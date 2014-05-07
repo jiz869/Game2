@@ -1,6 +1,6 @@
 #include "Player.h"
 
-GPlayer::GPlayer() : width(0), height(0), state(WAIT), sprite(0), applyGravity(false)
+GPlayer::GPlayer() : width(0), height(0), state(WAIT), sprite(0)
 {
 	animRunRate = 1.0/8.0;
     designSize = CCEGLView::sharedOpenGLView()->getDesignResolutionSize();
@@ -56,7 +56,7 @@ void GPlayer::Wait()
     CCAnimate *aa = CCAnimate::create(animationWait);
     CCRepeatForever *rep = CCRepeatForever::create(aa);
     sprite->runAction(rep);
-    state = Wait;
+    state = WAIT;
     velocity = ccp(0.0, 0.0);
     //CCLog("set player state WAIT");
 }
@@ -83,40 +83,71 @@ void GPlayer::SetPlayerPosition(float x, float y)
     sprite->setPosition(ccp(x,y));
 }
 
+//player collision test
+bool GPlayer::SegmentsTest(CCPoint b, CCPoint t, CCPoint l, CCPoint r)
+{
+    if(l.y > b.y && l.y < t.y) {
+        if(l.x < b.x && r.x > b.x){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool GPlayer::RightBottomTest(GObject *obj)
+{
+    //collision test of player's right side and object's left side
+    CCPoint player_pos;
+    float player_w, player_h;
+    this->GetAABB(player_pos, player_w, player_h);
+
+    CCPoint pos;
+    float w, h;
+    obj->GetAABB(pos, w, h);
+
+    CCPoint o1(pos.x, pos.y);
+    CCPoint o2(pos.x, pos.y+h-3);
+    CCPoint p1(player_pos.x+5, player_pos.y+15);
+    CCPoint p2(player_pos.x+player_w-12, player_pos.y+15);
+
+    //if speed is very fast, tunneling could happen
+    if( SegmentsTest(o1, o2, p1, p2) ) {
+        return true;
+    }
+
+    return false;
+}
+
+bool GPlayer::RightTopTest(GObject *obj)
+{
+    //collision test of player's right side and object's left side
+    CCPoint player_pos;
+    float player_w, player_h;
+    this->GetAABB(player_pos, player_w, player_h);
+
+    CCPoint pos;
+    float w, h;
+    obj->GetAABB(pos, w, h);
+
+    CCPoint o1(pos.x, pos.y);
+    CCPoint o2(pos.x, pos.y+h-3);
+    CCPoint p1(player_pos.x+5, player_pos.y+player_h-10);
+    CCPoint p2(player_pos.x+player_w-12, player_pos.y+player_h-10);
+
+    //if speed is very fast, tunneling could happen
+    if( SegmentsTest(o1, o2, p1, p2) ) {
+        return true;
+    }
+
+    return false;
+}
+
 void GPlayer::Step(float dt)
 {
-    CCPoint oldVelocity = velocity;
-    CCPoint oldPosition = GetPlayerPosition();
-
     CCPoint pos = sprite->getPosition();
     pos = pos + velocity;
     sprite->setPosition(pos);
-
-    if(applyGravity)
-    	velocity = velocity + gravity;
-
-    if( oldVelocity.y == 0.0 && velocity.y != 0.0 && state == WAIT) {
-        state = JMP1;
-        //CCLog("set player state JMP1");
-    }
-
-    //check and set gravity
-    UpdateGravity();
-
-    //velocity and gravity have the same direction
-
-    if( (oldPosition.y <= designSize.height/2 && pos.y > designSize.height/2) ||
-        (oldPosition.y > designSize.height/2 && pos.y <= designSize.height/2) ) {
-        SwitchGravity();
-        JumpDown();
-        CCLog("flip gravity!");
-    }else if(oldVelocity.y * velocity.y <= 0.0 && velocity.y * gravity.y > 0.0) {
-    	//CCLog("player's old velocity.y %f new velocity.y %f)", oldVelocity.y, velocity.y);
-        JumpDown();
-    }
-
-    //CCLog("player step position(%f, %f) velocity(%f, %f) gravity(%f, %f) state %d",
-    //		pos.x, pos.y, velocity.x, velocity.y, gravity.x, gravity.y, state);
 }
 
 

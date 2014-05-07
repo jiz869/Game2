@@ -1,6 +1,7 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
+#include "GameObject.h"
 #include "cocos2d.h"
 using namespace cocos2d;
 
@@ -61,6 +62,17 @@ public:
 
     //data
     ePlayerState state;
+
+    //player collision test
+    bool RightTopTest(GObject *obj);
+    bool RightBottomTest(GObject *obj);
+
+    //        t
+    //        |
+    // l------|------r
+    //        |
+    //        b
+    bool SegmentsTest(CCPoint b, CCPoint t, CCPoint l, CCPoint r);
 };
 
 #endif

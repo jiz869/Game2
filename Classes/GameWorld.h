@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "cocos2d.h"
+#include "Player.h"
 
 
 using namespace cocos2d;
@@ -48,7 +49,9 @@ public:
     CCSize designSize;
 
 protected:
+    GPlayer player;
 
+    void InitMap();
 };
 
 #endif
