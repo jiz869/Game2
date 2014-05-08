@@ -5,9 +5,9 @@
 #include "cocos2d.h"
 using namespace cocos2d;
 
-const float JMP_Y_SPEED = 7.0;
+const float JMP_Y_SPEED = 2.0;
 const float GRAVITY_Y = -0.4;
-const CCPoint INIT_POS = ccp(320, 10);
+const CCPoint INIT_POS = ccp(240, 26);
 const float SHORT_JMP_SPEED = 3.0;
 const float INIT_GAME_SPEED = 3.0;
 
@@ -30,7 +30,8 @@ class GPlayer : public CCObject
 public:
     enum ePlayerState {
         WAIT,
-        JMP,
+        JMP_UP,
+        JMP_DOWN
     };
     GPlayer();
     ~GPlayer();

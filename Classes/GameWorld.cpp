@@ -90,7 +90,7 @@ bool GameWorld::init()
 
         //add player
         this->addChild( player.CreatePlayerSprite(), 0.1 );
-        player.SetPlayerPosition(80, 100);
+        player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
         player.Wait();
 
         bRet = true;
@@ -120,13 +120,18 @@ void GameWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 	CCPoint location = touch->getLocation();
 
 	//CCLog("++++++++after  x:%f, y:%f", location.x, location.y);
+    player.Wait();
 }
 
 void GameWorld::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event)
 {
 	CCTouch* touch = (CCTouch*)( touches->anyObject() );
 	CCPoint location = touch->getLocation();
-
+    if(location.y > designSize.height/2) {
+        player.JumpUp();
+    }else{
+        player.JumpDown();
+    }
 }
 
 void GameWorld::ccTouchesMoved(cocos2d::CCSet* touches, cocos2d::CCEvent* event)

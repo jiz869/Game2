@@ -24,12 +24,13 @@ GPlayer::~GPlayer()
     }
 }
 
-//Customize
+//Customize to load player sprite
+#if 0
 CCSprite* GPlayer::CreatePlayerSprite()
 {
-    width=50;
-    height=34;
-    playerTexture = CCTextureCache::sharedTextureCache()->addImage("");
+    width=16;
+    height=20;
+    playerTexture = CCTextureCache::sharedTextureCache()->addImage("player.png");
     playerTexture->retain();
 
     sprite = CCSprite::createWithTexture(this->playerTexture, CCRectMake(0,0, width, height));
@@ -37,15 +38,63 @@ CCSprite* GPlayer::CreatePlayerSprite()
     sprite->setAnchorPoint(ccp(0,0));
     sprite->setPosition(INIT_POS);
 
-    //load wait animation
+    //load animations
+    //jump up animation
+    animationJumpUp = CCAnimation::create();
+    animationJumpUp->retain();
+    animationJumpUp->setDelayPerUnit(animRunRate);
+
+    CCSpriteFrame *frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(5*width+1, 0, width, height));
+    animationJumpUp->addSpriteFrame(frame);
+    frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(6*width, 0, width, height));
+    animationJumpUp->addSpriteFrame(frame);
+
+    //wait animation
     animationWait = CCAnimation::create();
     animationWait->retain();
     animationWait->setDelayPerUnit(animRunRate);
 
-    for(int i=0; i<8; ++i) {
-        CCSpriteFrame *frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(i*width, 0, width, height));
-        animationWait->addSpriteFrame(frame);
-    }
+    frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(112, 0, width, height));
+    animationWait->addSpriteFrame(frame);
+    //frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(128, 0, width, height));
+    //animationWait->addSpriteFrame(frame);
+
+    return sprite;
+}
+#endif
+
+CCSprite* GPlayer::CreatePlayerSprite()
+{
+    width=20;
+    height=32;
+    playerTexture = CCTextureCache::sharedTextureCache()->addImage("sprites.png");
+    playerTexture->retain();
+
+    sprite = CCSprite::createWithTexture(this->playerTexture, CCRectMake(0,0, width, height));
+    sprite->retain();
+    sprite->setAnchorPoint(ccp(0,0));
+    sprite->setPosition(INIT_POS);
+
+    //load animations
+    //jump up animation
+    animationJumpUp = CCAnimation::create();
+    animationJumpUp->retain();
+    animationJumpUp->setDelayPerUnit(animRunRate);
+
+    CCSpriteFrame *frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(102, 36, width, height));
+    animationJumpUp->addSpriteFrame(frame);
+    frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(104, 2, width, height));
+    animationJumpUp->addSpriteFrame(frame);
+
+    //wait animation
+    animationWait = CCAnimation::create();
+    animationWait->retain();
+    animationWait->setDelayPerUnit(animRunRate);
+
+    frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(100,70, width, height));
+    animationWait->addSpriteFrame(frame);
+    //frame = CCSpriteFrame::createWithTexture(this->playerTexture, CCRectMake(128, 0, width, height));
+    //animationWait->addSpriteFrame(frame);
 
     return sprite;
 }
@@ -64,12 +113,29 @@ void GPlayer::Wait()
 //Customize
 void GPlayer::JumpUp()
 {
-    //sprite->stopAllActions();
-    //sprite->setTextureRect( CCRectMake(5*width, 1*height+1, width, height) );
-    //state = (state == JMP1) ? JMP2 : JMP1;
-    //CCLog("set player state JMPx");
+    if( state != JMP_UP ) {
+        sprite->stopAllActions();
+        CCAnimate *aa = CCAnimate::create(animationJumpUp);
+        CCRepeatForever *rep = CCRepeatForever::create(aa);
+        sprite->runAction(rep);
+        velocity = ccp(0.0, JMP_Y_SPEED);
+        state = JMP_UP;
+        CCLog("set player state JMP");
+    }
 }
 
+void GPlayer::JumpDown()
+{
+    if( state != JMP_DOWN ) {
+        sprite->stopAllActions();
+        CCAnimate *aa = CCAnimate::create(animationJumpUp);
+        CCRepeatForever *rep = CCRepeatForever::create(aa);
+        sprite->runAction(rep);
+        velocity = ccp(0.0, -JMP_Y_SPEED);
+        state = JMP_DOWN;
+        CCLog("set player state JMP_DOWN");
+    }
+}
 //customize to control precision
 void GPlayer::GetAABB(CCPoint &o, float &w, float &h)
 {
