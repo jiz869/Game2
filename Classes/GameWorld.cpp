@@ -88,6 +88,11 @@ bool GameWorld::init()
 		this->setTouchEnabled(true);
         this->schedule( schedule_selector(GameWorld::step) );
 
+        //add player
+        this->addChild( player.CreatePlayerSprite(), 0.1 );
+        player.SetPlayerPosition(80, 100);
+        player.Wait();
+
         bRet = true;
 
         // play background music
@@ -149,6 +154,10 @@ static bool PointInSprite(CCPoint &p, CCSprite &sprite)
 
 void GameWorld::step(float dt)
 {
+    //player step
+    player.Step(dt);
+
+    //collision test
 
 }
 

@@ -7,7 +7,7 @@ using namespace cocos2d;
 
 const float JMP_Y_SPEED = 7.0;
 const float GRAVITY_Y = -0.4;
-const CCPoint INIT_POS = ccp(100, 100);
+const CCPoint INIT_POS = ccp(320, 10);
 const float SHORT_JMP_SPEED = 3.0;
 const float INIT_GAME_SPEED = 3.0;
 
