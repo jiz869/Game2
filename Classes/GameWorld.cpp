@@ -141,6 +141,14 @@ void GameWorld::ccTouchesMoved(cocos2d::CCSet* touches, cocos2d::CCEvent* event)
 
 }
 
+void GameWorld::LoadMap(char *name)
+{
+    //name: used for different levels
+    GObject* car;
+
+    
+}
+
 static bool PointInSprite(CCPoint &p, CCSprite &sprite)
 {
     float sx = sprite.getPositionX();

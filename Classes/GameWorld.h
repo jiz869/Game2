@@ -51,7 +51,11 @@ public:
 protected:
     GPlayer player;
 
-    void InitMap();
+    //map data structure and functions
+    vector<GObject*> lane1Cars;
+
+    void LoadMap(char *name);
+    GObject* GetObject(vector<GObject*> &objs, char*name);
 };
 
 #endif
