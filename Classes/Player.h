@@ -67,6 +67,7 @@ public:
     //player collision test
     bool RightTopTest(GObject *obj);
     bool RightBottomTest(GObject *obj);
+    bool CheckObjectCollision(GObject *obj);
 
     //        t
     //        |

@@ -52,10 +52,13 @@ protected:
     GPlayer player;
 
     //map data structure and functions
-    vector<GObject*> lane1Cars;
+    vector<GObject*> lane1;
 
     void LoadMap(char *name);
     GObject* GetObject(vector<GObject*> &objs, char*name);
+    void RenewMap();
+
+    void CheckCollision();
 };
 
 #endif

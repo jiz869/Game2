@@ -45,6 +45,8 @@ public:
     	velocity = v;
     }
 
+    bool InScreen(float w, float h);
+
     ObjectState state;
     float width;
     float height;

@@ -24,6 +24,24 @@ GPlayer::~GPlayer()
     }
 }
 
+static bool PointInObject(CCPoint &p, GObject *obj)
+{
+    CCPoint pos;
+    float w, h;
+    obj->GetAABB(pos, w, h);
+    float sx = pos.x;
+    float sy = pos.y;
+
+    float l = sx;
+    float r = sx + w - 1;
+    float b = sy;
+    float t = sy + h - 1;
+
+    if( (p.x > l) && (p.x < r) && (p.y < t) && (p.y > b) )
+        return true;
+    return false;
+}
+
 //Customize to load player sprite
 #if 0
 CCSprite* GPlayer::CreatePlayerSprite()
@@ -140,7 +158,8 @@ void GPlayer::JumpDown()
 void GPlayer::GetAABB(CCPoint &o, float &w, float &h)
 {
     o = sprite->getPosition();
-    w = width;
+    o.x += 3;
+    w = width - 3;
     h = height;
 }
 
@@ -203,6 +222,26 @@ bool GPlayer::RightTopTest(GObject *obj)
 
     //if speed is very fast, tunneling could happen
     if( SegmentsTest(o1, o2, p1, p2) ) {
+        return true;
+    }
+
+    return false;
+}
+
+bool GPlayer::CheckObjectCollision(GObject *obj)
+{
+    CCPoint pos;
+    float w, h;
+    this->GetAABB(pos, w, h);
+    CCPoint o1(pos.x, pos.y);
+    CCPoint o2(pos.x, pos.y+h-1);
+    CCPoint o3(pos.x+w-1, pos.y);
+    CCPoint o4(pos.x+w-1, pos.y+h-1);
+
+    if( PointInObject(o1, obj) ||
+        PointInObject(o2, obj) ||
+        PointInObject(o3, obj) ||
+        PointInObject(o4, obj) ) {
         return true;
     }
 

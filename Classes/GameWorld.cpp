@@ -93,6 +93,8 @@ bool GameWorld::init()
         player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
         player.Wait();
 
+        //load level
+        LoadMap("level1");
         bRet = true;
 
         // play background music
@@ -141,12 +143,67 @@ void GameWorld::ccTouchesMoved(cocos2d::CCSet* touches, cocos2d::CCEvent* event)
 
 }
 
+GObject* GameWorld::GetObject(vector<GObject*> &objs, char *name)
+{
+    if(objs.size() > 0) {
+        for(int i=0; i < objs.size(); ++i) {
+            if(objs[i]->state == OBJ_INACTIVE && (strncmp(objs[i]->objName, name, 50) == 0) ) {
+            	objs[i]->state = OBJ_ACTIVE;
+                return objs[i];
+            }
+        }
+    }
+
+    CCLog("creat a new %s object", name);
+    GObject *obj;
+    obj =  new GObject();
+    obj->Load(name);
+    objs.push_back(obj);
+    this->addChild(obj->Node());
+    obj->state = OBJ_ACTIVE;
+    return obj;
+}
+
+static bool CompareX2(GObject* a, GObject* b)
+{
+    CCPoint pos_a, pos_b;
+    float wa, wb;
+    float ha, hb;
+    a->GetAABB( pos_a, wa, hb);
+    b->GetAABB( pos_b, wb, hb);
+
+    return ( (pos_a.x+wa) < (pos_b.x+wb) );
+}
+
+void GameWorld::RenewMap()
+{
+    sort(lane1.begin(), lane1.end(), CompareX2);
+
+    GObject *last_car = lane1.back();
+    CCPoint pos;
+    float bw, bh;
+    last_car->GetAABB(pos, bw ,bh);
+    //if((pos.x+bw) < (designSize.width - 1.5*player.width)) {
+    if((pos.x+bw) < (designSize.width - 200)) {
+        GObject* car;
+        car = GetObject(lane1, "car1");
+        car->SetObjectPosition(designSize.width, 200);
+
+        CCPoint v = ccp( -2, 0);
+        car->SetVelocity(v);
+    }
+}
+
+//customize: level loading
 void GameWorld::LoadMap(char *name)
 {
     //name: used for different levels
     GObject* car;
+    car = GetObject(lane1, "car1");
+    car->SetObjectPosition(designSize.width, 200);
 
-    
+    CCPoint v = ccp( -2, 0);
+    car->SetVelocity(v);
 }
 
 static bool PointInSprite(CCPoint &p, CCSprite &sprite)
@@ -165,12 +222,38 @@ static bool PointInSprite(CCPoint &p, CCSprite &sprite)
     return false;
 }
 
+void GameWorld::CheckCollision()
+{
+    for(int i=0; i<lane1.size(); ++i) {
+        if( lane1[i]->state == OBJ_ACTIVE ) {
+            if( player.CheckObjectCollision(lane1[i]) ) {
+                player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+            }
+        }
+    }
+}
+
 void GameWorld::step(float dt)
 {
     //player step
     player.Step(dt);
 
-    //collision test
+    //all game objects step and objects management
+    int n = lane1.size();
+    for(int i=0; i<n; ++i) {
+        GObject *obj = lane1[i];
+        if(obj->state == OBJ_ACTIVE) {
+            obj->Step(dt);
+            if( !obj->InScreen( designSize.width, designSize.height) ) {
+                obj->state = OBJ_INACTIVE;
+            }
+        }
+    }
 
+    //renew map (may drop cars based on level design)
+    RenewMap();
+
+    //collision test
+    CheckCollision();
 }
 

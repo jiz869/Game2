@@ -72,7 +72,7 @@ void GObject::LoadCar1()
 {
     vector<CCPoint> tiles;
     tiles.reserve(1);
-    tiles[0] = ccp(0, 36 );
+    tiles[0] = ccp(0, 38 );
     LoadTiles(1, 1, 96, 36, "sprites.png", tiles, false);
 }
 
@@ -89,4 +89,18 @@ void GObject::Load(char* name)
     strncpy(objName, name, 50);
     state = OBJ_LOADED;
 }
+
+bool GObject::InScreen(float screen_w, float screen_h)
+{
+    CCPoint pos = batchNode->getPosition();
+    if( (pos.x + width < 0 || pos.y + height < 0) ||
+        (pos.x > screen_w  || pos.y > screen_h ) )
+    {
+        return false;
+    }
+    return true;
+}
+
+
+
 
