@@ -177,13 +177,12 @@ static bool CompareX2(GObject* a, GObject* b)
 
 void GameWorld::RenewMap()
 {
+    //lane1
     sort(lane1.begin(), lane1.end(), CompareX2);
-
     GObject *last_car = lane1.back();
     CCPoint pos;
     float bw, bh;
     last_car->GetAABB(pos, bw ,bh);
-    //if((pos.x+bw) < (designSize.width - 1.5*player.width)) {
     if((pos.x+bw) < (designSize.width - 200)) {
         GObject* car;
         car = GetObject(lane1, "car1");
@@ -192,17 +191,39 @@ void GameWorld::RenewMap()
         CCPoint v = ccp( -2, 0);
         car->SetVelocity(v);
     }
+
+    //lane2
+    sort(lane2.begin(), lane2.end(), CompareX2);
+    last_car = lane2.front();
+    last_car->GetAABB(pos, bw ,bh);
+    if(pos.x > 250) {
+        GObject* car;
+        car = GetObject(lane2, "car2");
+        car->SetObjectPosition(0, 100);
+
+        CCPoint v = ccp( 3, 0);
+        car->SetVelocity(v);
+    }
 }
 
 //customize: level loading
 void GameWorld::LoadMap(char *name)
 {
     //name: used for different levels
+
+    //lane1
     GObject* car;
     car = GetObject(lane1, "car1");
     car->SetObjectPosition(designSize.width, 200);
 
     CCPoint v = ccp( -2, 0);
+    car->SetVelocity(v);
+
+    //lane2
+    car = GetObject(lane2, "car2");
+    car->SetObjectPosition(0, 100);
+
+    v = ccp( 3, 0);
     car->SetVelocity(v);
 }
 
@@ -224,9 +245,19 @@ static bool PointInSprite(CCPoint &p, CCSprite &sprite)
 
 void GameWorld::CheckCollision()
 {
+    //lane1
     for(int i=0; i<lane1.size(); ++i) {
         if( lane1[i]->state == OBJ_ACTIVE ) {
             if( player.CheckObjectCollision(lane1[i]) ) {
+                player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+            }
+        }
+    }
+
+    //lane2
+    for(int i=0; i<lane2.size(); ++i) {
+        if( lane2[i]->state == OBJ_ACTIVE ) {
+            if( player.CheckObjectCollision(lane2[i]) ) {
                 player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
             }
         }
@@ -239,6 +270,8 @@ void GameWorld::step(float dt)
     player.Step(dt);
 
     //all game objects step and objects management
+
+    //lane1
     int n = lane1.size();
     for(int i=0; i<n; ++i) {
         GObject *obj = lane1[i];
@@ -250,6 +283,16 @@ void GameWorld::step(float dt)
         }
     }
 
+    n = lane2.size();
+    for(int i=0; i<n; ++i) {
+        GObject *obj = lane2[i];
+        if(obj->state == OBJ_ACTIVE) {
+            obj->Step(dt);
+            if( !obj->InScreen( designSize.width, designSize.height) ) {
+                obj->state = OBJ_INACTIVE;
+            }
+        }
+    }
     //renew map (may drop cars based on level design)
     RenewMap();
 

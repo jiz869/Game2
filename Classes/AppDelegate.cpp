@@ -22,7 +22,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
     //CCSize designSize = CCSizeMake(1280/2, 720/2);
     //CCSize designSize = CCSizeMake(480, 320);
-    CCSize designSize = CCSizeMake(860, 640);
+    CCSize designSize = CCSizeMake(480*1.5, 320*1.5);
     std::vector<std::string> searchPaths;
 
     searchPaths.push_back("hd");

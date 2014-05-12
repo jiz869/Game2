@@ -5,7 +5,6 @@
 #include "cocos2d.h"
 #include "Player.h"
 
-
 using namespace cocos2d;
 using namespace std;
 
@@ -53,6 +52,7 @@ protected:
 
     //map data structure and functions
     vector<GObject*> lane1;
+    vector<GObject*> lane2;
 
     void LoadMap(char *name);
     GObject* GetObject(vector<GObject*> &objs, char*name);

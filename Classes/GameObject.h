@@ -16,6 +16,7 @@ typedef enum{
 
 class GObject : public CCNode {
     void LoadCar1();
+    void LoadCar2();
 protected:
     CCSpriteBatchNode *batchNode;
     CCTexture2D *texture;

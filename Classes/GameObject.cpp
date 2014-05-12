@@ -76,12 +76,22 @@ void GObject::LoadCar1()
     LoadTiles(1, 1, 96, 36, "sprites.png", tiles, false);
 }
 
+void GObject::LoadCar2()
+{
+    vector<CCPoint> tiles;
+    tiles.reserve(1);
+    tiles[0] = ccp(0, 7 );
+    LoadTiles(1, 1, 89, 45, "cars.png", tiles, false);
+}
+
 void GObject::Load(char* name)
 {
     if(!name) return;
 
     if(strncmp(name, "car1", 50) == 0) {
         LoadCar1();
+    }else if(strncmp(name, "car2", 50) == 0) {
+        LoadCar2();
     }else {
         return;
     }
