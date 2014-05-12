@@ -205,35 +205,6 @@ static bool CompareX2(GObject* a, GObject* b)
 
 void GameWorld::RenewMap()
 {
-#if 0
-    //lane1
-    sort(lane1.begin(), lane1.end(), CompareX2);
-    GObject *last_car = lane1.back();
-    CCPoint pos;
-    float bw, bh;
-    last_car->GetAABB(pos, bw ,bh);
-    if((pos.x+bw) < (designSize.width - 200)) {
-        GObject* car;
-        car = GetObject(lane1, "car1");
-        car->SetObjectPosition(designSize.width, 200);
-
-        CCPoint v = ccp( -2, 0);
-        car->SetVelocity(v);
-    }
-
-    //lane2
-    sort(lane2.begin(), lane2.end(), CompareX2);
-    last_car = lane2.front();
-    last_car->GetAABB(pos, bw ,bh);
-    if(pos.x > 250) {
-        GObject* car;
-        car = GetObject(lane2, "car2");
-        car->SetObjectPosition(0, 100);
-
-        CCPoint v = ccp( 3, 0);
-        car->SetVelocity(v);
-    }
-#endif
     for(int i=0; i<numLanes; ++i) {
         GObject *last_car;
         bool addNewCar =false;
@@ -248,7 +219,8 @@ void GameWorld::RenewMap()
         }else{
             last_car = lane[i].back();
             last_car->GetAABB(pos, bw ,bh);
-            addNewCar = (pos.x+bw < (designSize.width - ld[i].interval));
+            float offset = getRandom(0, 80);
+            addNewCar = (pos.x+bw < (designSize.width - (ld[i].interval+offset)));
         }
 
         if(addNewCar) {
@@ -277,25 +249,9 @@ void GameWorld::LoadMap(char *name)
 {
     //name: used for different levels
 
-#if 0
-    //lane1
-    GObject* car;
-    car = GetObject(lane1, "car1");
-    car->SetObjectPosition(designSize.width, 200);
-
-    CCPoint v = ccp( -2, 0);
-    car->SetVelocity(v);
-
-    //lane2
-    car = GetObject(lane2, "car2");
-    car->SetObjectPosition(0, 100);
-
-    v = ccp( 3, 0);
-    car->SetVelocity(v);
-#endif
     //temp map data
-    float intervals[] = { 300, 500, 400, 250, 350, 500, 600, 510, 220, 310, 440};
-    float speed[] = { -2, 2.5, -2.2, 2.2, -1.8, 4, -5, 3, -2, 2, -2};
+    float intervals[] = { 350, 500, 400, 250, 350, 500, 600, 510, 220, 310, 440};
+    float speed[] = { -2, 3, -2.2, 2.2, -1.8, 4, -5, 3, -2, 2, -2};
     float laneY = 80;
     int i = 0;
     float rightX = designSize.width;
@@ -345,25 +301,6 @@ static bool PointInSprite(CCPoint &p, CCSprite &sprite)
 
 void GameWorld::CheckCollision()
 {
-#if 0
-    //lane1
-    for(int i=0; i<lane1.size(); ++i) {
-        if( lane1[i]->state == OBJ_ACTIVE ) {
-            if( player.CheckObjectCollision(lane1[i]) ) {
-                player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
-            }
-        }
-    }
-
-    //lane2
-    for(int i=0; i<lane2.size(); ++i) {
-        if( lane2[i]->state == OBJ_ACTIVE ) {
-            if( player.CheckObjectCollision(lane2[i]) ) {
-                player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
-            }
-        }
-    }
-#endif
     int n;
     for(int i=0; i<numLanes; ++i) {
         n = lane[i].size();
@@ -394,30 +331,6 @@ void GameWorld::step(float dt)
 
     //all game objects step and objects management
 
-#if 0
-    //lane1
-    int n = lane1.size();
-    for(int i=0; i<n; ++i) {
-        GObject *obj = lane1[i];
-        if(obj->state == OBJ_ACTIVE) {
-            obj->Step(dt);
-            if( !obj->InScreen( designSize.width, designSize.height) ) {
-                obj->state = OBJ_INACTIVE;
-            }
-        }
-    }
-
-    n = lane2.size();
-    for(int i=0; i<n; ++i) {
-        GObject *obj = lane2[i];
-        if(obj->state == OBJ_ACTIVE) {
-            obj->Step(dt);
-            if( !obj->InScreen( designSize.width, designSize.height) ) {
-                obj->state = OBJ_INACTIVE;
-            }
-        }
-    }
-#endif
     int n;
     for(int i=0; i<numLanes; ++i) {
         n = lane[i].size();
