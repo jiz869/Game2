@@ -10,6 +10,9 @@ void GObject::GetAABB(CCPoint &o, float &w, float &h)
     o = batchNode->getPosition();
     w = width;
     h = height;
+    if(strncmp(objName, "car1", 50) == 0) {
+    	o.x += 9;
+    }
 }
 
 GObject::~GObject()

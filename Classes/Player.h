@@ -5,7 +5,7 @@
 #include "cocos2d.h"
 using namespace cocos2d;
 
-const float JMP_Y_SPEED = 2.0;
+const float JMP_Y_SPEED = 3.0;
 const float GRAVITY_Y = -0.4;
 const CCPoint INIT_POS = ccp(240, 26);
 const float SHORT_JMP_SPEED = 3.0;

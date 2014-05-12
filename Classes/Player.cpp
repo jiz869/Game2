@@ -3,6 +3,9 @@
 GPlayer::GPlayer() : width(0), height(0), state(WAIT), sprite(0)
 {
 	animRunRate = 1.0/8.0;
+    animationJumpDown = 0;
+    animationJumpUp = 0;
+    animationWait = 0;
     designSize = CCEGLView::sharedOpenGLView()->getDesignResolutionSize();
 }
 

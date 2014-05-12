@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "GameWorld.h"
+#include "GameOverScene.h"
 #include "SimpleAudioEngine.h"
 
 using namespace CocosDenshion;
@@ -88,6 +89,11 @@ bool GameWorld::init()
 		this->setTouchEnabled(true);
         this->schedule( schedule_selector(GameWorld::step) );
 
+        //score label
+        InitScoreLabel();
+        //time label
+        InitTimeLabel();
+
         //add player
         this->addChild( player.CreatePlayerSprite(), 0.1 );
         player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
@@ -95,6 +101,7 @@ bool GameWorld::init()
 
         //load level
         LoadMap("level1");
+
         bRet = true;
 
         // play background music
@@ -112,6 +119,27 @@ void GameWorld::menuCloseCallback(CCObject* pSender)
 #else
     CCDirector::sharedDirector()->popScene();
 #endif
+}
+
+void GameWorld::InitScoreLabel()
+{
+    _label = CCLabelTTF::create("0", "Helvetica", 32 );
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    //_label->retain();
+    _label->setColor( ccc3(0, 0, 128) );
+    _label->setPosition( ccp(winSize.width/2, winSize.height - 50) );
+    this->addChild(_label);
+    score = 0;
+}
+
+void GameWorld::InitTimeLabel()
+{
+    timeLabel = CCLabelTTF::create("0", "Helvetica", 32 );
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    timeLabel->setColor( ccc3(10, 10, 10) );
+    timeLabel->setPosition( ccp(winSize.width - 80, winSize.height - 50) );
+    this->addChild(timeLabel);
+    seconds = 0;
 }
 
 // cpp with cocos2d-x
@@ -177,6 +205,7 @@ static bool CompareX2(GObject* a, GObject* b)
 
 void GameWorld::RenewMap()
 {
+#if 0
     //lane1
     sort(lane1.begin(), lane1.end(), CompareX2);
     GObject *last_car = lane1.back();
@@ -204,6 +233,43 @@ void GameWorld::RenewMap()
         CCPoint v = ccp( 3, 0);
         car->SetVelocity(v);
     }
+#endif
+    for(int i=0; i<numLanes; ++i) {
+        GObject *last_car;
+        bool addNewCar =false;
+        CCPoint pos;
+        float bw, bh;
+
+        sort(lane[i].begin(), lane[i].end(), CompareX2);
+        if(ld[i].l2r) {
+            last_car = lane[i].front();
+            last_car->GetAABB(pos, bw ,bh);
+            addNewCar = ( pos.x > ld[i].interval);
+        }else{
+            last_car = lane[i].back();
+            last_car->GetAABB(pos, bw ,bh);
+            addNewCar = (pos.x+bw < (designSize.width - ld[i].interval));
+        }
+
+        if(addNewCar) {
+            LaneAddCar(i);
+        }
+    }
+}
+
+void GameWorld::LaneAddCar(int i)
+{
+    GObject *car;
+    float offset = getRandom(0, 50);
+    float initX = ld[i].initPos.x;
+    car = GetObject( lane[i], ld[i].carName );
+
+    if(initX < designSize.width/2) {
+        initX -= offset;
+    }
+
+    car->SetObjectPosition( initX, ld[i].initPos.y );
+    car->SetVelocity( ld[i].velocity );
 }
 
 //customize: level loading
@@ -211,6 +277,7 @@ void GameWorld::LoadMap(char *name)
 {
     //name: used for different levels
 
+#if 0
     //lane1
     GObject* car;
     car = GetObject(lane1, "car1");
@@ -225,6 +292,39 @@ void GameWorld::LoadMap(char *name)
 
     v = ccp( 3, 0);
     car->SetVelocity(v);
+#endif
+    //temp map data
+    float intervals[] = { 300, 500, 400, 250, 350, 500, 600, 510, 220, 310, 440};
+    float speed[] = { -2, 2.5, -2.2, 2.2, -1.8, 4, -5, 3, -2, 2, -2};
+    float laneY = 80;
+    int i = 0;
+    float rightX = designSize.width;
+    while(designSize.height - laneY > 80) {
+        if(i%2 == 0) {
+            strncpy(ld[i].carName, "car1", 50);
+            //ld[i].velocity = ccp(-2, 0);
+            ld[i].initPos = ccp(rightX, laneY);
+            ld[i].height = 50;
+            ld[i].l2r = false;
+            //ld[i].interval = 150;
+            ld[i].interval = intervals[i];
+        }else{
+            strncpy(ld[i].carName, "car2", 50);
+            //ld[i].velocity = ccp(2, 0);
+            ld[i].initPos = ccp(0, laneY);
+            ld[i].height = 60;
+            ld[i].l2r = true;
+            //ld[i].interval = 300;
+        }
+        ld[i].velocity = ccp(speed[i], 0);
+        ld[i].interval = intervals[i];
+        LaneAddCar(i);
+        laneY += ld[i].height;
+        ++i;
+    }
+    numLanes = i;
+
+    numFrame = 0;
 }
 
 static bool PointInSprite(CCPoint &p, CCSprite &sprite)
@@ -245,6 +345,7 @@ static bool PointInSprite(CCPoint &p, CCSprite &sprite)
 
 void GameWorld::CheckCollision()
 {
+#if 0
     //lane1
     for(int i=0; i<lane1.size(); ++i) {
         if( lane1[i]->state == OBJ_ACTIVE ) {
@@ -262,15 +363,38 @@ void GameWorld::CheckCollision()
             }
         }
     }
+#endif
+    int n;
+    for(int i=0; i<numLanes; ++i) {
+        n = lane[i].size();
+        for(int j=0; j<n; ++j) {
+            if(lane[i][j]->state == OBJ_ACTIVE) {
+                if( player.CheckObjectCollision(lane[i][j]) ) {
+                    player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+                }
+            }
+        }
+    }
+
 }
 
 void GameWorld::step(float dt)
 {
+    numFrame++;
+    if(numFrame % 60 == 0) {
+        numFrame = 0;
+        seconds++;
+        char ss[10];
+        sprintf(ss, "%d", seconds);
+        timeLabel->setString(ss);
+    }
+    if(seconds == 60) GameOver();
     //player step
     player.Step(dt);
 
     //all game objects step and objects management
 
+#if 0
     //lane1
     int n = lane1.size();
     for(int i=0; i<n; ++i) {
@@ -293,10 +417,46 @@ void GameWorld::step(float dt)
             }
         }
     }
+#endif
+    int n;
+    for(int i=0; i<numLanes; ++i) {
+        n = lane[i].size();
+        for(int j=0; j<n; ++j) {
+            GObject *obj = lane[i][j];
+            if(obj->state == OBJ_ACTIVE) {
+                obj->Step(dt);
+                if( !obj->InScreen( designSize.width, designSize.height) ) {
+                    obj->state = OBJ_INACTIVE;
+                }
+            }
+
+        }
+    }
+
     //renew map (may drop cars based on level design)
     RenewMap();
 
     //collision test
     CheckCollision();
+
+    //check if player has crossed the road
+    if(player.GetPlayerPosition().y+40 >= designSize.height) {
+        score++;
+        char ss[10];
+        sprintf(ss, "%d", score);
+        player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+        _label->setString(ss);
+    }else if( player.GetPlayerPosition().y < INIT_POS.y) {
+        player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+    }
+}
+
+void GameWorld::GameOver()
+{
+    char s[200];
+    snprintf(s, 200, "Score: %d ", score );
+    GameOverScene *gameOverScene = GameOverScene::create();
+    gameOverScene->getLayer()->getLabel()->setString(s);
+	CCDirector::sharedDirector()->replaceScene( gameOverScene );
 }
 
