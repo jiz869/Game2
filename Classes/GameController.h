@@ -28,6 +28,7 @@ typedef struct{
 
 typedef struct{
     int laneNumber;
+    float playerSpeed;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 

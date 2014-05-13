@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "cocos2d.h"
+#include "GameController.h"
 using namespace cocos2d;
 
 const float JMP_Y_SPEED = 3.0;
