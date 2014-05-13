@@ -11,8 +11,6 @@ GPlayer::GPlayer() : width(0), height(0), state(WAIT), sprite(0)
 
 GPlayer::~GPlayer()
 {
-    sprite->release();
-    playerTexture->release();
     if(animationWait) {
         animationWait->release();
         animationWait = 0;
@@ -52,7 +50,6 @@ CCSprite* GPlayer::CreatePlayerSprite()
     width=16;
     height=20;
     playerTexture = CCTextureCache::sharedTextureCache()->addImage("player.png");
-    playerTexture->retain();
 
     sprite = CCSprite::createWithTexture(this->playerTexture, CCRectMake(0,0, width, height));
     sprite->retain();
@@ -92,7 +89,6 @@ CCSprite* GPlayer::CreatePlayerSprite()
     playerTexture->retain();
 
     sprite = CCSprite::createWithTexture(this->playerTexture, CCRectMake(0,0, width, height));
-    sprite->retain();
     sprite->setAnchorPoint(ccp(0,0));
     sprite->setPosition(INIT_POS);
 

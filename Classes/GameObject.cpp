@@ -18,7 +18,6 @@ void GObject::GetAABB(CCPoint &o, float &w, float &h)
 GObject::~GObject()
 {
     if(batchNode) {
-        batchNode->release();
         batchNode = 0;
     }
 }
@@ -51,7 +50,6 @@ void GObject::LoadTiles(int nc, int nr, float w, float h,
 {
     batchNode = CCSpriteBatchNode::create(fn);
     texture = batchNode->getTexture();
-    batchNode->retain();
     batchNode->setAnchorPoint(ccp(0.0, 0.0));
 
     for(int r=0; r<nr; ++r) {
