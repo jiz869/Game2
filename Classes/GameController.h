@@ -10,40 +10,39 @@
 #define __crossRoad__GameController__
 
 #include "cocos2d.h"
+#include <vector>
 
 USING_NS_CC;
 using namespace std;
 
 #define CCSTRING_FOR_KEY(dict , key)  ((CCString *)(dict)->objectForKey(key))
 
-class LaneDescription : public CCObject{
-public:
+typedef struct{
     char carName[50];
     CCPoint initPos;
     CCPoint velocity;
     float height;
-    int distance;
+    float distance;
     bool left2right;
-};
+}LaneDescription;
 
-class PlaySceneData : public CCObject{
-public:
+typedef struct{
     int laneNumber;
-    CCArray * laneDescriptions;
-};
+    vector<LaneDescription *> laneDescriptions;
+}PlaySceneData;
 
 class GameController {
-    
+
 public:
     static GameController * getGameController();
     PlaySceneData * getPlaySceneData(int level);
-    
+
 private:
     GameController();
     ~GameController();
     virtual bool init();
     CCDictionary * dict;
-    CCArray * playSceneDatas;
+    vector<PlaySceneData *> playSceneDatas;
     bool initPlaySceneData(CCArray * dataArray);
     CCSize designSize;
 };

@@ -19,6 +19,17 @@ GameWorld::~GameWorld()
 {
 	// cpp don't need to call super dealloc
 	// virtual destructor will do this
+	for(int i = 0 ; i < lanes.size() ; i++){
+		for(int j = 0 ; j < lanes[i].size() ; j++){
+			delete lanes[i][j];
+		}
+		lanes[i].clear();
+		vector<GObject *> tempVec;
+		lanes[i].swap(tempVec);
+	}
+	lanes.clear();
+	vector< vector<GObject *> > tempVec;
+	lanes.swap(tempVec);
 }
 
 GameWorld::GameWorld()
@@ -100,7 +111,7 @@ bool GameWorld::init()
         player.Wait();
 
         //load level
-        LoadMap("level1");
+        LoadMap(0);
 
         bRet = true;
 
@@ -205,22 +216,22 @@ static bool CompareX2(GObject* a, GObject* b)
 
 void GameWorld::RenewMap()
 {
-    for(int i=0; i<numLanes; ++i) {
+    for(int i=0; i<data->laneNumber; ++i) {
         GObject *last_car;
         bool addNewCar =false;
         CCPoint pos;
         float bw, bh;
 
-        sort(lane[i].begin(), lane[i].end(), CompareX2);
-        if(ld[i].l2r) {
-            last_car = lane[i].front();
+        sort(lanes[i].begin(), lanes[i].end(), CompareX2);
+        if(data->laneDescriptions[i]->left2right) {
+            last_car = lanes[i].front();
             last_car->GetAABB(pos, bw ,bh);
-            addNewCar = ( pos.x > ld[i].interval);
+            addNewCar = ( pos.x > data->laneDescriptions[i]->distance);
         }else{
-            last_car = lane[i].back();
+            last_car = lanes[i].back();
             last_car->GetAABB(pos, bw ,bh);
             float offset = getRandom(0, 80);
-            addNewCar = (pos.x+bw < (designSize.width - (ld[i].interval+offset)));
+            addNewCar = (pos.x+bw < (designSize.width - (data->laneDescriptions[i]->distance+offset)));
         }
 
         if(addNewCar) {
@@ -233,19 +244,20 @@ void GameWorld::LaneAddCar(int i)
 {
     GObject *car;
     float offset = getRandom(0, 50);
-    float initX = ld[i].initPos.x;
-    car = GetObject( lane[i], ld[i].carName );
+    float initX = data->laneDescriptions[i]->initPos.x;
+
+    car = GetObject( lanes[i], data->laneDescriptions[i]->carName );
 
     if(initX < designSize.width/2) {
         initX -= offset;
     }
 
-    car->SetObjectPosition( initX, ld[i].initPos.y );
-    car->SetVelocity( ld[i].velocity );
+    car->SetObjectPosition( initX, data->laneDescriptions[i]->initPos.y );
+    car->SetVelocity( data->laneDescriptions[i]->velocity );
 }
 
 //customize: level loading
-void GameWorld::LoadMap(char *name)
+void GameWorld::LoadMap(int level)
 {
     //name: used for different levels
 
@@ -278,22 +290,15 @@ void GameWorld::LoadMap(char *name)
 //        laneY += ld[i].height;
 //        ++i;
 //    }
-    
-    PlaySceneData * data = GameController::getGameController()->getPlaySceneData(0);
-    
-    numLanes = data->laneNumber;
-    
-    for (int i = 0; i < numLanes; i++) {
-        LaneDescription * ldDescription = (LaneDescription *)data->laneDescriptions->objectAtIndex(i);
-        strncpy(ld[i].carName, ldDescription->carName, 50);
-        ld[i].initPos = ldDescription->initPos;
-        ld[i].height = ldDescription->height;
-        ld[i].l2r = ldDescription->left2right;
-        ld[i].interval = ldDescription->distance;
-        ld[i].velocity = ldDescription->velocity;
-        LaneAddCar(i);
+
+    data = GameController::getGameController()->getPlaySceneData(level);
+
+    lanes.resize(data->laneNumber);
+
+    for(int i = 0 ; i < data->laneNumber ; i++){
+    	LaneAddCar(i);
     }
-    
+
     numFrame = 0;
 }
 
@@ -316,11 +321,11 @@ static bool PointInSprite(CCPoint &p, CCSprite &sprite)
 void GameWorld::CheckCollision()
 {
     int n;
-    for(int i=0; i<numLanes; ++i) {
-        n = lane[i].size();
+    for(int i=0; i<data->laneNumber; ++i) {
+        n = lanes[i].size();
         for(int j=0; j<n; ++j) {
-            if(lane[i][j]->state == OBJ_ACTIVE) {
-                if( player.CheckObjectCollision(lane[i][j]) ) {
+            if(lanes[i][j]->state == OBJ_ACTIVE) {
+                if( player.CheckObjectCollision(lanes[i][j]) ) {
                     player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
                 }
             }
@@ -346,10 +351,10 @@ void GameWorld::step(float dt)
     //all game objects step and objects management
 
     int n;
-    for(int i=0; i<numLanes; ++i) {
-        n = lane[i].size();
+    for(int i=0; i<data->laneNumber; ++i) {
+        n = lanes[i].size();
         for(int j=0; j<n; ++j) {
-            GObject *obj = lane[i][j];
+            GObject *obj = lanes[i][j];
             if(obj->state == OBJ_ACTIVE) {
                 obj->Step(dt);
                 if( !obj->InScreen( designSize.width, designSize.height) ) {

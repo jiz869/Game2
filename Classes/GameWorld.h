@@ -14,14 +14,14 @@ struct InterSectionResult{
 };
 
 //////////////////////////////////////////////////////////////////
-struct LaneDescriptor {
-    char carName[50];
-    CCPoint initPos;
-    CCPoint velocity;
-    float height;
-    float interval;
-    bool l2r;
-};
+//struct LaneDescriptor {
+//    char carName[50];
+//    CCPoint initPos;
+//    CCPoint velocity;
+//    float height;
+//    float interval;
+//    bool l2r;
+//};
 
 class GameWorld : public cocos2d::CCLayerColor
 {
@@ -57,7 +57,7 @@ public:
     //data
     CCSize designSize;
 
-    //score label 
+    //score label
     CCLabelTTF* _label;
     CCLabelTTF* timeLabel;
 
@@ -77,12 +77,14 @@ protected:
     //vector<GObject*> lane2;
 
     //max 20 lanes
-    vector<GObject*> lane[20];
-    LaneDescriptor ld[20];
-    int numLanes;
+    vector< vector<GObject*> > lanes;
+//    vector<GObject*> lane[20];
+//    LaneDescriptor ld[20];
+//    int numLanes;
+    PlaySceneData * data;
     void LaneAddCar(int i);
 
-    void LoadMap(char *name);
+    void LoadMap(int level);
     GObject* GetObject(vector<GObject*> &objs, char*name);
     void RenewMap();
 
