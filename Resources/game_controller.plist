@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>play_scene_data</key>
+	<array>
+		<dict>
+			<key>lane_number</key>
+			<string>3</string>
+			<key>lane_descriptions</key>
+			<array>
+				<dict>
+					<key>distance</key>
+					<string>350</string>
+					<key>speed</key>
+					<string>3.5</string>
+					<key>ccp_y_percent</key>
+					<string>0.2</string>
+					<key>direction</key>
+					<string>left2right</string>
+				</dict>
+				<dict>
+					<key>distance</key>
+					<string>250</string>
+					<key>speed</key>
+					<string>-2.2</string>
+					<key>ccp_y_percent</key>
+					<string>0.4</string>
+					<key>direction</key>
+					<string>right2left</string>
+				</dict>
+				<dict>
+					<key>distance</key>
+					<string>500</string>
+					<key>speed</key>
+					<string>4.3</string>
+					<key>ccp_y_percent</key>
+					<string>0.7</string>
+					<key>direction</key>
+					<string>left2right</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
