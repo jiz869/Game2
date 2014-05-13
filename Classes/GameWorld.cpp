@@ -250,36 +250,50 @@ void GameWorld::LoadMap(char *name)
     //name: used for different levels
 
     //temp map data
-    float intervals[] = { 350, 500, 400, 250, 350, 500, 600, 510, 220, 310, 440};
-    float speed[] = { -2, 3, -2.2, 2.2, -1.8, 4, -5, 3, -2, 2, -2};
-    float laneY = 80;
-    int i = 0;
-    float rightX = designSize.width;
-    while(designSize.height - laneY > 80) {
-        if(i%2 == 0) {
-            strncpy(ld[i].carName, "car1", 50);
-            //ld[i].velocity = ccp(-2, 0);
-            ld[i].initPos = ccp(rightX, laneY);
-            ld[i].height = 50;
-            ld[i].l2r = false;
-            //ld[i].interval = 150;
-            ld[i].interval = intervals[i];
-        }else{
-            strncpy(ld[i].carName, "car2", 50);
-            //ld[i].velocity = ccp(2, 0);
-            ld[i].initPos = ccp(0, laneY);
-            ld[i].height = 60;
-            ld[i].l2r = true;
-            //ld[i].interval = 300;
-        }
-        ld[i].velocity = ccp(speed[i], 0);
-        ld[i].interval = intervals[i];
+//    float intervals[] = { 350, 500, 400, 250, 350, 500, 600, 510, 220, 310, 440};
+//    float speed[] = { -2, 3, -2.2, 2.2, -1.8, 4, -5, 3, -2, 2, -2};
+//    float laneY = 80;
+//    int i = 0;
+//    float rightX = designSize.width;
+//    while(designSize.height - laneY > 80) {
+//        if(i%2 == 0) {
+//            strncpy(ld[i].carName, "car1", 50);
+//            //ld[i].velocity = ccp(-2, 0);
+//            ld[i].initPos = ccp(rightX, laneY);
+//            ld[i].height = 50;
+//            ld[i].l2r = false;
+//            //ld[i].interval = 150;
+//            ld[i].interval = intervals[i];
+//        }else{
+//            strncpy(ld[i].carName, "car2", 50);
+//            //ld[i].velocity = ccp(2, 0);
+//            ld[i].initPos = ccp(0, laneY);
+//            ld[i].height = 60;
+//            ld[i].l2r = true;
+//            //ld[i].interval = 300;
+//        }
+//        ld[i].velocity = ccp(speed[i], 0);
+//        ld[i].interval = intervals[i];
+//        LaneAddCar(i);
+//        laneY += ld[i].height;
+//        ++i;
+//    }
+    
+    PlaySceneData * data = GameController::getGameController()->getPlaySceneData(0);
+    
+    numLanes = data->laneNumber;
+    
+    for (int i = 0; i < numLanes; i++) {
+        LaneDescription * ldDescription = (LaneDescription *)data->laneDescriptions->objectAtIndex(i);
+        strncpy(ld[i].carName, ldDescription->carName, 50);
+        ld[i].initPos = ldDescription->initPos;
+        ld[i].height = ldDescription->height;
+        ld[i].l2r = ldDescription->left2right;
+        ld[i].interval = ldDescription->distance;
+        ld[i].velocity = ldDescription->velocity;
         LaneAddCar(i);
-        laneY += ld[i].height;
-        ++i;
     }
-    numLanes = i;
-
+    
     numFrame = 0;
 }
 

@@ -16,7 +16,7 @@ using namespace std;
 
 #define CCSTRING_FOR_KEY(dict , key)  ((CCString *)(dict)->objectForKey(key))
 
-class LaneDescription {
+class LaneDescription : public CCObject{
 public:
     char carName[50];
     CCPoint initPos;
@@ -26,7 +26,7 @@ public:
     bool left2right;
 };
 
-class PlaySceneData{
+class PlaySceneData : public CCObject{
 public:
     int laneNumber;
     CCArray * laneDescriptions;

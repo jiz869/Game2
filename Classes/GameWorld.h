@@ -4,6 +4,7 @@
 #include <vector>
 #include "cocos2d.h"
 #include "Player.h"
+#include "GameController.h"
 
 using namespace cocos2d;
 using namespace std;
