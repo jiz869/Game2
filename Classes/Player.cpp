@@ -54,7 +54,7 @@ CCSprite* GPlayer::CreatePlayerSprite()
     sprite = CCSprite::createWithTexture(this->playerTexture, CCRectMake(0,0, width, height));
     sprite->retain();
     sprite->setAnchorPoint(ccp(0,0));
-    sprite->setPosition(INIT_POS);
+    sprite->resetPlayerPosition();
 
     //load animations
     //jump up animation
@@ -90,7 +90,7 @@ CCSprite* GPlayer::CreatePlayerSprite()
 
     sprite = CCSprite::createWithTexture(this->playerTexture, CCRectMake(0,0, width, height));
     sprite->setAnchorPoint(ccp(0,0));
-    sprite->setPosition(INIT_POS);
+    sprite->setPosition(ccp(designSize.width / 2 , 0));
 
     //load animations
     //jump up animation
@@ -135,8 +135,8 @@ void GPlayer::JumpUp()
         CCAnimate *aa = CCAnimate::create(animationJumpUp);
         CCRepeatForever *rep = CCRepeatForever::create(aa);
         sprite->runAction(rep);
-        velocity = ccp(0.0, JMP_Y_SPEED);
         state = JMP_UP;
+        velocity = ccp(0, speed);
         CCLog("set player state JMP");
     }
 }
@@ -148,8 +148,8 @@ void GPlayer::JumpDown()
         CCAnimate *aa = CCAnimate::create(animationJumpUp);
         CCRepeatForever *rep = CCRepeatForever::create(aa);
         sprite->runAction(rep);
-        velocity = ccp(0.0, -JMP_Y_SPEED);
         state = JMP_DOWN;
+        velocity = ccp(0, -speed);
         CCLog("set player state JMP_DOWN");
     }
 }

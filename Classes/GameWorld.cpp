@@ -70,6 +70,7 @@ bool GameWorld::init()
 
 		CC_BREAK_IF(! CCLayerColor::initWithColor( ccc4(255,255,255,255) ) );
 		designSize = CCEGLView::sharedOpenGLView()->getDesignResolutionSize();
+        data = GameController::getGameController()->getPlaySceneData(0);
 
 #if 0
 		//Add a menu item with "X" image, which is clicked to quit the program.
@@ -107,7 +108,7 @@ bool GameWorld::init()
 
         //add player
         this->addChild( player.CreatePlayerSprite(), 0.1 );
-        player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+        player.SetPlayerSpeed(data->playerSpeed);
         player.Wait();
 
         //load level
@@ -165,12 +166,15 @@ void GameWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 }
 
 void GameWorld::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event)
-{
+{    
 	CCTouch* touch = (CCTouch*)( touches->anyObject() );
 	CCPoint location = touch->getLocation();
     if(location.y > designSize.height/2) {
         player.JumpUp();
     }else{
+        if (player.GetPlayerPosition().y <= 0) {
+            return;
+        }
         player.JumpDown();
     }
 }
@@ -179,7 +183,6 @@ void GameWorld::ccTouchesMoved(cocos2d::CCSet* touches, cocos2d::CCEvent* event)
 {
 	CCTouch* touch = (CCTouch*)( touches->anyObject() );
 	CCPoint location = touch->getLocation();
-
 }
 
 GObject* GameWorld::GetObject(vector<GObject*> &objs, char *name)
@@ -291,8 +294,6 @@ void GameWorld::LoadMap(int level)
 //        ++i;
 //    }
 
-    data = GameController::getGameController()->getPlaySceneData(level);
-
     lanes.resize(data->laneNumber);
 
     for(int i = 0 ; i < data->laneNumber ; i++){
@@ -326,7 +327,7 @@ void GameWorld::CheckCollision()
         for(int j=0; j<n; ++j) {
             if(lanes[i][j]->state == OBJ_ACTIVE) {
                 if( player.CheckObjectCollision(lanes[i][j]) ) {
-                    player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+                    player.resetPlayerPosition();
                 }
             }
         }
@@ -376,10 +377,10 @@ void GameWorld::step(float dt)
         score++;
         char ss[10];
         sprintf(ss, "%d", score);
-        player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+        player.resetPlayerPosition();
         _label->setString(ss);
-    }else if( player.GetPlayerPosition().y < INIT_POS.y) {
-        player.SetPlayerPosition(INIT_POS.x, INIT_POS.y);
+    }else if( player.GetPlayerPosition().y < 0) {
+        player.resetPlayerPosition();
     }
 }
 

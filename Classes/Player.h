@@ -4,11 +4,10 @@
 #include "GameObject.h"
 #include "cocos2d.h"
 #include "GameController.h"
+
 using namespace cocos2d;
 
-const float JMP_Y_SPEED = 3.0;
 const float GRAVITY_Y = -0.4;
-const CCPoint INIT_POS = ccp(240, 26);
 const float SHORT_JMP_SPEED = 3.0;
 const float INIT_GAME_SPEED = 3.0;
 
@@ -26,6 +25,7 @@ class GPlayer : public CCObject
 
     //physics
     CCPoint velocity;
+    float speed;
     CCSize designSize;
 
 public:
@@ -52,6 +52,9 @@ public:
     void SetPlayerVelocity(float x, float y) {
         velocity = ccp(x, y);
     }
+    void SetPlayerSpeed(float speed) {
+        this->speed = speed;
+    }
 
     void JumpUp();
     void JumpDown();
@@ -76,6 +79,11 @@ public:
     //        |
     //        b
     bool SegmentsTest(CCPoint b, CCPoint t, CCPoint l, CCPoint r);
+    
+    void resetPlayerPosition(){
+        sprite->setPosition(ccp(designSize.width/2 , 0));
+        Wait();
+    }
 };
 
 #endif
