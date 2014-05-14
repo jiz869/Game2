@@ -85,15 +85,29 @@ void GObject::LoadCar2()
     LoadTiles(1, 1, 89, 45, "cars.png", tiles, false);
 }
 
+void GObject::LoadSpeedUpCar() 
+{
+    vector<CCPoint> tiles;
+    tiles.reserve(1);
+    tiles[0] = ccp(0, 0 );
+    LoadTiles(1, 1, 16, 20, "player.png", tiles, false);
+}
+
 void GObject::Load(char* name)
 {
     if(!name) return;
 
     if(strncmp(name, "car1", 50) == 0) {
         LoadCar1();
+        carType = CAR_NORMAL;
     }else if(strncmp(name, "car2", 50) == 0) {
         LoadCar2();
+        carType = CAR_NORMAL;
+    }else if(strncmp(name, "speed_up_player", 50) == 0) {
+        LoadSpeedUpCar();
+        carType = CAR_SPEED_UP_PLAYER;
     }else {
+        carType = CAR_INVALID;
         return;
     }
 

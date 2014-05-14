@@ -73,14 +73,7 @@ protected:
     int seconds;
 
     //map data structure and functions
-    //vector<GObject*> lane1;
-    //vector<GObject*> lane2;
-
-    //max 20 lanes
     vector< vector<GObject*> > lanes;
-//    vector<GObject*> lane[20];
-//    LaneDescriptor ld[20];
-//    int numLanes;
     PlaySceneData * data;
     void LaneAddCar(int i);
 
@@ -89,6 +82,7 @@ protected:
     void RenewMap();
 
     void CheckCollision();
+    void ProcessPlayerCollision(GObject* obj);
     void GameOver();
 };
 

@@ -14,9 +14,18 @@ typedef enum{
     OBJ_INACTIVE
 }ObjectState;
 
+typedef enum{
+    CAR_INVALID,    // not a car object
+    CAR_NORMAL,
+    CAR_SPEED_UP_PLAYER,
+    CAR_DUP_PLAYER
+}CarType;
+
 class GObject : public CCNode {
+    // various cars
     void LoadCar1();
     void LoadCar2();
+    void LoadSpeedUpCar();
 protected:
     CCSpriteBatchNode *batchNode;
     CCTexture2D *texture;
@@ -53,6 +62,7 @@ public:
     float height;
     char objName[50];
     CCPoint velocity;
+    CarType carType;
 };
 
 #endif

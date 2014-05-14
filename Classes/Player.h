@@ -34,6 +34,11 @@ public:
         JMP_UP,
         JMP_DOWN
     };
+    enum ePlayerEffect {
+        SPEED_UP,
+        DUP
+    };
+
     GPlayer();
     ~GPlayer();
 
@@ -84,6 +89,9 @@ public:
         sprite->setPosition(ccp(designSize.width/2 , 0));
         Wait();
     }
+
+    //effect
+    void ProcessEffect(ePlayerEffect effect);
 };
 
 #endif

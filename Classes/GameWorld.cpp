@@ -249,7 +249,13 @@ void GameWorld::LaneAddCar(int i)
     float offset = getRandom(0, 50);
     float initX = data->laneDescriptions[i]->initPos.x;
 
-    car = GetObject( lanes[i], data->laneDescriptions[i]->carName );
+    //test special car
+    int rand = getRandom(0, 10);
+    if( rand > 8) {
+        car = GetObject( lanes[i], "speed_up_player" );
+    }else {
+        car = GetObject( lanes[i], data->laneDescriptions[i]->carName );
+    }
 
     if(initX < designSize.width/2) {
         initX -= offset;
@@ -319,6 +325,23 @@ static bool PointInSprite(CCPoint &p, CCSprite &sprite)
     return false;
 }
 
+void GameWorld::ProcessPlayerCollision(GObject *obj)
+{
+    switch( obj->carType ) {
+        case CAR_NORMAL:
+            player.resetPlayerPosition();
+            break;
+        case CAR_SPEED_UP_PLAYER:
+            player.ProcessEffect(GPlayer::SPEED_UP);
+            //remove this object & make it disappear
+            obj->state == OBJ_INACTIVE;
+            obj->SetObjectPosition( -designSize.width, 0);
+            break;
+        default:
+            break;
+    };
+}
+
 void GameWorld::CheckCollision()
 {
     int n;
@@ -327,7 +350,7 @@ void GameWorld::CheckCollision()
         for(int j=0; j<n; ++j) {
             if(lanes[i][j]->state == OBJ_ACTIVE) {
                 if( player.CheckObjectCollision(lanes[i][j]) ) {
-                    player.resetPlayerPosition();
+                    ProcessPlayerCollision(lanes[i][j]);
                 }
             }
         }
