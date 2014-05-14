@@ -77,6 +77,7 @@ protected:
     //vector<GObject*> lane2;
 
     //max 20 lanes
+    //To do: lanes done't need to contain ref to all cars running in it.
     vector< vector<GObject*> > lanes;
 //    vector<GObject*> lane[20];
 //    LaneDescriptor ld[20];
