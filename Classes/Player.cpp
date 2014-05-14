@@ -143,6 +143,10 @@ void GPlayer::JumpUp()
 
 void GPlayer::JumpDown()
 {
+    if (GetPlayerPosition().y <= 0) {
+        return;
+    }
+
     if( state != JMP_DOWN ) {
         sprite->stopAllActions();
         CCAnimate *aa = CCAnimate::create(animationJumpUp);

@@ -70,6 +70,9 @@ bool GameWorld::init()
 
 		CC_BREAK_IF(! CCLayerColor::initWithColor( ccc4(255,255,255,255) ) );
 		designSize = CCEGLView::sharedOpenGLView()->getDesignResolutionSize();
+
+		CCLog("w = %f , h = %f", designSize.width , designSize.height);
+
         data = GameController::getGameController()->getPlaySceneData(0);
 
 #if 0
@@ -166,15 +169,12 @@ void GameWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 }
 
 void GameWorld::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event)
-{    
+{
 	CCTouch* touch = (CCTouch*)( touches->anyObject() );
 	CCPoint location = touch->getLocation();
     if(location.y > designSize.height/2) {
         player.JumpUp();
     }else{
-        if (player.GetPlayerPosition().y <= 0) {
-            return;
-        }
         player.JumpDown();
     }
 }
