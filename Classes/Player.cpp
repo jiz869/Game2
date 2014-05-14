@@ -254,4 +254,15 @@ void GPlayer::Step(float dt)
     sprite->setPosition(pos);
 }
 
+void GPlayer::ProcessEffect(ePlayerEffect effect)
+{
+    switch(effect) {
+        case SPEED_UP:
+            speed +=3;
+            break;
+        default:
+            break;
+    };
+}
+
 
