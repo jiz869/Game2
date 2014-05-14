@@ -263,6 +263,11 @@ void GPlayer::ProcessEffect(ePlayerEffect effect)
     switch(effect) {
         case SPEED_UP:
             speed +=3;
+            if(velocity.y > 0) {
+            	velocity.y = speed;
+            }else if(velocity.y < 0) {
+            	velocity.y = -speed;
+            }
             break;
         default:
             break;
