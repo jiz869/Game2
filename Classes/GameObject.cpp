@@ -34,9 +34,6 @@ void GObject::Step(float dt)
     if(state == OBJ_ACTIVE) {
         batchNode->setPosition( pos + velocity );
     }
-    if(newpos.y < 50) {
-    	CCLog("car y %f < 50!!!", newpos.y);
-    }
 }
 
 //nc - number of columns

@@ -382,11 +382,13 @@ void GameWorld::ProcessPlayerCollision(GObject *obj)
             player.resetPlayerPosition();
             break;
         case CAR_SPEED_UP_PLAYER:
+        {
             player.ProcessEffect(GPlayer::SPEED_UP);
             //remove this object & make it disappear
-            obj->state == OBJ_INACTIVE;
-            obj->SetObjectPosition( -3*designSize.width, -3*designSize.height);
+            CCPoint pos = obj->Node()->getPosition();
+            obj->SetObjectPosition( pos.x, -3*designSize.height);
             break;
+        }
         default:
             break;
     };
