@@ -74,6 +74,7 @@ protected:
 
     //map data structure and functions
     vector< vector<GObject*> > lanes;
+    vector<GObject*> laneLastCar;
     PlaySceneData * data;
     void LaneAddCar(int i);
 

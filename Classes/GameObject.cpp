@@ -31,11 +31,11 @@ void GObject::Step(float dt)
 {
     CCPoint pos = batchNode->getPosition();
     CCPoint newpos = pos + velocity;
-    if(state != OBJ_INACTIVE) {
+    if(state == OBJ_ACTIVE) {
         batchNode->setPosition( pos + velocity );
-        if( newpos.x+width < 0 || newpos.y + height < 0 ) {
-            state = OBJ_INACTIVE;
-        }
+    }
+    if(newpos.y < 50) {
+    	CCLog("car y %f < 50!!!", newpos.y);
     }
 }
 
@@ -85,7 +85,7 @@ void GObject::LoadCar2()
     LoadTiles(1, 1, 89, 45, "cars.png", tiles, false);
 }
 
-void GObject::LoadSpeedUpCar() 
+void GObject::LoadSpeedUpCar()
 {
     vector<CCPoint> tiles;
     tiles.reserve(1);
@@ -117,8 +117,10 @@ void GObject::Load(char* name)
 
 bool GObject::InScreen(float screen_w, float screen_h)
 {
+	screen_w = screen_w*2;	//virtual size
+	screen_h = screen_h*2;
     CCPoint pos = batchNode->getPosition();
-    if( (pos.x + width < 0 || pos.y + height < 0) ||
+    if( (pos.x + width < -screen_w || pos.y + height < -screen_h) ||
         (pos.x > screen_w  || pos.y > screen_h ) )
     {
         return false;

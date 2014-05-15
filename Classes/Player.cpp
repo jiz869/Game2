@@ -25,11 +25,8 @@ GPlayer::~GPlayer()
     }
 }
 
-static bool PointInObject(CCPoint &p, GObject *obj)
+static bool PointInAABB(CCPoint &p, CCPoint pos, float w, float h)
 {
-    CCPoint pos;
-    float w, h;
-    obj->GetAABB(pos, w, h);
     float sx = pos.x;
     float sy = pos.y;
 
@@ -137,7 +134,7 @@ void GPlayer::JumpUp()
         sprite->runAction(rep);
         state = JMP_UP;
         velocity = ccp(0, speed);
-        CCLog("set player state JMP");
+        //CCLog("set player state JMP");
     }
 }
 
@@ -154,7 +151,7 @@ void GPlayer::JumpDown()
         sprite->runAction(rep);
         state = JMP_DOWN;
         velocity = ccp(0, -speed);
-        CCLog("set player state JMP_DOWN");
+        //CCLog("set player state JMP_DOWN");
     }
 }
 //customize to control precision
@@ -241,10 +238,28 @@ bool GPlayer::CheckObjectCollision(GObject *obj)
     CCPoint o3(pos.x+w-1, pos.y);
     CCPoint o4(pos.x+w-1, pos.y+h-1);
 
-    if( PointInObject(o1, obj) ||
-        PointInObject(o2, obj) ||
-        PointInObject(o3, obj) ||
-        PointInObject(o4, obj) ) {
+    //PointInAABB(CCPoint &p, CCPoint pos, float w, float h)
+    CCPoint objpos;
+    float objw, objh;
+    obj->GetAABB(objpos, objw, objh);
+
+    //player agains object
+    if( PointInAABB(o1, objpos, objw, objh) ||
+        PointInAABB(o2, objpos, objw, objh) ||
+        PointInAABB(o3, objpos, objw, objh) ||
+        PointInAABB(o4, objpos, objw, objh) ) {
+        return true;
+    }
+
+    //object against player
+    CCPoint p1(objpos.x, objpos.y);
+    CCPoint p2(objpos.x, objpos.y+objh-1);
+    CCPoint p3(objpos.x+objw-1, objpos.y);
+    CCPoint p4(objpos.x+objw-1, objpos.y+objh-1);
+    if( PointInAABB(p1, pos, w, h) ||
+        PointInAABB(p2, pos, w, h) ||
+        PointInAABB(p3, pos, w, h) ||
+        PointInAABB(p4, pos, w, h) ) {
         return true;
     }
 

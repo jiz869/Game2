@@ -133,7 +133,7 @@ void GameWorld::loadMenu(){
 	CCMenuItemImage * upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
 			"button_arrow_selected.png" , this , menu_selector(GameWorld::upHandler));
 	CCSize buttonSize = upButton->getContentSize();
-    
+
 	//upButton is on the left side
 	upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height/2));
 	upButton->setRotation(180);
@@ -152,9 +152,9 @@ void GameWorld::loadMenu(){
 	array->addObject(downButton);
 
 	MenuForArrowButton * menu = MenuForArrowButton::createWithArray(array);
-    
+
     menu->ignoreAnchorPointForPosition(false);
-    
+
 	menu->registerTouchendHandler(this , menu_selector(GameWorld::touchendHandler));
 
 	addChild(menu);
@@ -271,13 +271,14 @@ void GameWorld::RenewMap()
         CCPoint pos;
         float bw, bh;
 
-        sort(lanes[i].begin(), lanes[i].end(), CompareX2);
+        //sort(lanes[i].begin(), lanes[i].end(), CompareX2);
+        last_car = laneLastCar[i];
         if(data->laneDescriptions[i]->left2right) {
-            last_car = lanes[i].front();
+            //last_car = lanes[i].front();
             last_car->GetAABB(pos, bw ,bh);
             addNewCar = ( pos.x > data->laneDescriptions[i]->distance);
         }else{
-            last_car = lanes[i].back();
+            //last_car = lanes[i].back();
             last_car->GetAABB(pos, bw ,bh);
             float offset = getRandom(0, 80);
             addNewCar = (pos.x+bw < (designSize.width - (data->laneDescriptions[i]->distance+offset)));
@@ -309,6 +310,8 @@ void GameWorld::LaneAddCar(int i)
 
     car->SetObjectPosition( initX, data->laneDescriptions[i]->initPos.y );
     car->SetVelocity( data->laneDescriptions[i]->velocity );
+    laneLastCar[i] = car;
+    //CCLog("lane %d add car init pos.x %f pos.y %f", i, initX, data->laneDescriptions[i]->initPos.y);
 }
 
 //customize: level loading
@@ -347,6 +350,7 @@ void GameWorld::LoadMap(int level)
 //    }
 
     lanes.resize(data->laneNumber);
+    laneLastCar.resize(data->laneNumber);
 
     for(int i = 0 ; i < data->laneNumber ; i++){
     	LaneAddCar(i);
@@ -381,7 +385,7 @@ void GameWorld::ProcessPlayerCollision(GObject *obj)
             player.ProcessEffect(GPlayer::SPEED_UP);
             //remove this object & make it disappear
             obj->state == OBJ_INACTIVE;
-            obj->SetObjectPosition( -designSize.width, 0);
+            obj->SetObjectPosition( -3*designSize.width, -3*designSize.height);
             break;
         default:
             break;
