@@ -2,6 +2,7 @@
 #include "GameWorld.h"
 #include "GameOverScene.h"
 #include "SimpleAudioEngine.h"
+#include "MenuForArrowButton.h"
 
 using namespace CocosDenshion;
 using namespace cocos2d;
@@ -101,7 +102,7 @@ bool GameWorld::init()
 		this->addChild(pMenu, 2);
 #endif
 
-		this->setTouchEnabled(true);
+		//this->setTouchEnabled(true);
         this->schedule( schedule_selector(GameWorld::step) );
 
         //score label
@@ -117,6 +118,8 @@ bool GameWorld::init()
         //load level
         LoadMap(0);
 
+        loadMenu();
+
         bRet = true;
 
         // play background music
@@ -124,6 +127,49 @@ bool GameWorld::init()
 	} while (0);
 
 	return bRet;
+}
+
+void GameWorld::loadMenu(){
+	CCMenuItemImage * upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
+			"button_arrow_selected.png" , this , menu_selector(GameWorld::upHandler));
+	CCSize buttonSize = upButton->getContentSize();
+    
+	//upButton is on the left side
+	upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height/2));
+	upButton->setRotation(180);
+    upButton->setScale(0.6);
+
+	CCMenuItemImage * downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
+			"button_arrow_selected.png" , this , menu_selector(GameWorld::downHandler));
+	//downButton is on the right side
+	downButton->setPosition(ccp(designSize.width-buttonSize.width/2, buttonSize.height/2));
+    downButton->setScale(0.6);
+
+	CCArray * array = CCArray::createWithCapacity(2);
+
+	array->addObject(upButton);
+
+	array->addObject(downButton);
+
+	MenuForArrowButton * menu = MenuForArrowButton::createWithArray(array);
+    
+    menu->ignoreAnchorPointForPosition(false);
+    
+	menu->registerTouchendHandler(this , menu_selector(GameWorld::touchendHandler));
+
+	addChild(menu);
+}
+
+void GameWorld::upHandler(CCObject * sender){
+	player.JumpUp();
+}
+
+void GameWorld::downHandler(CCObject * sender){
+	player.JumpDown();
+}
+
+void GameWorld::touchendHandler(CCObject * sender){
+	player.Wait();
 }
 
 void GameWorld::menuCloseCallback(CCObject* pSender)

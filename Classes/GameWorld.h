@@ -84,6 +84,10 @@ protected:
     void CheckCollision();
     void ProcessPlayerCollision(GObject* obj);
     void GameOver();
+    void loadMenu();
+    void upHandler(CCObject * sender);
+    void downHandler(CCObject * sender);
+    void touchendHandler(CCObject * sender);
 };
 
 #endif
