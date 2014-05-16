@@ -24,6 +24,7 @@ typedef struct{
     float height;
     float distance;
     bool left2right;
+    float period;
 }LaneDescription;
 
 typedef struct{

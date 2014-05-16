@@ -7,50 +7,75 @@
 
 #include "GameObj.h"
 
+float GameObj::ptmRatio;
+b2World* GameObj::world;
+
 GameObj::GameObj() {
 	// TODO Auto-generated constructor stub
-
 }
 
 GameObj::~GameObj() {
 	// TODO Auto-generated destructor stub
 }
 
-B2Sprite * GameObj::load(const char * name , float ratio , b2BodyType type , b2World * world){
 
-	gameObj = B2Sprite::createWithSpriteFrameName(name);
-    
-    CCSize size = gameObj->getContentSize();
+B2Sprite * GameObj::load(const char * name , b2BodyType type , SpriteTag tag){
+	return load(name , type , NULL , tag);
+}
+
+B2Sprite * GameObj::load(b2BodyType type , const CCSize * size , SpriteTag tag){
+	return load(NULL , type , size , tag);
+}
+
+B2Sprite * GameObj::load(const char * name , b2BodyType type , const CCSize * size , SpriteTag tag){
+
+	if(name){
+		gameObj = B2Sprite::createWithSpriteFrameName(name);
+	}else{
+		gameObj = B2Sprite::create();
+	}
+
+	if(size == NULL) size = &gameObj->getContentSize();
 
     b2BodyDef bodyDef;
     bodyDef.type = type;
     b2Body * body = world->CreateBody(&bodyDef);
-    
+
     b2PolygonShape shape;
-    shape.SetAsBox(size.width/2/ratio, size.height/2/ratio);
-    
+    shape.SetAsBox(size->width/2/ptmRatio, size->height/2/ptmRatio);
+
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
     //birdfixtureDef.restitution = 0.7;
     body->CreateFixture(&fixtureDef);
-    
+
     gameObj->setB2Body(body);
-    gameObj->setPTMRatio(ratio);
-    
+    gameObj->setPTMRatio(ptmRatio);
+
     gameObj->setUserData(this);
+    gameObj->setTag(tag);
 
 	return gameObj;
 }
 
-void GameObj::setPosition(const b2Vec2 &position){
-    gameObj->getB2Body()->SetTransform(position, 0);
+void GameObj::setPosition(const CCPoint& position){
+    gameObj->getB2Body()->SetTransform(b2Vec2(position.x/ptmRatio , position.y/ptmRatio) , 0);
 }
 
-void GameObj::setVelocity(const b2Vec2 &velocity){
-    gameObj->getB2Body()->SetLinearVelocity(velocity);
+void GameObj::setVelocity(const CCPoint& velocity){
+    gameObj->getB2Body()->SetLinearVelocity(b2Vec2(velocity.x , velocity.y));
 }
 
 void GameObj::setSpeed(float speed){
     this->speed = speed;
+}
+
+const CCSize& GameObj::getSize(){
+	return gameObj->getContentSize();
+}
+
+void GameObj::setB2world(b2World * world , float ptmRatio){
+	GameObj::world = world;
+	GameObj::ptmRatio = ptmRatio;
 }
 

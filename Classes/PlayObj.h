@@ -17,14 +17,21 @@ class PlayerObj : public GameObj {
         JMP_UP,
         JMP_DOWN
     };
-    
+
 public:
-    void JumpUp();
-    void JumpDown();
-    void Wait();
-    
+    PlayerObj();
+    ~PlayerObj();
+    virtual B2Sprite * load(const char * name , b2BodyType type , SpriteTag tag);
+    void jumpUp();
+    void jumpDown();
+    void wait();
+    void reset();
+    void resetNextUpdate(bool shouldReset);
+    void step(float dt);
+
 protected:
     PlayerState movingState;
+    bool shouldReset;
 };
 
 #endif /* defined(__crossRoadMain__PlayObj__) */

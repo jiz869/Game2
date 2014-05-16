@@ -73,6 +73,7 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
             ld->distance = CCSTRING_FOR_KEY(ldDict, "distance")->floatValue();
             ld->velocity = ccp(CCSTRING_FOR_KEY(ldDict, "speed")->floatValue(), 0);
             ld->height = designSize.height * CCSTRING_FOR_KEY(ldDict, "ccp_y_percent")->floatValue();
+            ld->period = CCSTRING_FOR_KEY(ldDict, "period")->floatValue();
             if (CCSTRING_FOR_KEY(ldDict, "direction")->isEqual(CCString::create("left2right"))) {
                 ld->left2right = true;
                 ld->initPos = ccp(0, ld->height);
