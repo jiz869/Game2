@@ -17,6 +17,7 @@ typedef enum{
 	PLAYER = 0,
 	LOWER_BOUNDARY,
 	UPPER_BOUNDARY,
+	CAR,
 }SpriteTag;
 
 class GameObj {

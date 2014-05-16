@@ -52,7 +52,7 @@ void PlayerObj::jumpUp()
 //        sprite->runAction(rep);
         movingState = JMP_UP;
         setVelocity(ccp(0 , speed));
-        CCLog("set player state JMP %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
+        //CCLog("set player state JMP %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
     }
 }
 
@@ -69,7 +69,7 @@ void PlayerObj::jumpDown()
         //        sprite->runAction(rep);
         movingState = JMP_DOWN;
         setVelocity(ccp(0 , -speed));
-        CCLog("set player state JMP_DOWN %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
+        //CCLog("set player state JMP_DOWN %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
     }
 }
 

@@ -8,6 +8,7 @@
 
 #include "PlayScene.h"
 #include "MenuForArrowButton.h"
+#include "Lane.h"
 
 CCScene* PlayScene::scene()
 {
@@ -26,6 +27,8 @@ CCScene* PlayScene::scene()
 
 PlayScene::~PlayScene(){
     for (b2Body * body = world->GetBodyList(); body; body = body->GetNext()) {
+    	CCSprite *sprite = (CCSprite *)body->GetUserData();
+    	if(sprite) delete (GameObj *)(sprite->getUserData());
         world->DestroyBody(body);
     }
 
@@ -49,6 +52,10 @@ bool PlayScene::init(){
 
     CCLog("initPlayer");
 
+    initLanes();
+
+    CCLog("initLanes");
+
     initMenu();
 
     CCLog("initMenu");
@@ -69,16 +76,20 @@ void PlayScene::initMisc(){
 
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
 
-    batchNode = CCSpriteBatchNode::create("sprites.png");
-
-    addChild(batchNode);
-
     scheduleUpdate();
 }
 
 void PlayScene::initPlayer(){
 	player.setSpeed(data->playerSpeed);
-	batchNode->addChild(player.load("frog0.png" , b2_dynamicBody , PLAYER));
+	addChild(player.load("frog0.png" , b2_dynamicBody , PLAYER));
+}
+
+void PlayScene::initLanes(){
+	lanes.reserve(data->laneNumber);
+	for(int i = 0 ; i < data->laneNumber ; i++){
+		lanes[i] = Lane::creatWithDescription(data->laneDescriptions[i]);
+		addChild(lanes[i]);
+	}
 }
 
 void PlayScene::initMenu(){
@@ -145,12 +156,27 @@ void PlayScene::BeginContact(b2Contact *contact){
 			spriteB->getTag() == UPPER_BOUNDARY ||
 			spriteA->getTag() == UPPER_BOUNDARY){
 		player.resetNextUpdate(true);
-		CCLog("PlayScene::BeginContact2");
+	}
+
+	if(spriteA->getTag() == CAR || spriteB->getTag() == CAR){
+		player.resetNextUpdate(true);
 	}
 }
 
 void PlayScene::update(float dt){
 	world->Step(dt , 8 , 3);
 	player.step(dt);
+
+	for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()){
+		CCSprite *sprite = (CCSprite *)b->GetUserData();
+
+		if (sprite != NULL && sprite->getTag() == CAR) {
+			if(sprite->getPosition().x < 0 || sprite->getPosition().x > winSize.width){
+				delete (GameObj *)(sprite->getUserData());
+				sprite->removeFromParentAndCleanup(true);
+				world->DestroyBody(b);
+			}
+		}
+	}
 }
 

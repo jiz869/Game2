@@ -38,8 +38,6 @@ private:
 
     PlaySceneData * data;
 
-    CCSpriteBatchNode * batchNode;
-
     void initMisc();
 
     void initPlayer();
@@ -47,6 +45,8 @@ private:
     void initMenu();
 
     void initBoundary();
+
+    void initLanes();
 
     void upHandler(CCObject * sender);
     void downHandler(CCObject * sender);

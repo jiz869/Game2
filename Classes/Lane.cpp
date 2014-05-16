@@ -42,5 +42,22 @@ bool Lane::initWithDescription(LaneDescription * description){
 
 void Lane::addACar(float dt){
 
+	GameObj * carObj = new GameObj();
+
+	int carNumber = rand()%7;
+
+	CCString * carName = CCString::createWithFormat("car%d.png", carNumber);
+
+	B2Sprite * car = carObj->load(carName->getCString() , b2_kinematicBody , CAR);
+
+	if(description->left2right){
+		car->setFlipX(true);
+	}
+
+	carObj->setPosition(description->initPos);
+
+	carObj->setVelocity(description->velocity);
+
+	addChild(car);
 }
 
