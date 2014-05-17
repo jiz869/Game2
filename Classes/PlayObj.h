@@ -32,6 +32,7 @@ public:
 protected:
     PlayerState movingState;
     bool shouldReset;
+    CCString * waitFrameName;
 };
 
 #endif /* defined(__crossRoadMain__PlayObj__) */

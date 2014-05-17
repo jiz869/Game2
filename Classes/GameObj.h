@@ -11,6 +11,7 @@
 #include "cocos2d.h"
 #include "B2Sprite.h"
 #include "box2d/Box2D.h"
+#include "GameController.h"
 USING_NS_CC;
 
 typedef enum{
@@ -32,10 +33,13 @@ public:
     virtual void setSpeed(float speed);
     static void setB2world(b2World * world , float ptmRatio);
     virtual const CCSize& getSize();
+    virtual bool isBottom();
 
 protected:
 	B2Sprite * gameObj;
     float speed;
+    AnimationData * animationData;
+    
     static b2World * world;
     static float ptmRatio;
 };

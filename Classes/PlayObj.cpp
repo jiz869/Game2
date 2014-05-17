@@ -14,14 +14,16 @@ PlayerObj::PlayerObj() : shouldReset(false) , movingState(WAIT)
 }
 
 PlayerObj::~PlayerObj(){
-
+    waitFrameName->release();
 }
 
 B2Sprite * PlayerObj::load(const char * name , b2BodyType type , SpriteTag tag){
 
+    waitFrameName = CCString::createWithFormat("%s", name);
+    waitFrameName->retain();
 	GameObj::load(name , type , tag);
 	reset();
-	return gameObj;
+    return gameObj;
 }
 
 void PlayerObj::reset(){
@@ -34,11 +36,10 @@ void PlayerObj::reset(){
 void PlayerObj::wait()
 {
     gameObj->stopAllActions();
-//    CCAnimate *aa = CCAnimate::create(animationWait);
-//    CCRepeatForever *rep = CCRepeatForever::create(aa);
-//    sprite->runAction(rep);
     movingState = WAIT;
     setVelocity(ccp(0 , 0));
+    CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(waitFrameName->getCString());
+    gameObj->setDisplayFrame(frame);
     //CCLog("set player state WAIT");
 }
 
@@ -47,9 +48,8 @@ void PlayerObj::jumpUp()
 {
     if( movingState != JMP_UP ) {
         gameObj->stopAllActions();
-//        CCAnimate *aa = CCAnimate::create(animationJumpUp);
-//        CCRepeatForever *rep = CCRepeatForever::create(aa);
-//        sprite->runAction(rep);
+        CCAnimate * moveUp= CCAnimate::create(animationData->playerMoveAnim);
+        gameObj->runAction(CCRepeatForever::create(moveUp));
         movingState = JMP_UP;
         setVelocity(ccp(0 , speed));
         //CCLog("set player state JMP %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
@@ -58,15 +58,14 @@ void PlayerObj::jumpUp()
 
 void PlayerObj::jumpDown()
 {
-    if (gameObj->getPosition().y <= 0) {
+    if (isBottom()) {
         return;
     }
 
     if( movingState != JMP_DOWN ) {
         gameObj->stopAllActions();
-        //        CCAnimate *aa = CCAnimate::create(animationJumpUp);
-        //        CCRepeatForever *rep = CCRepeatForever::create(aa);
-        //        sprite->runAction(rep);
+        CCAnimate * moveUp= CCAnimate::create(animationData->playerMoveAnim);
+        gameObj->runAction(CCRepeatForever::create(moveUp));
         movingState = JMP_DOWN;
         setVelocity(ccp(0 , -speed));
         //CCLog("set player state JMP_DOWN %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);

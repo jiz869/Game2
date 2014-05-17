@@ -44,6 +44,10 @@ bool GameController::init(){
         return false;
     }
 
+    if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
+        return false;
+    }
+
     return true;
 }
 
@@ -89,7 +93,36 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
     return true;
 }
 
+bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
+    if (dataDict == NULL) {
+        return false;
+    }
+
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
+
+    CCArray * array = (CCArray *)dataDict->objectForKey("player_move_animation");
+
+    animationData.playerMoveAnim = initAnimation(array);
+    animationData.playerMoveAnim->setDelayPerUnit(0.05);
+
+    return true;
+}
+
+CCAnimation * GameController::initAnimation(cocos2d::CCArray *frameNameArray){
+    CCAnimation * anim = CCAnimation::create();
+    anim->retain();
+    for (int i = 0; i < frameNameArray->count(); i++) {
+        CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(CCSTRING_AT_INDEX(frameNameArray, i)->getCString());
+        anim->addSpriteFrame(frame);
+    }
+    return anim;
+}
+
 
 PlaySceneData * GameController::getPlaySceneData(int level){
     return playSceneDatas[level];
+}
+
+AnimationData * GameController::getAnimationData(){
+    return &animationData;
 }

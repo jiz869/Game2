@@ -12,6 +12,7 @@ b2World* GameObj::world;
 
 GameObj::GameObj() {
 	// TODO Auto-generated constructor stub
+    animationData = GameController::getGameController()->getAnimationData();
 }
 
 GameObj::~GameObj() {
@@ -77,5 +78,9 @@ const CCSize& GameObj::getSize(){
 void GameObj::setB2world(b2World * world , float ptmRatio){
 	GameObj::world = world;
 	GameObj::ptmRatio = ptmRatio;
+}
+
+bool GameObj::isBottom(){
+    return (gameObj->getPosition().y - gameObj->getContentSize().height / 2 < 1);
 }
 

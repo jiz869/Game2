@@ -74,8 +74,6 @@ void PlayScene::initMisc(){
 
     GameObj::setB2world(world , ptmRatio);
 
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
-
     scheduleUpdate();
 }
 
