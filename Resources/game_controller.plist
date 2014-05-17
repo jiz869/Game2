@@ -12,6 +12,8 @@
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
+					<key>period</key>
+					<string>2.8</string>
 					<key>distance</key>
 					<string>350</string>
 					<key>speed</key>
@@ -22,6 +24,8 @@
 					<string>left2right</string>
 				</dict>
 				<dict>
+					<key>period</key>
+					<string>3.5</string>
 					<key>distance</key>
 					<string>250</string>
 					<key>speed</key>
@@ -32,6 +36,8 @@
 					<string>right2left</string>
 				</dict>
 				<dict>
+					<key>period</key>
+					<string>2.2</string>
 					<key>distance</key>
 					<string>500</string>
 					<key>speed</key>
