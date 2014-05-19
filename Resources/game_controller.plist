@@ -4,10 +4,23 @@
 <dict>
 	<key>animation_data</key>
 	<dict>
+		<key>player_wait_image</key>
+		<string>player0.png</string>
 		<key>player_move_animation</key>
 		<array>
-			<string>frog1.png</string>
-			<string>frog2.png</string>
+			<string>player1.png</string>
+			<string>player2.png</string>
+			<string>player3.png</string>
+			<string>player4.png</string>
+			<string>player5.png</string>
+		</array>
+		<key>special_stop_animation</key>
+		<array>
+			<string>stop0.png</string>
+		</array>
+		<key>special_haste_animation</key>
+		<array>
+			<string>haste0.png</string>
 		</array>
 	</dict>
 	<key>play_scene_data</key>
@@ -20,8 +33,10 @@
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
+					<key>special_chance</key>
+					<string>0.3</string>
 					<key>period</key>
-					<string>2.8</string>
+					<string>2.2</string>
 					<key>distance</key>
 					<string>350</string>
 					<key>speed</key>
@@ -32,8 +47,10 @@
 					<string>left2right</string>
 				</dict>
 				<dict>
+					<key>special_chance</key>
+					<string>0.1</string>
 					<key>period</key>
-					<string>3.5</string>
+					<string>2.6</string>
 					<key>distance</key>
 					<string>250</string>
 					<key>speed</key>
@@ -44,8 +61,10 @@
 					<string>right2left</string>
 				</dict>
 				<dict>
+					<key>special_chance</key>
+					<string>0.2</string>
 					<key>period</key>
-					<string>2.2</string>
+					<string>1.2</string>
 					<key>distance</key>
 					<string>500</string>
 					<key>speed</key>
@@ -58,5 +77,24 @@
 			</array>
 		</dict>
 	</array>
+	<key>special_data</key>
+	<dict>
+		<key>stop</key>
+		<dict>
+			<key>duration</key>
+			<string>8</string>
+			<key>image_name</key>
+			<string>stop0.png</string>
+		</dict>
+		<key>haste</key>
+		<dict>
+			<key>duration</key>
+			<string>6</string>
+			<key>image_name</key>
+			<string>haste0.png</string>
+			<key>speed_increase</key>
+			<string>1.5</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

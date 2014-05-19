@@ -18,11 +18,16 @@ public:
 
 	static Lane * creatWithDescription(LaneDescription * description);
 	virtual bool initWithDescription(LaneDescription * description);
+    virtual void stopAtPosition(float x);
+    virtual void reStart();
 
 private:
 
 	LaneDescription * description;
 	void addACar(float dt);
+    bool isSpecialCar(float chance);
 };
+
+int getRandom(int low, int high);
 
 #endif /* LANE_H_ */

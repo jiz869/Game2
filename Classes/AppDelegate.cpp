@@ -48,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //CCScene *pScene = AnimationScene::scene();
 
     //CCScene *pScene =InputScene::scene();
-#if 0
+#if 1
     CCScene *pScene =PlayScene::scene();
 #else
     CCScene *pScene =GameWorld::scene();

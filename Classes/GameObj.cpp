@@ -48,6 +48,9 @@ B2Sprite * GameObj::load(const char * name , b2BodyType type , const CCSize * si
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
     //birdfixtureDef.restitution = 0.7;
+    if (tag == PLAYER) {
+        fixtureDef.isSensor = true;
+    }
     body->CreateFixture(&fixtureDef);
 
     gameObj->setB2Body(body);
@@ -63,12 +66,24 @@ void GameObj::setPosition(const CCPoint& position){
     gameObj->getB2Body()->SetTransform(b2Vec2(position.x/ptmRatio , position.y/ptmRatio) , 0);
 }
 
-void GameObj::setVelocity(const CCPoint& velocity){
-    gameObj->getB2Body()->SetLinearVelocity(b2Vec2(velocity.x , velocity.y));
+const CCPoint& GameObj::getPosition(){
+    return gameObj->getPosition();
+}
+
+void GameObj::setVelocity(b2Vec2 velocity){
+    gameObj->getB2Body()->SetLinearVelocity(velocity);
+}
+
+const b2Vec2 GameObj::getVelocity(){
+    return gameObj->getB2Body()->GetLinearVelocity();
 }
 
 void GameObj::setSpeed(float speed){
     this->speed = speed;
+}
+
+float GameObj::getSpeed(){
+    return speed;
 }
 
 const CCSize& GameObj::getSize(){

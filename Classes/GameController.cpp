@@ -7,6 +7,16 @@
 //
 
 #include "GameController.h"
+#include "SpecialObj.h"
+#include "PlayObj.h"
+
+void static stopBegin(PlayerObj * player, SpecialObj * specialObj);
+void static stopStep(PlayerObj * player, SpecialObj * specialObj);
+void static stopEnd(PlayerObj * player, SpecialObj * specialObj);
+
+void static hasteBegin(PlayerObj * player, SpecialObj * specialObj);
+void static hasteStep(PlayerObj * player, SpecialObj * specialObj);
+void static hasteEnd(PlayerObj * player, SpecialObj * specialObj);
 
 static GameController * controller;
 
@@ -47,6 +57,10 @@ bool GameController::init(){
     if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
         return false;
     }
+    
+    if(initSpecialData((CCDictionary *)dict->objectForKey("special_data")) == false){
+        return false;
+    }
 
     return true;
 }
@@ -78,6 +92,7 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
             ld->velocity = ccp(CCSTRING_FOR_KEY(ldDict, "speed")->floatValue(), 0);
             ld->height = designSize.height * CCSTRING_FOR_KEY(ldDict, "ccp_y_percent")->floatValue();
             ld->period = CCSTRING_FOR_KEY(ldDict, "period")->floatValue();
+            ld->specialChance = CCSTRING_FOR_KEY(ldDict, "special_chance")->floatValue();
             if (CCSTRING_FOR_KEY(ldDict, "direction")->isEqual(CCString::create("left2right"))) {
                 ld->left2right = true;
                 ld->initPos = ccp(0, ld->height);
@@ -99,11 +114,20 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     }
 
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
-
+    
+    animationData.playerWaitImageName = CCSTRING_FOR_KEY(dataDict, "player_wait_image");
+    
     CCArray * array = (CCArray *)dataDict->objectForKey("player_move_animation");
-
     animationData.playerMoveAnim = initAnimation(array);
     animationData.playerMoveAnim->setDelayPerUnit(0.05);
+
+    array = (CCArray *)dataDict->objectForKey("special_stop_animation");
+    animationData.specialStopAnim = initAnimation(array);
+    animationData.specialStopAnim->setDelayPerUnit(0.05);
+    
+    array = (CCArray *)dataDict->objectForKey("special_haste_animation");
+    animationData.specialHasteAnim = initAnimation(array);
+    animationData.specialHasteAnim->setDelayPerUnit(0.05);
 
     return true;
 }
@@ -118,6 +142,56 @@ CCAnimation * GameController::initAnimation(cocos2d::CCArray *frameNameArray){
     return anim;
 }
 
+bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
+    
+    if (dataDict == NULL) {
+        return false;
+    }
+    
+    specialDatas.reserve(dataDict->count());
+    
+    CCDictionary * dict = (CCDictionary *)dataDict->objectForKey("stop");
+    specialDatas[STOP] = new SpecialData;
+    specialDatas[STOP]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[STOP]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[STOP]->begin = &stopBegin;
+    specialDatas[STOP]->step = &stopStep;
+    specialDatas[STOP]->end = &stopEnd;
+    
+    dict = (CCDictionary *)dataDict->objectForKey("haste");
+    specialDatas[HASTE] = new SpecialData;
+    specialDatas[HASTE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[HASTE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[HASTE]->userData1 = CCSTRING_FOR_KEY(dict, "speed_increase")->floatValue();
+    specialDatas[HASTE]->begin = &hasteBegin;
+    specialDatas[HASTE]->step = &hasteStep;
+    specialDatas[HASTE]->end = &hasteEnd;
+    
+    return true;
+}
+
+void static stopBegin(PlayerObj * player, SpecialObj * specialObj){
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    
+    specialObj->lane->stopAtPosition(size.width/2);
+}
+void static stopStep(PlayerObj * player, SpecialObj * specialObj){
+    
+}
+void static stopEnd(PlayerObj * player, SpecialObj * specialObj){
+    specialObj->lane->reStart();
+}
+
+void static hasteBegin(PlayerObj * player, SpecialObj * specialObj){
+    player->speedUp(specialObj->getSpecialData()->userData1);
+}
+void static hasteStep(PlayerObj * player, SpecialObj * specialObj){
+    
+}
+
+void static hasteEnd(PlayerObj * player, SpecialObj * specialObj){
+    player->slowDown(specialObj->getSpecialData()->userData1);
+}
 
 PlaySceneData * GameController::getPlaySceneData(int level){
     return playSceneDatas[level];
@@ -125,4 +199,8 @@ PlaySceneData * GameController::getPlaySceneData(int level){
 
 AnimationData * GameController::getAnimationData(){
     return &animationData;
+}
+
+SpecialData * GameController::getSpecialData(int speciaId){
+    return specialDatas[speciaId];
 }

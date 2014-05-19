@@ -51,11 +51,15 @@ private:
     void upHandler(CCObject * sender);
     void downHandler(CCObject * sender);
     void touchendHandler(CCObject * sender);
+    
+    void processContact(float dt);
 
     PlayerObj player;
     GameObj lowerBoundary , upperBoundary;
 
     vector<Lane *> lanes;
+    
+    CCSprite * contact;
 };
 
 #endif /* defined(__crossRoadMain__PlayScene__) */

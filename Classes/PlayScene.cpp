@@ -25,6 +25,7 @@ CCScene* PlayScene::scene()
     return scene;
 }
 
+
 PlayScene::~PlayScene(){
     for (b2Body * body = world->GetBodyList(); body; body = body->GetNext()) {
     	CCSprite *sprite = (CCSprite *)body->GetUserData();
@@ -48,10 +49,6 @@ bool PlayScene::init(){
 
     CCLog("initBoundary");
 
-    initPlayer();
-
-    CCLog("initPlayer");
-
     initLanes();
 
     CCLog("initLanes");
@@ -59,6 +56,10 @@ bool PlayScene::init(){
     initMenu();
 
     CCLog("initMenu");
+    
+    initPlayer();
+    
+    CCLog("initPlayer");
 
     return true;
 }
@@ -79,7 +80,7 @@ void PlayScene::initMisc(){
 
 void PlayScene::initPlayer(){
 	player.setSpeed(data->playerSpeed);
-	addChild(player.load("frog0.png" , b2_dynamicBody , PLAYER));
+	addChild(player.load());
 }
 
 void PlayScene::initLanes(){
@@ -146,23 +147,31 @@ void PlayScene::touchendHandler(CCObject * sender){
 }
 
 void PlayScene::BeginContact(b2Contact *contact){
-	CCSprite * spriteA = (CCSprite *)contact->GetFixtureA()->GetBody()->GetUserData();
-	CCSprite * spriteB = (CCSprite *)contact->GetFixtureB()->GetBody()->GetUserData();
+	CCSprite * contactA = (CCSprite *)contact->GetFixtureA()->GetBody()->GetUserData();
+	CCSprite * contactB = (CCSprite *)contact->GetFixtureB()->GetBody()->GetUserData();
+    
+    if (contactA->getTag() == PLAYER) {
+        this->contact = contactB;
+        scheduleOnce(schedule_selector(PlayScene::processContact), 0);
+        
+        return;
+    }
+    
+    if (contactB->getTag() == PLAYER) {
+        this->contact = contactA;
+        scheduleOnce(schedule_selector(PlayScene::processContact), 0);
+    }
+    
+}
 
-	if(spriteA->getTag() == LOWER_BOUNDARY ||
-			spriteB->getTag() == LOWER_BOUNDARY ||
-			spriteB->getTag() == UPPER_BOUNDARY ||
-			spriteA->getTag() == UPPER_BOUNDARY){
-		player.resetNextUpdate(true);
-	}
-
-	if(spriteA->getTag() == CAR || spriteB->getTag() == CAR){
-		player.resetNextUpdate(true);
-	}
+void PlayScene::processContact(float dt)
+{
+    player.processContact(contact);
 }
 
 void PlayScene::update(float dt){
 	world->Step(dt , 8 , 3);
+
 	player.step(dt);
 
 	for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()){

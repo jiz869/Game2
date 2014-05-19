@@ -6,6 +6,16 @@
  */
 
 #include "Lane.h"
+#include "CarObj.h"
+#include "SpecialObj.h"
+
+int getRandom(int low, int high)
+{
+	if ( low - high < 0x10000L )
+        return low + ( ( random() >> 8 ) % ( high + 1 - low ) );
+    
+	return low + ( random() % ( high + 1 - low ) );
+}
 
 Lane::Lane() {
 	// TODO Auto-generated constructor stub
@@ -41,23 +51,67 @@ bool Lane::initWithDescription(LaneDescription * description){
 }
 
 void Lane::addACar(float dt){
+    
+    if (isSpecialCar(description->specialChance)) {
+        SpecialObj * speciaObj = new SpecialObj();
+        speciaObj->load(description->left2right, description->initPos, description->velocity.x, this);
+        return;
+    }
 
-	GameObj * carObj = new GameObj();
+	CarObj * car = new CarObj();
+    
+    car->load(description->left2right, description->initPos, description->velocity.x, this);
+}
 
-	int carNumber = rand()%7;
+bool Lane::isSpecialCar(float chance){
+    
+    int value = chance * 100;
+    
+    if (getRandom(0, 100) < value) {
+        return true;
+    }
+    
+    return false;
+}
 
-	CCString * carName = CCString::createWithFormat("car%d.png", carNumber);
+void Lane::stopAtPosition(float x){
+    CCArray * children = getChildren();
+    
+    B2Sprite * car;
+    
+    CCObject * pObject;
+    
+    CCARRAY_FOREACH(children, pObject){
+        car = (B2Sprite *)pObject;
+        
+        if (car) {
+            if (description->left2right && car->getPosition().x < x - 150) {
+                car->getB2Body()->SetLinearVelocity(b2Vec2(0 , 0));
+            }else if (!description->left2right && car->getPosition().x > x + 150){
+                car->getB2Body()->SetLinearVelocity(b2Vec2(0 , 0));
+            }
+        }
+    }
+    
+    unschedule(schedule_selector(Lane::addACar));
+}
 
-	B2Sprite * car = carObj->load(carName->getCString() , b2_kinematicBody , CAR);
-
-	if(description->left2right){
-		car->setFlipX(true);
-	}
-
-	carObj->setPosition(description->initPos);
-
-	carObj->setVelocity(description->velocity);
-
-	addChild(car);
+void Lane::reStart(){
+    CCArray * children = getChildren();
+    
+    B2Sprite * car;
+    
+    CCObject * pObject;
+    
+    CCARRAY_FOREACH(children, pObject){
+        car = (B2Sprite *)pObject;
+        
+        if (car) {
+            GameObj * gameObj = (GameObj *)car->getUserData();
+            car->getB2Body()->SetLinearVelocity(b2Vec2(gameObj->getSpeed() , 0));
+        }
+    }
+    
+    schedule(schedule_selector(Lane::addACar) , description->period);
 }
 

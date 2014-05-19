@@ -15,8 +15,19 @@
 USING_NS_CC;
 using namespace std;
 
+typedef enum{
+    STOP = 0,
+    HASTE,
+    SPECIAL_NUM,
+}SpecialID;
+
+class PlayerObj;
+class SpecialObj;
+
 #define CCSTRING_FOR_KEY(dict , key)  ((CCString *)(dict)->objectForKey(key))
 #define CCSTRING_AT_INDEX(array , index)  ((CCString *)(array)->objectAtIndex(index))
+
+typedef void (* SpectialFunc)(PlayerObj * , SpecialObj *);
 
 typedef struct{
     char carName[50];
@@ -26,6 +37,7 @@ typedef struct{
     float distance;
     bool left2right;
     float period;
+    float specialChance;
 }LaneDescription;
 
 typedef struct{
@@ -35,8 +47,22 @@ typedef struct{
 }PlaySceneData;
 
 typedef struct{
+    CCString * playerWaitImageName;
     CCAnimation * playerMoveAnim;
+    CCAnimation * specialStopAnim;
+    CCAnimation * specialHasteAnim;
 }AnimationData;
+
+typedef struct{
+    float duration;
+    CCString * imageName;
+    float userData1;
+    float userData2;
+    float userData3;
+    SpectialFunc begin;
+    SpectialFunc step;
+    SpectialFunc end;
+}SpecialData;
 
 class GameController {
 
@@ -44,6 +70,7 @@ public:
     static GameController * getGameController();
     PlaySceneData * getPlaySceneData(int level);
     AnimationData * getAnimationData();
+    SpecialData * getSpecialData(int speciaId);
 
 private:
     GameController();
@@ -54,7 +81,9 @@ private:
     AnimationData animationData;
     bool initPlaySceneData(CCArray * dataArray);
     bool initAnimationData(CCDictionary * dataDict);
+    bool initSpecialData(CCDictionary * dataDict);
     CCAnimation * initAnimation(CCArray * frameNameArray);
+    vector<SpecialData *> specialDatas;
     CCSize designSize;
 };
 

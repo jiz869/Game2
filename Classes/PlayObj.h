@@ -10,29 +10,40 @@
 #define __crossRoadMain__PlayObj__
 
 #include "GameObj.h"
+#include "SpecialObj.h"
+
+enum PlayerState {
+    WAIT,
+    JMP_UP,
+    JMP_DOWN
+};
+
+#define MAX_SPECIAL_NUM 2
 
 class PlayerObj : public GameObj {
-    enum PlayerState {
-        WAIT,
-        JMP_UP,
-        JMP_DOWN
-    };
 
 public:
     PlayerObj();
     ~PlayerObj();
-    virtual B2Sprite * load(const char * name , b2BodyType type , SpriteTag tag);
+    virtual B2Sprite * load();
     void jumpUp();
     void jumpDown();
     void wait();
     void reset();
-    void resetNextUpdate(bool shouldReset);
     void step(float dt);
+    void processContact(CCSprite * contact);
+    bool hasSpecial(SpecialObj * specialObj);
+    bool enoughSpecials();
+    void contactWithSpecial(SpecialObj * specialObj);
+    void endWithSpecial(SpecialObj * specialObj);
+    void removeSpecial(SpecialObj * specialObj);
+    void speedUp(float delta);
+    void slowDown(float delta);
+    void tagPlayer(SpecialObj * specialObj);
 
 protected:
     PlayerState movingState;
-    bool shouldReset;
-    CCString * waitFrameName;
+    vector<SpecialObj *> specials;
 };
 
 #endif /* defined(__crossRoadMain__PlayObj__) */
