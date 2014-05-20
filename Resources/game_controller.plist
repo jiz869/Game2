@@ -8,18 +8,18 @@
 		<string>player0.png</string>
 		<key>player_move_animation</key>
 		<array>
+			<string>player0.png</string>
 			<string>player1.png</string>
 			<string>player2.png</string>
-			<string>player3.png</string>
-			<string>player4.png</string>
-			<string>player5.png</string>
 		</array>
 		<key>special_stop_animation</key>
 		<array>
 			<string>stop0.png</string>
+			<string>stop1.png</string>
 		</array>
 		<key>special_haste_animation</key>
 		<array>
+			<string>haste1.png</string>
 			<string>haste0.png</string>
 		</array>
 	</dict>
@@ -27,14 +27,14 @@
 	<array>
 		<dict>
 			<key>lane_number</key>
-			<string>6</string>
+			<string>7</string>
 			<key>player_init_speed</key>
-			<string>3</string>
+			<string>2</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
 					<key>special_chance</key>
-					<string>0.1</string>
+					<string>0.05</string>
 					<key>period</key>
 					<string>2.2</string>
 					<key>distance</key>
@@ -42,13 +42,22 @@
 					<key>speed</key>
 					<string>3.5</string>
 					<key>ccp_y_percent</key>
-					<string>0.13</string>
+					<string>0.15</string>
 					<key>direction</key>
 					<string>left2right</string>
+					<key>road_image</key>
+					<string>road.png</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.1</string>
+					<string>0.08</string>
 					<key>period</key>
 					<string>2.6</string>
 					<key>distance</key>
@@ -56,41 +65,68 @@
 					<key>speed</key>
 					<string>-2.2</string>
 					<key>ccp_y_percent</key>
-					<string>0.3</string>
+					<string>0.25</string>
 					<key>direction</key>
 					<string>right2left</string>
+					<key>road_image</key>
+					<string>road.png</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.1</string>
+					<string>0.06</string>
 					<key>period</key>
-					<string>1.2</string>
+					<string>3</string>
 					<key>distance</key>
 					<string>500</string>
 					<key>speed</key>
-					<string>4.3</string>
+					<string>3.2</string>
 					<key>ccp_y_percent</key>
-					<string>0.47</string>
+					<string>0.35</string>
 					<key>direction</key>
 					<string>left2right</string>
+					<key>road_image</key>
+					<string>road.png</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
 				</dict>
 				<dict>
 					<key>special_chance</key>
 					<string>0.1</string>
 					<key>period</key>
-					<string>1.8</string>
+					<string>2.8</string>
 					<key>distance</key>
 					<string>500</string>
 					<key>speed</key>
-					<string>-3.8</string>
+					<string>-2.8</string>
 					<key>ccp_y_percent</key>
-					<string>0.63</string>
+					<string>0.5</string>
 					<key>direction</key>
 					<string>right2left</string>
+					<key>road_image</key>
+					<string>road.png</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.1</string>
+					<string>0.04</string>
 					<key>period</key>
 					<string>2.5</string>
 					<key>distance</key>
@@ -98,13 +134,22 @@
 					<key>speed</key>
 					<string>5</string>
 					<key>ccp_y_percent</key>
-					<string>0.78</string>
+					<string>0.6</string>
 					<key>direction</key>
 					<string>left2right</string>
+					<key>road_image</key>
+					<string>road.png</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.15</string>
+					<string>0.06</string>
 					<key>period</key>
 					<string>2.2</string>
 					<key>distance</key>
@@ -112,9 +157,41 @@
 					<key>speed</key>
 					<string>-3.3</string>
 					<key>ccp_y_percent</key>
-					<string>0.9</string>
+					<string>0.7</string>
 					<key>direction</key>
 					<string>right2left</string>
+					<key>road_image</key>
+					<string>road.png</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.05</string>
+					<key>period</key>
+					<string>2.8</string>
+					<key>distance</key>
+					<string>500</string>
+					<key>speed</key>
+					<string>2.8</string>
+					<key>ccp_y_percent</key>
+					<string>0.8</string>
+					<key>direction</key>
+					<string>left2right</string>
+					<key>road_image</key>
+					<string>road.png</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
 				</dict>
 			</array>
 		</dict>

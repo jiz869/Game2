@@ -15,10 +15,10 @@ class CarObj: public GameObj {
 public:
 	CarObj();
 	virtual ~CarObj();
-    virtual B2Sprite * load(bool left2right , CCPoint initPos , float speed , Lane * lane);
+    virtual B2Sprite * load(bool left2right , CCPoint initPos , float speed , Lane * lane , vector<int> * carNumbers);
     virtual B2Sprite * load(const char * name , bool left2right , CCPoint initPos , float speed , Lane * lane , SpriteTag tag);
     Lane * lane;
-    
+
 protected:
 };
 

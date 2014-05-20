@@ -43,7 +43,7 @@ B2Sprite * GameObj::load(const char * name , b2BodyType type , const CCSize * si
     b2Body * body = world->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-    shape.SetAsBox(size->width/2/ptmRatio, size->height/2/ptmRatio);
+    shape.SetAsBox(size->width/2/ptmRatio * 0.9, size->height/2/ptmRatio * 0.9);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;

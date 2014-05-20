@@ -38,6 +38,8 @@ typedef struct{
     bool left2right;
     float period;
     float specialChance;
+    CCString * roadImage;
+    vector<int> carNumbers;
 }LaneDescription;
 
 typedef struct{
@@ -62,6 +64,7 @@ typedef struct{
     SpectialFunc begin;
     SpectialFunc step;
     SpectialFunc end;
+    CCAnimation * animation;
 }SpecialData;
 
 class GameController {

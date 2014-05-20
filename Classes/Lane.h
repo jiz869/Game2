@@ -26,6 +26,7 @@ private:
 	LaneDescription * description;
 	void addACar(float dt);
     bool isSpecialCar(float chance);
+    void addRoad();
 };
 
 int getRandom(int low, int high);

@@ -58,7 +58,7 @@ bool GameController::init(){
     if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
         return false;
     }
-    
+
     if(initSpecialData((CCDictionary *)dict->objectForKey("special_data")) == false){
         return false;
     }
@@ -94,12 +94,19 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
             ld->height = designSize.height * CCSTRING_FOR_KEY(ldDict, "ccp_y_percent")->floatValue();
             ld->period = CCSTRING_FOR_KEY(ldDict, "period")->floatValue();
             ld->specialChance = CCSTRING_FOR_KEY(ldDict, "special_chance")->floatValue();
+            ld->roadImage = CCSTRING_FOR_KEY(ldDict, "road_image");
             if (CCSTRING_FOR_KEY(ldDict, "direction")->isEqual(CCString::create("left2right"))) {
                 ld->left2right = true;
                 ld->initPos = ccp(0, ld->height);
             }else{
                 ld->left2right = false;
                 ld->initPos = ccp(designSize.width, ld->height);
+            }
+
+            CCArray * carNumbers = (CCArray *)ldDict->objectForKey("car_numbers");
+            ld->carNumbers.reserve(carNumbers->count());
+            for(int k = 0 ; k < carNumbers->count() ; k++ ){
+            	ld->carNumbers.push_back(CCSTRING_AT_INDEX(carNumbers , k)->intValue());
             }
             data->laneDescriptions.push_back(ld);
         }
@@ -115,20 +122,20 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     }
 
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
-    
+
     animationData.playerWaitImageName = CCSTRING_FOR_KEY(dataDict, "player_wait_image");
-    
+
     CCArray * array = (CCArray *)dataDict->objectForKey("player_move_animation");
     animationData.playerMoveAnim = initAnimation(array);
     animationData.playerMoveAnim->setDelayPerUnit(0.05);
 
     array = (CCArray *)dataDict->objectForKey("special_stop_animation");
     animationData.specialStopAnim = initAnimation(array);
-    animationData.specialStopAnim->setDelayPerUnit(0.05);
-    
+    animationData.specialStopAnim->setDelayPerUnit(0.3);
+
     array = (CCArray *)dataDict->objectForKey("special_haste_animation");
     animationData.specialHasteAnim = initAnimation(array);
-    animationData.specialHasteAnim->setDelayPerUnit(0.05);
+    animationData.specialHasteAnim->setDelayPerUnit(0.3);
 
     return true;
 }
@@ -144,13 +151,13 @@ CCAnimation * GameController::initAnimation(cocos2d::CCArray *frameNameArray){
 }
 
 bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
-    
+
     if (dataDict == NULL) {
         return false;
     }
-    
+
     specialDatas.reserve(dataDict->count());
-    
+
     CCDictionary * dict = (CCDictionary *)dataDict->objectForKey("stop");
     specialDatas[STOP] = new SpecialData;
     specialDatas[STOP]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
@@ -158,7 +165,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[STOP]->begin = &stopBegin;
     specialDatas[STOP]->step = &stopStep;
     specialDatas[STOP]->end = &stopEnd;
-    
+    specialDatas[STOP]->animation = animationData.specialStopAnim;
+
     dict = (CCDictionary *)dataDict->objectForKey("haste");
     specialDatas[HASTE] = new SpecialData;
     specialDatas[HASTE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
@@ -167,7 +175,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[HASTE]->begin = &hasteBegin;
     specialDatas[HASTE]->step = &hasteStep;
     specialDatas[HASTE]->end = &hasteEnd;
-    
+    specialDatas[HASTE]->animation = animationData.specialHasteAnim;
+
     return true;
 }
 
@@ -186,7 +195,7 @@ void static hasteBegin(PlayerObj * player, SpecialObj * specialObj){
     player->speedUp(specialObj->getSpecialData()->userData1);
 }
 void static hasteStep(PlayerObj * player, SpecialObj * specialObj){
-    
+
 }
 
 void static hasteEnd(PlayerObj * player, SpecialObj * specialObj){
