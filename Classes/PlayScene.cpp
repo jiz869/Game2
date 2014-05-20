@@ -86,7 +86,7 @@ void PlayScene::initPlayer(){
 void PlayScene::initLanes(){
 	lanes.reserve(data->laneNumber);
 	for(int i = 0 ; i < data->laneNumber ; i++){
-		lanes[i] = Lane::creatWithDescription(data->laneDescriptions[i]);
+		lanes.push_back(Lane::creatWithDescription(data->laneDescriptions[i]));
 		addChild(lanes[i]);
 	}
 }
@@ -185,5 +185,17 @@ void PlayScene::update(float dt){
 			}
 		}
 	}
+}
+
+void PlayScene::stopAllLanes(){
+    for (int i = 0; i < lanes.size(); i++) {
+        lanes[i]->stopAtPosition(winSize.width/2);
+    }
+}
+
+void PlayScene::restartAllLanes(){
+    for (int i = 0; i < lanes.size(); i++) {
+            lanes[i]->reStart();
+    }
 }
 

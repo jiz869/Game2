@@ -82,14 +82,14 @@
 		<key>stop</key>
 		<dict>
 			<key>duration</key>
-			<string>8</string>
+			<string>4</string>
 			<key>image_name</key>
 			<string>stop0.png</string>
 		</dict>
 		<key>haste</key>
 		<dict>
 			<key>duration</key>
-			<string>6</string>
+			<string>7</string>
 			<key>image_name</key>
 			<string>haste0.png</string>
 			<key>speed_increase</key>

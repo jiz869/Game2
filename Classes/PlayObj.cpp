@@ -109,7 +109,7 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
     
     if (contact->getTag() == SPECIAL) {
         SpecialObj * specialObj = (SpecialObj *)contact->getUserData();
-        contactWithSpecial(specialObj);
+        beginWithSpecial(specialObj);
         
         return;
     }
@@ -121,7 +121,7 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
     
 }
 
-void PlayerObj::contactWithSpecial(SpecialObj * specialObj){
+void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
     
     if (hasSpecial(specialObj) || enoughSpecials()) {
         return;
@@ -136,16 +136,14 @@ void PlayerObj::contactWithSpecial(SpecialObj * specialObj){
 
 void PlayerObj::tagPlayer(SpecialObj *specialObj){
     CCSprite * tag = CCSprite::createWithSpriteFrameName(specialObj->getSpecialData()->imageName->getCString());
+    
+    CCSize tagSize = tag->getContentSize();
+    CCSize playerSize = gameObj->getContentSize();
+    
     gameObj->addChild(tag);
-    tag->setAnchorPoint(ccp(0 , 0));
-    tag->setFlipX(true);
     
     //Todo: need a better way and animation to tag player
-    if (specials.size() == 1) {
-        tag->setPosition(ccp(tag->getContentSize().width , gameObj->getContentSize().height/2));
-    }else if (specials.size() == 2) {
-        tag->setPosition(ccp(tag->getContentSize().width , gameObj->getContentSize().height/2 - tag->getContentSize().height*0.8));
-    }
+    tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
     
     tag->runAction(CCSequence::createWithTwoActions(CCScaleTo::create(0.2, 1.5), CCScaleTo::create(0.2, 0.8)));
     tag->setTag(specialObj->getSpecialId());
@@ -177,4 +175,20 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
             specials.erase(specials.begin() + i);
         }
     }
+    
+    CCSize tagSize;
+    CCSize playerSize = gameObj->getContentSize();
+    
+    for (int i = 0; i < specials.size(); i++) {
+        CCSprite * tag = (CCSprite *)gameObj->getChildByTag(specials[i]->getSpecialId());
+        
+        tagSize = tag->getContentSize();
+        
+        tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
+    }
+    
+}
+
+CCNode * PlayerObj::getParent(){
+    return gameObj->getParent();
 }

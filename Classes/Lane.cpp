@@ -85,9 +85,9 @@ void Lane::stopAtPosition(float x){
         car = (B2Sprite *)pObject;
         
         if (car) {
-            if (description->left2right && car->getPosition().x < x - 150) {
+            if (description->left2right && car->getPosition().x < x - car->getContentSize().width) {
                 car->getB2Body()->SetLinearVelocity(b2Vec2(0 , 0));
-            }else if (!description->left2right && car->getPosition().x > x + 150){
+            }else if (!description->left2right && car->getPosition().x > x + car->getContentSize().width){
                 car->getB2Body()->SetLinearVelocity(b2Vec2(0 , 0));
             }
         }

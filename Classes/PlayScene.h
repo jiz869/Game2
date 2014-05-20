@@ -27,6 +27,10 @@ public:
     virtual void update(float dt);
 
     virtual void BeginContact(b2Contact* contact);
+    
+    virtual void stopAllLanes();
+    
+    virtual void restartAllLanes();
 
 private:
 

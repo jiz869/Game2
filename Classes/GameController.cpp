@@ -9,6 +9,7 @@
 #include "GameController.h"
 #include "SpecialObj.h"
 #include "PlayObj.h"
+#include "PlayScene.h"
 
 void static stopBegin(PlayerObj * player, SpecialObj * specialObj);
 void static stopStep(PlayerObj * player, SpecialObj * specialObj);
@@ -171,15 +172,14 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
 }
 
 void static stopBegin(PlayerObj * player, SpecialObj * specialObj){
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    
-    specialObj->lane->stopAtPosition(size.width/2);
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->stopAllLanes();
 }
 void static stopStep(PlayerObj * player, SpecialObj * specialObj){
-    
 }
 void static stopEnd(PlayerObj * player, SpecialObj * specialObj){
-    specialObj->lane->reStart();
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->restartAllLanes();
 }
 
 void static hasteBegin(PlayerObj * player, SpecialObj * specialObj){

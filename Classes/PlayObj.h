@@ -34,12 +34,13 @@ public:
     void processContact(CCSprite * contact);
     bool hasSpecial(SpecialObj * specialObj);
     bool enoughSpecials();
-    void contactWithSpecial(SpecialObj * specialObj);
+    void beginWithSpecial(SpecialObj * specialObj);
     void endWithSpecial(SpecialObj * specialObj);
     void removeSpecial(SpecialObj * specialObj);
     void speedUp(float delta);
     void slowDown(float delta);
     void tagPlayer(SpecialObj * specialObj);
+    CCNode * getParent();
 
 protected:
     PlayerState movingState;
