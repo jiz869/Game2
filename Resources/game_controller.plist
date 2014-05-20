@@ -27,14 +27,14 @@
 	<array>
 		<dict>
 			<key>lane_number</key>
-			<string>3</string>
+			<string>6</string>
 			<key>player_init_speed</key>
 			<string>3</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
 					<key>special_chance</key>
-					<string>0.3</string>
+					<string>0.1</string>
 					<key>period</key>
 					<string>2.2</string>
 					<key>distance</key>
@@ -42,7 +42,7 @@
 					<key>speed</key>
 					<string>3.5</string>
 					<key>ccp_y_percent</key>
-					<string>0.2</string>
+					<string>0.13</string>
 					<key>direction</key>
 					<string>left2right</string>
 				</dict>
@@ -56,13 +56,13 @@
 					<key>speed</key>
 					<string>-2.2</string>
 					<key>ccp_y_percent</key>
-					<string>0.4</string>
+					<string>0.3</string>
 					<key>direction</key>
 					<string>right2left</string>
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.2</string>
+					<string>0.1</string>
 					<key>period</key>
 					<string>1.2</string>
 					<key>distance</key>
@@ -70,9 +70,51 @@
 					<key>speed</key>
 					<string>4.3</string>
 					<key>ccp_y_percent</key>
-					<string>0.7</string>
+					<string>0.47</string>
 					<key>direction</key>
 					<string>left2right</string>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.1</string>
+					<key>period</key>
+					<string>1.8</string>
+					<key>distance</key>
+					<string>500</string>
+					<key>speed</key>
+					<string>-3.8</string>
+					<key>ccp_y_percent</key>
+					<string>0.63</string>
+					<key>direction</key>
+					<string>right2left</string>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.1</string>
+					<key>period</key>
+					<string>2.5</string>
+					<key>distance</key>
+					<string>500</string>
+					<key>speed</key>
+					<string>5</string>
+					<key>ccp_y_percent</key>
+					<string>0.78</string>
+					<key>direction</key>
+					<string>left2right</string>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.15</string>
+					<key>period</key>
+					<string>2.2</string>
+					<key>distance</key>
+					<string>500</string>
+					<key>speed</key>
+					<string>-3.3</string>
+					<key>ccp_y_percent</key>
+					<string>0.9</string>
+					<key>direction</key>
+					<string>right2left</string>
 				</dict>
 			</array>
 		</dict>
@@ -82,14 +124,14 @@
 		<key>stop</key>
 		<dict>
 			<key>duration</key>
-			<string>4</string>
+			<string>2</string>
 			<key>image_name</key>
 			<string>stop0.png</string>
 		</dict>
 		<key>haste</key>
 		<dict>
 			<key>duration</key>
-			<string>7</string>
+			<string>6</string>
 			<key>image_name</key>
 			<string>haste0.png</string>
 			<key>speed_increase</key>

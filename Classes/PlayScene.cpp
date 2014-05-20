@@ -92,7 +92,7 @@ void PlayScene::initLanes(){
 }
 
 void PlayScene::initMenu(){
-	CCMenuItemImage * upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
+	upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                          "button_arrow_selected.png" , this , menu_selector(PlayScene::upHandler));
 	CCSize buttonSize = upButton->getContentSize();
 
@@ -197,5 +197,9 @@ void PlayScene::restartAllLanes(){
     for (int i = 0; i < lanes.size(); i++) {
             lanes[i]->reStart();
     }
+}
+
+bool PlayScene::isUpButtonSelected(){
+    return upButton->isSelected();
 }
 

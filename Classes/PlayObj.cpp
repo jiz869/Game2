@@ -8,6 +8,7 @@
 
 #include "PlayObj.h"
 #include "SpecialObj.h"
+#include "PlayScene.h"
 
 PlayerObj::PlayerObj() : movingState(WAIT)
 {
@@ -26,8 +27,15 @@ B2Sprite * PlayerObj::load(){
 
 void PlayerObj::reset(){
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
-	setPosition(ccp(size.width/2 , gameObj->getContentSize().height/2));
-	wait();
+	setPosition(ccp(size.width/2 , gameObj->getContentSize().height/2+2));
+
+    PlayScene * playScene = (PlayScene *)gameObj->getParent();
+    
+    if (playScene && playScene->isUpButtonSelected()) {
+        return;
+    }
+    
+    wait();
 }
 
 void PlayerObj::wait()

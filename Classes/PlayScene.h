@@ -31,6 +31,8 @@ public:
     virtual void stopAllLanes();
     
     virtual void restartAllLanes();
+    
+    virtual bool isUpButtonSelected();
 
 private:
 
@@ -64,6 +66,8 @@ private:
     vector<Lane *> lanes;
     
     CCSprite * contact;
+    
+    CCMenuItemImage * upButton;
 };
 
 #endif /* defined(__crossRoadMain__PlayScene__) */
