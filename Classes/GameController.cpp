@@ -64,7 +64,9 @@ bool GameController::init(){
     if(initSpecialData((CCDictionary *)dict->objectForKey("special_data")) == false){
         return false;
     }
-
+    currentLevel = 0;
+    lastScore = 0;
+    levelDuration = 5;	//hardcoded as 60 seconds
     return true;
 }
 

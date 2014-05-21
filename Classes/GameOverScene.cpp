@@ -25,6 +25,7 @@
 
 #include "GameOverScene.h"
 #include "GameWorld.h"
+#include "GameController.h"
 
 using namespace cocos2d;
 
@@ -58,13 +59,18 @@ bool GameOverLayer::init()
 {
 	if ( CCLayerColor::initWithColor( ccc4(255,255,255,255) ) )
 	{
-
 		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		this->_label = CCLabelTTF::create("","American Typewriter", 32);
 		_label->retain();
 		_label->setColor( ccc3(0, 0, 128) );
 		_label->setPosition( ccp(winSize.width/2, winSize.height/2) );
 		this->addChild(_label);
+
+		//set score
+		GameController *gc = GameController::getGameController();
+		char s[200];
+		snprintf(s, 200, "Score: %d ", gc->lastScore );
+		this->getLabel()->setString(s);
 
 		this->runAction( CCSequence::create(
                                 CCDelayTime::create(1),

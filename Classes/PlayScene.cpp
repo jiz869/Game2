@@ -9,6 +9,7 @@
 #include "PlayScene.h"
 #include "MenuForArrowButton.h"
 #include "Lane.h"
+#include "GameOverScene.h"
 
 CCScene* PlayScene::scene()
 {
@@ -56,10 +57,13 @@ bool PlayScene::init(){
     initMenu();
 
     CCLog("initMenu");
-    
+
     initPlayer();
-    
+
     CCLog("initPlayer");
+
+    initTimeLabel();
+    initScoreLabel();
 
     return true;
 }
@@ -76,6 +80,11 @@ void PlayScene::initMisc(){
     GameObj::setB2world(world , ptmRatio);
 
     scheduleUpdate();
+
+    numFrame=0;
+    score = 0;
+    duration = GameController::getGameController()->levelDuration;
+    seconds = 0;
 }
 
 void PlayScene::initPlayer(){
@@ -149,27 +158,32 @@ void PlayScene::touchendHandler(CCObject * sender){
 void PlayScene::BeginContact(b2Contact *contact){
 	CCSprite * contactA = (CCSprite *)contact->GetFixtureA()->GetBody()->GetUserData();
 	CCSprite * contactB = (CCSprite *)contact->GetFixtureB()->GetBody()->GetUserData();
-    
+
     if (contactA->getTag() == PLAYER) {
         this->contact = contactB;
         scheduleOnce(schedule_selector(PlayScene::processContact), 0);
-        
+
         return;
     }
-    
+
     if (contactB->getTag() == PLAYER) {
         this->contact = contactA;
         scheduleOnce(schedule_selector(PlayScene::processContact), 0);
     }
-    
+
 }
 
 void PlayScene::processContact(float dt)
 {
+	if( contact->getTag() == UPPER_BOUNDARY ) {
+		score++;
+		updateScore();
+	}
     player.processContact(contact);
 }
 
 void PlayScene::update(float dt){
+    numFrame++;
 	world->Step(dt , 8 , 3);
 
 	player.step(dt);
@@ -185,6 +199,14 @@ void PlayScene::update(float dt){
 			}
 		}
 	}
+
+    if(numFrame % 60 == 0) {
+        seconds++;
+        updateGameTime();
+    }
+
+    if(seconds == duration)
+    	GameOver();
 }
 
 void PlayScene::stopAllLanes(){
@@ -201,5 +223,45 @@ void PlayScene::restartAllLanes(){
 
 bool PlayScene::isUpButtonSelected(){
     return upButton->isSelected();
+}
+
+void PlayScene::updateGameTime()
+{
+    char ss[10];
+    sprintf(ss, "%d", seconds);
+    timeLabel->setString(ss);
+}
+
+void PlayScene::updateScore()
+{
+    char ss[10];
+    sprintf(ss, "%d", score);
+    scoreLabel->setString(ss);
+}
+
+void PlayScene::initTimeLabel()
+{
+    timeLabel = CCLabelTTF::create("0", "Helvetica", 32 );
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    timeLabel->setColor( ccc3(10, 10, 10) );
+    timeLabel->setPosition( ccp(winSize.width - 80, winSize.height - 50) );
+    this->addChild(timeLabel);
+}
+
+void PlayScene::initScoreLabel()
+{
+    scoreLabel = CCLabelTTF::create("0", "Helvetica", 32 );
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    scoreLabel->setColor( ccc3(0, 0, 128) );
+    scoreLabel->setPosition( ccp(winSize.width/2, winSize.height - 50) );
+    this->addChild(scoreLabel);
+}
+
+void PlayScene::GameOver()
+{
+    GameController *gc = GameController::getGameController();
+    gc->lastScore = score;
+    GameOverScene *gameOverScene = GameOverScene::create();
+	CCDirector::sharedDirector()->pushScene( gameOverScene );
 }
 

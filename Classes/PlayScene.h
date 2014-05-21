@@ -27,11 +27,11 @@ public:
     virtual void update(float dt);
 
     virtual void BeginContact(b2Contact* contact);
-    
+
     virtual void stopAllLanes();
-    
+
     virtual void restartAllLanes();
-    
+
     virtual bool isUpButtonSelected();
 
 private:
@@ -44,6 +44,10 @@ private:
 
     PlaySceneData * data;
 
+    //labels
+    CCLabelTTF* scoreLabel;
+    CCLabelTTF* timeLabel;
+
     void initMisc();
 
     void initPlayer();
@@ -54,20 +58,32 @@ private:
 
     void initLanes();
 
+    void initTimeLabel();
+    void updateGameTime();
+    void initScoreLabel();
+    void updateScore();
+
     void upHandler(CCObject * sender);
     void downHandler(CCObject * sender);
     void touchendHandler(CCObject * sender);
-    
+
     void processContact(float dt);
+
+    void GameOver();
 
     PlayerObj player;
     GameObj lowerBoundary , upperBoundary;
 
     vector<Lane *> lanes;
-    
+
     CCSprite * contact;
-    
+
     CCMenuItemImage * upButton;
+
+    long numFrame;
+    int score;
+    int duration;
+    int seconds;
 };
 
 #endif /* defined(__crossRoadMain__PlayScene__) */

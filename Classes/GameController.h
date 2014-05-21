@@ -77,6 +77,10 @@ public:
     AnimationData * getAnimationData();
     SpecialData * getSpecialData(int speciaId);
 
+    int currentLevel;
+    int lastScore;
+    int levelDuration;
+
 private:
     GameController();
     ~GameController();
