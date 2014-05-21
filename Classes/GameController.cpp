@@ -14,10 +14,12 @@
 void static stopBegin(PlayerObj * player, SpecialObj * specialObj);
 void static stopStep(PlayerObj * player, SpecialObj * specialObj);
 void static stopEnd(PlayerObj * player, SpecialObj * specialObj);
+bool static stopHitByCar(PlayerObj * player, SpecialObj * specialObj);
 
 void static hasteBegin(PlayerObj * player, SpecialObj * specialObj);
 void static hasteStep(PlayerObj * player, SpecialObj * specialObj);
 void static hasteEnd(PlayerObj * player, SpecialObj * specialObj);
+bool static hasteHitByCar(PlayerObj * player, SpecialObj * specialObj);
 
 static GameController * controller;
 
@@ -165,6 +167,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[STOP]->begin = &stopBegin;
     specialDatas[STOP]->step = &stopStep;
     specialDatas[STOP]->end = &stopEnd;
+    specialDatas[STOP]->hitByCar = &stopHitByCar;
     specialDatas[STOP]->animation = animationData.specialStopAnim;
 
     dict = (CCDictionary *)dataDict->objectForKey("haste");
@@ -175,6 +178,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[HASTE]->begin = &hasteBegin;
     specialDatas[HASTE]->step = &hasteStep;
     specialDatas[HASTE]->end = &hasteEnd;
+    specialDatas[HASTE]->hitByCar = &hasteHitByCar;
     specialDatas[HASTE]->animation = animationData.specialHasteAnim;
 
     return true;
@@ -190,6 +194,9 @@ void static stopEnd(PlayerObj * player, SpecialObj * specialObj){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->restartAllLanes();
 }
+bool static stopHitByCar(PlayerObj * player, SpecialObj * specialObj){
+	return true;
+}
 
 void static hasteBegin(PlayerObj * player, SpecialObj * specialObj){
     player->speedUp(specialObj->getSpecialData()->userData1);
@@ -201,6 +208,10 @@ void static hasteStep(PlayerObj * player, SpecialObj * specialObj){
 void static hasteEnd(PlayerObj * player, SpecialObj * specialObj){
     player->slowDown(specialObj->getSpecialData()->userData1);
 }
+bool static hasteHitByCar(PlayerObj * player, SpecialObj * specialObj){
+	return true;
+}
+
 
 PlaySceneData * GameController::getPlaySceneData(int level){
     return playSceneDatas[level];

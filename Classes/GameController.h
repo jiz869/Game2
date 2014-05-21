@@ -28,6 +28,7 @@ class SpecialObj;
 #define CCSTRING_AT_INDEX(array , index)  ((CCString *)(array)->objectAtIndex(index))
 
 typedef void (* SpectialFunc)(PlayerObj * , SpecialObj *);
+typedef bool (* SpectialHitByCarFunc)(PlayerObj * , SpecialObj *);
 
 typedef struct{
     char carName[50];
@@ -64,6 +65,7 @@ typedef struct{
     SpectialFunc begin;
     SpectialFunc step;
     SpectialFunc end;
+    SpectialHitByCarFunc hitByCar;
     CCAnimation * animation;
 }SpecialData;
 

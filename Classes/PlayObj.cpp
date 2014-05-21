@@ -30,11 +30,11 @@ void PlayerObj::reset(){
 	setPosition(ccp(size.width/2 , gameObj->getContentSize().height/2+2));
 
     PlayScene * playScene = (PlayScene *)gameObj->getParent();
-    
+
     if (playScene && playScene->isUpButtonSelected()) {
         return;
     }
-    
+
     wait();
 }
 
@@ -114,45 +114,59 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
         reset();
         return;
     }
-    
+
     if (contact->getTag() == SPECIAL) {
         SpecialObj * specialObj = (SpecialObj *)contact->getUserData();
         beginWithSpecial(specialObj);
-        
+
         return;
     }
-    
+
     if (contact->getTag() == CAR) {
-        reset();
+    	bool shouldPlayerReset = true;
+
+        for (int i = 0; i < specials.size(); i++) {
+            if(specials[i]->hitByCar(this) == false){
+            	shouldPlayerReset = false;
+            }
+        }
+
+        //remove all specials when hit by car
+        if(shouldPlayerReset == true){
+        	reset();
+            for (int i = 0; i < specials.size(); i++) {
+            	specials[i]->end(this);
+            }
+        }
         return;
     }
-    
+
 }
 
 void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
-    
+
     if (hasSpecial(specialObj) || enoughSpecials()) {
         return;
     }
-    
+
     specials.push_back(specialObj);
-    
+
     tagPlayer(specialObj);
-    
+
     specialObj->begin(this);
 }
 
 void PlayerObj::tagPlayer(SpecialObj *specialObj){
     CCSprite * tag = CCSprite::createWithSpriteFrameName(specialObj->getSpecialData()->imageName->getCString());
-    
+
     CCSize tagSize = tag->getContentSize();
     CCSize playerSize = gameObj->getContentSize();
-    
+
     gameObj->addChild(tag);
-    
+
     //Todo: need a better way and animation to tag player
     tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
-    
+
     tag->runAction(CCSequence::createWithTwoActions(CCScaleTo::create(0.2, 1.5), CCScaleTo::create(0.2, 0.8)));
     tag->setTag(specialObj->getSpecialId());
 }
@@ -167,7 +181,7 @@ bool PlayerObj::hasSpecial(SpecialObj *specialObj){
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -183,18 +197,18 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
             specials.erase(specials.begin() + i);
         }
     }
-    
+
     CCSize tagSize;
     CCSize playerSize = gameObj->getContentSize();
-    
+
     for (int i = 0; i < specials.size(); i++) {
         CCSprite * tag = (CCSprite *)gameObj->getChildByTag(specials[i]->getSpecialId());
-        
+
         tagSize = tag->getContentSize();
-        
+
         tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
     }
-    
+
 }
 
 CCNode * PlayerObj::getParent(){

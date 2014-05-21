@@ -18,7 +18,7 @@ SpecialObj::~SpecialObj() {
 }
 
 B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float speed, Lane *lane){
-    specialId = getRandom(0, 1);
+    specialId = getRandom(0, SPECIAL_NUM - 1);
     specialData = GameController::getGameController()->getSpecialData(specialId);
     CarObj::load(specialData->imageName->getCString(), left2right, initPos, speed, lane , SPECIAL);
     gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
@@ -51,6 +51,15 @@ void SpecialObj::end(PlayerObj *player){
         specialData->end(player , this);
     }
     player->endWithSpecial(this);
+}
+
+bool SpecialObj::hitByCar(PlayerObj *player){
+    if (specialData->hitByCar) {
+        return specialData->hitByCar(player , this);
+    }
+
+    //default is reset player when hit by car
+    return true;
 }
 
 SpecialData * SpecialObj::getSpecialData(){
