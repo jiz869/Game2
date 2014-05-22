@@ -88,8 +88,9 @@ void PlayScene::initMisc(){
 }
 
 void PlayScene::initPlayer(){
-	player.setSpeed(data->playerSpeed);
-	addChild(player.load());
+	player = new PlayerObj();
+	player->setSpeed(data->playerSpeed);
+	addChild(player->load());
 }
 
 void PlayScene::initLanes(){
@@ -134,25 +135,27 @@ void PlayScene::initMenu(){
 void PlayScene::initBoundary(){
 	CCSize size = CCSizeMake(winSize.width , 0);
 
-	B2Sprite * boundary = lowerBoundary.load(b2_staticBody , &size , LOWER_BOUNDARY);
-	lowerBoundary.setPosition(ccp(winSize.width / 2 , 0));
+	lowerBoundary = new GameObj();
+	B2Sprite * boundary = lowerBoundary->load(b2_staticBody , &size , LOWER_BOUNDARY);
+	lowerBoundary->setPosition(ccp(winSize.width / 2 , 0));
 	addChild(boundary);
 
-	boundary = upperBoundary.load(b2_staticBody , &size , UPPER_BOUNDARY);
-	upperBoundary.setPosition(ccp(winSize.width / 2 , winSize.height));
+	upperBoundary = new GameObj();
+	boundary = upperBoundary->load(b2_staticBody , &size , UPPER_BOUNDARY);
+	upperBoundary->setPosition(ccp(winSize.width / 2 , winSize.height));
 	addChild(boundary);
 }
 
 void PlayScene::upHandler(CCObject * sender){
-	player.jumpUp();
+	player->jumpUp();
 }
 
 void PlayScene::downHandler(CCObject * sender){
-	player.jumpDown();
+	player->jumpDown();
 }
 
 void PlayScene::touchendHandler(CCObject * sender){
-	player.wait();
+	player->wait();
 }
 
 void PlayScene::BeginContact(b2Contact *contact){
@@ -180,14 +183,14 @@ void PlayScene::processContact(float dt)
 		updateScore();
 		seconds += duration;
 	}
-    player.processContact(contact);
+    player->processContact(contact);
 }
 
 void PlayScene::update(float dt){
     numFrame++;
 	world->Step(dt , 8 , 3);
 
-	player.step(dt);
+	player->step(dt);
 
 	for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()){
 		CCSprite *sprite = (CCSprite *)b->GetUserData();
@@ -264,6 +267,6 @@ void PlayScene::GameOver()
     GameController *gc = GameController::getGameController();
     gc->lastScore = score;
     GameOverScene *gameOverScene = GameOverScene::create();
-	CCDirector::sharedDirector()->pushScene( gameOverScene );
+	CCDirector::sharedDirector()->replaceScene( gameOverScene );
 }
 

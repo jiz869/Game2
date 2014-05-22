@@ -24,7 +24,6 @@
  ****************************************************************************/
 
 #include "GameOverScene.h"
-#include "GameWorld.h"
 #include "GameController.h"
 #include "PlayScene.h"
 
@@ -35,7 +34,6 @@ bool GameOverScene::init()
 	if( CCScene::init() )
 	{
 		this->_layer = GameOverLayer::create();
-		this->_layer->retain();
 		this->addChild(_layer);
 
 		return true;
@@ -50,7 +48,6 @@ GameOverScene::~GameOverScene()
 {
 	if (_layer)
 	{
-		_layer->release();
 		_layer = NULL;
 	}
 }
@@ -62,7 +59,6 @@ bool GameOverLayer::init()
 	{
 		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		this->_label = CCLabelTTF::create("","American Typewriter", 32);
-		_label->retain();
 		_label->setColor( ccc3(0, 0, 128) );
 		_label->setPosition( ccp(winSize.width/2, winSize.height/2) );
 		this->addChild(_label);
@@ -96,7 +92,6 @@ GameOverLayer::~GameOverLayer()
 {
 	if (_label)
 	{
-		_label->release();
 		_label = NULL;
 	}
 }

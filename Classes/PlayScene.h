@@ -71,8 +71,8 @@ private:
 
     void GameOver();
 
-    PlayerObj player;
-    GameObj lowerBoundary , upperBoundary;
+    PlayerObj * player;
+    GameObj * lowerBoundary , * upperBoundary;
 
     vector<Lane *> lanes;
 
