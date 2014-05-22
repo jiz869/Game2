@@ -66,7 +66,7 @@ bool GameController::init(){
     }
     currentLevel = 0;
     lastScore = 0;
-    levelDuration = 5;	//hardcoded as 60 seconds
+    levelDuration = 10;
     return true;
 }
 

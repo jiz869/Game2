@@ -84,7 +84,7 @@ void PlayScene::initMisc(){
     numFrame=0;
     score = 0;
     duration = GameController::getGameController()->levelDuration;
-    seconds = 0;
+    seconds = duration;
 }
 
 void PlayScene::initPlayer(){
@@ -178,6 +178,7 @@ void PlayScene::processContact(float dt)
 	if( contact->getTag() == UPPER_BOUNDARY ) {
 		score++;
 		updateScore();
+		seconds += duration;
 	}
     player.processContact(contact);
 }
@@ -201,11 +202,11 @@ void PlayScene::update(float dt){
 	}
 
     if(numFrame % 60 == 0) {
-        seconds++;
+        seconds--;
         updateGameTime();
     }
 
-    if(seconds == duration)
+    if(seconds == 0)
     	GameOver();
 }
 
@@ -241,19 +242,20 @@ void PlayScene::updateScore()
 
 void PlayScene::initTimeLabel()
 {
-    timeLabel = CCLabelTTF::create("0", "Helvetica", 32 );
+    timeLabel = CCLabelTTF::create("0", "Helvetica", 64 );
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    timeLabel->setColor( ccc3(10, 10, 10) );
-    timeLabel->setPosition( ccp(winSize.width - 80, winSize.height - 50) );
+    timeLabel->setColor( ccc3(255, 10, 10) );
+    timeLabel->setPosition( ccp(winSize.width/2, winSize.height - 50) );
     this->addChild(timeLabel);
 }
 
 void PlayScene::initScoreLabel()
 {
-    scoreLabel = CCLabelTTF::create("0", "Helvetica", 32 );
+    scoreLabel = CCLabelTTF::create("0", "Helvetica", 64 );
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     scoreLabel->setColor( ccc3(0, 0, 128) );
-    scoreLabel->setPosition( ccp(winSize.width/2, winSize.height - 50) );
+    scoreLabel->setPosition( ccp(winSize.width - 80, winSize.height - 50) );
+
     this->addChild(scoreLabel);
 }
 
