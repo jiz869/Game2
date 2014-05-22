@@ -67,9 +67,23 @@ bool GameController::init(){
     if(initSpecialData((CCDictionary *)dict->objectForKey("special_data")) == false){
         return false;
     }
-    currentLevel = 0;
-    lastScore = 0;
-    levelDuration = 10;
+
+    if(initUserData((CCDictionary *)dict->objectForKey("user_data")) == false){
+        return false;
+    }
+
+    return true;
+}
+
+bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
+    if (dataDict == NULL) {
+        return false;
+    }
+
+    userData.levelDuration = CCSTRING_FOR_KEY(dataDict , "level_duration")->intValue();
+    userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->intValue();
+    userData.lastScore = 0;
+
     return true;
 }
 
@@ -251,4 +265,8 @@ AnimationData * GameController::getAnimationData(){
 
 SpecialData * GameController::getSpecialData(int speciaId){
     return specialDatas[speciaId];
+}
+
+UserData * GameController::getUserData(){
+	return &userData;
 }

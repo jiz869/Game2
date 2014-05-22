@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>user_data</key>
+	<dict>
+		<key>level_duration</key>
+		<string>10</string>
+		<key>top_score</key>
+		<string>0</string>
+	</dict>
 	<key>animation_data</key>
 	<dict>
 		<key>player_move_animation</key>

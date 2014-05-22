@@ -132,7 +132,8 @@ void Lane::reStart(){
     }
 
     unschedule(schedule_selector(Lane::addACar));
-    schedule(schedule_selector(Lane::addACar) , description->period);
+	scheduleOnce(schedule_selector(Lane::addACar) , 0);
+	scheduleOnce(schedule_selector(Lane::startSchedule) , 0);
 
     status = RUNNING;
 }

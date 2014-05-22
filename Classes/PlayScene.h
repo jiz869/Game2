@@ -46,6 +46,7 @@ private:
     CCSize winSize;
 
     PlaySceneData * data;
+    UserData * userData;
 
     //labels
     CCLabelTTF* scoreLabel;

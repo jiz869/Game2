@@ -70,6 +70,12 @@ typedef struct{
     CCAnimation * animation;
 }SpecialData;
 
+typedef struct{
+	int levelDuration;
+	int topScore;
+	int lastScore;
+}UserData;
+
 class GameController {
 
 public:
@@ -77,10 +83,7 @@ public:
     PlaySceneData * getPlaySceneData(int level);
     AnimationData * getAnimationData();
     SpecialData * getSpecialData(int speciaId);
-
-    int currentLevel;
-    int lastScore;
-    int levelDuration;
+    UserData * getUserData();
 
 private:
     GameController();
@@ -89,9 +92,11 @@ private:
     CCDictionary * dict;
     vector<PlaySceneData *> playSceneDatas;
     AnimationData animationData;
+    UserData userData;
     bool initPlaySceneData(CCArray * dataArray);
     bool initAnimationData(CCDictionary * dataDict);
     bool initSpecialData(CCDictionary * dataDict);
+    bool initUserData(CCDictionary * dataDict);
     CCAnimation * initAnimation(CCArray * frameNameArray);
     vector<SpecialData *> specialDatas;
     CCSize designSize;

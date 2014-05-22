@@ -75,6 +75,7 @@ void PlayScene::initMisc(){
     world->SetContactListener(this);
 
     data = GameController::getGameController()->getPlaySceneData(0);
+    userData = GameController::getGameController()->getUserData();
 
     winSize = CCDirector::sharedDirector()->getWinSize();
     ptmRatio = winSize.height / 10;
@@ -85,7 +86,7 @@ void PlayScene::initMisc(){
 
     numFrame=0;
     score = 0;
-    duration = GameController::getGameController()->levelDuration;
+    duration = userData->levelDuration;
     seconds = duration;
 }
 
@@ -184,6 +185,7 @@ void PlayScene::processContact(float dt)
 		score++;
 		updateScore();
 		seconds += duration;
+		updateGameTime();
 	}
     player->processContact(contact);
 }
@@ -282,8 +284,7 @@ void PlayScene::initScoreLabel()
 
 void PlayScene::GameOver()
 {
-    GameController *gc = GameController::getGameController();
-    gc->lastScore = score;
+    userData->lastScore = score;
     GameOverScene *gameOverScene = GameOverScene::create();
 	CCDirector::sharedDirector()->replaceScene( gameOverScene );
 }

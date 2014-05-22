@@ -66,7 +66,7 @@ bool GameOverLayer::init()
 		//set score
 		GameController *gc = GameController::getGameController();
 		char s[200];
-		snprintf(s, 200, "Score: %d ", gc->lastScore );
+		snprintf(s, 200, "Score: %d ", gc->getUserData()->lastScore);
 		this->getLabel()->setString(s);
 
 		this->runAction( CCSequence::create(
