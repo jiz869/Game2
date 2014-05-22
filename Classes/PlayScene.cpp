@@ -28,6 +28,8 @@ CCScene* PlayScene::scene()
 
 
 PlayScene::~PlayScene(){
+	player->removeAllSpecials();
+
     for (b2Body * body = world->GetBodyList(); body; body = body->GetNext()) {
     	CCSprite *sprite = (CCSprite *)body->GetUserData();
     	if(sprite) delete (GameObj *)(sprite->getUserData());
@@ -89,7 +91,7 @@ void PlayScene::initMisc(){
 
 void PlayScene::initPlayer(){
 	player = new PlayerObj();
-	player->setSpeed(data->playerSpeed);
+	player->setData(data);
 	addChild(player->load());
 }
 
@@ -214,14 +216,30 @@ void PlayScene::update(float dt){
 }
 
 void PlayScene::stopAllLanes(){
-    for (int i = 0; i < lanes.size(); i++) {
+	int size = lanes.size();
+    for (int i = 0; i < size; i++) {
         lanes[i]->stopAtPosition(winSize.width/2);
     }
 }
 
 void PlayScene::restartAllLanes(){
-    for (int i = 0; i < lanes.size(); i++) {
+	int size = lanes.size();
+    for (int i = 0; i < size; i++) {
             lanes[i]->reStart();
+    }
+}
+
+void PlayScene::slowAllLanes(float speed_decrease, float interval_increase){
+	int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+        lanes[i]->slow(speed_decrease, interval_increase);
+    }
+}
+
+void PlayScene::resumeAllLanesFromSlow(float speed_decrease, float interval_increase){
+	int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+        lanes[i]->resumeFromSlow(speed_decrease, interval_increase);
     }
 }
 

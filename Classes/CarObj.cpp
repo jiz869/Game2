@@ -35,8 +35,6 @@ B2Sprite * CarObj::load(const char * name , bool left2right, cocos2d::CCPoint in
 
 	setPosition(initPos);
 
-    setSpeed(speed);
-
 	setVelocity(b2Vec2(speed , 0));
 
     this->lane = lane;

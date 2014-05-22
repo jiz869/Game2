@@ -18,9 +18,13 @@ PlayerObj::PlayerObj() : movingState(WAIT)
 PlayerObj::~PlayerObj(){
 }
 
+void PlayerObj::setData(PlaySceneData * data){
+	this->data = data;
+}
+
 B2Sprite * PlayerObj::load(){
 
-	GameObj::load(animationData->playerWaitImageName->getCString() , b2_dynamicBody , PLAYER);
+	GameObj::load(data->playerWaitImageName->getCString() , b2_dynamicBody , PLAYER);
 	reset();
     return gameObj;
 }
@@ -43,7 +47,7 @@ void PlayerObj::wait()
     gameObj->stopAllActions();
     movingState = WAIT;
     setVelocity(b2Vec2(0 , 0));
-    CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(animationData->playerWaitImageName->getCString());
+    CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(data->playerWaitImageName->getCString());
     gameObj->setDisplayFrame(frame);
     //CCLog("set player state WAIT");
 }
@@ -53,10 +57,10 @@ void PlayerObj::jumpUp()
 {
     if( movingState != JMP_UP ) {
         gameObj->stopAllActions();
-        CCAnimate * moveUp= CCAnimate::create(animationData->playerMoveAnim);
+        CCAnimate * moveUp= CCAnimate::create(data->playerMoveAnim);
         gameObj->runAction(CCRepeatForever::create(moveUp));
         movingState = JMP_UP;
-        setVelocity(b2Vec2(0 , speed));
+        setVelocity(b2Vec2(0 , data->playerSpeed));
         //CCLog("set player state JMP %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
     }
 }
@@ -69,16 +73,18 @@ void PlayerObj::jumpDown()
 
     if( movingState != JMP_DOWN ) {
         gameObj->stopAllActions();
-        CCAnimate * moveUp= CCAnimate::create(animationData->playerMoveAnim);
+        CCAnimate * moveUp= CCAnimate::create(data->playerMoveAnim);
         gameObj->runAction(CCRepeatForever::create(moveUp));
         movingState = JMP_DOWN;
-        setVelocity(b2Vec2(0 , -speed));
+        setVelocity(b2Vec2(0 , -data->playerSpeed));
         //CCLog("set player state JMP_DOWN %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
     }
 }
 
 void PlayerObj::speedUp(float delta){
-    speed += delta;
+
+    data->playerSpeed += delta;
+
     if (movingState == WAIT) {
         return;
     }else if (movingState == JMP_UP){
@@ -91,7 +97,9 @@ void PlayerObj::speedUp(float delta){
 }
 
 void PlayerObj::slowDown(float delta){
-    speed -= delta;
+
+	data->playerSpeed -= delta;
+
     if (movingState == WAIT) {
         return;
     }else if (movingState == JMP_UP){
@@ -104,7 +112,8 @@ void PlayerObj::slowDown(float delta){
 }
 
 void PlayerObj::step(float dt){
-    for (int i = 0; i < specials.size(); i++) {
+	int size = specials.size();
+    for (int i = 0; i < size; i++) {
         specials[i]->step(this);
     }
 }
@@ -125,7 +134,8 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
     if (contact->getTag() == CAR) {
     	bool shouldPlayerReset = true;
 
-        for (int i = 0; i < specials.size(); i++) {
+    	int size = specials.size();
+        for (int i = 0; i < size; i++) {
             if(specials[i]->hitByCar(this) == false){
             	shouldPlayerReset = false;
             }
@@ -134,13 +144,20 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
         //remove all specials when hit by car
         if(shouldPlayerReset == true){
         	reset();
-            for (int i = 0; i < specials.size(); i++) {
-            	specials[i]->end(this);
-            }
+        	removeAllSpecials();
         }
         return;
     }
 
+}
+
+void PlayerObj::removeAllSpecials(){
+
+	int size = specials.size();
+
+    for (int i = 0; i < size; i++) {
+    	specials[i]->end(this);
+    }
 }
 
 void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
@@ -176,7 +193,8 @@ bool PlayerObj::enoughSpecials(){
 }
 
 bool PlayerObj::hasSpecial(SpecialObj *specialObj){
-    for (int i = 0; i < specials.size(); i++) {
+	int size = specials.size();
+    for (int i = 0; i < size; i++) {
         if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
             return true;
         }
@@ -192,7 +210,8 @@ void PlayerObj::endWithSpecial(SpecialObj *specialObj){
 }
 
 void PlayerObj::removeSpecial(SpecialObj *specialObj){
-    for (int i = 0; i < specials.size(); i++) {
+	int size = specials.size();
+    for (int i = 0; i < size; i++) {
         if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
             specials.erase(specials.begin() + i);
         }
@@ -201,12 +220,13 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
     CCSize tagSize;
     CCSize playerSize = gameObj->getContentSize();
 
-    for (int i = 0; i < specials.size(); i++) {
+    size = specials.size();
+    for (int i = 0; i < size; i++) {
         CCSprite * tag = (CCSprite *)gameObj->getChildByTag(specials[i]->getSpecialId());
 
         tagSize = tag->getContentSize();
 
-        tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
+        tag->setPosition(ccp(playerSize.width+(size-0.5)*tagSize.width , playerSize.height/2));
     }
 
 }

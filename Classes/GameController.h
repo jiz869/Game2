@@ -18,6 +18,7 @@ using namespace std;
 typedef enum{
     STOP = 0,
     HASTE,
+    SLOW,
     SPECIAL_NUM,
 }SpecialID;
 
@@ -31,11 +32,9 @@ typedef void (* SpectialFunc)(PlayerObj * , SpecialObj *);
 typedef bool (* SpectialHitByCarFunc)(PlayerObj * , SpecialObj *);
 
 typedef struct{
-    char carName[50];
     CCPoint initPos;
-    CCPoint velocity;
+    float carSpeed;
     float height;
-    float distance;
     bool left2right;
     float period;
     float specialChance;
@@ -45,15 +44,17 @@ typedef struct{
 
 typedef struct{
     int laneNumber;
+    CCString * playerWaitImageName;
+    CCAnimation * playerMoveAnim;
     float playerSpeed;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 
 typedef struct{
-    CCString * playerWaitImageName;
     CCAnimation * playerMoveAnim;
     CCAnimation * specialStopAnim;
     CCAnimation * specialHasteAnim;
+    CCAnimation * specialSlowAnim;
 }AnimationData;
 
 typedef struct{

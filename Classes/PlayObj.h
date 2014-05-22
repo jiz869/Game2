@@ -41,10 +41,13 @@ public:
     void slowDown(float delta);
     void tagPlayer(SpecialObj * specialObj);
     CCNode * getParent();
+    void setData(PlaySceneData * data);
+    void removeAllSpecials();
 
 protected:
     PlayerState movingState;
     vector<SpecialObj *> specials;
+    PlaySceneData * data;
 };
 
 #endif /* defined(__crossRoadMain__PlayObj__) */

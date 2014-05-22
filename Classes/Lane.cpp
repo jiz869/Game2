@@ -17,7 +17,7 @@ int getRandom(int low, int high)
 	return low + ( random() % ( high + 1 - low ) );
 }
 
-Lane::Lane() {
+Lane::Lane() : status(RUNNING) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -47,9 +47,14 @@ bool Lane::initWithDescription(LaneDescription * description){
 
 	addRoad();
 
-	schedule(schedule_selector(Lane::addACar) , description->period);
+	scheduleOnce(schedule_selector(Lane::addACar) , 0);
+	scheduleOnce(schedule_selector(Lane::startSchedule) , 0);
 
 	return true;
+}
+
+void Lane::startSchedule(){
+	schedule(schedule_selector(Lane::addACar) , description->period);
 }
 
 void Lane::addRoad(){
@@ -67,13 +72,13 @@ void Lane::addACar(float dt){
 
     if (isSpecialCar(description->specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
-        speciaObj->load(description->left2right, description->initPos, description->velocity.x, this);
+        speciaObj->load(description->left2right, description->initPos, description->carSpeed, this);
         return;
     }
 
 	CarObj * car = new CarObj();
 
-    car->load(description->left2right, description->initPos, description->velocity.x, this , &description->carNumbers);
+    car->load(description->left2right, description->initPos, description->carSpeed, this , &description->carNumbers);
 }
 
 bool Lane::isSpecialCar(float chance){
@@ -107,6 +112,8 @@ void Lane::stopAtPosition(float x){
     }
 
     unschedule(schedule_selector(Lane::addACar));
+
+    status = STOPPED;
 }
 
 void Lane::reStart(){
@@ -120,11 +127,41 @@ void Lane::reStart(){
         car = (B2Sprite *)pObject;
 
         if (car && car->getTag() != kCCNodeTagInvalid) {
-            GameObj * gameObj = (GameObj *)car->getUserData();
-            car->getB2Body()->SetLinearVelocity(b2Vec2(gameObj->getSpeed() , 0));
+        	car->getB2Body()->SetLinearVelocity(b2Vec2(description->carSpeed , 0));
         }
     }
 
+    unschedule(schedule_selector(Lane::addACar));
     schedule(schedule_selector(Lane::addACar) , description->period);
+
+    status = RUNNING;
 }
 
+void Lane::slow(float speed_decrease , float interval_increase){
+
+	if (description->left2right){
+		description->carSpeed -= speed_decrease;
+	}else if (!description->left2right){
+		description->carSpeed += speed_decrease;
+	}
+
+	description->period += interval_increase;
+
+	if(status != STOPPED){
+		reStart();
+	}
+}
+
+void Lane::resumeFromSlow(float speed_decrease , float interval_increase){
+	if (description->left2right){
+		description->carSpeed += speed_decrease;
+	}else if (!description->left2right){
+		description->carSpeed -= speed_decrease;
+	}
+
+	description->period -= interval_increase;
+
+	if(status != STOPPED){
+		reStart();
+	}
+}

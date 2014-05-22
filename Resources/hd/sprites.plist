@@ -59,7 +59,7 @@
             <key>car4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{40,267},{262,33}}</string>
+                <string>{{40,304},{262,33}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>car5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,267},{351,36}}</string>
+                <string>{{2,304},{351,36}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>car6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{40,531},{145,32}}</string>
+                <string>{{40,568},{145,32}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>haste0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,230},{38,35}}</string>
+                <string>{{2,267},{38,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>haste1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,196},{32,40}}</string>
+                <string>{{2,233},{32,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -173,10 +173,23 @@
                 <key>sourceSize</key>
                 <string>{1024,40}</string>
             </dict>
+            <key>slow0.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,196},{40,35}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{40,35}}</string>
+                <key>sourceSize</key>
+                <string>{40,35}</string>
+            </dict>
             <key>stop0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,620},{35,35}}</string>
+                <string>{{2,657},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -209,7 +222,7 @@
             <key>size</key>
             <string>{128,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:07689ff82b73d2a92d119a5a3686cf35$</string>
+            <string>$TexturePacker:SmartUpdate:3a4a4f87988889b6d23cbbd6c6bdf536$</string>
             <key>textureFileName</key>
             <string>sprites.png</string>
         </dict>

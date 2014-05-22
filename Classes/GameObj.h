@@ -33,17 +33,13 @@ public:
     virtual const CCPoint& getPosition();
     virtual void setVelocity(b2Vec2 velocity);
     virtual const b2Vec2 getVelocity();
-    virtual void setSpeed(float speed);
-    virtual float getSpeed();
     static void setB2world(b2World * world , float ptmRatio);
     virtual const CCSize& getSize();
     virtual bool isBottom();
 
 protected:
 	B2Sprite * gameObj;
-    float speed;
-    AnimationData * animationData;
-    
+
     static b2World * world;
     static float ptmRatio;
 };

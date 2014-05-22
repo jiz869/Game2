@@ -11,6 +11,11 @@
 #include "GameObj.h"
 #include "GameController.h"
 
+typedef enum{
+	RUNNING = 0x1 << 0,
+	STOPPED = 0x1 << 1,
+}LaneStatus;
+
 class Lane: public cocos2d::CCLayer {
 public:
 	Lane();
@@ -20,6 +25,8 @@ public:
 	virtual bool initWithDescription(LaneDescription * description);
     virtual void stopAtPosition(float x);
     virtual void reStart();
+    virtual void slow(float speed_decrease , float interval_increase);
+    virtual void resumeFromSlow(float speed_decrease , float interval_increase);
 
 private:
 
@@ -27,6 +34,8 @@ private:
 	void addACar(float dt);
     bool isSpecialCar(float chance);
     void addRoad();
+    LaneStatus status;
+    void startSchedule();
 };
 
 int getRandom(int low, int high);

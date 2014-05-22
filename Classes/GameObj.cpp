@@ -12,7 +12,6 @@ b2World* GameObj::world;
 
 GameObj::GameObj() {
 	// TODO Auto-generated constructor stub
-    animationData = GameController::getGameController()->getAnimationData();
 }
 
 GameObj::~GameObj() {
@@ -76,14 +75,6 @@ void GameObj::setVelocity(b2Vec2 velocity){
 
 const b2Vec2 GameObj::getVelocity(){
     return gameObj->getB2Body()->GetLinearVelocity();
-}
-
-void GameObj::setSpeed(float speed){
-    this->speed = speed;
-}
-
-float GameObj::getSpeed(){
-    return speed;
 }
 
 const CCSize& GameObj::getSize(){

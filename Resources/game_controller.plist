@@ -4,8 +4,6 @@
 <dict>
 	<key>animation_data</key>
 	<dict>
-		<key>player_wait_image</key>
-		<string>player0.png</string>
 		<key>player_move_animation</key>
 		<array>
 			<string>player0.png</string>
@@ -22,10 +20,16 @@
 			<string>haste1.png</string>
 			<string>haste0.png</string>
 		</array>
+		<key>special_slow_animation</key>
+		<array>
+			<string>slow0.png</string>
+		</array>
 	</dict>
 	<key>play_scene_data</key>
 	<array>
 		<dict>
+			<key>player_wait_image</key>
+			<string>player0.png</string>
 			<key>lane_number</key>
 			<string>7</string>
 			<key>player_init_speed</key>
@@ -34,11 +38,9 @@
 			<array>
 				<dict>
 					<key>special_chance</key>
-					<string>0.05</string>
+					<string>0.06</string>
 					<key>period</key>
 					<string>2.2</string>
-					<key>distance</key>
-					<string>350</string>
 					<key>speed</key>
 					<string>3.5</string>
 					<key>ccp_y_percent</key>
@@ -60,10 +62,8 @@
 					<string>0.08</string>
 					<key>period</key>
 					<string>2.6</string>
-					<key>distance</key>
-					<string>250</string>
 					<key>speed</key>
-					<string>-2.2</string>
+					<string>2.2</string>
 					<key>ccp_y_percent</key>
 					<string>0.25</string>
 					<key>direction</key>
@@ -83,8 +83,6 @@
 					<string>0.06</string>
 					<key>period</key>
 					<string>3</string>
-					<key>distance</key>
-					<string>500</string>
 					<key>speed</key>
 					<string>3.2</string>
 					<key>ccp_y_percent</key>
@@ -106,10 +104,8 @@
 					<string>0.1</string>
 					<key>period</key>
 					<string>2.8</string>
-					<key>distance</key>
-					<string>500</string>
 					<key>speed</key>
-					<string>-2.8</string>
+					<string>2.8</string>
 					<key>ccp_y_percent</key>
 					<string>0.5</string>
 					<key>direction</key>
@@ -129,8 +125,6 @@
 					<string>0.04</string>
 					<key>period</key>
 					<string>2.5</string>
-					<key>distance</key>
-					<string>500</string>
 					<key>speed</key>
 					<string>5</string>
 					<key>ccp_y_percent</key>
@@ -152,10 +146,8 @@
 					<string>0.06</string>
 					<key>period</key>
 					<string>2.2</string>
-					<key>distance</key>
-					<string>500</string>
 					<key>speed</key>
-					<string>-3.3</string>
+					<string>3.3</string>
 					<key>ccp_y_percent</key>
 					<string>0.7</string>
 					<key>direction</key>
@@ -175,8 +167,6 @@
 					<string>0.05</string>
 					<key>period</key>
 					<string>2.8</string>
-					<key>distance</key>
-					<string>500</string>
 					<key>speed</key>
 					<string>2.8</string>
 					<key>ccp_y_percent</key>
@@ -213,6 +203,17 @@
 			<string>haste0.png</string>
 			<key>speed_increase</key>
 			<string>1.5</string>
+		</dict>
+		<key>slow</key>
+		<dict>
+			<key>duration</key>
+			<string>4</string>
+			<key>image_name</key>
+			<string>slow0.png</string>
+			<key>speed_decrease</key>
+			<string>0.8</string>
+			<key>interval_increase</key>
+			<string>0.6</string>
 		</dict>
 	</dict>
 </dict>

@@ -32,6 +32,9 @@ public:
 
     virtual void restartAllLanes();
 
+    virtual void slowAllLanes(float speed_decrease, float interval_increase);
+    virtual void resumeAllLanesFromSlow(float speed_decrease, float interval_increase);
+
     virtual bool isUpButtonSelected();
 
 private:

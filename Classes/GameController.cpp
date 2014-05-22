@@ -21,6 +21,9 @@ void static hasteStep(PlayerObj * player, SpecialObj * specialObj);
 void static hasteEnd(PlayerObj * player, SpecialObj * specialObj);
 bool static hasteHitByCar(PlayerObj * player, SpecialObj * specialObj);
 
+void static slowBegin(PlayerObj * player, SpecialObj * specialObj);
+void static slowEnd(PlayerObj * player, SpecialObj * specialObj);
+
 static GameController * controller;
 
 GameController * GameController::getGameController(){
@@ -53,11 +56,11 @@ bool GameController::init(){
 
     designSize = CCDirector::sharedDirector()->getWinSize();
 
-    if(initPlaySceneData((CCArray *)dict->objectForKey("play_scene_data")) == false){
+    if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
         return false;
     }
 
-    if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
+    if(initPlaySceneData((CCArray *)dict->objectForKey("play_scene_data")) == false){
         return false;
     }
 
@@ -82,19 +85,15 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
         CCDictionary * dict = (CCDictionary *)dataArray->objectAtIndex(i);
         data->laneNumber = CCSTRING_FOR_KEY(dict , "lane_number")->intValue();
         data->playerSpeed = CCSTRING_FOR_KEY(dict , "player_init_speed")->floatValue();
+        data->playerWaitImageName = CCSTRING_FOR_KEY(dict, "player_wait_image");
+        data->playerMoveAnim = animationData.playerMoveAnim;
         data->laneDescriptions.reserve(data->laneNumber);
 
         CCArray * ldArray = (CCArray *)dict->objectForKey("lane_descriptions");
         for (int j = 0; j < ldArray->count(); j++) {
             LaneDescription * ld = new LaneDescription();
             CCDictionary * ldDict = (CCDictionary *)ldArray->objectAtIndex(j);
-            if (j%2 == 0) {
-                strncpy(ld->carName, "car2", 50);
-            }else{
-                strncpy(ld->carName, "car1", 50);
-            }
-            ld->distance = CCSTRING_FOR_KEY(ldDict, "distance")->floatValue();
-            ld->velocity = ccp(CCSTRING_FOR_KEY(ldDict, "speed")->floatValue(), 0);
+
             ld->height = designSize.height * CCSTRING_FOR_KEY(ldDict, "ccp_y_percent")->floatValue();
             ld->period = CCSTRING_FOR_KEY(ldDict, "period")->floatValue();
             ld->specialChance = CCSTRING_FOR_KEY(ldDict, "special_chance")->floatValue();
@@ -102,9 +101,11 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
             if (CCSTRING_FOR_KEY(ldDict, "direction")->isEqual(CCString::create("left2right"))) {
                 ld->left2right = true;
                 ld->initPos = ccp(0, ld->height);
+                ld->carSpeed = CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();
             }else{
                 ld->left2right = false;
                 ld->initPos = ccp(designSize.width, ld->height);
+                ld->carSpeed = -CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();
             }
 
             CCArray * carNumbers = (CCArray *)ldDict->objectForKey("car_numbers");
@@ -127,8 +128,6 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
 
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
 
-    animationData.playerWaitImageName = CCSTRING_FOR_KEY(dataDict, "player_wait_image");
-
     CCArray * array = (CCArray *)dataDict->objectForKey("player_move_animation");
     animationData.playerMoveAnim = initAnimation(array);
     animationData.playerMoveAnim->setDelayPerUnit(0.05);
@@ -140,6 +139,10 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     array = (CCArray *)dataDict->objectForKey("special_haste_animation");
     animationData.specialHasteAnim = initAnimation(array);
     animationData.specialHasteAnim->setDelayPerUnit(0.3);
+
+    array = (CCArray *)dataDict->objectForKey("special_slow_animation");
+    animationData.specialSlowAnim = initAnimation(array);
+    animationData.specialSlowAnim->setDelayPerUnit(0.3);
 
     return true;
 }
@@ -183,9 +186,22 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[HASTE]->hitByCar = &hasteHitByCar;
     specialDatas[HASTE]->animation = animationData.specialHasteAnim;
 
+    dict = (CCDictionary *)dataDict->objectForKey("slow");
+    specialDatas[SLOW] = new SpecialData;
+    specialDatas[SLOW]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[SLOW]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[SLOW]->userData1 = CCSTRING_FOR_KEY(dict, "speed_decrease")->floatValue();
+    specialDatas[SLOW]->userData2 = CCSTRING_FOR_KEY(dict, "interval_increase")->floatValue();
+    specialDatas[SLOW]->begin = &slowBegin;
+    specialDatas[SLOW]->step = NULL;
+    specialDatas[SLOW]->end = &slowEnd;
+    specialDatas[SLOW]->hitByCar = NULL;
+    specialDatas[SLOW]->animation = animationData.specialSlowAnim;
+
     return true;
 }
 
+//stop
 void static stopBegin(PlayerObj * player, SpecialObj * specialObj){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->stopAllLanes();
@@ -200,18 +216,28 @@ bool static stopHitByCar(PlayerObj * player, SpecialObj * specialObj){
 	return true;
 }
 
+//haste
 void static hasteBegin(PlayerObj * player, SpecialObj * specialObj){
     player->speedUp(specialObj->getSpecialData()->userData1);
 }
 void static hasteStep(PlayerObj * player, SpecialObj * specialObj){
 
 }
-
 void static hasteEnd(PlayerObj * player, SpecialObj * specialObj){
     player->slowDown(specialObj->getSpecialData()->userData1);
 }
 bool static hasteHitByCar(PlayerObj * player, SpecialObj * specialObj){
 	return true;
+}
+
+//slow
+void static slowBegin(PlayerObj * player, SpecialObj * specialObj){
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->slowAllLanes(specialObj->getSpecialData()->userData1 , specialObj->getSpecialData()->userData2);
+}
+void static slowEnd(PlayerObj * player, SpecialObj * specialObj){
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->resumeAllLanesFromSlow(specialObj->getSpecialData()->userData1 , specialObj->getSpecialData()->userData2);
 }
 
 
