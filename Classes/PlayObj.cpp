@@ -152,11 +152,9 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
 }
 
 void PlayerObj::removeAllSpecials(){
-
-	int size = specials.size();
-
-    for (int i = 0; i < size; i++) {
-    	specials[i]->end(this);
+    while(specials.size()){
+    	vector<SpecialObj *>::iterator it = specials.begin();
+    	(*it)->end(this);
     }
 }
 
@@ -214,6 +212,7 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
     for (int i = 0; i < size; i++) {
         if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
             specials.erase(specials.begin() + i);
+            return;
         }
     }
 
