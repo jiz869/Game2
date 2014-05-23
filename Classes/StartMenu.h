@@ -19,6 +19,11 @@ public:
     CREATE_FUNC(StartMenu);
     virtual bool init();
     void newGameHandler(CCObject * sender);
+    void showStartMenu(float dt);
+
+private:
+    CCMenu * startMenu;
+    CCSize winSize;
 };
 
 #endif /* STARTMENU_H_ */

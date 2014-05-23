@@ -13,6 +13,8 @@
 #include "GameController.h"
 #include "Lane.h"
 
+class MenuForArrowButton;
+
 class PlayScene : public cocos2d::CCLayerColor , public b2ContactListener
 {
 public:
@@ -36,9 +38,8 @@ public:
     virtual void resumeAllLanesFromSlow(float speed_decrease, float interval_increase);
 
     virtual bool isUpButtonSelected();
-    
-    void newGameHandler(CCObject * sender);
-    void showStartMenu(float dt);
+
+    void startNewGame();
 
 private:
 
@@ -64,7 +65,7 @@ private:
     void initBoundary();
 
     void initLanes();
-    
+
     void initStartMenu();
 
     void initTimeLabel();
@@ -94,8 +95,8 @@ private:
     int duration;
     int seconds;
     bool startUpdateTime;
-    
-    CCMenu * startMenu;
+
+    MenuForArrowButton * menu;
 };
 
 #endif /* defined(__crossRoadMain__PlayScene__) */

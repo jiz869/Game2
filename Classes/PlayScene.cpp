@@ -10,6 +10,7 @@
 #include "MenuForArrowButton.h"
 #include "Lane.h"
 #include "GameOverScene.h"
+#include "StartMenu.h"
 
 CCScene* PlayScene::scene()
 {
@@ -56,14 +57,14 @@ bool PlayScene::init(){
 
     CCLog("initLanes");
 
-    //initMenu();
-    initStartMenu();
-
-    CCLog("initMenu");
-
     initPlayer();
 
     CCLog("initPlayer");
+
+    initMenu();
+    initStartMenu();
+
+    CCLog("initMenu");
 
     initTimeLabel();
     initScoreLabel();
@@ -89,7 +90,7 @@ void PlayScene::initMisc(){
     score = 0;
     duration = userData->levelDuration;
     seconds = duration;
-    
+
     startUpdateTime = false;
 }
 
@@ -129,38 +130,25 @@ void PlayScene::initMenu(){
 
 	array->addObject(downButton);
 
-	MenuForArrowButton * menu = MenuForArrowButton::createWithArray(array);
+	menu = MenuForArrowButton::createWithArray(array);
 
     menu->ignoreAnchorPointForPosition(false);
 
 	menu->registerTouchendHandler(this , menu_selector(PlayScene::touchendHandler));
 
+	menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+
 	addChild(menu);
 }
 
 void PlayScene::initStartMenu(){
-    CCMenuItemImage * newGame = CCMenuItemImage::create("button_new_game.png", "button_new_game.png", this, menu_selector(PlayScene::newGameHandler));
-    
-    CCMenuItemImage * options = CCMenuItemImage::create("button_options.png", "button_options.png");
-    
-    newGame->setScale(0.5);
-    options->setScale(0.5);
-    
-    startMenu = CCMenu::create(newGame , options, NULL);
-    startMenu->alignItemsInColumns(1 , 1);
-    startMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
-    addChild(startMenu);
-    scheduleOnce(schedule_selector(PlayScene::showStartMenu), 1.5);
+	StartMenu * menu = StartMenu::create();
+	addChild(menu);
 }
 
-void PlayScene::newGameHandler(cocos2d::CCObject *sender){
-    startMenu->runAction(CCMoveTo::create(0.5, ccp(winSize.width/2, winSize.height*1.5)));
-    initMenu();
-    startUpdateTime=true;
-}
-
-void PlayScene::showStartMenu(float dt){
-    startMenu->runAction(CCMoveTo::create(0.5, ccp(winSize.width/2, winSize.height/2)));
+void PlayScene::startNewGame(){
+	menu->setPosition(ccp(winSize.width/2, winSize.height/2));
+	startUpdateTime=true;
 }
 
 void PlayScene::initBoundary(){
@@ -219,10 +207,14 @@ void PlayScene::processContact(float dt)
 }
 
 void PlayScene::update(float dt){
-    
+
 	world->Step(dt , 8 , 3);
 
 	player->step(dt);
+
+	for(int i = 0 ; i < lanes.size() ; i++){
+		lanes[i]->step(dt);
+	}
 
 	for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()){
 		CCSprite *sprite = (CCSprite *)b->GetUserData();
@@ -235,7 +227,7 @@ void PlayScene::update(float dt){
 			}
 		}
 	}
-    
+
     if (startUpdateTime==false) {
         return;
     }

@@ -17,7 +17,7 @@ int getRandom(int low, int high)
 	return low + ( random() % ( high + 1 - low ) );
 }
 
-Lane::Lane() : status(RUNNING) {
+Lane::Lane() : status(RUNNING) , timePassedFromLastSchedule(0) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -47,14 +47,9 @@ bool Lane::initWithDescription(LaneDescription * description){
 
 	addRoad();
 
-	scheduleOnce(schedule_selector(Lane::addACar) , 0);
-	scheduleOnce(schedule_selector(Lane::startSchedule) , 0);
+	schedule(schedule_selector(Lane::addACar) , description->period , kCCRepeatForever , 0.1);
 
 	return true;
-}
-
-void Lane::startSchedule(){
-	schedule(schedule_selector(Lane::addACar) , description->period);
 }
 
 void Lane::addRoad(){
@@ -69,6 +64,8 @@ void Lane::addRoad(){
 }
 
 void Lane::addACar(float dt){
+
+	timePassedFromLastSchedule = 0;
 
     if (isSpecialCar(description->specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
@@ -131,9 +128,14 @@ void Lane::reStart(){
         }
     }
 
+    float delay;
+
+    if(timePassedFromLastSchedule > description->period) delay = 0.1;
+    else delay = description->period - timePassedFromLastSchedule;
+
     unschedule(schedule_selector(Lane::addACar));
-	scheduleOnce(schedule_selector(Lane::addACar) , 0);
-	scheduleOnce(schedule_selector(Lane::startSchedule) , 0);
+    schedule(schedule_selector(Lane::addACar) , description->period ,
+    		kCCRepeatForever , delay);
 
     status = RUNNING;
 }
@@ -165,4 +167,8 @@ void Lane::resumeFromSlow(float speed_decrease , float interval_increase){
 	if(status != STOPPED){
 		reStart();
 	}
+}
+
+void Lane::step(float dt){
+	if(status == RUNNING) timePassedFromLastSchedule += dt;
 }

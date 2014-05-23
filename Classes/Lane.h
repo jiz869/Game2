@@ -27,15 +27,15 @@ public:
     virtual void reStart();
     virtual void slow(float speed_decrease , float interval_increase);
     virtual void resumeFromSlow(float speed_decrease , float interval_increase);
+    void step(float dt);
 
 private:
-
 	LaneDescription * description;
 	void addACar(float dt);
     bool isSpecialCar(float chance);
     void addRoad();
     LaneStatus status;
-    void startSchedule();
+    float timePassedFromLastSchedule;
 };
 
 int getRandom(int low, int high);
