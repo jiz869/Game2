@@ -56,7 +56,8 @@ bool PlayScene::init(){
 
     CCLog("initLanes");
 
-    initMenu();
+    //initMenu();
+    initStartMenu();
 
     CCLog("initMenu");
 
@@ -88,6 +89,8 @@ void PlayScene::initMisc(){
     score = 0;
     duration = userData->levelDuration;
     seconds = duration;
+    
+    startUpdateTime = false;
 }
 
 void PlayScene::initPlayer(){
@@ -133,6 +136,31 @@ void PlayScene::initMenu(){
 	menu->registerTouchendHandler(this , menu_selector(PlayScene::touchendHandler));
 
 	addChild(menu);
+}
+
+void PlayScene::initStartMenu(){
+    CCMenuItemImage * newGame = CCMenuItemImage::create("button_new_game.png", "button_new_game.png", this, menu_selector(PlayScene::newGameHandler));
+    
+    CCMenuItemImage * options = CCMenuItemImage::create("button_options.png", "button_options.png");
+    
+    newGame->setScale(0.5);
+    options->setScale(0.5);
+    
+    startMenu = CCMenu::create(newGame , options, NULL);
+    startMenu->alignItemsInColumns(1 , 1);
+    startMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    addChild(startMenu);
+    scheduleOnce(schedule_selector(PlayScene::showStartMenu), 1.5);
+}
+
+void PlayScene::newGameHandler(cocos2d::CCObject *sender){
+    startMenu->runAction(CCMoveTo::create(0.5, ccp(winSize.width/2, winSize.height*1.5)));
+    initMenu();
+    startUpdateTime=true;
+}
+
+void PlayScene::showStartMenu(float dt){
+    startMenu->runAction(CCMoveTo::create(0.5, ccp(winSize.width/2, winSize.height/2)));
 }
 
 void PlayScene::initBoundary(){
@@ -191,7 +219,7 @@ void PlayScene::processContact(float dt)
 }
 
 void PlayScene::update(float dt){
-    numFrame++;
+    
 	world->Step(dt , 8 , 3);
 
 	player->step(dt);
@@ -207,8 +235,12 @@ void PlayScene::update(float dt){
 			}
 		}
 	}
+    
+    if (startUpdateTime==false) {
+        return;
+    }
 
-    if(numFrame % 60 == 0) {
+    if(++numFrame % 60 == 0) {
         seconds--;
         updateGameTime();
     }

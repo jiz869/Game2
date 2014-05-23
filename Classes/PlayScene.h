@@ -36,6 +36,9 @@ public:
     virtual void resumeAllLanesFromSlow(float speed_decrease, float interval_increase);
 
     virtual bool isUpButtonSelected();
+    
+    void newGameHandler(CCObject * sender);
+    void showStartMenu(float dt);
 
 private:
 
@@ -61,6 +64,8 @@ private:
     void initBoundary();
 
     void initLanes();
+    
+    void initStartMenu();
 
     void initTimeLabel();
     void updateGameTime();
@@ -88,6 +93,9 @@ private:
     int score;
     int duration;
     int seconds;
+    bool startUpdateTime;
+    
+    CCMenu * startMenu;
 };
 
 #endif /* defined(__crossRoadMain__PlayScene__) */
