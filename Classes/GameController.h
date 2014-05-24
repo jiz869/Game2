@@ -19,6 +19,7 @@ typedef enum{
     STOP = 0,
     HASTE,
     SLOW,
+    LIFE,
     SPECIAL_NUM,
 }SpecialID;
 
@@ -55,6 +56,7 @@ typedef struct{
     CCAnimation * specialStopAnim;
     CCAnimation * specialHasteAnim;
     CCAnimation * specialSlowAnim;
+    CCAnimation * specialLifeAnim;
 }AnimationData;
 
 typedef struct{

@@ -143,6 +143,8 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
 
         //remove all specials when hit by car
         if(shouldPlayerReset == true){
+            PlayScene * playScene = (PlayScene *)getParent();
+            playScene->changeGameTime(-2);
         	reset();
         	removeAllSpecials();
         }
@@ -212,7 +214,7 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
     for (int i = 0; i < size; i++) {
         if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
             specials.erase(specials.begin() + i);
-            return;
+            break;
         }
     }
 

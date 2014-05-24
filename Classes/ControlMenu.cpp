@@ -43,7 +43,7 @@ bool ControlMenu::init(){
 	CCMenuItemImage * downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                            "button_arrow_selected.png" , this , menu_selector(ControlMenu::downHandler));
 	//downButton is on the right side
-	downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 5, buttonSize.height/2*BUTTON_SCALE));
+	downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 10, buttonSize.height/2*BUTTON_SCALE));
     downButton->setScale(BUTTON_SCALE);
 
 	CCArray * array = CCArray::createWithCapacity(2);
@@ -89,6 +89,8 @@ void ControlMenu::initTimeLabel(){
     timeLabel->setColor( ccc3(255, 10, 10) );
     timeLabel->setPosition( ccp(50, winSize.height - 50) );
     this->addChild(timeLabel);
+    CCString * str = CCString::createWithFormat("%d", seconds);
+    timeLabel->setString(str->getCString());
 }
 
 void ControlMenu::initScoreLabel(){
@@ -140,7 +142,7 @@ void ControlMenu::step(float dt){
         updateGameTime();
     }
 
-    if(seconds == 0)
+    if(seconds <= 0)
     	GameOver();
 }
 
@@ -149,4 +151,17 @@ void ControlMenu::doScore(){
 	updateScore();
 	seconds += duration;
 	updateGameTime();
+}
+
+void ControlMenu::changeTime(int delta){
+	seconds += delta;
+	updateGameTime();
+}
+
+void ControlMenu::increaseDuration(int delta){
+    duration+=delta;
+}
+
+void ControlMenu::resumeDuration(){
+    duration = userData->levelDuration;
 }

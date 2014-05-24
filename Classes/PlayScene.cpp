@@ -222,3 +222,15 @@ bool PlayScene::isUpButtonSelected(){
     return controlMenu->isUpButtonSelected();
 }
 
+void PlayScene::increaseDuration(int delta){
+    controlMenu->increaseDuration(delta);
+}
+
+void PlayScene::resumeDuration(){
+    controlMenu->resumeDuration();
+}
+
+void PlayScene::changeGameTime(int delta){
+    controlMenu->changeTime(delta);
+}
+

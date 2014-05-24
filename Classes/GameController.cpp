@@ -24,6 +24,9 @@ bool static hasteHitByCar(PlayerObj * player, SpecialObj * specialObj);
 void static slowBegin(PlayerObj * player, SpecialObj * specialObj);
 void static slowEnd(PlayerObj * player, SpecialObj * specialObj);
 
+void static lifeBegin(PlayerObj * player, SpecialObj * specialObj);
+void static lifeEnd(PlayerObj * player, SpecialObj * specialObj);
+
 static GameController * controller;
 
 GameController * GameController::getGameController(){
@@ -157,6 +160,10 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     array = (CCArray *)dataDict->objectForKey("special_slow_animation");
     animationData.specialSlowAnim = initAnimation(array);
     animationData.specialSlowAnim->setDelayPerUnit(0.3);
+    
+    array = (CCArray *)dataDict->objectForKey("special_life_animation");
+    animationData.specialLifeAnim = initAnimation(array);
+    animationData.specialLifeAnim->setDelayPerUnit(0.3);
 
     return true;
 }
@@ -211,6 +218,18 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SLOW]->end = &slowEnd;
     specialDatas[SLOW]->hitByCar = NULL;
     specialDatas[SLOW]->animation = animationData.specialSlowAnim;
+    
+    dict = (CCDictionary *)dataDict->objectForKey("life");
+    specialDatas[LIFE] = new SpecialData;
+    specialDatas[LIFE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[LIFE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[LIFE]->userData1 = CCSTRING_FOR_KEY(dict, "min")->floatValue();
+    specialDatas[LIFE]->userData2 = CCSTRING_FOR_KEY(dict, "max")->floatValue();
+    specialDatas[LIFE]->begin = &lifeBegin;
+    specialDatas[LIFE]->step = NULL;
+    specialDatas[LIFE]->end = &lifeEnd;
+    specialDatas[LIFE]->hitByCar = NULL;
+    specialDatas[LIFE]->animation = animationData.specialLifeAnim;
 
     return true;
 }
@@ -252,6 +271,19 @@ void static slowBegin(PlayerObj * player, SpecialObj * specialObj){
 void static slowEnd(PlayerObj * player, SpecialObj * specialObj){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->resumeAllLanesFromSlow(specialObj->getSpecialData()->userData1 , specialObj->getSpecialData()->userData2);
+}
+
+//life
+void static lifeBegin(PlayerObj * player, SpecialObj * specialObj){
+    int life = getRandom(specialObj->getSpecialData()->userData1,
+                         specialObj->getSpecialData()->userData2);
+    
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->increaseDuration(life);
+}
+void static lifeEnd(PlayerObj * player, SpecialObj * specialObj){
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->resumeDuration();
 }
 
 

@@ -31,6 +31,10 @@
 		<array>
 			<string>slow0.png</string>
 		</array>
+		<key>special_life_animation</key>
+		<array>
+			<string>life0.png</string>
+		</array>
 	</dict>
 	<key>play_scene_data</key>
 	<array>
@@ -221,6 +225,17 @@
 			<string>0.8</string>
 			<key>interval_increase</key>
 			<string>0.6</string>
+		</dict>
+		<key>life</key>
+		<dict>
+			<key>duration</key>
+			<string>6</string>
+			<key>image_name</key>
+			<string>life0.png</string>
+			<key>min</key>
+			<string>2</string>
+			<key>max</key>
+			<string>6</string>
 		</dict>
 	</dict>
 </dict>

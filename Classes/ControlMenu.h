@@ -21,6 +21,9 @@ public:
     void startNewGame();
     void doScore();
     void step(float dt);
+    void increaseDuration(int delta);
+    void resumeDuration();
+    void changeTime(int delta);
 
 private:
     CCSize winSize;

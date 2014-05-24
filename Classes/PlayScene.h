@@ -43,6 +43,10 @@ public:
     void upHandler(CCObject * sender);
     void downHandler(CCObject * sender);
     void touchendHandler(CCObject * sender);
+    
+    void increaseDuration(int delta);
+    void resumeDuration();
+    void changeGameTime(int delta);
 
 private:
 
