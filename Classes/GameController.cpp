@@ -11,6 +11,9 @@
 #include "PlayObj.h"
 #include "PlayScene.h"
 #include "ControlMenu.h"
+#include "SimpleAudioEngine.h" 
+
+using namespace CocosDenshion;
 
 void static stopBegin(PlayerObj * player, SpecialObj * specialObj);
 void static stopStep(PlayerObj * player, SpecialObj * specialObj);
@@ -129,6 +132,8 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
         data->playerWaitImageName = CCSTRING_FOR_KEY(dict, "player_wait_image");
         data->playerMoveAnim = animationData.playerMoveAnim;
         data->laneDescriptions.reserve(data->laneNumber);
+        data->backgroundSoundImage = CCSTRING_FOR_KEY(dict, "background_sound_file");
+        SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(data->backgroundSoundImage->getCString());
 
         CCArray * ldArray = (CCArray *)dict->objectForKey("lane_descriptions");
         for (int j = 0; j < ldArray->count(); j++) {

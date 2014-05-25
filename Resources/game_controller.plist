@@ -43,6 +43,8 @@
 	<key>play_scene_data</key>
 	<array>
 		<dict>
+			<key>background_sound_file</key>
+			<string>busy.wav</string>
 			<key>player_wait_image</key>
 			<string>player0.png</string>
 			<key>lane_number</key>

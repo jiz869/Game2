@@ -57,6 +57,7 @@ typedef struct{
     CCString * playerWaitImageName;
     CCAnimation * playerMoveAnim;
     float playerSpeed;
+    CCString * backgroundSoundImage;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 

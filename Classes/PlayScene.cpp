@@ -12,6 +12,9 @@
 #include "GameOverScene.h"
 #include "StartMenu.h"
 #include "ControlMenu.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 
 CCScene* PlayScene::scene()
 {
@@ -81,8 +84,17 @@ void PlayScene::initMisc(){
     ptmRatio = winSize.height / 10;
 
     GameObj::setB2world(world , ptmRatio);
+    
+    if (userData->sound == UNMUTE) {
+        startPlayBackgroundMusic();
+    }
 
     scheduleUpdate();
+}
+
+void PlayScene::startPlayBackgroundMusic(){
+    if(!SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
+        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(data->backgroundSoundImage->getCString(), true);
 }
 
 void PlayScene::initPlayer(){

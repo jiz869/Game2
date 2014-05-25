@@ -8,6 +8,9 @@
 #include "StartMenu.h"
 #include "PlayScene.h"
 #include "ControlMenu.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 
 StartMenu::StartMenu() {
 	// TODO Auto-generated constructor stub
@@ -193,9 +196,26 @@ void StartMenu::saveUserData(CheckboxType tag){
             if (userData->sound != tag) {
                 GameController::getGameController()->setUserData("sound", tag);
                 userData->sound = tag;
+                changeSoundSetting(tag);
             }
             break;
             
+        default:
+            break;
+    }
+}
+
+void StartMenu::changeSoundSetting(CheckboxType type){
+    switch (type) {
+        case MUTE:
+            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            break;
+        case UNMUTE:
+        {
+            PlayScene * playScene = (PlayScene *)getParent();
+            playScene->startPlayBackgroundMusic();
+            break;
+        }
         default:
             break;
     }

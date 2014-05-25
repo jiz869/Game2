@@ -23,6 +23,7 @@ public:
     void optionsHandler(CCObject * sender);
     void okHandler(CCObject * sender);
     void checkboxHandler(CCObject * sender);
+    void changeSoundSetting(CheckboxType type);
 
 private:
     CCMenu * startMenu;

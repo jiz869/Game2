@@ -44,6 +44,7 @@ public:
     
     ControlMenu * controlMenu;
     StartMenu * startMenu;
+    void startPlayBackgroundMusic();
 
 private:
 
