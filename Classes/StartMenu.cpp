@@ -187,6 +187,7 @@ void StartMenu::saveUserData(CheckboxType tag){
                 GameController::getGameController()->setUserData("controller_position", tag);
                 userData->controllerPosition = tag;
             }
+            break;
         case MUTE:
         case UNMUTE:
             if (userData->sound != tag) {

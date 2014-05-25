@@ -108,7 +108,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
         userData.controllerPosition = RIGHT;
     }
     else{
-        userData.sound = SIDE;
+        userData.controllerPosition = SIDE;
     }
 
     return true;
