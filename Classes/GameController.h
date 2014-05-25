@@ -23,6 +23,15 @@ typedef enum{
     SPECIAL_NUM,
 }SpecialID;
 
+typedef enum{
+    LEFT=0,
+    RIGHT,
+    SIDE,
+    MUTE,
+    UNMUTE,
+    CHECKBOX_TYPE_NUM,
+}CheckboxType;
+
 class PlayerObj;
 class SpecialObj;
 
@@ -73,6 +82,8 @@ typedef struct{
 }SpecialData;
 
 typedef struct{
+    CheckboxType sound;
+    CheckboxType controllerPosition;
 	int levelDuration;
 	int topScore;
 	int lastScore;
@@ -86,6 +97,7 @@ public:
     AnimationData * getAnimationData();
     SpecialData * getSpecialData(int speciaId);
     UserData * getUserData();
+    void setUserData(const char * key , CheckboxType data);
 
 private:
     GameController();

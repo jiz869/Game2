@@ -10,6 +10,7 @@
 #include "SpecialObj.h"
 #include "PlayObj.h"
 #include "PlayScene.h"
+#include "ControlMenu.h"
 
 void static stopBegin(PlayerObj * player, SpecialObj * specialObj);
 void static stopStep(PlayerObj * player, SpecialObj * specialObj);
@@ -26,6 +27,8 @@ void static slowEnd(PlayerObj * player, SpecialObj * specialObj);
 
 void static lifeBegin(PlayerObj * player, SpecialObj * specialObj);
 void static lifeEnd(PlayerObj * player, SpecialObj * specialObj);
+
+char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
 
@@ -56,6 +59,12 @@ bool GameController::init(){
     if (dict == NULL) {
         return false;
     }
+    
+    userDataValue[LEFT]="left";
+    userDataValue[RIGHT]="right";
+    userDataValue[SIDE]="side";
+    userDataValue[MUTE]="mute";
+    userDataValue[UNMUTE]="unmute";
 
     designSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -86,6 +95,21 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.levelDuration = CCSTRING_FOR_KEY(dataDict , "level_duration")->intValue();
     userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->intValue();
     userData.lastScore = 0;
+    
+    if (CCSTRING_FOR_KEY(dataDict, "sound")->isEqual(CCString::create("mute"))) {
+        userData.sound = MUTE;
+    }else{
+        userData.sound = UNMUTE;
+    }
+    
+    if (CCSTRING_FOR_KEY(dataDict, "controller_position")->isEqual(CCString::create("left"))) {
+        userData.controllerPosition = LEFT;
+    }else if (CCSTRING_FOR_KEY(dataDict, "controller_position")->isEqual(CCString::create("right"))){
+        userData.controllerPosition = RIGHT;
+    }
+    else{
+        userData.sound = SIDE;
+    }
 
     return true;
 }
@@ -279,11 +303,11 @@ void static lifeBegin(PlayerObj * player, SpecialObj * specialObj){
                          specialObj->getSpecialData()->userData2);
     
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->increaseDuration(life);
+    playScene->controlMenu->increaseDuration(life);
 }
 void static lifeEnd(PlayerObj * player, SpecialObj * specialObj){
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->resumeDuration();
+    playScene->controlMenu->resumeDuration();
 }
 
 
@@ -302,3 +326,15 @@ SpecialData * GameController::getSpecialData(int speciaId){
 UserData * GameController::getUserData(){
 	return &userData;
 }
+
+void GameController::setUserData(const char * key, CheckboxType type){
+    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("game_controller.plist");
+    CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
+    
+    userDataDict->setObject(CCString::createWithFormat("%s", userDataValue[type]), key);
+    
+    dict->setObject(userDataDict, "user_data");
+    dict->writeToFile(fullPath.c_str());
+}
+
+

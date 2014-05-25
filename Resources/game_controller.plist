@@ -4,6 +4,10 @@
 <dict>
 	<key>user_data</key>
 	<dict>
+		<key>sound</key>
+		<string>unmute</string>
+		<key>controller_position</key>
+		<string>right</string>
 		<key>level_duration</key>
 		<string>15</string>
 		<key>top_score</key>

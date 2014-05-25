@@ -11,7 +11,7 @@
 #include "Lane.h"
 #include "GameOverScene.h"
 #include "StartMenu.h"
-#include "ControlMenu.h";
+#include "ControlMenu.h"
 
 CCScene* PlayScene::scene()
 {
@@ -105,8 +105,8 @@ void PlayScene::initControlMenu(){
 }
 
 void PlayScene::initStartMenu(){
-	StartMenu * menu = StartMenu::create();
-	addChild(menu);
+	startMenu = StartMenu::create();
+	addChild(startMenu);
 }
 
 void PlayScene::initBoundary(){
@@ -121,10 +121,6 @@ void PlayScene::initBoundary(){
 	boundary = upperBoundary->load(b2_staticBody , &size , UPPER_BOUNDARY);
 	upperBoundary->setPosition(ccp(winSize.width / 2 , winSize.height));
 	addChild(boundary);
-}
-
-void PlayScene::startNewGame(){
-	controlMenu->startNewGame();
 }
 
 void PlayScene::upHandler(CCObject * sender){
@@ -216,21 +212,5 @@ void PlayScene::resumeAllLanesFromSlow(float speed_decrease, float interval_incr
     for (int i = 0; i < size; i++) {
         lanes[i]->resumeFromSlow(speed_decrease, interval_increase);
     }
-}
-
-bool PlayScene::isUpButtonSelected(){
-    return controlMenu->isUpButtonSelected();
-}
-
-void PlayScene::increaseDuration(int delta){
-    controlMenu->increaseDuration(delta);
-}
-
-void PlayScene::resumeDuration(){
-    controlMenu->resumeDuration();
-}
-
-void PlayScene::changeGameTime(int delta){
-    controlMenu->changeTime(delta);
 }
 

@@ -9,6 +9,7 @@
 #include "PlayObj.h"
 #include "SpecialObj.h"
 #include "PlayScene.h"
+#include "ControlMenu.h"
 
 PlayerObj::PlayerObj() : movingState(WAIT)
 {
@@ -35,7 +36,7 @@ void PlayerObj::reset(){
 
     PlayScene * playScene = (PlayScene *)gameObj->getParent();
 
-    if (playScene && playScene->isUpButtonSelected()) {
+    if (playScene && playScene->controlMenu->isUpButtonSelected()) {
         return;
     }
 
@@ -144,7 +145,7 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
         //remove all specials when hit by car
         if(shouldPlayerReset == true){
             PlayScene * playScene = (PlayScene *)getParent();
-            playScene->changeGameTime(-2);
+            playScene->controlMenu->changeGameTime(-2);
         	reset();
         	removeAllSpecials();
         }

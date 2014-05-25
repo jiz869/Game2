@@ -23,14 +23,15 @@ public:
     void step(float dt);
     void increaseDuration(int delta);
     void resumeDuration();
-    void changeTime(int delta);
+    void changeGameTime(int delta);
+    void changeControllerPosition(CheckboxType type);
 
 private:
     CCSize winSize;
     CCLabelTTF* scoreLabel;
     CCLabelTTF* timeLabel;
     MenuForArrowButton * menu;
-    CCMenuItemImage * upButton;
+    CCMenuItemImage * upButton , * downButton;
 
     void initTimeLabel();
     void initScoreLabel();

@@ -14,6 +14,7 @@
 #include "Lane.h"
 
 class ControlMenu;
+class StartMenu;
 
 class PlayScene : public cocos2d::CCLayerColor , public b2ContactListener
 {
@@ -37,16 +38,12 @@ public:
     virtual void slowAllLanes(float speed_decrease, float interval_increase);
     virtual void resumeAllLanesFromSlow(float speed_decrease, float interval_increase);
 
-    virtual bool isUpButtonSelected();
-    void startNewGame();
-
     void upHandler(CCObject * sender);
     void downHandler(CCObject * sender);
     void touchendHandler(CCObject * sender);
     
-    void increaseDuration(int delta);
-    void resumeDuration();
-    void changeGameTime(int delta);
+    ControlMenu * controlMenu;
+    StartMenu * startMenu;
 
 private:
 
@@ -79,8 +76,6 @@ private:
     vector<Lane *> lanes;
 
     CCSprite * contact;
-
-    ControlMenu * controlMenu;
 };
 
 #endif /* defined(__crossRoadMain__PlayScene__) */

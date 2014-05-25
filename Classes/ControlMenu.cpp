@@ -9,7 +9,7 @@
 #include "GameOverScene.h"
 #include "PlayScene.h"
 
-#define BUTTON_SCALE 0.5
+#define BUTTON_SCALE 0.6
 
 ControlMenu::ControlMenu() {
 	// TODO Auto-generated constructor stub
@@ -33,20 +33,18 @@ bool ControlMenu::init(){
 
 	upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                          "button_arrow_selected.png" , this , menu_selector(ControlMenu::upHandler));
-	CCSize buttonSize = upButton->getContentSize();
-
-	//upButton is on the left side
-	upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*BUTTON_SCALE));
-	upButton->setRotation(180);
+    
+    upButton->setRotation(180);
     upButton->setScale(BUTTON_SCALE);
 
-	CCMenuItemImage * downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
+	downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                            "button_arrow_selected.png" , this , menu_selector(ControlMenu::downHandler));
-	//downButton is on the right side
-	downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 10, buttonSize.height/2*BUTTON_SCALE));
-    downButton->setScale(BUTTON_SCALE);
 
-	CCArray * array = CCArray::createWithCapacity(2);
+    downButton->setScale(BUTTON_SCALE);
+    
+    changeControllerPosition(userData->controllerPosition);
+	
+    CCArray * array = CCArray::createWithCapacity(2);
 
 	array->addObject(upButton);
 
@@ -153,7 +151,7 @@ void ControlMenu::doScore(){
 	updateGameTime();
 }
 
-void ControlMenu::changeTime(int delta){
+void ControlMenu::changeGameTime(int delta){
 	seconds += delta;
 	updateGameTime();
 }
@@ -164,4 +162,33 @@ void ControlMenu::increaseDuration(int delta){
 
 void ControlMenu::resumeDuration(){
     duration = userData->levelDuration;
+}
+
+void ControlMenu::changeControllerPosition(CheckboxType type){
+    CCSize buttonSize = upButton->getContentSize();
+    switch (type) {
+        case LEFT:
+            //upButton is on the left side
+            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height*1.5*BUTTON_SCALE));
+            //downButton is on the right side
+            downButton->setPosition(ccp(buttonSize.width/2 + 15, buttonSize.height/2*BUTTON_SCALE));
+            break;
+            
+        case RIGHT:
+            //upButton is on the left side
+            upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*BUTTON_SCALE));
+            //downButton is on the right side
+            downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*BUTTON_SCALE));
+            break;
+            
+        case SIDE:
+            //upButton is on the left side
+            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height/2*BUTTON_SCALE));
+            //downButton is on the right side
+            downButton->setPosition(ccp(winSize.width - buttonSize.width/2, buttonSize.height/2*BUTTON_SCALE));
+            break;
+            
+        default:
+            break;
+    }
 }
