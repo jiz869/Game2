@@ -1,8 +1,9 @@
 #include "AppDelegate.h"
 #include "PlayScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
-
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate() {
 
@@ -61,7 +62,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
     CCDirector::sharedDirector()->stopAnimation();
-
+    if(SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()){
+    	SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    }
     // if you use SimpleAudioEngine, it must be pause
     // CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
@@ -69,7 +72,7 @@ void AppDelegate::applicationDidEnterBackground() {
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
     CCDirector::sharedDirector()->startAnimation();
-
+    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     // if you use SimpleAudioEngine, it must resume here
     // CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

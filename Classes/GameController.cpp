@@ -11,7 +11,7 @@
 #include "PlayObj.h"
 #include "PlayScene.h"
 #include "ControlMenu.h"
-#include "SimpleAudioEngine.h" 
+#include "SimpleAudioEngine.h"
 
 using namespace CocosDenshion;
 
@@ -56,13 +56,21 @@ GameController::~GameController(){
 }
 
 bool GameController::init(){
-    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("game_controller.plist");
-    dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
+
+	plistWritablePath = CCFileUtils::sharedFileUtils()->getWritablePath().append("game_controller.plist");
+
+	if(!CCFileUtils::sharedFileUtils()->isFileExist(plistWritablePath)){
+		string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("game_controller.plist");
+		dict = CCDictionary::createWithContentsOfFileThreadSafe(path.c_str());
+		dict->writeToFile(plistWritablePath.c_str());
+	}else{
+		dict = CCDictionary::createWithContentsOfFileThreadSafe(plistWritablePath.c_str());
+	}
 
     if (dict == NULL) {
         return false;
     }
-    
+
     userDataValue[LEFT]="left";
     userDataValue[RIGHT]="right";
     userDataValue[SIDE]="side";
@@ -98,13 +106,13 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.levelDuration = CCSTRING_FOR_KEY(dataDict , "level_duration")->intValue();
     userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->intValue();
     userData.lastScore = 0;
-    
+
     if (CCSTRING_FOR_KEY(dataDict, "sound")->isEqual(CCString::create("mute"))) {
         userData.sound = MUTE;
     }else{
         userData.sound = UNMUTE;
     }
-    
+
     if (CCSTRING_FOR_KEY(dataDict, "controller_position")->isEqual(CCString::create("left"))) {
         userData.controllerPosition = LEFT;
     }else if (CCSTRING_FOR_KEY(dataDict, "controller_position")->isEqual(CCString::create("right"))){
@@ -189,7 +197,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     array = (CCArray *)dataDict->objectForKey("special_slow_animation");
     animationData.specialSlowAnim = initAnimation(array);
     animationData.specialSlowAnim->setDelayPerUnit(0.3);
-    
+
     array = (CCArray *)dataDict->objectForKey("special_life_animation");
     animationData.specialLifeAnim = initAnimation(array);
     animationData.specialLifeAnim->setDelayPerUnit(0.3);
@@ -247,7 +255,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SLOW]->end = &slowEnd;
     specialDatas[SLOW]->hitByCar = NULL;
     specialDatas[SLOW]->animation = animationData.specialSlowAnim;
-    
+
     dict = (CCDictionary *)dataDict->objectForKey("life");
     specialDatas[LIFE] = new SpecialData;
     specialDatas[LIFE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
@@ -306,7 +314,7 @@ void static slowEnd(PlayerObj * player, SpecialObj * specialObj){
 void static lifeBegin(PlayerObj * player, SpecialObj * specialObj){
     int life = getRandom(specialObj->getSpecialData()->userData1,
                          specialObj->getSpecialData()->userData2);
-    
+
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->increaseDuration(life);
 }
@@ -333,13 +341,12 @@ UserData * GameController::getUserData(){
 }
 
 void GameController::setUserData(const char * key, CheckboxType type){
-    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("game_controller.plist");
     CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
-    
+
     userDataDict->setObject(CCString::createWithFormat("%s", userDataValue[type]), key);
-    
+
     dict->setObject(userDataDict, "user_data");
-    dict->writeToFile(fullPath.c_str());
+    dict->writeToFile(plistWritablePath.c_str());
 }
 
 
