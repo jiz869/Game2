@@ -60,8 +60,8 @@
 					<string>2.2</string>
 					<key>speed</key>
 					<string>3.5</string>
-					<key>ccp_y_percent</key>
-					<string>0.1</string>
+					<key>init_position</key>
+					<string>{0,0.1}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>road_image</key>
@@ -81,8 +81,8 @@
 					<string>2.6</string>
 					<key>speed</key>
 					<string>3</string>
-					<key>ccp_y_percent</key>
-					<string>0.2</string>
+					<key>init_position</key>
+					<string>{0,0.2}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>road_image</key>
@@ -102,8 +102,8 @@
 					<string>3</string>
 					<key>speed</key>
 					<string>3.5</string>
-					<key>ccp_y_percent</key>
-					<string>0.3</string>
+					<key>init_position</key>
+					<string>{0,0.3}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>road_image</key>
@@ -123,8 +123,8 @@
 					<string>4</string>
 					<key>speed</key>
 					<string>6</string>
-					<key>ccp_y_percent</key>
-					<string>0.4</string>
+					<key>init_position</key>
+					<string>{0,0.4}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>road_image</key>
@@ -144,8 +144,8 @@
 					<string>2.8</string>
 					<key>speed</key>
 					<string>2.5</string>
-					<key>ccp_y_percent</key>
-					<string>0.5</string>
+					<key>init_position</key>
+					<string>{1,0.5}</string>
 					<key>direction</key>
 					<string>right2left</string>
 					<key>road_image</key>
@@ -165,8 +165,8 @@
 					<string>2.8</string>
 					<key>speed</key>
 					<string>3.5</string>
-					<key>ccp_y_percent</key>
-					<string>0.6</string>
+					<key>init_position</key>
+					<string>{1,0.6}</string>
 					<key>direction</key>
 					<string>right2left</string>
 					<key>road_image</key>
@@ -186,8 +186,8 @@
 					<string>2.8</string>
 					<key>speed</key>
 					<string>2.8</string>
-					<key>ccp_y_percent</key>
-					<string>0.7</string>
+					<key>init_position</key>
+					<string>{1,0.7}</string>
 					<key>direction</key>
 					<string>right2left</string>
 					<key>road_image</key>
@@ -207,8 +207,8 @@
 					<string>2.8</string>
 					<key>speed</key>
 					<string>2.2</string>
-					<key>ccp_y_percent</key>
-					<string>0.8</string>
+					<key>init_position</key>
+					<string>{1,0.8}</string>
 					<key>direction</key>
 					<string>right2left</string>
 					<key>road_image</key>

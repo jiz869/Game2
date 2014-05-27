@@ -148,17 +148,16 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
             LaneDescription * ld = new LaneDescription();
             CCDictionary * ldDict = (CCDictionary *)ldArray->objectAtIndex(j);
 
-            ld->height = designSize.height * CCSTRING_FOR_KEY(ldDict, "ccp_y_percent")->floatValue();
+            CCPoint pos = CCPointFromString(CCSTRING_FOR_KEY(ldDict, "init_position")->getCString());
+            ld->initPos = ccp(pos.x * designSize.width , pos.y * designSize.height);
             ld->period = CCSTRING_FOR_KEY(ldDict, "period")->floatValue();
             ld->specialChance = CCSTRING_FOR_KEY(ldDict, "special_chance")->floatValue();
             ld->roadImage = CCSTRING_FOR_KEY(ldDict, "road_image");
             if (CCSTRING_FOR_KEY(ldDict, "direction")->isEqual(CCString::create("left2right"))) {
                 ld->left2right = true;
-                ld->initPos = ccp(0, ld->height);
                 ld->carSpeed = CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();
             }else{
                 ld->left2right = false;
-                ld->initPos = ccp(designSize.width, ld->height);
                 ld->carSpeed = -CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();
             }
 
