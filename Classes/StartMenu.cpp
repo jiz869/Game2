@@ -13,6 +13,9 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 extern void setBannerViewHidden(bool);
 #define SET_BANNDER_HIDDEN(_hidden) setBannerViewHidden(_hidden)
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../admob.android/AdmobHelper.h"
+#define SET_BANNDER_HIDDEN(_hidden) AdmobHelper::setBannerViewHidden(_hidden)
 #else
 #define SET_BANNDER_HIDDEN(_hidden)
 #endif
