@@ -115,6 +115,7 @@ private:
     CCAnimation * initAnimation(CCArray * frameNameArray);
     vector<SpecialData *> specialDatas;
     CCSize designSize;
+    string plistWritablePath;
 };
 
 #endif /* defined(__crossRoad__GameController__) */

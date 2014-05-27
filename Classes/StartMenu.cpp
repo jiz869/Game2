@@ -10,6 +10,13 @@
 #include "ControlMenu.h"
 #include "SimpleAudioEngine.h"
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+extern void setBannerViewHidden(bool);
+#define SET_BANNDER_HIDDEN(_hidden) setBannerViewHidden(_hidden)
+#else
+#define SET_BANNDER_HIDDEN(_hidden)
+#endif
+
 using namespace CocosDenshion;
 
 StartMenu::StartMenu() {
@@ -25,6 +32,8 @@ bool StartMenu::init(){
     if (!CCLayerColor::initWithColor(ccc4(0,0,0,176))) {
         return false;
     }
+    
+    SET_BANNDER_HIDDEN(false);
 
     winSize = CCDirector::sharedDirector()->getWinSize();
     ignoreAnchorPointForPosition(false);
@@ -118,6 +127,7 @@ void StartMenu::initOptionsMenu(){
 }
 
 void StartMenu::newGameHandler(cocos2d::CCObject *sender){
+    SET_BANNDER_HIDDEN(true);
 	CCSequence * sequence = CCSequence::create(CCMoveTo::create(1, ccp(winSize.width/2, winSize.height*1.5)),
 			CCCallFunc::create(((PlayScene *)getParent())->controlMenu, callfunc_selector(ControlMenu::startNewGame)) , NULL);
     runAction(sequence);
@@ -128,11 +138,13 @@ void StartMenu::showStartMenu(float dt){
 }
 
 void StartMenu::optionsHandler(cocos2d::CCObject *sender){
+    SET_BANNDER_HIDDEN(true);
     startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
 }
 
 void StartMenu::okHandler(cocos2d::CCObject *sender){
+    SET_BANNDER_HIDDEN(false);
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     startMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
 }
