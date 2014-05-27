@@ -10,6 +10,13 @@
 
 #include "cocos2d.h"
 
+typedef enum{
+	UP = 0,
+	DOWN,
+	PAUSE_PLAY,
+	CONTROL_BUTTON_MAX,
+}ControlButtonType;
+
 using namespace cocos2d;
 
 class MenuForArrowButton: public cocos2d::CCMenu {

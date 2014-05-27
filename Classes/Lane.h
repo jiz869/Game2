@@ -24,6 +24,7 @@ public:
 	static Lane * creatWithDescription(LaneDescription * description);
 	virtual bool initWithDescription(LaneDescription * description);
     virtual void stopAtPosition(float x);
+    virtual void stop();
     virtual void reStart();
     virtual void slow(float speed_decrease , float interval_increase);
     virtual void resumeFromSlow(float speed_decrease , float interval_increase);

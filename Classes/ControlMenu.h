@@ -11,6 +11,11 @@
 #include "MenuForArrowButton.h"
 #include "GameController.h"
 
+typedef enum{
+	PAUSE = 0,
+	PLAY,
+}GameStatus;
+
 class ControlMenu: public cocos2d::CCLayerColor {
 public:
 	ControlMenu();
@@ -25,6 +30,7 @@ public:
     void resumeDuration();
     void changeGameTime(int delta);
     void changeControllerPosition(CheckboxType type);
+    void pauseAndPlayHandler(CCObject * sender);
 
 private:
     CCSize winSize;
@@ -52,6 +58,10 @@ private:
     void upHandler(CCObject * sender);
     void downHandler(CCObject * sender);
     void touchendHandler(CCObject * sender);
+
+    GameStatus status;
+    void pauseGame();
+    void resumeGame();
 };
 
 #endif /* CONTROLMENU_H_ */

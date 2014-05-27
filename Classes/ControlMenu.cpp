@@ -11,7 +11,7 @@
 
 #define BUTTON_SCALE 0.6
 
-ControlMenu::ControlMenu() {
+ControlMenu::ControlMenu() : status(PLAY) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -33,22 +33,37 @@ bool ControlMenu::init(){
 
 	upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                          "button_arrow_selected.png" , this , menu_selector(ControlMenu::upHandler));
-    
+
     upButton->setRotation(180);
     upButton->setScale(BUTTON_SCALE);
+    upButton->setTag(UP);
 
 	downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                            "button_arrow_selected.png" , this , menu_selector(ControlMenu::downHandler));
 
     downButton->setScale(BUTTON_SCALE);
-    
+    downButton->setTag(DOWN);
+
     changeControllerPosition(userData->controllerPosition);
-	
-    CCArray * array = CCArray::createWithCapacity(2);
+
+    CCMenuItemImage * pauseAndPlay = CCMenuItemImage::create("pause.png" ,
+            "play.png" , this , menu_selector(ControlMenu::pauseAndPlayHandler));
+
+    pauseAndPlay->setScale(0.5);
+
+    pauseAndPlay->setAnchorPoint(ccp(1.1 , 1.05));
+
+    pauseAndPlay->setPosition(ccp(winSize.width , winSize.height));
+
+    pauseAndPlay->setTag(PAUSE_PLAY);
+
+    CCArray * array = CCArray::createWithCapacity(CONTROL_BUTTON_MAX);
 
 	array->addObject(upButton);
 
 	array->addObject(downButton);
+
+	array->addObject(pauseAndPlay);
 
 	menu = MenuForArrowButton::createWithArray(array);
 
@@ -70,6 +85,35 @@ bool ControlMenu::init(){
 
     return true;
 }
+
+void ControlMenu::pauseAndPlayHandler(CCObject * sender){
+	CCMenuItem * item = (CCMenuItem *)sender;
+
+	if(status == PLAY){
+		status = PAUSE;
+		item->selected();
+		pauseGame();
+	}else{
+		status = PLAY;
+		item->unselected();
+		resumeGame();
+	}
+}
+
+void ControlMenu::pauseGame(){
+	((PlayScene *)getParent())->freezeAllLanes();
+	upButton->setEnabled(false);
+	downButton->setEnabled(false);
+	startUpdateTime = false;
+}
+
+void ControlMenu::resumeGame(){
+	((PlayScene *)getParent())->restartAllLanes();
+	upButton->setEnabled(true);
+	downButton->setEnabled(true);
+	startUpdateTime = true;
+}
+
 
 void ControlMenu::upHandler(CCObject * sender){
 	((PlayScene *)getParent())->upHandler(NULL);
@@ -95,8 +139,7 @@ void ControlMenu::initScoreLabel(){
     scoreLabel = CCLabelTTF::create("0", "Helvetica", 64 );
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     scoreLabel->setColor( ccc3(0, 0, 128) );
-    scoreLabel->setPosition( ccp(winSize.width - 50, winSize.height - 50) );
-
+    scoreLabel->setPosition( ccp(150, winSize.height - 50) );
     this->addChild(scoreLabel);
 }
 
@@ -173,21 +216,21 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
             //downButton is on the right side
             downButton->setPosition(ccp(buttonSize.width/2 + 15, buttonSize.height/2*BUTTON_SCALE));
             break;
-            
+
         case RIGHT:
             //upButton is on the left side
             upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*BUTTON_SCALE));
             //downButton is on the right side
             downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*BUTTON_SCALE));
             break;
-            
+
         case SIDE:
             //upButton is on the left side
             upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height/2*BUTTON_SCALE));
             //downButton is on the right side
             downButton->setPosition(ccp(winSize.width - buttonSize.width/2, buttonSize.height/2*BUTTON_SCALE));
             break;
-            
+
         default:
             break;
     }

@@ -113,6 +113,26 @@ void Lane::stopAtPosition(float x){
     status = STOPPED;
 }
 
+void Lane::stop(){
+    CCArray * children = getChildren();
+
+    B2Sprite * car;
+
+    CCObject * pObject;
+
+    CCARRAY_FOREACH(children, pObject){
+        car = (B2Sprite *)pObject;
+
+        if (car && car->getTag() != kCCNodeTagInvalid) {
+        	car->getB2Body()->SetLinearVelocity(b2Vec2(0 , 0));
+        }
+    }
+
+    unschedule(schedule_selector(Lane::addACar));
+
+    status = STOPPED;
+}
+
 void Lane::reStart(){
     CCArray * children = getChildren();
 

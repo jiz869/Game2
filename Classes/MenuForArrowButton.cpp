@@ -32,6 +32,7 @@ MenuForArrowButton * MenuForArrowButton::createWithArray(CCArray* pArrayOfItems)
 
 bool MenuForArrowButton::ccTouchBegan(CCTouch* touch, CCEvent* event){
 	bool ret = CCMenu::ccTouchBegan(touch , event);
+	if(m_pSelectedItem && m_pSelectedItem->getTag() == PAUSE_PLAY) return ret;
     if (m_pSelectedItem)
     {
         m_pSelectedItem->activate();
@@ -41,6 +42,7 @@ bool MenuForArrowButton::ccTouchBegan(CCTouch* touch, CCEvent* event){
 
 void MenuForArrowButton::ccTouchEnded(CCTouch *touch, CCEvent* event){
     CCMenu::ccTouchEnded(touch, event);
+    if(m_pSelectedItem && m_pSelectedItem->getTag() == PAUSE_PLAY) return;
     if (m_pSelectedItem)
     {
         if (m_pListener && m_pfnSelector)

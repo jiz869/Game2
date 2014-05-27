@@ -32,6 +32,7 @@ public:
     virtual void BeginContact(b2Contact* contact);
 
     virtual void stopAllLanes();
+    virtual void freezeAllLanes();
 
     virtual void restartAllLanes();
 
@@ -41,7 +42,7 @@ public:
     void upHandler(CCObject * sender);
     void downHandler(CCObject * sender);
     void touchendHandler(CCObject * sender);
-    
+
     ControlMenu * controlMenu;
     StartMenu * startMenu;
     void startPlayBackgroundMusic();
