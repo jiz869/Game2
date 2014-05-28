@@ -8,6 +8,9 @@
 #include "ControlMenu.h"
 #include "GameOverScene.h"
 #include "PlayScene.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 
 #define BUTTON_SCALE 0.6
 
@@ -105,6 +108,9 @@ void ControlMenu::pauseGame(){
 	upButton->setEnabled(false);
 	downButton->setEnabled(false);
 	startUpdateTime = false;
+    if(SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()){
+    	SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    }
 }
 
 void ControlMenu::resumeGame(){
@@ -112,6 +118,7 @@ void ControlMenu::resumeGame(){
 	upButton->setEnabled(true);
 	downButton->setEnabled(true);
 	startUpdateTime = true;
+	SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
 
 

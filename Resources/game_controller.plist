@@ -44,7 +44,7 @@
 	<array>
 		<dict>
 			<key>background_sound_file</key>
-			<string>busy.wav</string>
+			<string>busy.ogg</string>
 			<key>player_wait_image</key>
 			<string>player0.png</string>
 			<key>lane_number</key>
