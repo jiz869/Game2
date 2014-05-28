@@ -50,7 +50,7 @@
 			<key>lane_number</key>
 			<string>8</string>
 			<key>player_init_speed</key>
-			<string>2</string>
+			<string>4</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
