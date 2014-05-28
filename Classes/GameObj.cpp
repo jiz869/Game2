@@ -28,7 +28,6 @@ B2Sprite * GameObj::load(b2BodyType type , const CCSize * size , SpriteTag tag){
 }
 
 B2Sprite * GameObj::load(const char * name , b2BodyType type , const CCSize * size , SpriteTag tag){
-
 	if(name){
 		gameObj = B2Sprite::createWithSpriteFrameName(name);
 	}else{
@@ -42,7 +41,14 @@ B2Sprite * GameObj::load(const char * name , b2BodyType type , const CCSize * si
     b2Body * body = world->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-    shape.SetAsBox(size->width/2/ptmRatio * 0.9, size->height/2/ptmRatio * 0.9);
+
+    if(tag == CAR || tag == SPECIAL){
+    	shape.SetAsBox(size->width/2/ptmRatio * 0.9 * 0.8, size->height/2/ptmRatio * 0.9 * 0.8);
+    	gameObj->setScale(0.8);
+    }
+    else{
+    	shape.SetAsBox(size->width/2/ptmRatio * 0.9, size->height/2/ptmRatio * 0.9);
+    }
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;

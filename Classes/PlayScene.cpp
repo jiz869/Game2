@@ -65,12 +65,31 @@ bool PlayScene::init(){
 
     CCLog("initPlayer");
 
+    initCityObj();
+
     initControlMenu();
     initStartMenu();
 
     CCLog("initMenu");
 
     return true;
+}
+
+void PlayScene::initCityObj(){
+	CCString * houseName;
+	CCSprite * house;
+
+	for(int i = 0 ; i < 8 ; i++){
+		for(int j = 0 ; j < 21 ; j++){
+			if(j == 10 ) continue;
+			int houseNumber = getRandom(0 , 38);
+			houseName = CCString::createWithFormat("house%d.png", houseNumber);
+			house = CCSprite::createWithSpriteFrameName(houseName->getCString());
+			house->setPosition(ccp(j * 0.05 * winSize.width , (0.05 + i * 0.1) * winSize.height));
+			house->setScale(0.8);
+			addChild(house);
+		}
+	}
 }
 
 void PlayScene::initMisc(){

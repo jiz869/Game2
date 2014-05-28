@@ -72,6 +72,8 @@ private:
 
     void processContact(float dt);
 
+    void initCityObj();
+
     PlayerObj * player;
     GameObj * lowerBoundary , * upperBoundary;
 

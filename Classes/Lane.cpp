@@ -60,6 +60,8 @@ void Lane::addRoad(){
 
 	road->setPosition(description->initPos);
 
+	road->setScaleY(0.8);
+
 	addChild(road);
 }
 
