@@ -48,6 +48,10 @@ protected:
     PlayerState movingState;
     vector<SpecialObj *> specials;
     PlaySceneData * data;
+    CCPoint velocity;
+    CCPoint acc;	//acceleration
+    float playerAccSpeed;		//starting acceleration
+    float playerStopAccSpeed;	//stopping acceleration
 };
 
 #endif /* defined(__crossRoadMain__PlayObj__) */

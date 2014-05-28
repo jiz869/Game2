@@ -40,6 +40,9 @@ void PlayerObj::reset(){
         return;
     }
 
+    velocity = ccp(0,0);
+    playerAccSpeed = 0.2;
+    playerStopAccSpeed = 0.07;
     wait();
 }
 
@@ -47,7 +50,7 @@ void PlayerObj::wait()
 {
     gameObj->stopAllActions();
     movingState = WAIT;
-    setVelocity(b2Vec2(0 , 0));
+    acc = (velocity.y > 0) ? ccp(0,-playerStopAccSpeed) : ccp(0, playerStopAccSpeed);
     CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(data->playerWaitImageName->getCString());
     gameObj->setDisplayFrame(frame);
     //CCLog("set player state WAIT");
@@ -61,7 +64,8 @@ void PlayerObj::jumpUp()
         CCAnimate * moveUp= CCAnimate::create(data->playerMoveAnim);
         gameObj->runAction(CCRepeatForever::create(moveUp));
         movingState = JMP_UP;
-        setVelocity(b2Vec2(0 , data->playerSpeed));
+        acc = ccp(0, playerAccSpeed);
+        //setVelocity(b2Vec2(0 , data->playerSpeed));
         //CCLog("set player state JMP %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
     }
 }
@@ -77,7 +81,8 @@ void PlayerObj::jumpDown()
         CCAnimate * moveUp= CCAnimate::create(data->playerMoveAnim);
         gameObj->runAction(CCRepeatForever::create(moveUp));
         movingState = JMP_DOWN;
-        setVelocity(b2Vec2(0 , -data->playerSpeed));
+        acc = ccp(0, -playerAccSpeed);
+        //setVelocity(b2Vec2(0 , -data->playerSpeed));
         //CCLog("set player state JMP_DOWN %f %f", gameObj->getB2Body()->GetPosition().x , gameObj->getB2Body()->GetPosition().y);
     }
 }
@@ -117,6 +122,18 @@ void PlayerObj::step(float dt){
     for (int i = 0; i < size; i++) {
         specials[i]->step(this);
     }
+    velocity = velocity + acc;
+
+    if(movingState == WAIT && velocity.y*acc.y >= 0) {
+    	velocity = ccp(0,0);
+    	acc = ccp(0,0);
+    }else if( velocity.y > data->playerSpeed) {
+    	velocity = ccp(0, data->playerSpeed);
+    }else if( velocity.y < -data->playerSpeed) {
+    	velocity = ccp(0, -data->playerSpeed);
+    }
+
+    setVelocity(b2Vec2(velocity.x , velocity.y));
 }
 
 void PlayerObj::processContact(cocos2d::CCSprite *contact){
