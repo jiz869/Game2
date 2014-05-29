@@ -13,6 +13,7 @@
 #include "StartMenu.h"
 #include "ControlMenu.h"
 #include "SimpleAudioEngine.h"
+#include "City.h"
 
 using namespace CocosDenshion;
 
@@ -57,11 +58,13 @@ bool PlayScene::init(){
 
     CCLog("initBoundary");
 
+    initCityObj();
+
+    CCLog("initCityObj");
+
     initLanes();
 
     CCLog("initLanes");
-    
-    initCityObj();
 
     initPlayer();
 
@@ -76,28 +79,8 @@ bool PlayScene::init(){
 }
 
 void PlayScene::initCityObj(){
-    int number;
-	CCString * spriteName;
-	CCSprite * sprite;
-
-	for(int i = 0 ; i < 8 ; i++){
-		for(int j = 0 ; j < 21 ; j++){
-			if(j == 10 || j == 5 || j == 15 ) {
-                number = getRandom(0 , 6);
-                spriteName = CCString::createWithFormat("tile%d.png", number);
-            }else if(toss(0.5)){
-                number = getRandom(0 , 38);
-                spriteName = CCString::createWithFormat("house%d.png", number);
-            }else{
-                number = getRandom(0 , 16);
-                spriteName = CCString::createWithFormat("tree%d.png", number);
-            }
-            sprite = CCSprite::createWithSpriteFrameName(spriteName->getCString());
-			sprite->setPosition(ccp(j * 0.05 * winSize.width , (0.05 + i * 0.1) * winSize.height));
-			sprite->setScale(0.8);
-			addChild(sprite);
-		}
-	}
+	City * city = City::create();
+	addChild(city);
 }
 
 void PlayScene::initMisc(){

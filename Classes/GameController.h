@@ -48,7 +48,6 @@ typedef struct{
     bool left2right;
     float period;
     float specialChance;
-    CCString * roadImage;
     vector<int> carNumbers;
 }LaneDescription;
 

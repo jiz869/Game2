@@ -52,6 +52,13 @@ void MenuForArrowButton::ccTouchEnded(CCTouch *touch, CCEvent* event){
     }
 }
 
+void MenuForArrowButton::ccTouchMoved(CCTouch *touch, CCEvent* event){
+	CCMenu::ccTouchMoved(touch, event);
+	if (m_pSelectedItem){
+		m_pSelectedItem->activate();
+	}
+}
+
 void MenuForArrowButton::registerTouchendHandler(CCObject *target, SEL_MenuHandler selector){
 	m_pListener = target;
 	m_pfnSelector = selector;

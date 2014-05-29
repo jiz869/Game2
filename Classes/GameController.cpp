@@ -154,7 +154,6 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
             ld->initPos = ccp(pos.x * designSize.width , pos.y * designSize.height);
             ld->period = CCSTRING_FOR_KEY(ldDict, "period")->floatValue();
             ld->specialChance = CCSTRING_FOR_KEY(ldDict, "special_chance")->floatValue();
-            ld->roadImage = CCSTRING_FOR_KEY(ldDict, "road_image");
             if (CCSTRING_FOR_KEY(ldDict, "direction")->isEqual(CCString::create("left2right"))) {
                 ld->left2right = true;
                 ld->carSpeed = CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();

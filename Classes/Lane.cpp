@@ -18,13 +18,13 @@ int getRandom(int low, int high)
 }
 
 bool toss(float chance){
-    
+
     int value = chance * 100;
-    
+
     if (getRandom(0, 100) < value) {
         return true;
     }
-    
+
     return false;
 }
 
@@ -56,24 +56,9 @@ bool Lane::initWithDescription(LaneDescription * description){
 
 	this->description = description;
 
-	addRoad();
-
 	schedule(schedule_selector(Lane::addACar) , description->period , kCCRepeatForever , 0.1);
 
 	return true;
-}
-
-void Lane::addRoad(){
-	CCSprite * road = CCSprite::createWithSpriteFrameName(description->roadImage->getCString());
-
-	if(description->left2right) road->setAnchorPoint(ccp(0 , 0.5));
-	else road->setAnchorPoint(ccp(1 , 0.5));
-
-	road->setPosition(description->initPos);
-
-	road->setScaleY(0.8);
-
-	addChild(road);
 }
 
 void Lane::addACar(float dt){
