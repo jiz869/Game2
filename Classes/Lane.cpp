@@ -17,6 +17,17 @@ int getRandom(int low, int high)
 	return low + ( random() % ( high + 1 - low ) );
 }
 
+bool toss(float chance){
+    
+    int value = chance * 100;
+    
+    if (getRandom(0, 100) < value) {
+        return true;
+    }
+    
+    return false;
+}
+
 Lane::Lane() : status(RUNNING) , timePassedFromLastSchedule(0) {
 	// TODO Auto-generated constructor stub
 
@@ -69,7 +80,7 @@ void Lane::addACar(float dt){
 
 	timePassedFromLastSchedule = 0;
 
-    if (isSpecialCar(description->specialChance)) {
+    if (toss(description->specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
         speciaObj->load(description->left2right, description->initPos, description->carSpeed, this);
         return;
@@ -78,17 +89,6 @@ void Lane::addACar(float dt){
 	CarObj * car = new CarObj();
 
     car->load(description->left2right, description->initPos, description->carSpeed, this , &description->carNumbers);
-}
-
-bool Lane::isSpecialCar(float chance){
-
-    int value = chance * 100;
-
-    if (getRandom(0, 100) < value) {
-        return true;
-    }
-
-    return false;
 }
 
 void Lane::stopAtPosition(float x){

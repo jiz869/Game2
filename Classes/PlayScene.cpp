@@ -45,7 +45,7 @@ PlayScene::~PlayScene(){
 }
 
 bool PlayScene::init(){
-    if (!CCLayerColor::initWithColor(ccc4(255,255,255,255))) {
+    if (!CCLayerColor::initWithColor(ccc4(0x9f,0x9f,0x5f,255))) {
         return false;
     }
 
@@ -60,12 +60,12 @@ bool PlayScene::init(){
     initLanes();
 
     CCLog("initLanes");
+    
+    initCityObj();
 
     initPlayer();
 
     CCLog("initPlayer");
-
-    initCityObj();
 
     initControlMenu();
     initStartMenu();
@@ -76,18 +76,26 @@ bool PlayScene::init(){
 }
 
 void PlayScene::initCityObj(){
-	CCString * houseName;
-	CCSprite * house;
+    int number;
+	CCString * spriteName;
+	CCSprite * sprite;
 
 	for(int i = 0 ; i < 8 ; i++){
 		for(int j = 0 ; j < 21 ; j++){
-			if(j == 10 ) continue;
-			int houseNumber = getRandom(0 , 38);
-			houseName = CCString::createWithFormat("house%d.png", houseNumber);
-			house = CCSprite::createWithSpriteFrameName(houseName->getCString());
-			house->setPosition(ccp(j * 0.05 * winSize.width , (0.05 + i * 0.1) * winSize.height));
-			house->setScale(0.8);
-			addChild(house);
+			if(j == 10 || j == 5 || j == 15 ) {
+                number = getRandom(0 , 6);
+                spriteName = CCString::createWithFormat("tile%d.png", number);
+            }else if(toss(0.5)){
+                number = getRandom(0 , 38);
+                spriteName = CCString::createWithFormat("house%d.png", number);
+            }else{
+                number = getRandom(0 , 16);
+                spriteName = CCString::createWithFormat("tree%d.png", number);
+            }
+            sprite = CCSprite::createWithSpriteFrameName(spriteName->getCString());
+			sprite->setPosition(ccp(j * 0.05 * winSize.width , (0.05 + i * 0.1) * winSize.height));
+			sprite->setScale(0.8);
+			addChild(sprite);
 		}
 	}
 }

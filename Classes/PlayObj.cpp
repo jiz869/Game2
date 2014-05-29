@@ -41,18 +41,15 @@ void PlayerObj::reset(){
     }
 
     velocity = ccp(0,0);
-    playerAccSpeed = 0.2;
-    playerStopAccSpeed = 0.07;
+    playerAccSpeed = data->playerAccSpeed;
+    playerStopAccSpeed = data->playerStopAccSpeed;
     wait();
 }
 
 void PlayerObj::wait()
 {
-    gameObj->stopAllActions();
     movingState = WAIT;
     acc = (velocity.y > 0) ? ccp(0,-playerStopAccSpeed) : ccp(0, playerStopAccSpeed);
-    CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(data->playerWaitImageName->getCString());
-    gameObj->setDisplayFrame(frame);
     //CCLog("set player state WAIT");
 }
 
@@ -127,6 +124,9 @@ void PlayerObj::step(float dt){
     if(movingState == WAIT && velocity.y*acc.y >= 0) {
     	velocity = ccp(0,0);
     	acc = ccp(0,0);
+    	gameObj->stopAllActions();
+        CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(data->playerWaitImageName->getCString());
+        gameObj->setDisplayFrame(frame);
     }else if( velocity.y > data->playerSpeed) {
     	velocity = ccp(0, data->playerSpeed);
     }else if( velocity.y < -data->playerSpeed) {

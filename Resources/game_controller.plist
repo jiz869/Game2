@@ -51,6 +51,10 @@
 			<string>8</string>
 			<key>player_init_speed</key>
 			<string>4</string>
+			<key>player_start_acc_speed</key>
+			<string>0.06</string>
+			<key>player_stop_acc_speed</key>
+			<string>0.04</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>

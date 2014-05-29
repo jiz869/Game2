@@ -141,6 +141,8 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
         data->playerMoveAnim = animationData.playerMoveAnim;
         data->laneDescriptions.reserve(data->laneNumber);
         data->backgroundSoundImage = CCSTRING_FOR_KEY(dict, "background_sound_file");
+        data->playerAccSpeed = CCSTRING_FOR_KEY(dict , "player_start_acc_speed")->floatValue();
+        data->playerStopAccSpeed = CCSTRING_FOR_KEY(dict , "player_stop_acc_speed")->floatValue();
         SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(data->backgroundSoundImage->getCString());
 
         CCArray * ldArray = (CCArray *)dict->objectForKey("lane_descriptions");

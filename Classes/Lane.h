@@ -11,6 +11,8 @@
 #include "GameObj.h"
 #include "GameController.h"
 
+extern bool toss(float);
+
 typedef enum{
 	RUNNING = 0x1 << 0,
 	STOPPED = 0x1 << 1,
@@ -33,7 +35,6 @@ public:
 private:
 	LaneDescription * description;
 	void addACar(float dt);
-    bool isSpecialCar(float chance);
     void addRoad();
     LaneStatus status;
     float timePassedFromLastSchedule;

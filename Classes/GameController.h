@@ -58,6 +58,8 @@ typedef struct{
     CCAnimation * playerMoveAnim;
     float playerSpeed;
     CCString * backgroundSoundImage;
+    float playerAccSpeed;
+    float playerStopAccSpeed;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 
