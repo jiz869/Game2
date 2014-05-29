@@ -133,10 +133,17 @@ void ControlMenu::touchendHandler(CCObject * sender){
 }
 
 void ControlMenu::initTimeLabel(){
+	CCSprite * clock = CCSprite::createWithSpriteFrameName("Clock0.png");
+	CCAnimation * animation = GameController::getGameController()->getAnimationData()->clockAnim;
+	clock->setScale(0.6);
+	clock->setPosition( ccp(50, winSize.height - 50) );
+	clock->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
+	addChild(clock);
+
     timeLabel = CCLabelTTF::create("0", "Helvetica", 64 );
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     timeLabel->setColor( ccc3(255, 10, 10) );
-    timeLabel->setPosition( ccp(50, winSize.height - 50) );
+    timeLabel->setPosition( ccp(150, winSize.height - 50) );
     this->addChild(timeLabel);
     CCString * str = CCString::createWithFormat("%d", seconds);
     timeLabel->setString(str->getCString());
@@ -146,7 +153,7 @@ void ControlMenu::initScoreLabel(){
     scoreLabel = CCLabelTTF::create("0", "Helvetica", 64 );
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     scoreLabel->setColor( ccc3(0, 0, 128) );
-    scoreLabel->setPosition( ccp(150, winSize.height - 50) );
+    scoreLabel->setPosition( ccp(250, winSize.height - 50) );
     this->addChild(scoreLabel);
 }
 

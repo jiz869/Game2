@@ -28,6 +28,8 @@ bool City::init(){
 
 	addChild(node);
 
+	road_tile_number = getRandom(0 , 6);
+
 	addCityObj();
 
 	addRoad();
@@ -38,8 +40,7 @@ bool City::init(){
 void City::addRoad(){
 
 	for(float i = 0 ; i < 0.9 ; i+=0.1){
-		int roadNumber = getRandom(0 , 5);
-		CCString * roadName = CCString::createWithFormat("road%d.png", roadNumber);
+		CCString * roadName = CCString::createWithFormat("road%d.png", road_tile_number);
 
 		CCSprite * road = CCSprite::createWithSpriteFrameName(roadName->getCString());
 
@@ -62,10 +63,11 @@ void City::addCityObj(){
 	for(int i = 0 ; i < 8 ; i++){
 		for(int j = 0 ; j < 21 ; j++){
 			if(j == 10 || j == 5 || j == 15 ) {
-				number = getRandom(0 , 6);
-				spriteName = CCString::createWithFormat("tile%d.png", number);
+				spriteName = CCString::createWithFormat("tile%d.png", road_tile_number);
 				scaleX = 1;
 				scaleY = 0.8;
+			}else if(toss(0.4)){
+				continue;
 			}else if(toss(0.5)){
                 number = getRandom(0 , 38);
                 spriteName = CCString::createWithFormat("house%d.png", number);

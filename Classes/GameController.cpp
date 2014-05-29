@@ -202,6 +202,10 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.specialLifeAnim = initAnimation(array);
     animationData.specialLifeAnim->setDelayPerUnit(0.3);
 
+    array = (CCArray *)dataDict->objectForKey("clock_animation");
+    animationData.clockAnim = initAnimation(array);
+    animationData.clockAnim->setDelayPerUnit(0.5);
+
     return true;
 }
 

@@ -21,6 +21,7 @@ private:
     CCSpriteBatchNode * node;
     void addRoad();
     void addCityObj();
+    int road_tile_number;
 };
 
 #endif /* CITY_H_ */

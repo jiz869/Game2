@@ -54,6 +54,7 @@ void MenuForArrowButton::ccTouchEnded(CCTouch *touch, CCEvent* event){
 
 void MenuForArrowButton::ccTouchMoved(CCTouch *touch, CCEvent* event){
 	CCMenu::ccTouchMoved(touch, event);
+	if(m_pSelectedItem && m_pSelectedItem->getTag() == PAUSE_PLAY) return;
 	if (m_pSelectedItem){
 		m_pSelectedItem->activate();
 	}

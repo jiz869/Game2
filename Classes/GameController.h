@@ -68,6 +68,7 @@ typedef struct{
     CCAnimation * specialHasteAnim;
     CCAnimation * specialSlowAnim;
     CCAnimation * specialLifeAnim;
+    CCAnimation * clockAnim;
 }AnimationData;
 
 typedef struct{

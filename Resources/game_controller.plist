@@ -39,6 +39,17 @@
 		<array>
 			<string>life0.png</string>
 		</array>
+		<key>clock_animation</key>
+		<array>
+			<string>Clock0.png</string>
+			<string>Clock1.png</string>
+			<string>Clock2.png</string>
+			<string>Clock3.png</string>
+			<string>Clock4.png</string>
+			<string>Clock5.png</string>
+			<string>Clock6.png</string>
+			<string>Clock7.png</string>
+		</array>
 	</dict>
 	<key>play_scene_data</key>
 	<array>
