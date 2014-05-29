@@ -51,8 +51,10 @@
 			<string>8</string>
 			<key>player_init_speed</key>
 			<string>4</string>
+			<key>New item</key>
+			<string></string>
 			<key>player_start_acc_speed</key>
-			<string>0.06</string>
+			<string>0.15</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
 			<key>lane_descriptions</key>

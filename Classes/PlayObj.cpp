@@ -41,6 +41,7 @@ void PlayerObj::reset(){
     }
 
     velocity = ccp(0,0);
+    acc = ccp(0,0);
     playerAccSpeed = data->playerAccSpeed;
     playerStopAccSpeed = data->playerStopAccSpeed;
     wait();
