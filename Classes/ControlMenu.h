@@ -35,11 +35,10 @@ public:
 private:
     CCSize winSize;
     CCLabelTTF* scoreLabel;
-    CCLabelTTF* timeLabel;
     MenuForArrowButton * menu;
     CCMenuItemImage * upButton , * downButton;
 
-    void initTimeLabel();
+    void initBloodBar();
     void initScoreLabel();
 
     void updateGameTime();
@@ -50,6 +49,7 @@ private:
     long numFrame;
     int score;
     int duration;
+    int maxDuration;
     int seconds;
     bool startUpdateTime;
 
@@ -62,6 +62,7 @@ private:
     GameStatus status;
     void pauseGame();
     void resumeGame();
+    CCProgressTimer * bloodBar;
 };
 
 #endif /* CONTROLMENU_H_ */

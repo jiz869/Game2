@@ -79,11 +79,12 @@ bool ControlMenu::init(){
     numFrame=0;
     score = 0;
     duration = userData->levelDuration;
+    maxDuration = 30;
     seconds = duration;
 
     startUpdateTime = false;
 
-    initTimeLabel();
+    initBloodBar();
     initScoreLabel();
 
     return true;
@@ -132,28 +133,27 @@ void ControlMenu::touchendHandler(CCObject * sender){
 	((PlayScene *)getParent())->touchendHandler(NULL);
 }
 
-void ControlMenu::initTimeLabel(){
-	CCSprite * clock = CCSprite::createWithSpriteFrameName("Clock0.png");
-	CCAnimation * animation = GameController::getGameController()->getAnimationData()->clockAnim;
-	clock->setScale(0.6);
-	clock->setPosition( ccp(50, winSize.height - 50) );
-	clock->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
-	addChild(clock);
+void ControlMenu::initBloodBar(){
+	CCSprite * emptyBar = CCSprite::createWithSpriteFrameName("empty_bar.png");
+	emptyBar->setPosition(ccp(100, winSize.height - 50));
+	emptyBar->setScaleX(0.6);
+	addChild(emptyBar);
 
-    timeLabel = CCLabelTTF::create("0", "Helvetica", 64 );
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    timeLabel->setColor( ccc3(255, 10, 10) );
-    timeLabel->setPosition( ccp(150, winSize.height - 50) );
-    this->addChild(timeLabel);
-    CCString * str = CCString::createWithFormat("%d", seconds);
-    timeLabel->setString(str->getCString());
+	bloodBar = CCProgressTimer::create(CCSprite::createWithSpriteFrameName("blood_bar.png"));
+	bloodBar->setType(kCCProgressTimerTypeBar);
+	bloodBar->setPosition(ccp(100, winSize.height - 50));
+	bloodBar->setBarChangeRate(ccp(1,0));
+	bloodBar->setMidpoint(ccp(0 , 1));
+	bloodBar->setScaleX(0.6);
+	updateGameTime();
+	addChild(bloodBar);
 }
 
 void ControlMenu::initScoreLabel(){
     scoreLabel = CCLabelTTF::create("0", "Helvetica", 64 );
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     scoreLabel->setColor( ccc3(0, 0, 128) );
-    scoreLabel->setPosition( ccp(250, winSize.height - 50) );
+    scoreLabel->setPosition( ccp(300, winSize.height - 50) );
     this->addChild(scoreLabel);
 }
 
@@ -168,9 +168,10 @@ void ControlMenu::startNewGame(){
 
 void ControlMenu::updateGameTime()
 {
-    char ss[10];
-    sprintf(ss, "%d", seconds);
-    timeLabel->setString(ss);
+	if(seconds > maxDuration){
+		seconds = maxDuration;
+	}
+    bloodBar->setPercentage((float)seconds/maxDuration * 100);
 }
 
 void ControlMenu::updateScore()
