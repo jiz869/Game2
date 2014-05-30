@@ -54,6 +54,8 @@
 	<key>play_scene_data</key>
 	<array>
 		<dict>
+			<key>reset_sound_file</key>
+			<string>bzzzt.wav</string>
 			<key>background_sound_file</key>
 			<string>busy.ogg</string>
 			<key>player_wait_image</key>

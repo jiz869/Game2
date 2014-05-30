@@ -223,12 +223,13 @@ void StartMenu::saveUserData(CheckboxType tag){
 void StartMenu::changeSoundSetting(CheckboxType type){
     switch (type) {
         case MUTE:
-            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0);
+            SimpleAudioEngine::sharedEngine()->setEffectsVolume(0);
             break;
         case UNMUTE:
         {
-            PlayScene * playScene = (PlayScene *)getParent();
-            playScene->startPlayBackgroundMusic();
+            SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(1);
+            SimpleAudioEngine::sharedEngine()->setEffectsVolume(1);
             break;
         }
         default:

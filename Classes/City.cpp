@@ -30,7 +30,7 @@ bool City::init(){
 
 	road_tile_number = getRandom(0 , 6);
 
-	addCityObj();
+	//addCityObj();
 
 	addRoad();
 
