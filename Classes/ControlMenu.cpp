@@ -79,7 +79,7 @@ bool ControlMenu::init(){
     numFrame=0;
     score = 0;
     duration = userData->levelDuration;
-    maxDuration = 30;
+    maxDuration = 10;
     seconds = duration;
 
     startUpdateTime = false;
@@ -135,16 +135,16 @@ void ControlMenu::touchendHandler(CCObject * sender){
 
 void ControlMenu::initBloodBar(){
 	CCSprite * emptyBar = CCSprite::createWithSpriteFrameName("empty_bar.png");
-	emptyBar->setPosition(ccp(100, winSize.height - 50));
-	emptyBar->setScaleX(0.6);
+	emptyBar->setPosition(ccp(winSize.width/2 - 40, winSize.height - 50));
+	emptyBar->setScaleX(0.9);
 	addChild(emptyBar);
 
 	bloodBar = CCProgressTimer::create(CCSprite::createWithSpriteFrameName("blood_bar.png"));
 	bloodBar->setType(kCCProgressTimerTypeBar);
-	bloodBar->setPosition(ccp(100, winSize.height - 50));
+	bloodBar->setPosition(ccp(winSize.width/2 - 40, winSize.height - 50));
 	bloodBar->setBarChangeRate(ccp(1,0));
 	bloodBar->setMidpoint(ccp(0 , 1));
-	bloodBar->setScaleX(0.6);
+	bloodBar->setScaleX(0.9);
 	updateGameTime();
 	addChild(bloodBar);
 }
@@ -205,7 +205,7 @@ void ControlMenu::step(float dt){
 void ControlMenu::doScore(){
 	score++;
 	updateScore();
-	seconds += duration;
+	seconds += duration/2;
 	updateGameTime();
 }
 

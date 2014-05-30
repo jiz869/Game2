@@ -167,7 +167,7 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
         if(shouldPlayerReset == true){
             SimpleAudioEngine::sharedEngine()->playEffect(data->resetSoundImage->getCString());
             PlayScene * playScene = (PlayScene *)getParent();
-            playScene->controlMenu->changeGameTime(-2);
+            playScene->controlMenu->changeGameTime(-1);
         	reset();
         	removeAllSpecials();
         }

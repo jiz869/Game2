@@ -9,7 +9,7 @@
 		<key>controller_position</key>
 		<string>right</string>
 		<key>level_duration</key>
-		<string>15</string>
+		<string>10</string>
 		<key>top_score</key>
 		<string>0</string>
 	</dict>
@@ -76,9 +76,9 @@
 					<key>special_chance</key>
 					<string>0.0</string>
 					<key>period</key>
-					<string>1.8</string>
+					<string>2</string>
 					<key>speed</key>
-					<string>3.5</string>
+					<string>3.4</string>
 					<key>init_position</key>
 					<string>{0,0.1}</string>
 					<key>direction</key>
@@ -95,7 +95,7 @@
 					<key>special_chance</key>
 					<string>0.0</string>
 					<key>period</key>
-					<string>4</string>
+					<string>2.3</string>
 					<key>speed</key>
 					<string>5</string>
 					<key>init_position</key>
