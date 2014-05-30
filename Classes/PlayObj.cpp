@@ -10,6 +10,9 @@
 #include "SpecialObj.h"
 #include "PlayScene.h"
 #include "ControlMenu.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 
 PlayerObj::PlayerObj() : movingState(WAIT)
 {
@@ -162,6 +165,7 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
 
         //remove all specials when hit by car
         if(shouldPlayerReset == true){
+            SimpleAudioEngine::sharedEngine()->playEffect(data->resetSoundImage->getCString());
             PlayScene * playScene = (PlayScene *)getParent();
             playScene->controlMenu->changeGameTime(-2);
         	reset();
