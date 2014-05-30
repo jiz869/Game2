@@ -103,8 +103,10 @@ void PlayScene::initMisc(){
 }
 
 void PlayScene::startPlayBackgroundMusic(){
-    if(!SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
-        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(data->backgroundSoundImage->getCString(), true);
+    if(!SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()){
+		AnimationData * animData = GameController::getGameController()->getAnimationData();
+        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(animData->backgroundSoundImage->getCString(), true);
+    }
 }
 
 void PlayScene::initPlayer(){

@@ -165,7 +165,8 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
 
         //remove all specials when hit by car
         if(shouldPlayerReset == true){
-            SimpleAudioEngine::sharedEngine()->playEffect(data->resetSoundImage->getCString());
+			AnimationData * animData = GameController::getGameController()->getAnimationData();
+            SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
             PlayScene * playScene = (PlayScene *)getParent();
             playScene->controlMenu->changeGameTime(-1);
         	reset();

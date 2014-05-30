@@ -52,11 +52,11 @@ bool ControlMenu::init(){
     CCMenuItemImage * pauseAndPlay = CCMenuItemImage::create("pause.png" ,
             "play.png" , this , menu_selector(ControlMenu::pauseAndPlayHandler));
 
-    pauseAndPlay->setScale(0.5);
+    pauseAndPlay->setScale(0.8);
 
-    pauseAndPlay->setAnchorPoint(ccp(1.1 , 1.05));
+    pauseAndPlay->setAnchorPoint(ccp(1.5 , 0.5));
 
-    pauseAndPlay->setPosition(ccp(winSize.width , winSize.height));
+    pauseAndPlay->setPosition(ccp(winSize.width , winSize.height - 50));
 
     pauseAndPlay->setTag(PAUSE_PLAY);
 
@@ -135,25 +135,23 @@ void ControlMenu::touchendHandler(CCObject * sender){
 
 void ControlMenu::initBloodBar(){
 	CCSprite * emptyBar = CCSprite::createWithSpriteFrameName("empty_bar.png");
-	emptyBar->setPosition(ccp(winSize.width/2 - 40, winSize.height - 50));
-	emptyBar->setScaleX(0.9);
+	emptyBar->setPosition(ccp(winSize.width/4, winSize.height - 50));
 	addChild(emptyBar);
 
 	bloodBar = CCProgressTimer::create(CCSprite::createWithSpriteFrameName("blood_bar.png"));
 	bloodBar->setType(kCCProgressTimerTypeBar);
-	bloodBar->setPosition(ccp(winSize.width/2 - 40, winSize.height - 50));
+	bloodBar->setPosition(ccp(winSize.width/4, winSize.height - 50));
 	bloodBar->setBarChangeRate(ccp(1,0));
 	bloodBar->setMidpoint(ccp(0 , 1));
-	bloodBar->setScaleX(0.9);
 	updateGameTime();
 	addChild(bloodBar);
 }
 
 void ControlMenu::initScoreLabel(){
-    scoreLabel = CCLabelTTF::create("0", "Helvetica", 64 );
+    scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    scoreLabel->setColor( ccc3(0, 0, 128) );
-    scoreLabel->setPosition( ccp(300, winSize.height - 50) );
+    scoreLabel->setColor( ccc3(106, 0, 9) );
+    scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height - 50) );
     this->addChild(scoreLabel);
 }
 
@@ -179,6 +177,9 @@ void ControlMenu::updateScore()
     char ss[10];
     sprintf(ss, "%d", score);
     scoreLabel->setString(ss);
+    scoreLabel->runAction(CCSequence::create(CCScaleTo::create(0.5 , 2.5) , CCScaleTo::create(0.5 , 1.0), NULL));
+	AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSoundImage->getCString());
 }
 
 void ControlMenu::GameOver()

@@ -56,14 +56,15 @@ typedef struct{
     CCString * playerWaitImageName;
     CCAnimation * playerMoveAnim;
     float playerSpeed;
-    CCString * backgroundSoundImage;
-    CCString * resetSoundImage;
     float playerAccSpeed;
     float playerStopAccSpeed;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 
 typedef struct{
+    CCString * backgroundSoundImage;
+    CCString * resetSoundImage;
+    CCString * scoreSoundImage;
     CCAnimation * playerMoveAnim;
     CCAnimation * specialStopAnim;
     CCAnimation * specialHasteAnim;
