@@ -21,7 +21,7 @@ bool toss(float chance){
 
     int value = chance * 100;
 
-    if (getRandom(0, 100) < value) {
+    if (getRandom(0, 99) < value) {
         return true;
     }
 

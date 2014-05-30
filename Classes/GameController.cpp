@@ -190,7 +190,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
 
     CCArray * array = (CCArray *)dataDict->objectForKey("player_move_animation");
     animationData.playerMoveAnim = initAnimation(array);
-    animationData.playerMoveAnim->setDelayPerUnit(0.05);
+    animationData.playerMoveAnim->setDelayPerUnit(0.1);
 
     array = (CCArray *)dataDict->objectForKey("special_stop_animation");
     animationData.specialStopAnim = initAnimation(array);

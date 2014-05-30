@@ -30,7 +30,7 @@ bool City::init(){
 
 	road_tile_number = getRandom(0 , 6);
 
-	//addCityObj();
+	addCityObj();
 
 	addRoad();
 
@@ -62,11 +62,11 @@ void City::addCityObj(){
 
 	for(int i = 0 ; i < 8 ; i++){
 		for(int j = 0 ; j < 21 ; j++){
-			if(j == 10 || j == 5 || j == 15 ) {
+			if(j == 10) {
 				spriteName = CCString::createWithFormat("tile%d.png", road_tile_number);
 				scaleX = 1;
 				scaleY = 0.8;
-			}else if(toss(0.4)){
+			}else if(toss(1)){
 				continue;
 			}else if(toss(0.5)){
                 number = getRandom(0 , 38);
