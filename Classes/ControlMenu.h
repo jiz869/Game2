@@ -31,6 +31,7 @@ public:
     void changeGameTime(int delta);
     void changeControllerPosition(CheckboxType type);
     void pauseAndPlayHandler(CCObject * sender);
+    void showGo();
 
 private:
     CCSize winSize;
@@ -48,7 +49,8 @@ private:
 
     long numFrame;
     int score;
-    int duration;
+    int initDuration;
+    int durationIncrease;
     int maxDuration;
     int seconds;
     bool startUpdateTime;
@@ -63,6 +65,10 @@ private:
     void pauseGame();
     void resumeGame();
     CCProgressTimer * bloodBar;
+    void initLevelSplash();
+    
+    CCLabelTTF * levelSplash;
+    CCLabelTTF * goSplash;
 };
 
 #endif /* CONTROLMENU_H_ */

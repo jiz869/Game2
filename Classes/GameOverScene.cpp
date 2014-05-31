@@ -25,7 +25,7 @@
 
 #include "GameOverScene.h"
 #include "GameController.h"
-#include "PlayScene.h"
+#include "StartMenuScene.h"
 
 using namespace cocos2d;
 
@@ -85,7 +85,7 @@ bool GameOverLayer::init()
 
 void GameOverLayer::gameOverDone()
 {
-	CCDirector::sharedDirector()->replaceScene( PlayScene::scene() );
+	CCDirector::sharedDirector()->replaceScene( StartMenuScene::scene() );
 }
 
 GameOverLayer::~GameOverLayer()

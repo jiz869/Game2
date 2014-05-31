@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "PlayScene.h"
+#include "StartMenuScene.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
@@ -40,18 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-    // create a scene. it's an autorelease object
-    //CCScene *pScene = HelloWorld::scene();
-
-    //Example: Animation
-    //CCScene *pScene = AnimationScene::scene();
-
-    //CCScene *pScene =InputScene::scene();
-#if 1
-    CCScene *pScene =PlayScene::scene();
-#else
-    CCScene *pScene =GameWorld::scene();
-#endif
+    CCScene *pScene =StartMenuScene::scene();
 
     // run
     pDirector->runWithScene(pScene);

@@ -1,30 +1,31 @@
-/*
- * StartMenu.h
- *
- *  Created on: May 22, 2014
- *      Author: welcomelm
- */
+//
+//  StartMenuScene.h
+//  crossRoad
+//
+//  Created by Min Li on 2014-05-30.
+//
+//
 
-#ifndef STARTMENU_H_
-#define STARTMENU_H_
+#ifndef __crossRoad__StartMenuScene__
+#define __crossRoad__StartMenuScene__
 
 #include "GameController.h"
 
 USING_NS_CC;
 
-class StartMenu: public cocos2d::CCLayerColor {
+class StartMenuScene: public cocos2d::CCLayerColor {
 public:
-	StartMenu();
-	virtual ~StartMenu();
-    CREATE_FUNC(StartMenu);
+	StartMenuScene();
+	virtual ~StartMenuScene();
+    static cocos2d::CCScene* scene();
+    CREATE_FUNC(StartMenuScene);
     virtual bool init();
     void newGameHandler(CCObject * sender);
-    void showStartMenu(float dt);
     void optionsHandler(CCObject * sender);
     void okHandler(CCObject * sender);
     void checkboxHandler(CCObject * sender);
     void changeSoundSetting(CheckboxType type);
-
+    
 private:
     CCMenu * startMenu;
     CCMenu * optionsMenu;
@@ -41,4 +42,4 @@ private:
     void saveUserData(CheckboxType tag);
 };
 
-#endif /* STARTMENU_H_ */
+#endif /* defined(__crossRoad__StartMenuScene__) */

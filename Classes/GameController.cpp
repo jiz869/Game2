@@ -103,9 +103,12 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
         return false;
     }
 
-    userData.levelDuration = CCSTRING_FOR_KEY(dataDict , "level_duration")->intValue();
+    userData.initDuration = CCSTRING_FOR_KEY(dataDict , "init_duration")->intValue();
+    userData.durationIncrease = CCSTRING_FOR_KEY(dataDict , "duration_increase")->intValue();
+    userData.maxDuration = CCSTRING_FOR_KEY(dataDict , "max_duration")->intValue();
     userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->intValue();
     userData.lastScore = 0;
+    userData.currentLevel = 0;
 
     if (CCSTRING_FOR_KEY(dataDict, "sound")->isEqual(CCString::create("mute"))) {
         userData.sound = MUTE;
@@ -357,6 +360,10 @@ void GameController::setUserData(const char * key, CheckboxType type){
 
     dict->setObject(userDataDict, "user_data");
     dict->writeToFile(plistWritablePath.c_str());
+}
+
+void GameController::levelUp(){
+    userData.currentLevel++;
 }
 
 

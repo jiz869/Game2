@@ -29,10 +29,10 @@ bool City::init(){
 	addChild(node);
 
 	road_tile_number = getRandom(0 , 6);
+    
+    addRoad();
 
 	addCityObj();
-
-	addRoad();
 
 	return true;
 }

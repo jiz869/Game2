@@ -14,7 +14,6 @@
 #include "Lane.h"
 
 class ControlMenu;
-class StartMenu;
 
 class PlayScene : public cocos2d::CCLayerColor , public b2ContactListener
 {
@@ -44,7 +43,6 @@ public:
     void touchendHandler(CCObject * sender);
 
     ControlMenu * controlMenu;
-    StartMenu * startMenu;
     void startPlayBackgroundMusic();
 
 private:
@@ -67,8 +65,6 @@ private:
     void initBoundary();
 
     void initLanes();
-
-    void initStartMenu();
 
     void processContact(float dt);
 

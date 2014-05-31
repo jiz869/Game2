@@ -10,7 +10,6 @@
 #include "MenuForArrowButton.h"
 #include "Lane.h"
 #include "GameOverScene.h"
-#include "StartMenu.h"
 #include "ControlMenu.h"
 #include "SimpleAudioEngine.h"
 #include "City.h"
@@ -71,7 +70,6 @@ bool PlayScene::init(){
     CCLog("initPlayer");
 
     initControlMenu();
-    initStartMenu();
 
     CCLog("initMenu");
 
@@ -126,11 +124,6 @@ void PlayScene::initLanes(){
 void PlayScene::initControlMenu(){
 	controlMenu = ControlMenu::create();
 	addChild(controlMenu);
-}
-
-void PlayScene::initStartMenu(){
-	startMenu = StartMenu::create();
-	addChild(startMenu);
 }
 
 void PlayScene::initBoundary(){

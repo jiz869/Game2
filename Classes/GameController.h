@@ -89,9 +89,12 @@ typedef struct{
 typedef struct{
     CheckboxType sound;
     CheckboxType controllerPosition;
-	int levelDuration;
+	int initDuration;
+    int durationIncrease;
 	int topScore;
 	int lastScore;
+    int currentLevel;
+    int maxDuration;
 }UserData;
 
 class GameController {
@@ -103,6 +106,7 @@ public:
     SpecialData * getSpecialData(int speciaId);
     UserData * getUserData();
     void setUserData(const char * key , CheckboxType data);
+    void levelUp();
 
 private:
     GameController();

@@ -32,7 +32,8 @@ bool ControlMenu::init(){
     winSize = CCDirector::sharedDirector()->getWinSize();
 
     ignoreAnchorPointForPosition(false);
-    setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    
+    setPosition(ccp(winSize.width/2 , winSize.height/2));
 
 	upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                          "button_arrow_selected.png" , this , menu_selector(ControlMenu::upHandler));
@@ -71,6 +72,8 @@ bool ControlMenu::init(){
 	menu = MenuForArrowButton::createWithArray(array);
 
     menu->ignoreAnchorPointForPosition(false);
+    
+    menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 
 	menu->registerTouchendHandler(this , menu_selector(ControlMenu::touchendHandler));
 
@@ -78,16 +81,42 @@ bool ControlMenu::init(){
 
     numFrame=0;
     score = 0;
-    duration = userData->levelDuration;
-    maxDuration = 10;
-    seconds = duration;
+    initDuration = userData->initDuration;
+    maxDuration = userData->maxDuration;
+    durationIncrease = userData->durationIncrease;
+    seconds = initDuration;
 
     startUpdateTime = false;
 
     initBloodBar();
     initScoreLabel();
+    initLevelSplash();
 
     return true;
+}
+
+void ControlMenu::initLevelSplash(){
+    levelSplash = CCLabelTTF::create("0", "Verdana-Bold", 128 );
+    levelSplash->setColor( ccc3(106, 0, 9) );
+    levelSplash->setPosition( ccp(winSize.width/2, winSize.height/2) );
+    CCString * level = CCString::createWithFormat("LEVEL %d", userData->currentLevel);
+    levelSplash->setString(level->getCString());
+    this->addChild(levelSplash);
+    
+    goSplash = CCLabelTTF::create("0", "Verdana-Bold", 128 );
+    goSplash->setColor( ccc3(106, 0, 9) );
+    goSplash->setPosition( ccp(winSize.width/2, winSize.height/2) );
+    goSplash->setString("GO");
+    this->addChild(goSplash);
+    goSplash->setVisible(false);
+    
+    levelSplash->runAction( CCSequence::create(CCScaleTo::create(0.6, 1.5) , CCScaleTo::create(0.6, 0.0) , CCCallFunc::create(this, callfunc_selector(ControlMenu::showGo)), NULL));
+}
+
+void ControlMenu::showGo(){
+    levelSplash->setVisible(false);
+    goSplash->setVisible(true);
+    goSplash->runAction( CCSequence::create(CCScaleTo::create(0.6, 1.5) , CCScaleTo::create(0.6, 0.0) , CCCallFunc::create(this, callfunc_selector(ControlMenu::startNewGame)), NULL));
 }
 
 void ControlMenu::pauseAndPlayHandler(CCObject * sender){
@@ -149,7 +178,6 @@ void ControlMenu::initBloodBar(){
 
 void ControlMenu::initScoreLabel(){
     scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     scoreLabel->setColor( ccc3(106, 0, 9) );
     scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height - 50) );
     this->addChild(scoreLabel);
@@ -160,7 +188,8 @@ bool ControlMenu::isUpButtonSelected(){
 }
 
 void ControlMenu::startNewGame(){
-	setPosition(ccp(winSize.width/2 , winSize.height/2));
+    goSplash->setVisible(false);
+	menu->setPosition(ccp(winSize.width/2 , winSize.height/2));
 	startUpdateTime=true;
 }
 
@@ -206,7 +235,7 @@ void ControlMenu::step(float dt){
 void ControlMenu::doScore(){
 	score++;
 	updateScore();
-	seconds += duration/2;
+	seconds += durationIncrease;
 	updateGameTime();
 }
 
@@ -216,11 +245,11 @@ void ControlMenu::changeGameTime(int delta){
 }
 
 void ControlMenu::increaseDuration(int delta){
-    duration+=delta;
+    durationIncrease+=delta;
 }
 
 void ControlMenu::resumeDuration(){
-    duration = userData->levelDuration;
+    durationIncrease = userData->initDuration;
 }
 
 void ControlMenu::changeControllerPosition(CheckboxType type){
