@@ -14,6 +14,8 @@
 typedef enum{
 	PAUSE = 0,
 	PLAY,
+    OVER,
+    LEVEL_UP
 }GameStatus;
 
 class ControlMenu: public cocos2d::CCLayerColor {
@@ -32,6 +34,8 @@ public:
     void changeControllerPosition(CheckboxType type);
     void pauseAndPlayHandler(CCObject * sender);
     void showGo();
+    void showOver();
+    void nextScene();
 
 private:
     CCSize winSize;
@@ -69,6 +73,8 @@ private:
     
     CCLabelTTF * levelSplash;
     CCLabelTTF * goSplash;
+    CCLabelTTF * gameSplash;
+    CCLabelTTF * overSplash;
 };
 
 #endif /* CONTROLMENU_H_ */

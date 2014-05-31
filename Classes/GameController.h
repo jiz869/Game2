@@ -32,6 +32,8 @@ typedef enum{
     CHECKBOX_TYPE_NUM,
 }CheckboxType;
 
+#define MAX_LEVELS 9
+
 class PlayerObj;
 class SpecialObj;
 
@@ -92,9 +94,11 @@ typedef struct{
 	int initDuration;
     int durationIncrease;
 	int topScore;
+    int topLevel;
 	int lastScore;
     int currentLevel;
     int maxDuration;
+    int levels[MAX_LEVELS];
 }UserData;
 
 class GameController {
@@ -105,8 +109,9 @@ public:
     AnimationData * getAnimationData();
     SpecialData * getSpecialData(int speciaId);
     UserData * getUserData();
-    void setUserData(const char * key , CheckboxType data);
+    void setUserData(const char * key , CheckboxType data , int value);
     void levelUp();
+    void setLastScore(int lastScore);
 
 private:
     GameController();

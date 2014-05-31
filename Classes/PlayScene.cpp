@@ -85,26 +85,15 @@ void PlayScene::initMisc(){
     world = new b2World(b2Vec2(0 , 0));
     world->SetContactListener(this);
 
-    data = GameController::getGameController()->getPlaySceneData(0);
     userData = GameController::getGameController()->getUserData();
+    data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
 
     winSize = CCDirector::sharedDirector()->getWinSize();
     ptmRatio = winSize.height / 10;
 
     GameObj::setB2world(world , ptmRatio);
 
-    if (userData->sound == UNMUTE) {
-        startPlayBackgroundMusic();
-    }
-
     scheduleUpdate();
-}
-
-void PlayScene::startPlayBackgroundMusic(){
-    if(!SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()){
-		AnimationData * animData = GameController::getGameController()->getAnimationData();
-        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(animData->backgroundSoundImage->getCString(), true);
-    }
 }
 
 void PlayScene::initPlayer(){

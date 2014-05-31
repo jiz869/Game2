@@ -43,7 +43,6 @@ public:
     void touchendHandler(CCObject * sender);
 
     ControlMenu * controlMenu;
-    void startPlayBackgroundMusic();
 
 private:
 

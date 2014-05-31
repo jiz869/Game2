@@ -107,13 +107,19 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.durationIncrease = CCSTRING_FOR_KEY(dataDict , "duration_increase")->intValue();
     userData.maxDuration = CCSTRING_FOR_KEY(dataDict , "max_duration")->intValue();
     userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->intValue();
+    userData.topLevel = CCSTRING_FOR_KEY(dataDict , "top_level")->intValue();
     userData.lastScore = 0;
     userData.currentLevel = 0;
+    
+    for (int i=0; i < MAX_LEVELS; i++) {
+        userData.levels[i] = pow(2.0f,(float)i);
+    }
 
     if (CCSTRING_FOR_KEY(dataDict, "sound")->isEqual(CCString::create("mute"))) {
         userData.sound = MUTE;
     }else{
         userData.sound = UNMUTE;
+        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(animationData.backgroundSoundImage->getCString(), true);
     }
 
     if (CCSTRING_FOR_KEY(dataDict, "controller_position")->isEqual(CCString::create("left"))) {
@@ -353,10 +359,14 @@ UserData * GameController::getUserData(){
 	return &userData;
 }
 
-void GameController::setUserData(const char * key, CheckboxType type){
+void GameController::setUserData(const char * key, CheckboxType type , int value){
     CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
 
-    userDataDict->setObject(CCString::createWithFormat("%s", userDataValue[type]), key);
+    if (type == CHECKBOX_TYPE_NUM) {
+        userDataDict->setObject(CCString::createWithFormat("%d", value), key);
+    }else{
+        userDataDict->setObject(CCString::createWithFormat("%s", userDataValue[type]), key);
+    }
 
     dict->setObject(userDataDict, "user_data");
     dict->writeToFile(plistWritablePath.c_str());
@@ -364,6 +374,14 @@ void GameController::setUserData(const char * key, CheckboxType type){
 
 void GameController::levelUp(){
     userData.currentLevel++;
+}
+
+void GameController::setLastScore(int lastScore){
+    userData.lastScore = lastScore;
+    if (lastScore > userData.topScore) {
+        userData.topScore = lastScore;
+        setUserData("top_score", CHECKBOX_TYPE_NUM , lastScore);
+    }
 }
 
 

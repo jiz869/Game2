@@ -209,14 +209,14 @@ void StartMenuScene::saveUserData(CheckboxType tag){
         case RIGHT:
         case SIDE:
             if (userData->controllerPosition != tag) {
-                GameController::getGameController()->setUserData("controller_position", tag);
+                GameController::getGameController()->setUserData("controller_position", tag , 0);
                 userData->controllerPosition = tag;
             }
             break;
         case MUTE:
         case UNMUTE:
             if (userData->sound != tag) {
-                GameController::getGameController()->setUserData("sound", tag);
+                GameController::getGameController()->setUserData("sound", tag , 0);
                 userData->sound = tag;
                 changeSoundSetting(tag);
             }
