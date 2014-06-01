@@ -111,8 +111,14 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.lastScore = 0;
     userData.currentLevel = 0;
     
-    for (int i=0; i < MAX_LEVELS; i++) {
-        userData.levels[i] = pow(2.0f,(float)i);
+    CCArray * levels = (CCArray *)dataDict->objectForKey("levels");
+    
+    userData.maxLevel = levels->count();
+    
+    userData.levels.reserve(userData.maxLevel);
+    
+    for (int i = 0; i < userData.maxLevel; i++) {
+        userData.levels.push_back(CCSTRING_AT_INDEX(levels, i)->intValue());
     }
 
     if (CCSTRING_FOR_KEY(dataDict, "sound")->isEqual(CCString::create("mute"))) {
@@ -192,6 +198,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.backgroundSoundImage = CCSTRING_FOR_KEY(dataDict, "background_sound_file");
     animationData.resetSoundImage = CCSTRING_FOR_KEY(dataDict, "reset_sound_file");
     animationData.scoreSoundImage = CCSTRING_FOR_KEY(dataDict, "score_sound_file");
+    animationData.levelupSoundImage = CCSTRING_FOR_KEY(dataDict, "levelup_sound_file");
 
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData.backgroundSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
@@ -374,6 +381,10 @@ void GameController::setUserData(const char * key, CheckboxType type , int value
 
 void GameController::levelUp(){
     userData.currentLevel++;
+    if (userData.currentLevel > userData.topLevel) {
+        userData.topLevel = userData.currentLevel;
+        setUserData("top_level", CHECKBOX_TYPE_NUM, userData.topLevel);
+    }
 }
 
 void GameController::setLastScore(int lastScore){

@@ -35,11 +35,15 @@ public:
     void pauseAndPlayHandler(CCObject * sender);
     void showGo();
     void showOver();
+    void showUp();
     void nextScene();
 
 private:
     CCSize winSize;
+    
     CCLabelTTF* scoreLabel;
+    CCSprite * gem;
+    
     MenuForArrowButton * menu;
     CCMenuItemImage * upButton , * downButton;
 
@@ -73,8 +77,12 @@ private:
     
     CCLabelTTF * levelSplash;
     CCLabelTTF * goSplash;
-    CCLabelTTF * gameSplash;
-    CCLabelTTF * overSplash;
+    CCSprite * gameSplash;
+    CCSprite * overSplash;
+    CCSprite * levelsplash;
+    CCSprite * upSplash;
+    
+    void levelUp();
 };
 
 #endif /* CONTROLMENU_H_ */

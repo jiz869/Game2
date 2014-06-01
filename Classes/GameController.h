@@ -32,8 +32,6 @@ typedef enum{
     CHECKBOX_TYPE_NUM,
 }CheckboxType;
 
-#define MAX_LEVELS 9
-
 class PlayerObj;
 class SpecialObj;
 
@@ -67,6 +65,7 @@ typedef struct{
     CCString * backgroundSoundImage;
     CCString * resetSoundImage;
     CCString * scoreSoundImage;
+    CCString * levelupSoundImage;
     CCAnimation * playerMoveAnim;
     CCAnimation * specialStopAnim;
     CCAnimation * specialHasteAnim;
@@ -98,7 +97,8 @@ typedef struct{
 	int lastScore;
     int currentLevel;
     int maxDuration;
-    int levels[MAX_LEVELS];
+    vector<int> levels;
+    int maxLevel;
 }UserData;
 
 class GameController {

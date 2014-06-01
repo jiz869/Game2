@@ -111,19 +111,25 @@ void ControlMenu::initLevelSplash(){
     this->addChild(goSplash);
     goSplash->setScale(0);
     
-    gameSplash = CCLabelTTF::create("0", "Verdana-Bold", 128 );
-    gameSplash->setColor( ccc3(106, 0, 9) );
-    gameSplash->setPosition( ccp(winSize.width/4, winSize.height*0.5) );
-    gameSplash->setString("GAME");
+    gameSplash = CCSprite::create("game.png");
+    gameSplash->setPosition(ccp(winSize.width/4, winSize.height*0.5));
+    addChild(gameSplash);
     gameSplash->setScale(0.0);
-    this->addChild(gameSplash);
     
-    overSplash = CCLabelTTF::create("0", "Verdana-Bold", 128 );
-    overSplash->setColor( ccc3(106, 0, 9) );
-    overSplash->setPosition( ccp(winSize.width*0.75, winSize.height*0.5) );
-    overSplash->setString("OVER");
+    overSplash = CCSprite::create("over.png");
+    overSplash->setPosition(ccp(winSize.width*0.75, winSize.height*0.5));
+    addChild(overSplash);
     overSplash->setScale(0.0);
-    this->addChild(overSplash);
+    
+    levelsplash = CCSprite::create("level.png");
+    levelsplash->setPosition(ccp(winSize.width/4, winSize.height*1.5));
+    addChild(levelsplash);
+    levelsplash->setScale(0.6);
+    
+    upSplash = CCSprite::create("up.png");
+    upSplash->setPosition(ccp(winSize.width*0.75, winSize.height*1.5));
+    addChild(upSplash);
+    upSplash->setScale(0.6);
     
     levelSplash->runAction( CCSequence::create(CCScaleTo::create(1.2, 1.5) , CCCallFunc::create(this, callfunc_selector(ControlMenu::showGo)), NULL));
 }
@@ -191,10 +197,17 @@ void ControlMenu::initBloodBar(){
 }
 
 void ControlMenu::initScoreLabel(){
+    CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
+    gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
+    gem->setScale(0.6);
+    gem->setAnchorPoint(ccp(-1.5, 0.5));
+    gem->setPosition(ccp(winSize.width/2 , winSize.height-50));
+    addChild(gem);
+    
     scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
-    scoreLabel->setColor( ccc3(106, 0, 9) );
+    scoreLabel->setColor( ccc3(54, 255, 0) );
     scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height - 50) );
-    this->addChild(scoreLabel);
+    addChild(scoreLabel);
 }
 
 bool ControlMenu::isUpButtonSelected(){
@@ -227,15 +240,14 @@ void ControlMenu::updateScore()
 
 void ControlMenu::GameOver()
 {
-    menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
-    GameController::getGameController()->setLastScore(score);
     status=OVER;
-    
-    gameSplash->runAction( CCSequence::create(CCScaleTo::create(0.6, 1.2) , CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
+    gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.6, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
+    menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));    
+    GameController::getGameController()->setLastScore(score);
 }
 
 void ControlMenu::showOver(){
-    overSplash->runAction(CCSequence::create(CCScaleTo::create(0.6, 1.2) , CCDelayTime::create(1) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
+    overSplash->runAction(CCSequence::create(CCScaleTo::create(0.6, 0.6) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
 }
 
 void ControlMenu::nextScene(){
@@ -261,10 +273,29 @@ void ControlMenu::step(float dt){
 }
 
 void ControlMenu::doScore(){
+    if (status != PLAY) {
+        return;
+    }
 	score++;
 	updateScore();
+    if (userData->levels[userData->currentLevel] != 0 &&
+        score >= userData->levels[userData->currentLevel]) {
+        levelUp();
+    }
 	seconds += durationIncrease;
 	updateGameTime();
+}
+
+void ControlMenu::levelUp(){
+    status=LEVEL_UP;
+    levelsplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width/4, winSize.height*0.5)) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showUp)), NULL));
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
+    GameController::getGameController()->levelUp();
+}
+
+void ControlMenu::showUp(){
+    upSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width*0.75, winSize.height*0.5)) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
 }
 
 void ControlMenu::changeGameTime(int delta){
