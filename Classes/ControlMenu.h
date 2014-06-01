@@ -40,10 +40,10 @@ public:
 
 private:
     CCSize winSize;
-    
+
     CCLabelTTF* scoreLabel;
     CCSprite * gem;
-    
+
     MenuForArrowButton * menu;
     CCMenuItemImage * upButton , * downButton;
 
@@ -74,14 +74,13 @@ private:
     void resumeGame();
     CCProgressTimer * bloodBar;
     void initLevelSplash();
-    
-    CCLabelTTF * levelSplash;
-    CCLabelTTF * goSplash;
+
+    CCSprite * goSplash;
     CCSprite * gameSplash;
     CCSprite * overSplash;
-    CCSprite * levelsplash;
+    CCSprite * levelSplash;
     CCSprite * upSplash;
-    
+
     void levelUp();
 };
 
