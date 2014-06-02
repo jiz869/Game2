@@ -70,12 +70,19 @@ void StartMenuScene::initMainMenu(){
     
     CCMenuItemImage * options = CCMenuItemImage::create("button_options_normal.png", "button_options_selected.png" , this , menu_selector(StartMenuScene::optionsHandler));
     
+    CCMenuItemImage * score = CCMenuItemImage::create("top_score_normal.png", "top_score_selected.png" , this , menu_selector(StartMenuScene::scoreHandler));
+    
     newGame->setScale(0.5);
     options->setScale(0.5);
+    score->setScale(0.5);
     
-    startMenu = CCMenu::create(newGame , options, NULL);
-    startMenu->alignItemsInColumns(1 , 1);
+    startMenu = CCMenu::create(newGame , options, score , NULL);
+    startMenu->alignItemsInColumns(1 , 1 , 1);
     addChild(startMenu);
+}
+
+void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
+    
 }
 
 void StartMenuScene::initOptionsMenu(){

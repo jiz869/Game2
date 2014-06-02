@@ -25,6 +25,7 @@ public:
     void okHandler(CCObject * sender);
     void checkboxHandler(CCObject * sender);
     void changeSoundSetting(CheckboxType type);
+    void scoreHandler(CCObject * sender);
     
 private:
     CCMenu * startMenu;
