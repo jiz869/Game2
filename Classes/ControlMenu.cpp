@@ -32,7 +32,7 @@ bool ControlMenu::init(){
     winSize = CCDirector::sharedDirector()->getWinSize();
 
     ignoreAnchorPointForPosition(false);
-    
+
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
 	upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
@@ -55,9 +55,9 @@ bool ControlMenu::init(){
 
     pauseAndPlay->setScale(0.8);
 
-    pauseAndPlay->setAnchorPoint(ccp(1.5 , 0.5));
+    //pauseAndPlay->setAnchorPoint(ccp(1.5 , 0.5));
 
-    pauseAndPlay->setPosition(ccp(winSize.width , winSize.height - 50));
+    pauseAndPlay->setPosition(ccp(winSize.width * 0.875 , winSize.height - 50));
 
     pauseAndPlay->setTag(PAUSE_PLAY);
 
@@ -72,7 +72,7 @@ bool ControlMenu::init(){
 	menu = MenuForArrowButton::createWithArray(array);
 
     menu->ignoreAnchorPointForPosition(false);
-    
+
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 
 	menu->registerTouchendHandler(this , menu_selector(ControlMenu::touchendHandler));
@@ -100,27 +100,27 @@ void ControlMenu::initLevelSplash(){
     goSplash->setPosition( ccp(winSize.width/2, winSize.height/2) );
     addChild(goSplash);
     goSplash->setScale(0);
-    
+
     gameSplash = CCSprite::create("game.png");
     gameSplash->setPosition(ccp(winSize.width/4, winSize.height*0.5));
     addChild(gameSplash);
     gameSplash->setScale(0.0);
-    
+
     overSplash = CCSprite::create("over.png");
     overSplash->setPosition(ccp(winSize.width*0.75, winSize.height*0.5));
     addChild(overSplash);
     overSplash->setScale(0.0);
-    
+
     levelSplash = CCSprite::create("level.png");
     levelSplash->setPosition(ccp(winSize.width/4, winSize.height*1.5));
     addChild(levelSplash);
     levelSplash->setScale(0.6);
-    
+
     upSplash = CCSprite::create("up.png");
     upSplash->setPosition(ccp(winSize.width*0.75, winSize.height*1.5));
     addChild(upSplash);
     upSplash->setScale(0.6);
-    
+
     showGo();
 }
 
@@ -189,10 +189,9 @@ void ControlMenu::initScoreLabel(){
     CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
     gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
     gem->setScale(0.6);
-    gem->setAnchorPoint(ccp(-1.5, 0.5));
-    gem->setPosition(ccp(winSize.width/2 , winSize.height-50));
+    gem->setPosition(ccp(winSize.width * 0.625 , winSize.height-50));
     addChild(gem);
-    
+
     scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
     scoreLabel->setColor( ccc3(54, 255, 0) );
     scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height - 50) );
@@ -231,7 +230,7 @@ void ControlMenu::GameOver()
 {
     status=OVER;
     gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.2, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
-    menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));    
+    menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     GameController::getGameController()->setLastScore(score);
 }
 
@@ -278,6 +277,7 @@ void ControlMenu::doScore(){
 void ControlMenu::levelUp(){
     status=LEVEL_UP;
     levelSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width/4, winSize.height*0.5)) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showUp)), NULL));
+    menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
     GameController::getGameController()->levelUp();

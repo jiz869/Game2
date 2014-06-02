@@ -26,13 +26,15 @@ public:
     void checkboxHandler(CCObject * sender);
     void changeSoundSetting(CheckboxType type);
     void scoreHandler(CCObject * sender);
-    
+
 private:
     CCMenu * startMenu;
     CCMenu * optionsMenu;
+    CCMenu * scoreMenu;
     CCSize winSize;
     void initMainMenu();
     void initOptionsMenu();
+    void initScoreMenu();
     CCMenuItemImage * checkboxLeft;
     CCMenuItemImage * checkboxRight;
     CCMenuItemImage * checkboxSide;
@@ -41,6 +43,9 @@ private:
     UserData * userData;
     void checkboxChooser(CheckboxType tag);
     void saveUserData(CheckboxType tag);
+
+    CCMenuItemImage * gem;
+    CCMenuItemLabel * scoreLabel;
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */
