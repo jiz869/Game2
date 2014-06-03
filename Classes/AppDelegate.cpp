@@ -32,8 +32,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionFixedHeight);
 
-    GameController::getGameController();
-
     // turn on display FPS
     pDirector->setDisplayStats(true);
 

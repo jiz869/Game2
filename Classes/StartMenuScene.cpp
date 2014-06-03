@@ -68,7 +68,6 @@ bool StartMenuScene::init(){
 }
 
 void StartMenuScene::initScoreMenu(){
-	UserData * userData = GameController::getGameController()->getUserData();
 	CCString * gemName = CCString::createWithFormat("gem%d.png", userData->topLevel);
 	gem = CCMenuItemImage::create();
 	gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
