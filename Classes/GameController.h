@@ -66,6 +66,7 @@ typedef struct{
     CCString * resetSoundImage;
     CCString * scoreSoundImage;
     CCString * levelupSoundImage;
+    vector<CCString *> hornSoundImages;
     CCAnimation * playerMoveAnim;
     CCAnimation * specialStopAnim;
     CCAnimation * specialHasteAnim;

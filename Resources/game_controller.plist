@@ -41,6 +41,12 @@
 		<string>busy.ogg</string>
 		<key>levelup_sound_file</key>
 		<string>level_up.wav</string>
+		<key>horn_sound_files</key>
+		<array>
+			<string>horn0.wav</string>
+			<string>horn1.wav</string>
+			<string>horn2.wav</string>
+		</array>
 		<key>player_move_animation</key>
 		<array>
 			<string>player0.png</string>

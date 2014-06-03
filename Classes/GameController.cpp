@@ -110,13 +110,13 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.topLevel = CCSTRING_FOR_KEY(dataDict , "top_level")->intValue();
     userData.lastScore = 0;
     userData.currentLevel = 0;
-    
+
     CCArray * levels = (CCArray *)dataDict->objectForKey("levels");
-    
+
     userData.maxLevel = levels->count();
-    
+
     userData.levels.reserve(userData.maxLevel);
-    
+
     for (int i = 0; i < userData.maxLevel; i++) {
         userData.levels.push_back(CCSTRING_AT_INDEX(levels, i)->intValue());
     }
@@ -203,6 +203,14 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData.backgroundSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.scoreSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.levelupSoundImage->getCString());
+
+    CCArray * hornSoundFiles = (CCArray *)dataDict->objectForKey("horn_sound_files");
+    animationData.hornSoundImages.reserve(hornSoundFiles->count());
+    for(int i=0 ; i<hornSoundFiles->count() ; i++){
+        animationData.hornSoundImages.push_back(CCSTRING_AT_INDEX(hornSoundFiles , i));
+        SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.hornSoundImages[i]->getCString());
+    }
 
     CCArray * array = (CCArray *)dataDict->objectForKey("player_move_animation");
     animationData.playerMoveAnim = initAnimation(array);

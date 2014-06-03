@@ -16,6 +16,7 @@ public:
 	virtual ~City();
     CREATE_FUNC(City);
     virtual bool init();
+    void addHornSounds();
 private:
     CCSize winSize;
     CCSpriteBatchNode * node;

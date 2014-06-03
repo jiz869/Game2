@@ -7,6 +7,9 @@
 
 #include "City.h"
 #include "Lane.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 
 City::City() {
 	// TODO Auto-generated constructor stub
@@ -29,7 +32,7 @@ bool City::init(){
 	addChild(node);
 
 	road_tile_number = getRandom(0 , 6);
-    
+
     addRoad();
 
 	addCityObj();
@@ -86,4 +89,12 @@ void City::addCityObj(){
 			node->addChild(sprite);
 		}
 	}
+
+	schedule(schedule_selector(City::addHornSounds), 8, kCCRepeatForever, 0.1);
+}
+
+void City::addHornSounds(){
+    AnimationData * data = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(
+            data->hornSoundImages[getRandom(0,data->hornSoundImages.size()-1)]->getCString());
 }
