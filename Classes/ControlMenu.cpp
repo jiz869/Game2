@@ -188,9 +188,18 @@ void ControlMenu::initBloodBar(){
 void ControlMenu::initScoreLabel(){
     CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
     gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
-    gem->setScale(0.6);
+    gem->setScale(0.8);
     gem->setPosition(ccp(winSize.width * 0.625 , winSize.height-50));
     addChild(gem);
+
+    if(userData->currentLevel < userData->maxLevel){
+        gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel + 1);
+        gemLevelup = CCSprite::createWithSpriteFrameName(gemName->getCString());
+        gemLevelup->setScale(0.8);
+        gemLevelup->setPosition(ccp(winSize.width * 0.625 , winSize.height-50));
+        gemLevelup->setOpacity(0);
+        addChild(gemLevelup);
+    }
 
     scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
     scoreLabel->setColor( ccc3(54, 255, 0) );
@@ -277,6 +286,7 @@ void ControlMenu::doScore(){
 void ControlMenu::levelUp(){
     status=LEVEL_UP;
     levelSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width/4, winSize.height*0.5)) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showUp)), NULL));
+    gem->runAction(CCFadeOut::create(0.8));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
@@ -285,6 +295,7 @@ void ControlMenu::levelUp(){
 
 void ControlMenu::showUp(){
     upSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width*0.75, winSize.height*0.5)) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
+    gemLevelup->runAction(CCFadeIn::create(0.8));
 }
 
 void ControlMenu::changeGameTime(int delta){

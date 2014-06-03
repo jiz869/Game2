@@ -43,6 +43,7 @@ private:
 
     CCLabelTTF* scoreLabel;
     CCSprite * gem;
+    CCSprite * gemLevelup;
 
     MenuForArrowButton * menu;
     CCMenuItemImage * upButton , * downButton;

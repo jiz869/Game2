@@ -21,13 +21,13 @@
 		<key>levels</key>
 		<array>
 			<string>4</string>
+			<string>8</string>
 			<string>12</string>
+			<string>16</string>
+			<string>20</string>
 			<string>24</string>
-			<string>48</string>
-			<string>64</string>
-			<string>96</string>
-			<string>128</string>
-			<string>196</string>
+			<string>28</string>
+			<string>32</string>
 			<string>0</string>
 		</array>
 	</dict>
