@@ -11,10 +11,11 @@
 
 int getRandom(int low, int high)
 {
+    srand (time(NULL));
 	if ( low - high < 0x10000L )
-        return low + ( ( random() >> 8 ) % ( high + 1 - low ) );
+        return low + ( ( rand() >> 8 ) % ( high + 1 - low ) );
 
-	return low + ( random() % ( high + 1 - low ) );
+	return low + ( rand() % ( high + 1 - low ) );
 }
 
 bool toss(float chance){
