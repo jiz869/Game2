@@ -47,7 +47,7 @@ PlayScene::~PlayScene(){
 }
 
 bool PlayScene::init(){
-    if (!CCLayerColor::initWithColor(ccc4(0x9f,0x9f,0x5f,255))) {
+    if (!CCLayerColor::initWithColor(ccc4(255,255,255,255))) {
         return false;
     }
 

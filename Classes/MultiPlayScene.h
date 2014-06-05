@@ -42,6 +42,7 @@ protected:
     bool isFirstLaunch;
     void recover();
     void connectionFailed();
+    CCLabelTTF * infoLabel;
 };
 
 #endif /* MULTIPLAYSCENE_H_ */

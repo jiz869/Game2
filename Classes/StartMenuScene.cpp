@@ -125,10 +125,10 @@ void StartMenuScene::initMainMenu(){
 
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
     pvp->setScale(0.5);
-    
+
     startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
     startMenu->alignItemsInColumns(2 , 2);
-    
+
     addChild(startMenu);
 }
 

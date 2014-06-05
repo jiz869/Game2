@@ -11,11 +11,10 @@
 
 int getRandom(int low, int high)
 {
-    srand (time(NULL));
 	if ( low - high < 0x10000L )
         return low + ( ( rand() >> 8 ) % ( high + 1 - low ) );
 
-	return low + ( rand() % ( high + 1 - low ) );
+	return low + ( random() % ( high + 1 - low ) );
 }
 
 bool toss(float chance){
@@ -76,13 +75,8 @@ void Lane::addACar1(float dt){
 
 	float speed , interval;
 
-    if(toss(0.5)){
-        speed = description->carSpeed + 0.1*getRandom(0,3);
-        interval = description->period - 0.1*getRandom(0,3);
-    }else{
-        speed = description->carSpeed - 0.1*getRandom(0,3);
-        interval = description->period + 0.1*getRandom(0,3);
-    }
+    interval = description->period - 0.1*getRandom(0,3);
+    speed = description->carSpeed;
 
     car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
 
@@ -103,13 +97,8 @@ void Lane::addACar2(float dt){
 
     float speed , interval;
 
-    if(toss(0.5)){
-        speed = description->carSpeed + 0.1*getRandom(0,3);
-        interval = description->period - 0.1*getRandom(0,3);
-    }else{
-        speed = description->carSpeed - 0.1*getRandom(0,3);
-        interval = description->period + 0.1*getRandom(0,3);
-    }
+    interval = description->period - 0.1*getRandom(0,3);
+    speed = description->carSpeed;
 
     car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
 
