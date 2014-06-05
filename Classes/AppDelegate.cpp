@@ -39,9 +39,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-    CCScene *pScene= MultiPlayScene::scene();
+    CCScene * testScene= MultiPlayScene::scene();
+    
+    testScene->retain();
 
-    pScene =StartMenuScene::scene();
+    CCScene *pScene =StartMenuScene::scene();
 
     // run
     pDirector->runWithScene(pScene);

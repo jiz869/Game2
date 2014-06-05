@@ -5,7 +5,7 @@
  *      Author: mli
  */
 
-#include <MultiPlayScene.h>
+#include "MultiPlayScene.h"
 
 MultiPlayScene::MultiPlayScene()
 {

@@ -11,6 +11,23 @@
 #include "SimpleAudioEngine.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+void onRequestError(int code){
+    CCLOG("onRequestError %d", code);
+}
+
+void onPaymentFinished(bool wasSuccessful){
+    CCLOG("onPaymentFinished %d", wasSuccessful);
+}
+
+void onRequestFinish(){
+    CCLOG("onRequestFinish");
+}
+
+extern void request();
+
+extern void purchase();
+
+extern bool canMakePayments();
 extern void setBannerViewHidden(bool);
 #define SET_BANNDER_HIDDEN(_hidden) setBannerViewHidden(_hidden)
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
