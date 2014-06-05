@@ -1,7 +1,6 @@
 #include "AppDelegate.h"
 #include "StartMenuScene.h"
 #include "SimpleAudioEngine.h"
-#include "MultiPlayScene.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -38,10 +37,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-
-    CCScene * testScene= MultiPlayScene::scene();
-    
-    testScene->retain();
 
     CCScene *pScene =StartMenuScene::scene();
 

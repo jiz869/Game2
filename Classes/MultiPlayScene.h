@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "appwarp.h"
+#include "PlayScene.h"
 
 USING_NS_CC;
 using namespace AppWarp;
@@ -18,7 +19,7 @@ using namespace AppWarp;
 #define APPWARP_SECRET_KEY  "f87c2719986446f3d07816a58b5e89e7a7b8af1b04795e5cac8cb5e88afe0e16"
 #define ROOM_ID             "2103900253"
 
-class MultiPlayScene: public CCLayerColor , public ConnectionRequestListener , public RoomRequestListener,
+class MultiPlayScene: public PlayScene , public ConnectionRequestListener , public RoomRequestListener,
                     public NotificationListener,public ZoneRequestListener,public ChatRequestListener
 {
 public:
@@ -33,10 +34,14 @@ public:
 
     virtual void onConnectDone(int res);
     virtual void onJoinRoomDone(AppWarp::room revent);
+    void returnOnConnectionFailed();
+    virtual void update(float dt);
 
-private:
+protected:
     void connectToAppWarp();
     bool isFirstLaunch;
+    void recover();
+    void connectionFailed();
 };
 
 #endif /* MULTIPLAYSCENE_H_ */

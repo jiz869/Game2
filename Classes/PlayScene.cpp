@@ -31,9 +31,11 @@ CCScene* PlayScene::scene()
     return scene;
 }
 
+PlayScene::PlayScene() : player(NULL) {
+}
 
 PlayScene::~PlayScene(){
-	player->removeAllSpecials();
+    if (player) player->removeAllSpecials();
 
     for (b2Body * body = world->GetBodyList(); body; body = body->GetNext()) {
     	CCSprite *sprite = (CCSprite *)body->GetUserData();
@@ -98,7 +100,6 @@ void PlayScene::initMisc(){
 
 void PlayScene::initPlayer(){
 	player = new PlayerObj();
-	player->setData(data);
 	addChild(player->load());
 }
 

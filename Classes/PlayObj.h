@@ -41,7 +41,6 @@ public:
     void slowDown(float delta);
     void tagPlayer(SpecialObj * specialObj);
     CCNode * getParent();
-    void setData(PlaySceneData * data);
     void removeAllSpecials();
 
 protected:

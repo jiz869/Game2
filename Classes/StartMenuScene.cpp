@@ -9,6 +9,7 @@
 #include "StartMenuScene.h"
 #include "PlayScene.h"
 #include "SimpleAudioEngine.h"
+#include "MultiPlayScene.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 void onRequestError(int code){
@@ -122,9 +123,18 @@ void StartMenuScene::initMainMenu(){
     options->setScale(0.5);
     score->setScale(0.5);
 
-    startMenu = CCMenu::create(newGame , options, score , NULL);
-    startMenu->alignItemsInColumns(1 , 1 , 1);
+    CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
+    pvp->setScale(0.5);
+    
+    startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
+    startMenu->alignItemsInColumns(2 , 2);
+    
     addChild(startMenu);
+}
+
+void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
+    CCScene * pvpScene = MultiPlayScene::scene();
+    CCDirector::sharedDirector()->replaceScene(pvpScene);
 }
 
 void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){

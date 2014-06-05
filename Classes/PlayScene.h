@@ -18,6 +18,7 @@ class ControlMenu;
 class PlayScene : public cocos2d::CCLayerColor , public b2ContactListener
 {
 public:
+    PlayScene();
     ~PlayScene();
 
     virtual bool init();
@@ -44,7 +45,7 @@ public:
 
     ControlMenu * controlMenu;
 
-private:
+protected:
 
     b2World * world;
 

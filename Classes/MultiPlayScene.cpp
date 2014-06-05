@@ -6,6 +6,7 @@
  */
 
 #include "MultiPlayScene.h"
+#include "StartMenuScene.h"
 
 MultiPlayScene::MultiPlayScene()
 {
@@ -37,6 +38,8 @@ bool MultiPlayScene::init(){
     if (!CCLayerColor::initWithColor(ccc4(0x9f,0x9f,0x5f,255))) {
         return false;
     }
+    
+    PlayScene::initMisc();
 
     isFirstLaunch = true;
 
@@ -54,11 +57,40 @@ void MultiPlayScene::onConnectDone(int res)
         warpClientRef = AppWarp::Client::getInstance();
         warpClientRef->joinRoom(ROOM_ID);
     }
+    else if (res==AppWarp::ResultCode::connection_error_recoverable)
+    {
+        schedule(schedule_selector(MultiPlayScene::recover), 5.0f);
+    }
+    else
+    {
+        unschedule(schedule_selector(MultiPlayScene::recover));
+        connectionFailed();
+    }
+}
+
+void MultiPlayScene::recover(){
+    AppWarp::Client::getInstance()->recoverConnection();
 }
 
 void MultiPlayScene::onJoinRoomDone(AppWarp::room revent)
 {
     CCLog("onJoinRoomDone %d", revent.result);
+    if (revent.result==0)
+    {
+    }else{
+        connectionFailed();
+    }
+}
+
+void MultiPlayScene::connectionFailed(){
+    CCLabelTTF * label = CCLabelTTF::create("Connection failed !!! Please retry later", "Verdana", 32);
+    label->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    addChild(label);
+    runAction(CCSequence::create( CCDelayTime::create(2.5) ,CCCallFunc::create(this, callfunc_selector(MultiPlayScene::returnOnConnectionFailed)), NULL ));
+}
+
+void MultiPlayScene::returnOnConnectionFailed(){
+    CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
 }
 
 void MultiPlayScene::connectToAppWarp(){
@@ -81,4 +113,8 @@ void MultiPlayScene::connectToAppWarp(){
     {
         AppWarp::Client::getInstance()->connect("welcomelm");
     }
+}
+
+void MultiPlayScene::update(float dt){
+    
 }

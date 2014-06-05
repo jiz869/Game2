@@ -17,13 +17,11 @@ using namespace CocosDenshion;
 PlayerObj::PlayerObj() : movingState(WAIT)
 {
     specials.reserve(MAX_SPECIAL_NUM);
+    UserData * userData = GameController::getGameController()->getUserData();
+    data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
 }
 
 PlayerObj::~PlayerObj(){
-}
-
-void PlayerObj::setData(PlaySceneData * data){
-	this->data = data;
 }
 
 B2Sprite * PlayerObj::load(){
