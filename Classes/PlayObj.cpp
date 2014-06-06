@@ -19,6 +19,8 @@ PlayerObj::PlayerObj() : movingState(WAIT)
     specials.reserve(MAX_SPECIAL_NUM);
     UserData * userData = GameController::getGameController()->getUserData();
     data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    resetPos = ccp(size.width/2 , gameObj->getContentSize().height/2+2);
 }
 
 PlayerObj::~PlayerObj(){
@@ -32,9 +34,7 @@ B2Sprite * PlayerObj::load(){
 }
 
 void PlayerObj::reset(){
-	CCSize size = CCDirector::sharedDirector()->getWinSize();
-	setPosition(ccp(size.width/2 , gameObj->getContentSize().height/2+2));
-
+	setPosition(resetPos);
     PlayScene * playScene = (PlayScene *)gameObj->getParent();
 
     if (playScene && playScene->controlMenu->isUpButtonSelected()) {

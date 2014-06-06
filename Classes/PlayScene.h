@@ -56,7 +56,7 @@ protected:
     PlaySceneData * data;
     UserData * userData;
 
-    void initMisc();
+    virtual void initMisc();
 
     void initPlayer();
 

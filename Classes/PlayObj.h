@@ -42,6 +42,7 @@ public:
     void tagPlayer(SpecialObj * specialObj);
     CCNode * getParent();
     void removeAllSpecials();
+    CCPoint resetPos;
 
 protected:
     PlayerState movingState;

@@ -38,24 +38,31 @@ bool MultiPlayScene::init(){
     if (!CCLayerColor::initWithColor(ccc4(0x9f,0x9f,0x5f,255))) {
         return false;
     }
-
-    PlayScene::initMisc();
-
-    infoLabel = CCLabelTTF::create("", "Verdana", 32);
-    infoLabel->setColor( ccc3(54, 255, 0) );
-    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
-    addChild(infoLabel);
-
-    isFirstLaunch = true;
+    
+    initMisc();
+    
+    CCLog("initMisc");
 
     connectToAppWarp();
 
     return true;
 }
 
+void MultiPlayScene::initMisc(){
+    PlayScene::initMisc();
+    
+    infoLabel = CCLabelTTF::create("", "Verdana", 32);
+    infoLabel->setColor( ccc3(54, 255, 0) );
+    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    addChild(infoLabel);
+    
+    isFirstLaunch = true;
+}
+
 void MultiPlayScene::onConnectDone(int res)
 {
 	CCString * str = CCString::createWithFormat("onConnectDone %d", res);
+    CCLOG("%s", str->getCString());
     infoLabel->setString(str->getCString());
     if (res==AppWarp::ResultCode::success)
     {
@@ -81,11 +88,25 @@ void MultiPlayScene::recover(){
 void MultiPlayScene::onJoinRoomDone(AppWarp::room revent)
 {
 	CCString * str = CCString::createWithFormat("onJoinRoomDone %d", revent.result);
+    CCLOG("%s", str->getCString());
     infoLabel->setString(str->getCString());
     if (revent.result==0)
     {
+        AppWarp::Client *warpClientRef;
+        warpClientRef = AppWarp::Client::getInstance();
+        warpClientRef->subscribeRoom(ROOM_ID);
     }else{
         connectionFailed();
+    }
+}
+
+void MultiPlayScene::onSubscribeRoomDone(AppWarp::room revent)
+{
+    CCString * str = CCString::createWithFormat("onSubscribeRoomDone %d", revent.result);
+    CCLOG("%s", str->getCString());
+    infoLabel->setString(str->getCString());
+    if (revent.result==0)
+    {
     }
 }
 
@@ -103,6 +124,7 @@ void MultiPlayScene::connectToAppWarp(){
     if (isFirstLaunch)
     {
         infoLabel->setString("connectToAppWarp");
+        CCLOG("connectToAppWarp");
         isFirstLaunch = !isFirstLaunch;
         AppWarp::Client::initialize(APPWARP_APP_KEY,APPWARP_SECRET_KEY);
         warpClientRef = AppWarp::Client::getInstance();
@@ -112,14 +134,54 @@ void MultiPlayScene::connectToAppWarp(){
         warpClientRef->setRoomRequestListener(this);
         warpClientRef->setZoneRequestListener(this);
         warpClientRef->setChatRequestListener(this);
-        warpClientRef->connect("welcomelm");
+        warpClientRef->connect("limin");
     }
     else
     {
-        AppWarp::Client::getInstance()->connect("welcomelm");
+        AppWarp::Client::getInstance()->connect("limin");
     }
 }
 
 void MultiPlayScene::update(float dt){
 
+}
+
+void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
+    CCLOG("onUserJoinedRoom %s", username.c_str());
+    infoLabel->setString(username.c_str());
+    
+    order = FIRST;
+    prepareToStart();
+}
+
+void MultiPlayScene::prepareToStart(){
+    initBoundary();
+    
+    CCLog("initBoundary");
+    
+    initCityObj();
+    
+    CCLog("initCityObj");
+    
+    initPlayer();
+    
+    CCLog("initPlayer");
+    
+    initControlMenu();
+    
+    CCLog("initMenu");
+}
+
+void MultiPlayScene::initPlayer(){
+    player = new PlayerObj();
+    enemy = new PlayerObj();
+    if (order == FIRST) {
+        player->resetPos = ccp(winSize.width/2-30 , winSize.height/2+2);
+        enemy->resetPos = ccp(winSize.width/2+30 , winSize.height/2+2);
+    }else{
+        enemy->resetPos = ccp(winSize.width/2-30 , winSize.height/2+2);
+        player->resetPos = ccp(winSize.width/2+30 , winSize.height/2+2);
+    }
+	addChild(player->load());
+    addChild(enemy->load());
 }
