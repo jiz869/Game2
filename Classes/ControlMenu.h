@@ -39,7 +39,7 @@ public:
     void showUp();
     void nextScene();
 
-private:
+protected:
     CCSize winSize;
 
     CCLabelTTF* scoreLabel;
@@ -47,10 +47,13 @@ private:
     CCSprite * gemLevelup;
 
     MenuForArrowButton * menu;
-    CCMenuItemImage * upButton , * downButton;
+    CCMenuItemImage * upButton , * downButton , * pauseAndPlay;
 
-    void initBloodBar();
-    void initScoreLabel();
+    virtual void initBloodBar();
+    virtual void initScoreLabel();
+    virtual void initMenu();
+    virtual void initMisc();
+    virtual void initLevelSplash();
 
     void updateGameTime();
     void updateScore(bool isGood);
@@ -75,7 +78,6 @@ private:
     void pauseGame();
     void resumeGame();
     CCProgressTimer * bloodBar;
-    void initLevelSplash();
 
     CCSprite * goSplash;
     CCSprite * gameSplash;

@@ -28,6 +28,16 @@ bool ControlMenu::init(){
         return false;
     }
 
+    initMisc();
+    initMenu();
+    initBloodBar();
+    initScoreLabel();
+    initLevelSplash();
+
+    return true;
+}
+
+void ControlMenu::initMisc(){
     userData = GameController::getGameController()->getUserData();
     winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -35,14 +45,25 @@ bool ControlMenu::init(){
 
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
-	upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
+    numFrame=0;
+    score = 0;
+    initDuration = userData->initDuration;
+    maxDuration = userData->maxDuration;
+    durationIncrease = userData->durationIncrease;
+    seconds = initDuration;
+
+    startUpdateTime = false;
+}
+
+void ControlMenu::initMenu(){
+    upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                          "button_arrow_selected.png" , this , menu_selector(ControlMenu::upHandler));
 
     upButton->setRotation(180);
     upButton->setScale(BUTTON_SCALE);
     upButton->setTag(UP);
 
-	downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
+    downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                            "button_arrow_selected.png" , this , menu_selector(ControlMenu::downHandler));
 
     downButton->setScale(BUTTON_SCALE);
@@ -50,7 +71,7 @@ bool ControlMenu::init(){
 
     changeControllerPosition(userData->controllerPosition);
 
-    CCMenuItemImage * pauseAndPlay = CCMenuItemImage::create("pause.png" ,
+    pauseAndPlay = CCMenuItemImage::create("pause.png" ,
             "play.png" , this , menu_selector(ControlMenu::pauseAndPlayHandler));
 
     pauseAndPlay->setScale(0.8);
@@ -63,36 +84,21 @@ bool ControlMenu::init(){
 
     CCArray * array = CCArray::createWithCapacity(CONTROL_BUTTON_MAX);
 
-	array->addObject(upButton);
+    array->addObject(upButton);
 
-	array->addObject(downButton);
+    array->addObject(downButton);
 
-	array->addObject(pauseAndPlay);
+    array->addObject(pauseAndPlay);
 
-	menu = MenuForArrowButton::createWithArray(array);
+    menu = MenuForArrowButton::createWithArray(array);
 
     menu->ignoreAnchorPointForPosition(false);
 
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 
-	menu->registerTouchendHandler(this , menu_selector(ControlMenu::touchendHandler));
+    menu->registerTouchendHandler(this , menu_selector(ControlMenu::touchendHandler));
 
-	addChild(menu);
-
-    numFrame=0;
-    score = 0;
-    initDuration = userData->initDuration;
-    maxDuration = userData->maxDuration;
-    durationIncrease = userData->durationIncrease;
-    seconds = initDuration;
-
-    startUpdateTime = false;
-
-    initBloodBar();
-    initScoreLabel();
-    initLevelSplash();
-
-    return true;
+    addChild(menu);
 }
 
 void ControlMenu::initLevelSplash(){
