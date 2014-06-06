@@ -38,9 +38,9 @@ bool MultiPlayScene::init(){
     if (!CCLayerColor::initWithColor(ccc4(0x9f,0x9f,0x5f,255))) {
         return false;
     }
-    
+
     initMisc();
-    
+
     CCLog("initMisc");
 
     connectToAppWarp();
@@ -50,13 +50,17 @@ bool MultiPlayScene::init(){
 
 void MultiPlayScene::initMisc(){
     PlayScene::initMisc();
-    
+
+    unscheduleUpdate();
+
     infoLabel = CCLabelTTF::create("", "Verdana", 32);
     infoLabel->setColor( ccc3(54, 255, 0) );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     addChild(infoLabel);
-    
+
     isFirstLaunch = true;
+    order = ORDER_MAX;
+    syncCount = 0;
 }
 
 void MultiPlayScene::onConnectDone(int res)
@@ -149,26 +153,41 @@ void MultiPlayScene::update(float dt){
 void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
     CCLOG("onUserJoinedRoom %s", username.c_str());
     infoLabel->setString(username.c_str());
-    
+
+    enemyName = username;
     order = FIRST;
-    prepareToStart();
+    scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
+    latency = getCurrentTime();
+    sendSync();
+}
+
+void MultiPlayScene::sendStart(){
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->sendPrivateChat(enemyName, "start");
+}
+
+void MultiPlayScene::sendSync(){
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->sendPrivateChat(enemyName, "sync");
 }
 
 void MultiPlayScene::prepareToStart(){
     initBoundary();
-    
+
     CCLog("initBoundary");
-    
+
     initCityObj();
-    
+
     CCLog("initCityObj");
-    
+
     initPlayer();
-    
+
     CCLog("initPlayer");
-    
+
     initControlMenu();
-    
+
     CCLog("initMenu");
 }
 
@@ -176,12 +195,55 @@ void MultiPlayScene::initPlayer(){
     player = new PlayerObj();
     enemy = new PlayerObj();
     if (order == FIRST) {
-        player->resetPos = ccp(winSize.width/2-30 , winSize.height/2+2);
-        enemy->resetPos = ccp(winSize.width/2+30 , winSize.height/2+2);
+        addChild(player->load(PlayerObj::LEFT));
+        addChild(enemy->load(PlayerObj::RIGHT));
     }else{
-        enemy->resetPos = ccp(winSize.width/2-30 , winSize.height/2+2);
-        player->resetPos = ccp(winSize.width/2+30 , winSize.height/2+2);
+        addChild(player->load(PlayerObj::RIGHT));
+        addChild(enemy->load(PlayerObj::LEFT));
+
     }
-	addChild(player->load());
-    addChild(enemy->load());
+}
+
+void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string message){
+    CCLOG("onPrivateChatReceived %s", sender.c_str());
+    string str = sender + string(" send ") + message;
+    infoLabel->setString(str.c_str());
+
+    if(message == "sync"){
+        if(order == ORDER_MAX){
+            sendSync();
+            if(syncCount == 0){
+                latency = getCurrentTime();
+            }
+            syncCount++;
+            if(syncCount == SYNC_TIMES){
+                latency = (getCurrentTime()-latency)/(SYNC_TIMES-1);
+                CCLOG("latency %lu", latency);
+            }
+        }else{
+            syncCount++;
+            sendSync();
+            if(syncCount == SYNC_TIMES){
+                latency = (getCurrentTime()-latency)/SYNC_TIMES;
+                CCLOG("latency %lu", latency);
+                sendStart();
+                scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0 + (float)latency/1000.0);
+            }
+        }
+    }else if(message == "start"){
+        order = SECOND;
+        enemyName = sender;
+        scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
+        scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0);
+    }
+}
+
+void MultiPlayScene::startGame(){
+
+}
+
+unsigned long MultiPlayScene::getCurrentTime(){
+    struct cc_timeval tv;
+    CCTime::gettimeofdayCocos2d(&tv, NULL);
+    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }

@@ -62,6 +62,16 @@ typedef struct{
 }PlaySceneData;
 
 typedef struct{
+    int laneNumber;
+    CCString * playerWaitImageName;
+    CCAnimation * playerMoveAnim;
+    float playerSpeed;
+    float playerAccSpeed;
+    float playerStopAccSpeed;
+    vector<LaneDescription *> laneDescriptions;
+}MultiPlaySceneData;
+
+typedef struct{
     CCString * backgroundSoundImage;
     CCString * resetSoundImage;
     CCString * scoreSoundImage;
@@ -93,9 +103,9 @@ typedef struct{
     CheckboxType controllerPosition;
 	int initDuration;
     int durationIncrease;
-	int topScore;
+	float topScore;
     int topLevel;
-	int lastScore;
+	float lastScore;
     int currentLevel;
     int maxDuration;
     vector<int> levels;
@@ -112,7 +122,7 @@ public:
     UserData * getUserData();
     void setUserData(const char * key , CheckboxType data , int value);
     void levelUp();
-    void setLastScore(int lastScore);
+    void setLastScore(float lastScore);
 
 private:
     GameController();
@@ -120,9 +130,11 @@ private:
     virtual bool init();
     CCDictionary * dict;
     vector<PlaySceneData *> playSceneDatas;
+    vector<MultiPlaySceneData *> multiPlaySceneDatas;
     AnimationData animationData;
     UserData userData;
     bool initPlaySceneData(CCArray * dataArray);
+    bool initMultiPlaySceneData(CCArray * dataArray);
     bool initAnimationData(CCDictionary * dataDict);
     bool initSpecialData(CCDictionary * dataDict);
     bool initUserData(CCDictionary * dataDict);

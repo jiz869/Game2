@@ -23,7 +23,10 @@ using namespace std;
 typedef enum{
     FIRST=0,
     SECOND,
-}PlayerOrder;
+    ORDER_MAX,
+}ORDER;
+
+#define SYNC_TIMES 6
 
 class MultiPlayScene: public PlayScene , public ConnectionRequestListener , public RoomRequestListener,
                     public NotificationListener,public ZoneRequestListener,public ChatRequestListener
@@ -44,6 +47,7 @@ public:
     void returnOnConnectionFailed();
     virtual void update(float dt);
     virtual void onSubscribeRoomDone(AppWarp::room revent);
+    virtual void onPrivateChatReceived(std::string sender, std::string message);
 
 protected:
     void connectToAppWarp();
@@ -52,11 +56,22 @@ protected:
     void connectionFailed();
     CCLabelTTF * infoLabel;
     PlayerObj * enemy;
-    PlayerOrder order;
-    
+    string enemyName;
+
     virtual void initMisc();
     virtual void initPlayer();
     void prepareToStart();
+    ORDER order;
+    unsigned long latency;
+    int syncCount;
+
+    virtual void sendStart();
+    virtual void sendSync();
+    unsigned long getCurrentTime();
+
+    void startGame();
+
+    MultiPlaySceneData * multiPlayScenedata;
 };
 
 #endif /* MULTIPLAYSCENE_H_ */

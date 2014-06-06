@@ -100,7 +100,7 @@ void PlayScene::initMisc(){
 
 void PlayScene::initPlayer(){
 	player = new PlayerObj();
-	addChild(player->load());
+	addChild(player->load(PlayerObj::MIDDLE));
 }
 
 void PlayScene::initLanes(){

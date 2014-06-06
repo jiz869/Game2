@@ -95,7 +95,7 @@ void StartMenuScene::initScoreMenu(){
     scoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", "Verdana-Bold", 128 ));
     scoreLabel->setColor( ccc3(54, 255, 0) );
     scoreLabel->setAnchorPoint(ccp(-1,0.5));
-    CCString * score = CCString::createWithFormat("%d", userData->topScore);
+    CCString * score = CCString::createWithFormat("%.1f", userData->topScore);
     scoreLabel->setString(score->getCString());
     scoreLabel->setPosition(ccp(winSize.width/2, winSize.height*0.75));
 

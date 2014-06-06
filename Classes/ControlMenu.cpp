@@ -202,7 +202,7 @@ void ControlMenu::initScoreLabel(){
     }
 
     scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
-    scoreLabel->setColor( ccc3(54, 255, 0) );
+    scoreLabel->setColor( ccc3(168, 0, 0) );
     scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height - 50) );
     addChild(scoreLabel);
 }
@@ -225,11 +225,12 @@ void ControlMenu::updateGameTime()
     bloodBar->setPercentage((float)seconds/maxDuration * 100);
 }
 
-void ControlMenu::updateScore()
+void ControlMenu::updateScore(bool isGood)
 {
     char ss[10];
-    sprintf(ss, "%d", score);
+    sprintf(ss, "%.1f", score);
     scoreLabel->setString(ss);
+    if(!isGood) return;
     scoreLabel->runAction(CCSequence::create(CCScaleTo::create(0.5 , 2.5) , CCScaleTo::create(0.5 , 1.0), NULL));
 	AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSoundImage->getCString());
@@ -273,8 +274,8 @@ void ControlMenu::doScore(){
     if (status != PLAY) {
         return;
     }
-	score++;
-	updateScore();
+	score+=1;
+	updateScore(true);
     if (userData->levels[userData->currentLevel] != 0 &&
         score >= userData->levels[userData->currentLevel]) {
         levelUp();
@@ -301,6 +302,11 @@ void ControlMenu::showUp(){
 void ControlMenu::changeGameTime(int delta){
 	seconds += delta;
 	updateGameTime();
+}
+
+void ControlMenu::changeScore(float delta , bool isGood){
+    score += delta;
+    updateScore(isGood);
 }
 
 void ControlMenu::increaseDuration(int delta){

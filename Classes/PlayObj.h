@@ -23,9 +23,16 @@ enum PlayerState {
 class PlayerObj : public GameObj {
 
 public:
+    typedef enum{
+        MIDDLE=0,
+        LEFT,
+        RIGHT,
+    }PlayerOrder;
+
+public:
     PlayerObj();
     ~PlayerObj();
-    virtual B2Sprite * load();
+    virtual B2Sprite * load(PlayerOrder order);
     void jumpUp();
     void jumpDown();
     void wait();

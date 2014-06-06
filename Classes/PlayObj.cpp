@@ -19,16 +19,25 @@ PlayerObj::PlayerObj() : movingState(WAIT)
     specials.reserve(MAX_SPECIAL_NUM);
     UserData * userData = GameController::getGameController()->getUserData();
     data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    resetPos = ccp(size.width/2 , gameObj->getContentSize().height/2+2);
 }
 
 PlayerObj::~PlayerObj(){
 }
 
-B2Sprite * PlayerObj::load(){
+B2Sprite * PlayerObj::load(PlayerOrder order){
 
 	GameObj::load(data->playerWaitImageName->getCString() , b2_dynamicBody , PLAYER);
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+	float resetPosX;
+
+	if(order == PlayerObj::LEFT){
+	    resetPosX = size.width/2 - 30;
+	}else if(order == PlayerObj::RIGHT){
+	    resetPosX = size.width/2 + 30;
+	}else{
+	    resetPosX = size.width/2;
+	}
+	resetPos = ccp(resetPosX , gameObj->getContentSize().height/2+2);
 	reset();
     return gameObj;
 }
@@ -166,7 +175,7 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
 			AnimationData * animData = GameController::getGameController()->getAnimationData();
             SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
             PlayScene * playScene = (PlayScene *)getParent();
-            playScene->controlMenu->changeGameTime(-1);
+            playScene->controlMenu->changeScore(-0.1 , false);
         	reset();
         	removeAllSpecials();
         }

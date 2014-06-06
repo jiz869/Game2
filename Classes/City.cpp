@@ -36,7 +36,7 @@ bool City::init(){
 
 void City::addRoad(){
 
-    int number = getRandom(0,6);
+    int number = 5;//getRandom(0,6);
     CCString * roadName = CCString::createWithFormat("road%d.png", number);;
     CCSprite * road;
 
