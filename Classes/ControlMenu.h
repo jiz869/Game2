@@ -26,7 +26,7 @@ public:
     virtual bool init();
     bool isUpButtonSelected();
     void startNewGame();
-    void doScore();
+    virtual void doScore();
     void step(float dt);
     void increaseDuration(int delta);
     void resumeDuration();
@@ -36,7 +36,7 @@ public:
     void pauseAndPlayHandler(CCObject * sender);
     void showGo();
     void showOver();
-    void showUp();
+    virtual void showUp();
     void nextScene();
 
 protected:
@@ -56,9 +56,9 @@ protected:
     virtual void initLevelSplash();
 
     void updateGameTime();
-    void updateScore(bool isGood);
+    virtual void updateScore(bool isGood);
 
-    void GameOver();
+    virtual void GameOver();
 
     long numFrame;
     float score;

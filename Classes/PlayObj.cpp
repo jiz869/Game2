@@ -266,3 +266,7 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
 CCNode * PlayerObj::getParent(){
     return gameObj->getParent();
 }
+
+void PlayerObj::setTag(int tag){
+    gameObj->setTag(tag);
+}

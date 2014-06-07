@@ -13,6 +13,7 @@
 #include "ControlMenu.h"
 #include "SimpleAudioEngine.h"
 #include "City.h"
+#include "MultiPlayControlMenu.h"
 
 using namespace CocosDenshion;
 
@@ -112,7 +113,7 @@ void PlayScene::initLanes(){
 }
 
 void PlayScene::initControlMenu(){
-	controlMenu = ControlMenu::create();
+    controlMenu = MultiPlayControlMenu::create();
 	addChild(controlMenu);
 }
 

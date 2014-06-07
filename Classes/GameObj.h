@@ -20,6 +20,7 @@ typedef enum{
 	UPPER_BOUNDARY,
 	CAR,
     SPECIAL,
+    ENEMY,
 }SpriteTag;
 
 class GameObj {

@@ -50,6 +50,7 @@ public:
     CCNode * getParent();
     void removeAllSpecials();
     CCPoint resetPos;
+    void setTag(int tag);
 
 protected:
     PlayerState movingState;

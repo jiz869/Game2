@@ -17,6 +17,11 @@ public:
     virtual ~MultiPlayControlMenu();
     CREATE_FUNC(MultiPlayControlMenu);
     virtual bool init();
+    virtual void step(float dt);
+    virtual void doScore();
+    void enemyOver();
+    virtual void showUp();
+    void updateEnemyScore(float score);
 
 protected:
 
@@ -25,8 +30,13 @@ protected:
     virtual void initMenu();
     virtual void initMisc();
     virtual void initLevelSplash();
-    
+
+    virtual void gameOver();
+
     CCLabelTTF * scoreLabelEnemy;
+    float enemyScore;
+    virtual void updateScore(bool isGood);
+    bool isEnemyOver;
 };
 
 #endif /* MULTIPLAYCONTROLMENU_H_ */

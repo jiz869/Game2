@@ -58,17 +58,17 @@ protected:
 
     virtual void initMisc();
 
-    void initPlayer();
+    virtual void initPlayer();
 
-    void initControlMenu();
+    virtual void initControlMenu();
 
-    void initBoundary();
+    virtual void initBoundary();
 
-    void initLanes();
+    virtual void initLanes();
 
     void processContact(float dt);
 
-    void initCityObj();
+    virtual void initCityObj();
 
     PlayerObj * player;
     GameObj * lowerBoundary , * upperBoundary;

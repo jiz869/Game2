@@ -48,7 +48,10 @@ public:
     virtual void update(float dt);
     virtual void onSubscribeRoomDone(AppWarp::room revent);
     virtual void onPrivateChatReceived(std::string sender, std::string message);
-    virtual void onSendPrivateChatDone(int res);
+    void sendScore(float score);
+    void sendOver();
+    void gameOver();
+    virtual void sendPlayPos();
 
 protected:
     void connectToAppWarp();
@@ -61,6 +64,7 @@ protected:
 
     virtual void initMisc();
     virtual void initPlayer();
+    virtual void initControlMenu();
     void prepareToStart();
     ORDER order;
     unsigned long latency;

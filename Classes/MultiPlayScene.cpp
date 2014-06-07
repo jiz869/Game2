@@ -7,6 +7,7 @@
 
 #include "MultiPlayScene.h"
 #include "StartMenuScene.h"
+#include "MultiPlayControlMenu.h"
 
 MultiPlayScene::MultiPlayScene()
 {
@@ -147,7 +148,7 @@ void MultiPlayScene::connectToAppWarp(){
 }
 
 void MultiPlayScene::update(float dt){
-
+    PlayScene::update(dt);
 }
 
 void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
@@ -174,6 +175,33 @@ void MultiPlayScene::sendSync(){
     warpClientRef->sendPrivateChat(enemyName, "sync");
 }
 
+void MultiPlayScene::sendScore(float score){
+    CCString * str = CCString::createWithFormat("{%.1f,%.1f}", 0 , score);
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->sendPrivateChat(enemyName, str->getCString());
+}
+
+void MultiPlayScene::sendOver(){
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->sendPrivateChat(enemyName, "over");
+}
+
+void MultiPlayScene::gameOver(){
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->leaveRoom(ROOM_ID);
+}
+
+void MultiPlayScene::sendPlayPos(){
+    CCPoint pos = player->getPosition();
+    CCString * str = CCString::createWithFormat("{%f,%f}", pos.x , pos.y);
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->sendPrivateChat(enemyName, str->getCString());
+}
+
 void MultiPlayScene::prepareToStart(){
     initBoundary();
 
@@ -197,8 +225,8 @@ void MultiPlayScene::initPlayer(){
     }else{
         addChild(player->load(PlayerObj::RIGHT));
         addChild(enemy->load(PlayerObj::LEFT));
-
     }
+    enemy->setTag(ENEMY);
 }
 
 void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string message){
@@ -233,19 +261,31 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
         enemyName = sender;
         scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
         scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0);
+    }else if(message == "over"){
+        ((MultiPlayControlMenu *)controlMenu)->enemyOver();
+    }else{
+        CCPoint point = CCPointFromString(message.c_str());
+        if(point.x < 0.1){
+            ((MultiPlayControlMenu *)controlMenu)->updateEnemyScore(point.y);
+        }else{
+            enemy->setPosition(point);
+        }
     }
 }
 
 void MultiPlayScene::startGame(){
+    PlayScene::initLanes();
+    initControlMenu();
+    schedule(schedule_selector(MultiPlayScene::sendPlayPos), latency, kCCRepeatForever, 0.05f);
+}
 
+void MultiPlayScene::initControlMenu(){
+    controlMenu = MultiPlayControlMenu::create();
+    addChild(controlMenu);
 }
 
 unsigned long MultiPlayScene::getCurrentTime(){
     struct cc_timeval tv;
     CCTime::gettimeofdayCocos2d(&tv, NULL);
     return tv.tv_sec * 1000 + tv.tv_usec / 1000;
-}
-
-void MultiPlayScene::onSendPrivateChatDone(int res){
-    CCLOG("onSendPrivateChatDone %d", res);
 }
