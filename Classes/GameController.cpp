@@ -140,6 +140,8 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     else{
         userData.controllerPosition = SIDE;
     }
+    
+    userData.order = -1;
 
     return true;
 }

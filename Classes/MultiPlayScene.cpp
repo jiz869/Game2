@@ -138,11 +138,11 @@ void MultiPlayScene::connectToAppWarp(){
         warpClientRef->setRoomRequestListener(this);
         warpClientRef->setZoneRequestListener(this);
         warpClientRef->setChatRequestListener(this);
-        warpClientRef->connect("limin");
+        warpClientRef->connect("welcomelm");
     }
     else
     {
-        AppWarp::Client::getInstance()->connect("limin");
+        AppWarp::Client::getInstance()->connect("welcomelm");
     }
 }
 
@@ -156,6 +156,7 @@ void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
 
     enemyName = username;
     order = FIRST;
+    userData->order = order;
     scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
     latency = getCurrentTime();
     sendSync();
@@ -185,10 +186,6 @@ void MultiPlayScene::prepareToStart(){
     initPlayer();
 
     CCLog("initPlayer");
-
-    initControlMenu();
-
-    CCLog("initMenu");
 }
 
 void MultiPlayScene::initPlayer(){
@@ -205,7 +202,7 @@ void MultiPlayScene::initPlayer(){
 }
 
 void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string message){
-    CCLOG("onPrivateChatReceived %s", sender.c_str());
+    CCLOG("onPrivateChatReceived %s %s", sender.c_str() , message.c_str());
     string str = sender + string(" send ") + message;
     infoLabel->setString(str.c_str());
 
@@ -232,6 +229,7 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
         }
     }else if(message == "start"){
         order = SECOND;
+        userData->order=order;
         enemyName = sender;
         scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
         scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0);
@@ -246,4 +244,8 @@ unsigned long MultiPlayScene::getCurrentTime(){
     struct cc_timeval tv;
     CCTime::gettimeofdayCocos2d(&tv, NULL);
     return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+}
+
+void MultiPlayScene::onSendPrivateChatDone(int res){
+    CCLOG("onSendPrivateChatDone %d", res);
 }

@@ -133,6 +133,7 @@ void StartMenuScene::initMainMenu(){
 }
 
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
+    SET_BANNDER_HIDDEN(true);
     CCScene * pvpScene = MultiPlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(pvpScene);
 }

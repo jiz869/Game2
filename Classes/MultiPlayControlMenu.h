@@ -25,6 +25,8 @@ protected:
     virtual void initMenu();
     virtual void initMisc();
     virtual void initLevelSplash();
+    
+    CCLabelTTF * scoreLabelEnemy;
 };
 
 #endif /* MULTIPLAYCONTROLMENU_H_ */

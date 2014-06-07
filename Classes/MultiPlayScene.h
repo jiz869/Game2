@@ -48,6 +48,7 @@ public:
     virtual void update(float dt);
     virtual void onSubscribeRoomDone(AppWarp::room revent);
     virtual void onPrivateChatReceived(std::string sender, std::string message);
+    virtual void onSendPrivateChatDone(int res);
 
 protected:
     void connectToAppWarp();

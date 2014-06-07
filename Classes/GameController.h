@@ -110,6 +110,7 @@ typedef struct{
     int maxDuration;
     vector<int> levels;
     int maxLevel;
+    int order;
 }UserData;
 
 class GameController {
