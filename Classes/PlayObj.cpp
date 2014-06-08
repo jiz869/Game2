@@ -145,7 +145,7 @@ void PlayerObj::step(float dt){
 bool PlayerObj::processContact(cocos2d::CCSprite *contact){
     if (contact->getTag() == UPPER_BOUNDARY || contact->getTag() == LOWER_BOUNDARY) {
         reset();
-        return true;
+        return false;
     }
 
     if (contact->getTag() == SPECIAL) {

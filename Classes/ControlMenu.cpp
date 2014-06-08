@@ -276,9 +276,9 @@ void ControlMenu::step(float dt){
     	GameOver();
 }
 
-void ControlMenu::doScore(){
+bool ControlMenu::doScore(){
     if (status != PLAY) {
-        return;
+        return false;
     }
 	score+=1;
 	updateScore(true);
@@ -288,6 +288,7 @@ void ControlMenu::doScore(){
     }
 	seconds += durationIncrease;
 	updateGameTime();
+    return true;
 }
 
 void ControlMenu::levelUp(){
@@ -311,6 +312,9 @@ void ControlMenu::changeGameTime(int delta){
 }
 
 void ControlMenu::changeScore(float delta , bool isGood){
+    if (status != PLAY) {
+        return;
+    }
     score += delta;
     updateScore(isGood);
 }

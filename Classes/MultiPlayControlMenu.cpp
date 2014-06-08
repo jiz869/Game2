@@ -74,12 +74,13 @@ void MultiPlayControlMenu::initLevelSplash(){
     ControlMenu::initLevelSplash();
 }
 
-void MultiPlayControlMenu::doScore(){
+bool MultiPlayControlMenu::doScore(){
     if (status != PLAY) {
-        return;
+        return false;
     }
     score+=1;
     updateScore(true);
+    return true;
 }
 
 void MultiPlayControlMenu::updateScore(bool isGood){
@@ -94,16 +95,17 @@ void MultiPlayControlMenu::GameOver(){
 
 void MultiPlayControlMenu::updateEnemyScore(float score){
     char ss[10];
-    enemyScore = score;
-    sprintf(ss, "%.1f", score);
+    enemyScore += score;
+    sprintf(ss, "%.1f", enemyScore);
     scoreLabelEnemy->setString(ss);
 }
 
 void MultiPlayControlMenu::step(float dt){
     ControlMenu::step(dt);
-    if(status == OVER && isEnemyOver){
+    if(status == OVER && isEnemyOver == true){
         isEnemyOver=false;
         ((MultiPlayScene*)getParent())->gameOver();
+        
         if(score <= enemyScore){
             gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
         }else{

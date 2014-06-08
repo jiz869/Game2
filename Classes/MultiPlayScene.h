@@ -47,7 +47,7 @@ public:
     void returnOnConnectionFailed();
     virtual void update(float dt);
     virtual void onSubscribeRoomDone(AppWarp::room revent);
-    virtual void onChatReceived(AppWarp::chat chatevent);
+    virtual void onPrivateChatReceived(std::string sender, std::string message);
     void sendScore();
     void sendOver();
     void gameOver();
@@ -64,6 +64,7 @@ protected:
     CCLabelTTF * infoLabel;
     PlayerObj * enemy;
     string enemyName;
+    string userName;
 
     virtual void initMisc();
     virtual void initPlayer();
@@ -86,6 +87,8 @@ protected:
     MultiPlaySceneData * multiPlayScenedata;
     
     virtual void processContact(float dt);
+    
+    string getUserName();
 };
 
 #endif /* MULTIPLAYSCENE_H_ */

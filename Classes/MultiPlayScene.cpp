@@ -128,6 +128,7 @@ void MultiPlayScene::connectToAppWarp(){
     AppWarp::Client *warpClientRef;
     if (isFirstLaunch)
     {
+        userName = getUserName();
         infoLabel->setString("connectToAppWarp");
         CCLOG("connectToAppWarp");
         isFirstLaunch = !isFirstLaunch;
@@ -139,12 +140,24 @@ void MultiPlayScene::connectToAppWarp(){
         warpClientRef->setRoomRequestListener(this);
         warpClientRef->setZoneRequestListener(this);
         warpClientRef->setChatRequestListener(this);
-        warpClientRef->connect("welcomelm");
+        warpClientRef->connect(userName);
     }
     else
     {
-        AppWarp::Client::getInstance()->connect("welcomelm");
+        AppWarp::Client::getInstance()->connect(userName);
     }
+}
+
+string MultiPlayScene::getUserName()
+{
+	std::string charStr;
+	srand (time(NULL));
+    
+	for (int i = 0; i < 10; ++i) {
+		charStr += (char)(65+(rand() % (26)));
+	}
+    
+	return charStr;
 }
 
 void MultiPlayScene::update(float dt){
@@ -167,25 +180,26 @@ void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
 void MultiPlayScene::sendStart(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat("start");
+    warpClientRef->sendPrivateChat(enemyName,"start");
 }
 
 void MultiPlayScene::sendSync(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat("sync");
+    warpClientRef->sendPrivateChat(enemyName,"sync");
 }
 
 void MultiPlayScene::sendScore(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat("score");
+    warpClientRef->sendPrivateChat(enemyName,"score");
 }
 
 void MultiPlayScene::sendOver(){
+    CCLOG("sendOver");
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat("over");
+    warpClientRef->sendPrivateChat(enemyName,"over");
 }
 
 void MultiPlayScene::gameOver(){
@@ -199,31 +213,31 @@ void MultiPlayScene::gameOver(){
 //    CCString * str = CCString::createWithFormat("{%f,%f}", pos.x , pos.y);
 //    AppWarp::Client *warpClientRef;
 //    warpClientRef = AppWarp::Client::getInstance();
-//    warpClientRef->sendChat(str->getCString());
+//    warpClientRef->sendPrivateChat(enemyName,str->getCString());
 //}
 
 void MultiPlayScene::sendUp(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat("up");
+    warpClientRef->sendPrivateChat(enemyName,"up");
 }
 
 void MultiPlayScene::sendDown(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat("down");
+    warpClientRef->sendPrivateChat(enemyName,"down");
 }
 
 void MultiPlayScene::sendWait(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat("wait");
+    warpClientRef->sendPrivateChat(enemyName,"wait");
 }
 
 void MultiPlayScene::sendHit(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat("hit");
+    warpClientRef->sendPrivateChat(enemyName,"hit");
 }
 
 void MultiPlayScene::prepareToStart(){
@@ -253,9 +267,7 @@ void MultiPlayScene::initPlayer(){
     enemy->setTag(ENEMY);
 }
 
-void MultiPlayScene::onChatReceived(AppWarp::chat chatevent){
-    string message = chatevent.chat;
-    string sender = chatevent.sender;
+void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string message){
     if(message == "sync"){
         if(order == ORDER_MAX){
             if(syncCount == 0){
@@ -320,6 +332,7 @@ unsigned long MultiPlayScene::getCurrentTime(){
 
 void MultiPlayScene::upHandler(int tag){
     if (tag == PLAYER) {
+        sendUp();
         player->jumpUp();
     }else{
         enemy->jumpUp();
@@ -328,6 +341,7 @@ void MultiPlayScene::upHandler(int tag){
 
 void MultiPlayScene::downHandler(int tag){
     if (tag == PLAYER) {
+        sendDown();
         player->jumpDown();
     }else{
         enemy->jumpDown();
@@ -336,6 +350,7 @@ void MultiPlayScene::downHandler(int tag){
 
 void MultiPlayScene::touchendHandler(int tag){
     if (tag == PLAYER) {
+        sendWait();
         player->wait();
     }else{
         enemy->wait();
@@ -344,8 +359,9 @@ void MultiPlayScene::touchendHandler(int tag){
 
 void MultiPlayScene::processContact(float dt){
 	if( contact->getTag() == UPPER_BOUNDARY ) {
-        sendScore();
-		controlMenu->doScore();
+		if(controlMenu->doScore() == true){
+            sendScore();
+        }
 	}
     if(player->processContact(contact) == true){
         sendHit();

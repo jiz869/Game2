@@ -18,7 +18,7 @@ public:
     CREATE_FUNC(MultiPlayControlMenu);
     virtual bool init();
     virtual void step(float dt);
-    virtual void doScore();
+    virtual bool doScore();
     void enemyOver();
     virtual void showUp();
     void updateEnemyScore(float score);

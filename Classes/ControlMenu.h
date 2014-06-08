@@ -26,7 +26,7 @@ public:
     virtual bool init();
     bool isUpButtonSelected();
     void startNewGame();
-    virtual void doScore();
+    virtual bool doScore();
     virtual void step(float dt);
     void increaseDuration(int delta);
     void resumeDuration();
