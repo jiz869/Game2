@@ -113,7 +113,7 @@ void PlayScene::initLanes(){
 }
 
 void PlayScene::initControlMenu(){
-    controlMenu = MultiPlayControlMenu::create();
+    controlMenu = ControlMenu::create();
 	addChild(controlMenu);
 }
 
