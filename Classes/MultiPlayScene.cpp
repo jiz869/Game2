@@ -139,11 +139,11 @@ void MultiPlayScene::connectToAppWarp(){
         warpClientRef->setRoomRequestListener(this);
         warpClientRef->setZoneRequestListener(this);
         warpClientRef->setChatRequestListener(this);
-        warpClientRef->connect("limin");
+        warpClientRef->connect("welcomelm");
     }
     else
     {
-        AppWarp::Client::getInstance()->connect("limin");
+        AppWarp::Client::getInstance()->connect("welcomelm");
     }
 }
 
@@ -183,7 +183,6 @@ void MultiPlayScene::sendScore(float score){
 }
 
 void MultiPlayScene::sendOver(){
-    CCLOG("sendOver");
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
     warpClientRef->sendPrivateChat(enemyName, "over");
