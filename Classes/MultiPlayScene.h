@@ -47,7 +47,7 @@ public:
     void returnOnConnectionFailed();
     virtual void update(float dt);
     virtual void onSubscribeRoomDone(AppWarp::room revent);
-    virtual void onPrivateChatReceived(std::string sender, std::string message);
+    virtual void onChatReceived(AppWarp::chat chatevent);
     void sendScore(float score);
     void sendOver();
     void gameOver();

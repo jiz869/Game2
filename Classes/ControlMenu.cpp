@@ -245,13 +245,13 @@ void ControlMenu::updateScore(bool isGood)
 void ControlMenu::GameOver()
 {
     status=OVER;
-    gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.2, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
+    gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     GameController::getGameController()->setLastScore(score);
 }
 
 void ControlMenu::showOver(){
-    overSplash->runAction(CCSequence::create(CCScaleTo::create(0.2, 0.6) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
+    overSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
 }
 
 void ControlMenu::nextScene(){

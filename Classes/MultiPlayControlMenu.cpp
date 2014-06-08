@@ -106,7 +106,7 @@ void MultiPlayControlMenu::step(float dt){
         isEnemyOver=false;
         ((MultiPlayScene*)getParent())->gameOver();
         if(score <= enemyScore){
-            gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.2, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
+            gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
         }else{
             levelSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width/4, winSize.height*0.5)) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showUp)), NULL));
         }

@@ -166,26 +166,26 @@ void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
 void MultiPlayScene::sendStart(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendPrivateChat(enemyName, "start");
+    warpClientRef->sendChat("start");
 }
 
 void MultiPlayScene::sendSync(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendPrivateChat(enemyName, "sync");
+    warpClientRef->sendChat("sync");
 }
 
 void MultiPlayScene::sendScore(float score){
     CCString * str = CCString::createWithFormat("{%.1f,%.1f}", 0.0 , score);
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendPrivateChat(enemyName, str->getCString());
+    warpClientRef->sendChat(str->getCString());
 }
 
 void MultiPlayScene::sendOver(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendPrivateChat(enemyName, "over");
+    warpClientRef->sendChat("over");
 }
 
 void MultiPlayScene::gameOver(){
@@ -199,7 +199,7 @@ void MultiPlayScene::sendPlayPos(){
     CCString * str = CCString::createWithFormat("{%f,%f}", pos.x , pos.y);
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendPrivateChat(enemyName, str->getCString());
+    warpClientRef->sendChat(str->getCString());
 }
 
 void MultiPlayScene::prepareToStart(){
@@ -229,7 +229,9 @@ void MultiPlayScene::initPlayer(){
     enemy->setTag(ENEMY);
 }
 
-void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string message){
+void MultiPlayScene::onChatReceived(AppWarp::chat chatevent){
+    string message = chatevent.chat;
+    string sender = chatevent.sender;
     if(message == "sync"){
         if(order == ORDER_MAX){
             if(syncCount == 0){
