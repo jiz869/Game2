@@ -48,6 +48,7 @@ public:
     virtual void update(float dt);
     virtual void onSubscribeRoomDone(AppWarp::room revent);
     virtual void onPrivateChatReceived(std::string sender, std::string message);
+    virtual void onUserLeftRoom(AppWarp::room rData, std::string user);
     void sendScore();
     void sendOver();
     void gameOver();
@@ -83,8 +84,6 @@ protected:
     unsigned long getCurrentTime();
 
     void startGame();
-
-    MultiPlaySceneData * multiPlayScenedata;
     
     virtual void processContact(float dt);
     

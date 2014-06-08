@@ -62,16 +62,6 @@ typedef struct{
 }PlaySceneData;
 
 typedef struct{
-    int laneNumber;
-    CCString * playerWaitImageName;
-    CCAnimation * playerMoveAnim;
-    float playerSpeed;
-    float playerAccSpeed;
-    float playerStopAccSpeed;
-    vector<LaneDescription *> laneDescriptions;
-}MultiPlaySceneData;
-
-typedef struct{
     CCString * backgroundSoundImage;
     CCString * resetSoundImage;
     CCString * scoreSoundImage;
@@ -131,11 +121,9 @@ private:
     virtual bool init();
     CCDictionary * dict;
     vector<PlaySceneData *> playSceneDatas;
-    vector<MultiPlaySceneData *> multiPlaySceneDatas;
     AnimationData animationData;
     UserData userData;
     bool initPlaySceneData(CCArray * dataArray);
-    bool initMultiPlaySceneData(CCArray * dataArray);
     bool initAnimationData(CCDictionary * dataDict);
     bool initSpecialData(CCDictionary * dataDict);
     bool initUserData(CCDictionary * dataDict);

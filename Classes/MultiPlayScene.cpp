@@ -51,14 +51,14 @@ bool MultiPlayScene::init(){
 
 void MultiPlayScene::initMisc(){
     PlayScene::initMisc();
-
+    data = GameController::getGameController()->getPlaySceneData(userData->maxLevel+1);
     unscheduleUpdate();
 
     infoLabel = CCLabelTTF::create("", "Verdana", 32);
     infoLabel->setColor( ccc3(54, 255, 0) );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     addChild(infoLabel);
-
+    
     isFirstLaunch = true;
     order = ORDER_MAX;
     syncCount = 0;
@@ -177,6 +177,10 @@ void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
     sendSync();
 }
 
+void MultiPlayScene::onUserLeftRoom(AppWarp::room rData, std::string user){
+    CCLOG("%s left", user.c_str());
+}
+
 void MultiPlayScene::sendStart(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
@@ -205,7 +209,7 @@ void MultiPlayScene::sendOver(){
 void MultiPlayScene::gameOver(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->leaveRoom(ROOM_ID);
+    warpClientRef->disconnect();
 }
 
 //void MultiPlayScene::sendPlayPos(){

@@ -87,10 +87,6 @@ bool GameController::init(){
         return false;
     }
 
-    if(initMultiPlaySceneData((CCArray *)dict->objectForKey("multi_play_scene_data")) == false){
-        return false;
-    }
-
     if(initSpecialData((CCDictionary *)dict->objectForKey("special_data")) == false){
         return false;
     }
@@ -189,54 +185,6 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
             data->laneDescriptions.push_back(ld);
         }
         playSceneDatas.push_back(data);
-    }
-
-    return true;
-}
-
-bool GameController::initMultiPlaySceneData(cocos2d::CCArray *dataArray){
-    if (dataArray == NULL) {
-        return false;
-    }
-
-    multiPlaySceneDatas.reserve(dataArray->count());
-
-    for (int i = 0; i < dataArray->count(); i++) {
-        MultiPlaySceneData * data = new MultiPlaySceneData();
-        CCDictionary * dict = (CCDictionary *)dataArray->objectAtIndex(i);
-        data->laneNumber = CCSTRING_FOR_KEY(dict , "lane_number")->intValue();
-        data->playerSpeed = CCSTRING_FOR_KEY(dict , "player_init_speed")->floatValue();
-        data->playerWaitImageName = CCSTRING_FOR_KEY(dict, "player_wait_image");
-        data->playerMoveAnim = animationData.playerMoveAnim;
-        data->laneDescriptions.reserve(data->laneNumber);
-        data->playerAccSpeed = CCSTRING_FOR_KEY(dict , "player_start_acc_speed")->floatValue();
-        data->playerStopAccSpeed = CCSTRING_FOR_KEY(dict , "player_stop_acc_speed")->floatValue();
-
-        CCArray * ldArray = (CCArray *)dict->objectForKey("lane_descriptions");
-        for (int j = 0; j < ldArray->count(); j++) {
-            LaneDescription * ld = new LaneDescription();
-            CCDictionary * ldDict = (CCDictionary *)ldArray->objectAtIndex(j);
-
-            CCPoint pos = CCPointFromString(CCSTRING_FOR_KEY(ldDict, "init_position")->getCString());
-            ld->initPos = ccp(pos.x * designSize.width , pos.y * designSize.height);
-            ld->period = CCSTRING_FOR_KEY(ldDict, "period")->floatValue();
-            ld->specialChance = CCSTRING_FOR_KEY(ldDict, "special_chance")->floatValue();
-            if (CCSTRING_FOR_KEY(ldDict, "direction")->isEqual(CCString::create("left2right"))) {
-                ld->left2right = true;
-                ld->carSpeed = CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();
-            }else{
-                ld->left2right = false;
-                ld->carSpeed = -CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();
-            }
-
-            CCArray * carNumbers = (CCArray *)ldDict->objectForKey("car_numbers");
-            ld->carNumbers.reserve(carNumbers->count());
-            for(int k = 0 ; k < carNumbers->count() ; k++ ){
-                ld->carNumbers.push_back(CCSTRING_AT_INDEX(carNumbers , k)->intValue());
-            }
-            data->laneDescriptions.push_back(ld);
-        }
-        multiPlaySceneDatas.push_back(data);
     }
 
     return true;

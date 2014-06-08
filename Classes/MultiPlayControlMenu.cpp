@@ -37,6 +37,10 @@ void MultiPlayControlMenu::initMisc(){
     ControlMenu::initMisc();
     enemyScore = 0;
     isEnemyOver=false;
+    
+    initDuration = 60;
+    maxDuration = 60;
+    seconds = initDuration;
 }
 
 void MultiPlayControlMenu::initMenu(){
