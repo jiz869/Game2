@@ -131,15 +131,15 @@ void PlayScene::initBoundary(){
 	addChild(boundary);
 }
 
-void PlayScene::upHandler(CCObject * sender){
+void PlayScene::upHandler(int tag){
 	player->jumpUp();
 }
 
-void PlayScene::downHandler(CCObject * sender){
+void PlayScene::downHandler(int tag){
 	player->jumpDown();
 }
 
-void PlayScene::touchendHandler(CCObject * sender){
+void PlayScene::touchendHandler(int tag){
 	player->wait();
 }
 

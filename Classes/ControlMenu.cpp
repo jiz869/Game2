@@ -168,13 +168,13 @@ void ControlMenu::resumeGame(){
 
 
 void ControlMenu::upHandler(CCObject * sender){
-	((PlayScene *)getParent())->upHandler(NULL);
+	((PlayScene *)getParent())->upHandler(PLAYER);
 }
 void ControlMenu::downHandler(CCObject * sender){
-	((PlayScene *)getParent())->downHandler(NULL);
+	((PlayScene *)getParent())->downHandler(PLAYER);
 }
 void ControlMenu::touchendHandler(CCObject * sender){
-	((PlayScene *)getParent())->touchendHandler(NULL);
+	((PlayScene *)getParent())->touchendHandler(PLAYER);
 }
 
 void ControlMenu::initBloodBar(){

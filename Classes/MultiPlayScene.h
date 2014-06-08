@@ -48,10 +48,13 @@ public:
     virtual void update(float dt);
     virtual void onSubscribeRoomDone(AppWarp::room revent);
     virtual void onChatReceived(AppWarp::chat chatevent);
-    void sendScore(float score);
+    void sendScore();
     void sendOver();
     void gameOver();
-    virtual void sendPlayPos();
+    //virtual void sendPlayPos();
+    virtual void upHandler(int tag);
+    virtual void downHandler(int tag);
+    virtual void touchendHandler(int tag);
 
 protected:
     void connectToAppWarp();
@@ -72,11 +75,17 @@ protected:
 
     virtual void sendStart();
     virtual void sendSync();
+    virtual void sendUp();
+    virtual void sendDown();
+    virtual void sendWait();
+    virtual void sendHit();
     unsigned long getCurrentTime();
 
     void startGame();
 
     MultiPlaySceneData * multiPlayScenedata;
+    
+    virtual void processContact(float dt);
 };
 
 #endif /* MULTIPLAYSCENE_H_ */

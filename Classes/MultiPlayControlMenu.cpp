@@ -84,7 +84,6 @@ void MultiPlayControlMenu::doScore(){
 
 void MultiPlayControlMenu::updateScore(bool isGood){
     ControlMenu::updateScore(isGood);
-    ((MultiPlayScene*)getParent())->sendScore(score);
 }
 
 void MultiPlayControlMenu::GameOver(){

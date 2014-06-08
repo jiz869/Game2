@@ -38,7 +38,7 @@ public:
     void wait();
     void reset();
     void step(float dt);
-    void processContact(CCSprite * contact);
+    bool processContact(CCSprite * contact);
     bool hasSpecial(SpecialObj * specialObj);
     bool enoughSpecials();
     void beginWithSpecial(SpecialObj * specialObj);

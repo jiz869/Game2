@@ -39,9 +39,9 @@ public:
     virtual void slowAllLanes(float speed_decrease, float interval_increase);
     virtual void resumeAllLanesFromSlow(float speed_decrease, float interval_increase);
 
-    void upHandler(CCObject * sender);
-    void downHandler(CCObject * sender);
-    void touchendHandler(CCObject * sender);
+    virtual void upHandler(int tag);
+    virtual void downHandler(int tag);
+    virtual void touchendHandler(int tag);
 
     ControlMenu * controlMenu;
 
@@ -66,7 +66,7 @@ protected:
 
     virtual void initLanes();
 
-    void processContact(float dt);
+    virtual void processContact(float dt);
 
     virtual void initCityObj();
 

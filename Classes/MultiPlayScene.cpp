@@ -149,6 +149,7 @@ void MultiPlayScene::connectToAppWarp(){
 
 void MultiPlayScene::update(float dt){
     PlayScene::update(dt);
+    enemy->step(dt);
 }
 
 void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
@@ -175,11 +176,10 @@ void MultiPlayScene::sendSync(){
     warpClientRef->sendChat("sync");
 }
 
-void MultiPlayScene::sendScore(float score){
-    CCString * str = CCString::createWithFormat("{%.1f,%.1f}", 0.0 , score);
+void MultiPlayScene::sendScore(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat(str->getCString());
+    warpClientRef->sendChat("score");
 }
 
 void MultiPlayScene::sendOver(){
@@ -194,12 +194,36 @@ void MultiPlayScene::gameOver(){
     warpClientRef->leaveRoom(ROOM_ID);
 }
 
-void MultiPlayScene::sendPlayPos(){
-    CCPoint pos = player->getPosition();
-    CCString * str = CCString::createWithFormat("{%f,%f}", pos.x , pos.y);
+//void MultiPlayScene::sendPlayPos(){
+//    CCPoint pos = player->getPosition();
+//    CCString * str = CCString::createWithFormat("{%f,%f}", pos.x , pos.y);
+//    AppWarp::Client *warpClientRef;
+//    warpClientRef = AppWarp::Client::getInstance();
+//    warpClientRef->sendChat(str->getCString());
+//}
+
+void MultiPlayScene::sendUp(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
-    warpClientRef->sendChat(str->getCString());
+    warpClientRef->sendChat("up");
+}
+
+void MultiPlayScene::sendDown(){
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->sendChat("down");
+}
+
+void MultiPlayScene::sendWait(){
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->sendChat("wait");
+}
+
+void MultiPlayScene::sendHit(){
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->sendChat("hit");
 }
 
 void MultiPlayScene::prepareToStart(){
@@ -260,15 +284,20 @@ void MultiPlayScene::onChatReceived(AppWarp::chat chatevent){
         userData->order=order;
         scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
         scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0);
+    }else if(message == "up"){
+        upHandler(ENEMY);
+    }else if(message == "down"){
+        downHandler(ENEMY);
+    }else if(message == "wait"){
+        touchendHandler(ENEMY);
     }else if(message == "over"){
         ((MultiPlayControlMenu *)controlMenu)->enemyOver();
-    }else{
-        CCPoint point = CCPointFromString(message.c_str());
-        if(point.x < 0.1){
-            ((MultiPlayControlMenu *)controlMenu)->updateEnemyScore(point.y);
-        }else{
-            enemy->setPosition(point);
-        }
+    }else if(message == "score"){
+        ((MultiPlayControlMenu *)controlMenu)->updateEnemyScore(1.0);
+        enemy->reset();
+    }else if(message == "hit"){
+        ((MultiPlayControlMenu *)controlMenu)->updateEnemyScore(-0.1);
+        enemy->reset();
     }
 }
 
@@ -276,7 +305,6 @@ void MultiPlayScene::startGame(){
     scheduleUpdate();
     PlayScene::initLanes();
     initControlMenu();
-    schedule(schedule_selector(MultiPlayScene::sendPlayPos), (float)latency/1000.0, kCCRepeatForever, 0.05f);
 }
 
 void MultiPlayScene::initControlMenu(){
@@ -288,4 +316,38 @@ unsigned long MultiPlayScene::getCurrentTime(){
     struct cc_timeval tv;
     CCTime::gettimeofdayCocos2d(&tv, NULL);
     return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+}
+
+void MultiPlayScene::upHandler(int tag){
+    if (tag == PLAYER) {
+        player->jumpUp();
+    }else{
+        enemy->jumpUp();
+    }
+}
+
+void MultiPlayScene::downHandler(int tag){
+    if (tag == PLAYER) {
+        player->jumpDown();
+    }else{
+        enemy->jumpDown();
+    }
+}
+
+void MultiPlayScene::touchendHandler(int tag){
+    if (tag == PLAYER) {
+        player->wait();
+    }else{
+        enemy->wait();
+    }
+}
+
+void MultiPlayScene::processContact(float dt){
+	if( contact->getTag() == UPPER_BOUNDARY ) {
+        sendScore();
+		controlMenu->doScore();
+	}
+    if(player->processContact(contact) == true){
+        sendHit();
+    }
 }
