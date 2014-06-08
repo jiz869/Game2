@@ -88,6 +88,7 @@ void MultiPlayControlMenu::updateScore(bool isGood){
 }
 
 void MultiPlayControlMenu::GameOver(){
+    CCLOG("GameOver");
     status = OVER;
     ((MultiPlayScene*)getParent())->sendOver();
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
@@ -102,6 +103,7 @@ void MultiPlayControlMenu::updateEnemyScore(float score){
 
 void MultiPlayControlMenu::step(float dt){
     ControlMenu::step(dt);
+    CCLOG("%d, %d", status , isEnemyOver);
     if(status == OVER && isEnemyOver){
         isEnemyOver=false;
         ((MultiPlayScene*)getParent())->gameOver();
@@ -115,6 +117,7 @@ void MultiPlayControlMenu::step(float dt){
 }
 
 void MultiPlayControlMenu::enemyOver(){
+    CCLOG("enemyOver");
     isEnemyOver=true;
 }
 

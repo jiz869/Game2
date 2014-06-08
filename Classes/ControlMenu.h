@@ -27,7 +27,7 @@ public:
     bool isUpButtonSelected();
     void startNewGame();
     virtual void doScore();
-    void step(float dt);
+    virtual void step(float dt);
     void increaseDuration(int delta);
     void resumeDuration();
     void changeGameTime(int delta);
