@@ -31,7 +31,7 @@ protected:
     virtual void initMisc();
     virtual void initLevelSplash();
 
-    virtual void gameOver();
+    virtual void GameOver();
 
     CCLabelTTF * scoreLabelEnemy;
     float enemyScore;

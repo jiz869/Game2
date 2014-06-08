@@ -272,7 +272,7 @@ void ControlMenu::step(float dt){
         updateGameTime();
     }
 
-    if(seconds <= 0)
+    if(seconds <= 0 && status != OVER)
     	GameOver();
 }
 
