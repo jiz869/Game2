@@ -52,11 +52,11 @@ void MultiPlayControlMenu::initScoreLabel(){
     float playerCPPX, enemyCCPX;
 
     if (userData->order == FIRST) {
-        playerCPPX = winSize.width * 0.33;
-        enemyCCPX = winSize.width * 0.66;
-    }else if (userData->order == SECOND){
-        enemyCCPX = winSize.width * 0.33;
         playerCPPX = winSize.width * 0.66;
+        enemyCCPX = winSize.width * 0.82;
+    }else if (userData->order == SECOND){
+        enemyCCPX = winSize.width * 0.66;
+        playerCPPX = winSize.width * 0.82;
     }
 
     scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );

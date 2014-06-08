@@ -236,6 +236,7 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
 
     if(message == "sync"){
         if(order == ORDER_MAX){
+        	enemyName = sender;
             sendSync();
             if(syncCount == 0){
                 latency = getCurrentTime();
@@ -258,7 +259,6 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
     }else if(message == "start"){
         order = SECOND;
         userData->order=order;
-        enemyName = sender;
         scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
         scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0);
     }else if(message == "over"){
