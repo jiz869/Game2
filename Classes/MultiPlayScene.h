@@ -81,6 +81,7 @@ protected:
     virtual void sendDown();
     virtual void sendWait();
     virtual void sendHit();
+    
     unsigned long getCurrentTime();
 
     void startGame();

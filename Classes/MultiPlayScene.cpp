@@ -51,14 +51,14 @@ bool MultiPlayScene::init(){
 
 void MultiPlayScene::initMisc(){
     PlayScene::initMisc();
-    data = GameController::getGameController()->getPlaySceneData(userData->maxLevel+1);
+    data = GameController::getGameController()->getPlaySceneData(userData->maxLevel);
     unscheduleUpdate();
 
     infoLabel = CCLabelTTF::create("", "Verdana", 32);
     infoLabel->setColor( ccc3(54, 255, 0) );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     addChild(infoLabel);
-    
+
     isFirstLaunch = true;
     order = ORDER_MAX;
     syncCount = 0;
@@ -152,11 +152,11 @@ string MultiPlayScene::getUserName()
 {
 	std::string charStr;
 	srand (time(NULL));
-    
+
 	for (int i = 0; i < 10; ++i) {
 		charStr += (char)(65+(rand() % (26)));
 	}
-    
+
 	return charStr;
 }
 
@@ -200,7 +200,6 @@ void MultiPlayScene::sendScore(){
 }
 
 void MultiPlayScene::sendOver(){
-    CCLOG("sendOver");
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
     warpClientRef->sendPrivateChat(enemyName,"over");
