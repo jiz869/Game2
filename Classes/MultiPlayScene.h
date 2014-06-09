@@ -56,6 +56,8 @@ public:
     virtual void upHandler(int tag);
     virtual void downHandler(int tag);
     virtual void touchendHandler(int tag);
+    virtual void BeginContact(b2Contact* contact);
+    void resetEnemy();
 
 protected:
     void connectToAppWarp();

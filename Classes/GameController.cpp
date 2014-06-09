@@ -108,6 +108,8 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.maxDuration = CCSTRING_FOR_KEY(dataDict , "max_duration")->intValue();
     userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->floatValue();
     userData.topLevel = CCSTRING_FOR_KEY(dataDict , "top_level")->intValue();
+    userData.pvpInitDuration = CCSTRING_FOR_KEY(dataDict , "pvp_init_duration")->intValue();
+    userData.pvpMaxDuration = CCSTRING_FOR_KEY(dataDict , "pvp_max_duration")->intValue();
     userData.lastScore = 0;
     userData.currentLevel = 0;
 

@@ -150,7 +150,6 @@ void PlayScene::BeginContact(b2Contact *contact){
     if (contactA->getTag() == PLAYER) {
         this->contact = contactB;
         scheduleOnce(schedule_selector(PlayScene::processContact), 0);
-
         return;
     }
 

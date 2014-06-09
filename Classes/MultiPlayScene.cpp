@@ -69,7 +69,7 @@ void MultiPlayScene::onConnectDone(int res)
 	CCString * str = CCString::createWithFormat("onConnectDone %d", res);
     CCLOG("%s", str->getCString());
     infoLabel->setString(str->getCString());
-    if (res==AppWarp::ResultCode::success)
+    if (res==AppWarp::ResultCode::success || res==AppWarp::ResultCode::success_recovered)
     {
         AppWarp::Client *warpClientRef;
         warpClientRef = AppWarp::Client::getInstance();
@@ -272,9 +272,12 @@ void MultiPlayScene::initPlayer(){
 
 void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string message){
     if(message == "sync"){
-        if(order == ORDER_MAX){
+        if(order == ORDER_MAX || order ==SECOND){
             if(syncCount == 0){
                 enemyName = sender;
+                order = SECOND;
+                userData->order=order;
+                scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
                 latency = getCurrentTime();
             }
             sendSync();
@@ -295,9 +298,6 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
             }
         }
     }else if(message == "start"){
-        order = SECOND;
-        userData->order=order;
-        scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
         scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0);
     }else if(message == "up"){
         upHandler(ENEMY);
@@ -369,4 +369,20 @@ void MultiPlayScene::processContact(float dt){
     if(player->processContact(contact) == true){
         sendHit();
     }
+}
+
+void MultiPlayScene::BeginContact(b2Contact *contact){
+    PlayScene::BeginContact(contact);
+
+    CCSprite * contactA = (CCSprite *)contact->GetFixtureA()->GetBody()->GetUserData();
+	CCSprite * contactB = (CCSprite *)contact->GetFixtureB()->GetBody()->GetUserData();
+    
+    if ((contactA->getTag() == ENEMY && contactB->getTag() == LOWER_BOUNDARY) ||
+        (contactB->getTag() == ENEMY && contactA->getTag() == LOWER_BOUNDARY)) {
+        scheduleOnce(schedule_selector(MultiPlayScene::resetEnemy), 0);
+    }
+}
+
+void MultiPlayScene::resetEnemy(){
+    enemy->reset();
 }

@@ -37,6 +37,7 @@ B2Sprite * PlayerObj::load(PlayerOrder order){
 	}else{
 	    resetPosX = size.width/2;
 	}
+
 	resetPos = ccp(resetPosX , gameObj->getContentSize().height/2+1);
 	reset();
     return gameObj;
