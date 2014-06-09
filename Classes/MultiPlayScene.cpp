@@ -166,6 +166,7 @@ void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
 }
 
 void MultiPlayScene::onUserLeftRoom(AppWarp::room rData, std::string user){
+    CCLOG("onUserLeftRoom");
     if(((MultiPlayControlMenu *)controlMenu)->isEnemyOver == true) return;
     CCString * str = CCString::createWithFormat("user %s left room", user.c_str());
     connectionFailed(str->getCString());
@@ -196,6 +197,7 @@ void MultiPlayScene::sendOver(){
 }
 
 void MultiPlayScene::gameOver(){
+    CCLOG("gameOver");
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
     warpClientRef->setConnectionRequestListener(NULL);
