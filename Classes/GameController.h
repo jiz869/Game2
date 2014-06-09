@@ -101,6 +101,8 @@ typedef struct{
     vector<int> levels;
     int maxLevel;
     int order;
+    int pvpInitDuration;
+    int pvpMaxDuration;
 }UserData;
 
 class GameController {

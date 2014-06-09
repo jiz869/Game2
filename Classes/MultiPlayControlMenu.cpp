@@ -38,8 +38,8 @@ void MultiPlayControlMenu::initMisc(){
     enemyScore = 0;
     isEnemyOver=false;
     
-    initDuration = 60;
-    maxDuration = 60;
+    initDuration = userData->pvpInitDuration;
+    maxDuration = userData->pvpMaxDuration;
     seconds = initDuration;
 }
 
