@@ -37,7 +37,7 @@ void MultiPlayControlMenu::initMisc(){
     ControlMenu::initMisc();
     enemyScore = 0;
     isEnemyOver=false;
-    
+
     initDuration = userData->pvpInitDuration;
     maxDuration = userData->pvpMaxDuration;
     seconds = initDuration;
@@ -109,17 +109,13 @@ void MultiPlayControlMenu::step(float dt){
     if(status == OVER && isEnemyOver == true){
         isEnemyOver=false;
         ((MultiPlayScene*)getParent())->gameOver();
-        
+
         if(score <= enemyScore){
             gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
         }else{
             levelSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width/4, winSize.height*0.5)) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showUp)), NULL));
         }
     }
-}
-
-void MultiPlayControlMenu::enemyOver(){
-    isEnemyOver=true;
 }
 
 void MultiPlayControlMenu::showUp(){

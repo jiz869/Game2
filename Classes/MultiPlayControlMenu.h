@@ -19,9 +19,9 @@ public:
     virtual bool init();
     virtual void step(float dt);
     virtual bool doScore();
-    void enemyOver();
     virtual void showUp();
     void updateEnemyScore(float score);
+    bool isEnemyOver;
 
 protected:
 
@@ -36,7 +36,6 @@ protected:
     CCLabelTTF * scoreLabelEnemy;
     float enemyScore;
     virtual void updateScore(bool isGood);
-    bool isEnemyOver;
 };
 
 #endif /* MULTIPLAYCONTROLMENU_H_ */

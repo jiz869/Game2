@@ -75,7 +75,13 @@ void Lane::addACar1(float dt){
 
 	float speed , interval;
 
-    interval = description->period - 0.1*getRandom(0,3);
+	UserData * userData = GameController::getGameController()->getUserData();
+
+    if(userData->inPvpMode){
+        interval = description->period;
+    }else{
+        interval = description->period - 0.1*getRandom(0,3);
+    }
     speed = description->carSpeed;
 
     car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
@@ -97,7 +103,13 @@ void Lane::addACar2(float dt){
 
     float speed , interval;
 
-    interval = description->period - 0.1*getRandom(0,3);
+    UserData * userData = GameController::getGameController()->getUserData();
+
+    if(userData->inPvpMode){
+        interval = description->period;
+    }else{
+        interval = description->period - 0.1*getRandom(0,3);
+    }
     speed = description->carSpeed;
 
     car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);

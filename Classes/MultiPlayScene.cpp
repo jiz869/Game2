@@ -59,7 +59,6 @@ void MultiPlayScene::initMisc(){
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     addChild(infoLabel);
 
-    isFirstLaunch = true;
     order = ORDER_MAX;
     syncCount = 0;
 }
@@ -75,14 +74,9 @@ void MultiPlayScene::onConnectDone(int res)
         warpClientRef = AppWarp::Client::getInstance();
         warpClientRef->joinRoom(ROOM_ID);
     }
-    else if (res==AppWarp::ResultCode::connection_error_recoverable)
-    {
-        schedule(schedule_selector(MultiPlayScene::recover), 5.0f);
-    }
     else
     {
-        unschedule(schedule_selector(MultiPlayScene::recover));
-        connectionFailed();
+        connectionFailed("connection failed");
     }
 }
 
@@ -101,7 +95,7 @@ void MultiPlayScene::onJoinRoomDone(AppWarp::room revent)
         warpClientRef = AppWarp::Client::getInstance();
         warpClientRef->subscribeRoom(ROOM_ID);
     }else{
-        connectionFailed();
+        connectionFailed("join room failed");
     }
 }
 
@@ -115,37 +109,31 @@ void MultiPlayScene::onSubscribeRoomDone(AppWarp::room revent)
     }
 }
 
-void MultiPlayScene::connectionFailed(){
-	infoLabel->setString("Connection failed !!! Please retry later");
+void MultiPlayScene::connectionFailed(const char * message){
+	infoLabel->setString(message);
     runAction(CCSequence::create( CCDelayTime::create(2.5) ,CCCallFunc::create(this, callfunc_selector(MultiPlayScene::returnOnConnectionFailed)), NULL ));
 }
 
 void MultiPlayScene::returnOnConnectionFailed(){
+    gameOver();
     CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
 }
 
 void MultiPlayScene::connectToAppWarp(){
     AppWarp::Client *warpClientRef;
-    if (isFirstLaunch)
-    {
-        userName = getUserName();
-        infoLabel->setString("connectToAppWarp");
-        CCLOG("connectToAppWarp");
-        isFirstLaunch = !isFirstLaunch;
-        AppWarp::Client::initialize(APPWARP_APP_KEY,APPWARP_SECRET_KEY);
-        warpClientRef = AppWarp::Client::getInstance();
-        warpClientRef->setRecoveryAllowance(60);
-        warpClientRef->setConnectionRequestListener(this);
-        warpClientRef->setNotificationListener(this);
-        warpClientRef->setRoomRequestListener(this);
-        warpClientRef->setZoneRequestListener(this);
-        warpClientRef->setChatRequestListener(this);
-        warpClientRef->connect(userName);
-    }
-    else
-    {
-        AppWarp::Client::getInstance()->connect(userName);
-    }
+
+    userName = getUserName();
+    infoLabel->setString("connectToAppWarp");
+    CCLOG("connectToAppWarp");
+    AppWarp::Client::initialize(APPWARP_APP_KEY,APPWARP_SECRET_KEY);
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->setRecoveryAllowance(60);
+    warpClientRef->setConnectionRequestListener(this);
+    warpClientRef->setNotificationListener(this);
+    warpClientRef->setRoomRequestListener(this);
+    warpClientRef->setZoneRequestListener(this);
+    warpClientRef->setChatRequestListener(this);
+    warpClientRef->connect(userName);
 }
 
 string MultiPlayScene::getUserName()
@@ -178,7 +166,9 @@ void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
 }
 
 void MultiPlayScene::onUserLeftRoom(AppWarp::room rData, std::string user){
-    CCLOG("%s left", user.c_str());
+    if(((MultiPlayControlMenu *)controlMenu)->isEnemyOver == true) return;
+    CCString * str = CCString::createWithFormat("user %s left room", user.c_str());
+    connectionFailed(str->getCString());
 }
 
 void MultiPlayScene::sendStart(){
@@ -208,6 +198,12 @@ void MultiPlayScene::sendOver(){
 void MultiPlayScene::gameOver(){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->setConnectionRequestListener(NULL);
+    warpClientRef->setNotificationListener(NULL);
+    warpClientRef->setRoomRequestListener(NULL);
+    warpClientRef->setZoneRequestListener(NULL);
+    warpClientRef->setChatRequestListener(NULL);
+    warpClientRef->leaveRoom(ROOM_ID);
     warpClientRef->disconnect();
 }
 
@@ -244,6 +240,13 @@ void MultiPlayScene::sendHit(){
 }
 
 void MultiPlayScene::prepareToStart(){
+
+    userData->inPvpMode = true;
+
+    infoLabel->setZOrder(100000);
+
+    infoLabel->setString("Preparing to start");
+
     initBoundary();
 
     CCLog("initBoundary");
@@ -306,7 +309,7 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
     }else if(message == "wait"){
         touchendHandler(ENEMY);
     }else if(message == "over"){
-        ((MultiPlayControlMenu *)controlMenu)->enemyOver();
+        ((MultiPlayControlMenu *)controlMenu)->isEnemyOver=true;
     }else if(message == "score"){
         ((MultiPlayControlMenu *)controlMenu)->updateEnemyScore(1.0);
         enemy->reset();
@@ -317,6 +320,7 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
 }
 
 void MultiPlayScene::startGame(){
+    infoLabel->setString("");
     scheduleUpdate();
     PlayScene::initLanes();
     initControlMenu();
@@ -376,7 +380,7 @@ void MultiPlayScene::BeginContact(b2Contact *contact){
 
     CCSprite * contactA = (CCSprite *)contact->GetFixtureA()->GetBody()->GetUserData();
 	CCSprite * contactB = (CCSprite *)contact->GetFixtureB()->GetBody()->GetUserData();
-    
+
     if ((contactA->getTag() == ENEMY && contactB->getTag() == LOWER_BOUNDARY) ||
         (contactB->getTag() == ENEMY && contactA->getTag() == LOWER_BOUNDARY)) {
         scheduleOnce(schedule_selector(MultiPlayScene::resetEnemy), 0);

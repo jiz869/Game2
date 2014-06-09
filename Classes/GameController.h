@@ -103,6 +103,7 @@ typedef struct{
     int order;
     int pvpInitDuration;
     int pvpMaxDuration;
+    bool inPvpMode;
 }UserData;
 
 class GameController {

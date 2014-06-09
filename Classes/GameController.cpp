@@ -138,8 +138,9 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     else{
         userData.controllerPosition = SIDE;
     }
-    
+
     userData.order = -1;
+    userData.inPvpMode = false;
 
     return true;
 }
