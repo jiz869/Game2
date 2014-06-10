@@ -233,6 +233,7 @@ void MultiPlayScene::sendOver(){
 }
 
 void MultiPlayScene::gameOver(){
+    CCLOG("gameOver %s", roomId.c_str());
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
     warpClientRef->setConnectionRequestListener(NULL);
@@ -241,7 +242,6 @@ void MultiPlayScene::gameOver(){
     warpClientRef->setZoneRequestListener(NULL);
     warpClientRef->setChatRequestListener(NULL);
 
-    CCLOG("gameOver %s", roomId.c_str());
     if(roomId != NULL_ROOM_ID){
         warpClientRef->leaveRoom(roomId);
     }
