@@ -50,6 +50,8 @@ public:
     virtual void onPrivateChatReceived(std::string sender, std::string message);
     virtual void onUserLeftRoom(AppWarp::room rData, std::string user);
     virtual void onRoomCreated(AppWarp::room rData);
+    virtual void onInitUDPDone(int result);
+    virtual void onUpdatePeersReceived(AppWarp::byte update[], int len, bool isUDP);
     void sendScore();
     void sendOver();
     void gameOver();
@@ -92,6 +94,8 @@ protected:
     virtual void processContact(float dt);
 
     string getUserName();
+
+    void sendUpdate(const char * command);
 };
 
 #endif /* MULTIPLAYSCENE_H_ */
