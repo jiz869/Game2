@@ -64,7 +64,7 @@ void AppDelegate::applicationWillEnterForeground() {
     // if you use SimpleAudioEngine, it must resume here
     // CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     UserData * userData = GameController::getGameController()->getUserData();
-    if(userData->inPvpMode == true){
+    if(userData->pvpMode != NONE){
         MultiPlayScene * currentScene = (MultiPlayScene *)CCDirector::sharedDirector()->getRunningScene();
         currentScene->gameOver();
         CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());

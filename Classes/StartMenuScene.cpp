@@ -76,7 +76,7 @@ bool StartMenuScene::init(){
     setPosition(ccp(winSize.width/2 , winSize.height/2));
     userData = GameController::getGameController()->getUserData();
 
-    userData->inPvpMode = false;
+    userData->pvpMode = NONE;
 
     initMainMenu();
 

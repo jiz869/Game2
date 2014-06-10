@@ -61,6 +61,8 @@ void MultiPlayScene::initMisc(){
 
     order = ORDER_MAX;
     syncCount = 0;
+    roomId=NULL_ROOM_ID;
+    controlMenu = NULL;
 }
 
 void MultiPlayScene::onConnectDone(int res)
@@ -72,7 +74,8 @@ void MultiPlayScene::onConnectDone(int res)
     {
         AppWarp::Client *warpClientRef;
         warpClientRef = AppWarp::Client::getInstance();
-        warpClientRef->joinRoom(ROOM_ID);
+        userData->pvpMode = CONNECTED;
+        warpClientRef->joinRoomInUserRange(1,1,true);
     }
     else
     {
@@ -89,14 +92,39 @@ void MultiPlayScene::onJoinRoomDone(AppWarp::room revent)
 	CCString * str = CCString::createWithFormat("onJoinRoomDone %d", revent.result);
     CCLOG("%s", str->getCString());
     infoLabel->setString(str->getCString());
+
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
     if (revent.result==0)
     {
-        AppWarp::Client *warpClientRef;
-        warpClientRef = AppWarp::Client::getInstance();
-        warpClientRef->subscribeRoom(ROOM_ID);
-    }else{
+        if(userData->pvpMode == CONNECTED){
+            userData->pvpMode = JOIN_ROOM1;
+        }else if(userData->pvpMode == CREATE_ROOM){
+            userData->pvpMode = JOIN_ROOM2;
+        }
+
+        roomId = revent.roomId;
+        warpClientRef->subscribeRoom(roomId);
+    }else if(userData->pvpMode == CONNECTED){
+        CCLOG("createRoom");
+        warpClientRef->subscribeLobby();
+        warpClientRef->createRoom("play_room", userName, 2);
+    }
+    else{
         connectionFailed("join room failed");
     }
+}
+
+void MultiPlayScene::onRoomCreated(AppWarp::room rData){
+    CCString * str = CCString::createWithFormat("onRoomCreated %d", rData.result);
+    CCLOG("%s", str->getCString());
+    infoLabel->setString(str->getCString());
+
+    AppWarp::Client *warpClientRef;
+    warpClientRef = AppWarp::Client::getInstance();
+    warpClientRef->unsubscribeLobby();
+    warpClientRef->joinRoom(rData.roomId);
+    userData->pvpMode == CREATE_ROOM;
 }
 
 void MultiPlayScene::onSubscribeRoomDone(AppWarp::room revent)
@@ -104,8 +132,10 @@ void MultiPlayScene::onSubscribeRoomDone(AppWarp::room revent)
     CCString * str = CCString::createWithFormat("onSubscribeRoomDone %d", revent.result);
     CCLOG("%s", str->getCString());
     infoLabel->setString(str->getCString());
-    if (revent.result==0)
-    {
+    if (revent.result==0){
+        userData->pvpMode == SUBSCRIBE_ROOM;
+    }else{
+        connectionFailed("subscribe room failed");
     }
 }
 
@@ -154,6 +184,9 @@ void MultiPlayScene::update(float dt){
 }
 
 void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
+    if(username == userName) return;
+    if(event.roomId != roomId) return;
+
     CCLOG("onUserJoinedRoom %s", username.c_str());
     infoLabel->setString(username.c_str());
 
@@ -166,8 +199,11 @@ void MultiPlayScene::onUserJoinedRoom(AppWarp::room event, string username){
 }
 
 void MultiPlayScene::onUserLeftRoom(AppWarp::room rData, std::string user){
+    if(user == userName) return;
+    if(rData.roomId != roomId) return;
+
     CCLOG("onUserLeftRoom");
-    if(((MultiPlayControlMenu *)controlMenu)->isEnemyOver == true) return;
+    if(controlMenu && ((MultiPlayControlMenu *)controlMenu)->isEnemyOver == true) return;
     CCString * str = CCString::createWithFormat("user %s left room", user.c_str());
     connectionFailed(str->getCString());
 }
@@ -197,7 +233,6 @@ void MultiPlayScene::sendOver(){
 }
 
 void MultiPlayScene::gameOver(){
-    CCLOG("gameOver");
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
     warpClientRef->setConnectionRequestListener(NULL);
@@ -205,7 +240,11 @@ void MultiPlayScene::gameOver(){
     warpClientRef->setRoomRequestListener(NULL);
     warpClientRef->setZoneRequestListener(NULL);
     warpClientRef->setChatRequestListener(NULL);
-    warpClientRef->leaveRoom(ROOM_ID);
+
+    CCLOG("gameOver %s", roomId.c_str());
+    if(roomId != NULL_ROOM_ID){
+        warpClientRef->leaveRoom(roomId);
+    }
     warpClientRef->disconnect();
 }
 
@@ -243,7 +282,7 @@ void MultiPlayScene::sendHit(){
 
 void MultiPlayScene::prepareToStart(){
 
-    userData->inPvpMode = true;
+    userData->pvpMode = PREPARE_PLAY;
 
     infoLabel->setZOrder(100000);
 
@@ -288,13 +327,13 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
             sendSync();
             syncCount++;
             if(syncCount == SYNC_TIMES){
-                latency = (getCurrentTime()-latency)/(SYNC_TIMES-1);
+                latency = (getCurrentTime()-latency)/(SYNC_TIMES-1)/2;
                 CCLOG("latency %lu", latency);
             }
         }else{
             syncCount++;
             if(syncCount == SYNC_TIMES){
-                latency = (getCurrentTime()-latency)/SYNC_TIMES;
+                latency = (getCurrentTime()-latency)/SYNC_TIMES/2;
                 CCLOG("latency %lu", latency);
                 sendStart();
                 scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0 + (float)latency/1000.0);

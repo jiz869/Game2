@@ -18,7 +18,6 @@ using namespace std;
 
 #define APPWARP_APP_KEY     "6a62bddeb3c503c6ad766390357a403f2ea778316726be19c29d309064d37862"
 #define APPWARP_SECRET_KEY  "f87c2719986446f3d07816a58b5e89e7a7b8af1b04795e5cac8cb5e88afe0e16"
-#define ROOM_ID             "1547727279"
 
 typedef enum{
     FIRST=0,
@@ -27,6 +26,7 @@ typedef enum{
 }ORDER;
 
 #define SYNC_TIMES 6
+#define NULL_ROOM_ID "0"
 
 class MultiPlayScene: public PlayScene , public ConnectionRequestListener , public RoomRequestListener,
                     public NotificationListener,public ZoneRequestListener,public ChatRequestListener
@@ -49,6 +49,7 @@ public:
     virtual void onSubscribeRoomDone(AppWarp::room revent);
     virtual void onPrivateChatReceived(std::string sender, std::string message);
     virtual void onUserLeftRoom(AppWarp::room rData, std::string user);
+    virtual void onRoomCreated(AppWarp::room rData);
     void sendScore();
     void sendOver();
     void gameOver();
@@ -65,8 +66,9 @@ protected:
     void connectionFailed(const char * message);
     CCLabelTTF * infoLabel;
     PlayerObj * enemy;
-    string enemyName;
-    string userName;
+    std::string enemyName;
+    std::string userName;
+    std::string roomId;
 
     virtual void initMisc();
     virtual void initPlayer();
