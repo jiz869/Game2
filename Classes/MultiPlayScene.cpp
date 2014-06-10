@@ -54,9 +54,13 @@ void MultiPlayScene::initMisc(){
     data = GameController::getGameController()->getPlaySceneData(userData->maxLevel);
     unscheduleUpdate();
 
+    initCityObj();
+
+    CCLog("initCityObj");
+
     infoLabel = CCLabelTTF::create("", "Verdana", 32);
-    infoLabel->setColor( ccc3(54, 255, 0) );
-    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    infoLabel->setColor( ccc3(168, 0, 0) );
+    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height - 50));
     addChild(infoLabel);
 
     order = ORDER_MAX;
@@ -140,6 +144,7 @@ void MultiPlayScene::onSubscribeRoomDone(AppWarp::room revent)
 }
 
 void MultiPlayScene::connectionFailed(const char * message){
+    if(controlMenu) controlMenu->gameOver();
 	infoLabel->setString(message);
     runAction(CCSequence::create( CCDelayTime::create(2.5) ,CCCallFunc::create(this, callfunc_selector(MultiPlayScene::returnOnConnectionFailed)), NULL ));
 }
@@ -292,10 +297,6 @@ void MultiPlayScene::prepareToStart(){
 
     CCLog("initBoundary");
 
-    initCityObj();
-
-    CCLog("initCityObj");
-
     initPlayer();
 
     CCLog("initPlayer");
@@ -327,13 +328,13 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
             sendSync();
             syncCount++;
             if(syncCount == SYNC_TIMES){
-                latency = (getCurrentTime()-latency)/(SYNC_TIMES-1)/2;
+                latency = (getCurrentTime()-latency)/(SYNC_TIMES-1);
                 CCLOG("latency %lu", latency);
             }
         }else{
             syncCount++;
             if(syncCount == SYNC_TIMES){
-                latency = (getCurrentTime()-latency)/SYNC_TIMES/2;
+                latency = (getCurrentTime()-latency)/SYNC_TIMES;
                 CCLOG("latency %lu", latency);
                 sendStart();
                 scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0 + (float)latency/1000.0);

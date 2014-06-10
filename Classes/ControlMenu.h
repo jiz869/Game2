@@ -38,6 +38,7 @@ public:
     void showOver();
     virtual void showUp();
     void nextScene();
+    virtual void gameOver();
 
 protected:
     CCSize winSize;
@@ -57,8 +58,6 @@ protected:
 
     void updateGameTime();
     virtual void updateScore(bool isGood);
-
-    virtual void GameOver();
 
     long numFrame;
     float score;

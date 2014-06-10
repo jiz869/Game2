@@ -91,7 +91,7 @@ void MultiPlayControlMenu::updateScore(bool isGood){
     ControlMenu::updateScore(isGood);
 }
 
-void MultiPlayControlMenu::GameOver(){
+void MultiPlayControlMenu::gameOver(){
     status = OVER;
     ((MultiPlayScene*)getParent())->sendOver();
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));

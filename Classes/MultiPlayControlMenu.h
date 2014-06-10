@@ -22,6 +22,7 @@ public:
     virtual void showUp();
     void updateEnemyScore(float score);
     bool isEnemyOver;
+    virtual void gameOver();
 
 protected:
 
@@ -30,8 +31,6 @@ protected:
     virtual void initMenu();
     virtual void initMisc();
     virtual void initLevelSplash();
-
-    virtual void GameOver();
 
     CCLabelTTF * scoreLabelEnemy;
     float enemyScore;
