@@ -93,8 +93,8 @@ void MultiPlayControlMenu::updateScore(bool isGood){
 
 void MultiPlayControlMenu::gameOver(){
     status = OVER;
-    ((MultiPlayScene*)getParent())->sendOver();
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    ((MultiPlayScene*)getParent())->sendOver();
 }
 
 void MultiPlayControlMenu::updateEnemyScore(float score){

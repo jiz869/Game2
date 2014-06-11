@@ -145,6 +145,7 @@ void MultiPlayScene::onSubscribeRoomDone(AppWarp::room revent)
 }
 
 void MultiPlayScene::connectionFailed(const char * message){
+    if(controlMenu) controlMenu->hideMenu();
 	infoLabel->setString(message);
     runAction(CCSequence::create( CCDelayTime::create(2.5) ,CCCallFunc::create(this, callfunc_selector(MultiPlayScene::returnOnConnectionFailed)), NULL ));
 }
@@ -172,9 +173,11 @@ void MultiPlayScene::connectToAppWarp(){
 }
 
 void MultiPlayScene::onInitUDPDone(int result){
-    if(result!=AppWarp::ResultCode::success){
-        CCString * str = CCString::createWithFormat("onInitUDPDone %d", result);
-        CCLOG("%s", str->getCString());
+    CCString * str = CCString::createWithFormat("onInitUDPDone %d", result);
+    CCLOG("%s", str->getCString());
+    if(result==AppWarp::ResultCode::success){
+        infoLabel->setString(str->getCString());
+    }else{
         connectionFailed(str->getCString());
     }
 }
@@ -217,7 +220,6 @@ void MultiPlayScene::onUserLeftRoom(AppWarp::room rData, std::string user){
 
     CCLOG("onUserLeftRoom");
     if(controlMenu && ((MultiPlayControlMenu *)controlMenu)->isEnemyOver == true) return;
-    if(controlMenu) controlMenu->gameOver();
     CCString * str = CCString::createWithFormat("user %s left room", user.c_str());
     connectionFailed(str->getCString());
 }
@@ -318,16 +320,22 @@ void MultiPlayScene::initPlayer(){
 }
 
 void MultiPlayScene::onUpdatePeersReceived(AppWarp::byte update[], int len, bool isUDP){
-    char * cmd = (char *)update;
+    memcpy((void *)msg , (const void *)update , len);
 
-    if(strstr(cmd , userName.c_str())) return;
+    scheduleOnce(schedule_selector(MultiPlayScene::processMsg) , 0);
 
-    char * command = (char *)&update[10];
+    CCLOG("%s", msg);
+}
+
+void MultiPlayScene::processMsg(){
+    if(strstr(msg , userName.c_str())) return;
+
+    char * command = &msg[10];
 
     if(strcmp(command , "sync") == 0){
         if(order == ORDER_MAX || order ==SECOND){
             if(syncCount == 0){
-                enemyName.assign(cmd,10);
+                enemyName.assign(msg,10);
                 order = SECOND;
                 userData->order=order;
                 scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);

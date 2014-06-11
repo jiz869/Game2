@@ -71,6 +71,7 @@ protected:
     std::string enemyName;
     std::string userName;
     std::string roomId;
+    char msg[20];
 
     virtual void initMisc();
     virtual void initPlayer();
@@ -96,6 +97,8 @@ protected:
     string getUserName();
 
     void sendUpdate(const char * command);
+
+    void processMsg();
 };
 
 #endif /* MULTIPLAYSCENE_H_ */

@@ -39,6 +39,7 @@ public:
     virtual void showUp();
     void nextScene();
     virtual void gameOver();
+    void hideMenu();
 
 protected:
     CCSize winSize;

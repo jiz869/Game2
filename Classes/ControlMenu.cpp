@@ -355,3 +355,7 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
             break;
     }
 }
+
+void ControlMenu::hideMenu(){
+    menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+}
