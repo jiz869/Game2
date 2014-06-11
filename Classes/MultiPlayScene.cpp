@@ -80,7 +80,7 @@ void MultiPlayScene::onConnectDone(int res)
         warpClientRef = AppWarp::Client::getInstance();
         userData->pvpMode = CONNECTED;
         warpClientRef->initUDP();
-        warpClientRef->joinRoomInUserRange(1,1,true);
+        warpClientRef->joinRoomInUserRange(0,1,true);
     }
     else
     {
@@ -252,6 +252,9 @@ void MultiPlayScene::gameOver(){
 
     if(roomId != NULL_ROOM_ID){
         warpClientRef->leaveRoom(roomId);
+        if(order == FIRST){
+            warpClientRef->deleteRoom(roomId);
+        }
     }
     warpClientRef->disconnect();
 }
