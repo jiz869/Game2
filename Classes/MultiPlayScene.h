@@ -19,6 +19,8 @@ using namespace std;
 #define APPWARP_APP_KEY     "6a62bddeb3c503c6ad766390357a403f2ea778316726be19c29d309064d37862"
 #define APPWARP_SECRET_KEY  "f87c2719986446f3d07816a58b5e89e7a7b8af1b04795e5cac8cb5e88afe0e16"
 
+//#define USE_UDP
+
 typedef enum{
     FIRST=0,
     SECOND,
@@ -50,8 +52,6 @@ public:
     virtual void onPrivateChatReceived(std::string sender, std::string message);
     virtual void onUserLeftRoom(AppWarp::room rData, std::string user);
     virtual void onRoomCreated(AppWarp::room rData);
-    virtual void onInitUDPDone(int result);
-    virtual void onUpdatePeersReceived(AppWarp::byte update[], int len, bool isUDP);
     void sendScore();
     void sendOver();
     void gameOver();
@@ -61,6 +61,8 @@ public:
     virtual void touchendHandler(int tag);
     virtual void BeginContact(b2Contact* contact);
     void resetEnemy();
+    void onInitUDPDone(int result);
+    void onUpdatePeersReceived(AppWarp::byte update[], int len, bool isUDP);
 
 protected:
     void connectToAppWarp();
@@ -71,7 +73,6 @@ protected:
     std::string enemyName;
     std::string userName;
     std::string roomId;
-    char msg[20];
 
     virtual void initMisc();
     virtual void initPlayer();
