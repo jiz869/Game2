@@ -227,19 +227,19 @@ void MultiPlayScene::onUserLeftRoom(AppWarp::room rData, std::string user){
 }
 
 void MultiPlayScene::sendStart(){
-    sendUpdate("start");
+    sendUpdate("start" , false);
 }
 
 void MultiPlayScene::sendSync(){
-    sendUpdate("sync");
+    sendUpdate("sync" , false);
 }
 
 void MultiPlayScene::sendScore(){
-    sendUpdate("score");
+    sendUpdate("score" , true);
 }
 
 void MultiPlayScene::sendOver(){
-    sendUpdate("over");
+    sendUpdate("over" , false);
 }
 
 void MultiPlayScene::gameOver(){
@@ -268,40 +268,46 @@ void MultiPlayScene::gameOver(){
 //}
 
 void MultiPlayScene::sendUp(){
-    sendUpdate("up");
+    sendUpdate("up" , true);
 }
 
 void MultiPlayScene::sendDown(){
-    sendUpdate("down");
+    sendUpdate("down" , true);
 }
 
 void MultiPlayScene::sendWait(){
-    sendUpdate("wait");
+    sendUpdate("wait" , true);
 }
 
 void MultiPlayScene::sendHit(){
-    sendUpdate("hit");
+    sendUpdate("hit" , true);
 }
 
-void MultiPlayScene::sendUpdate(const char * command){
+void MultiPlayScene::sendUpdate(const char * command , bool useUdp){
     AppWarp::Client *warpClientRef;
     warpClientRef = AppWarp::Client::getInstance();
 
 #ifdef USE_UDP
+    if(!useUdp){
+        warpClientRef->sendChat(command);
+        return;
+    }
     char * cmd = strdup(userName.c_str());
     strcat(cmd , command);
     warpClientRef->sendUdpUpdate((byte *)cmd , strlen(cmd) + 1);
 #else
-    warpClientRef->sendPrivateChat(enemyName , command);
+    warpClientRef->sendChat(command);
 #endif
+}
+
+void MultiPlayScene::onChatReceived(AppWarp::chat chatevent){
+    onPrivateChatReceived(chatevent.sender , chatevent.chat);
 }
 
 void MultiPlayScene::onUpdatePeersReceived(AppWarp::byte update[], int len, bool isUDP){
     char * command = (char *)update;
 
     CCLOG("%s", command);
-
-    if(strstr(command , userName.c_str())) return;
 
     onPrivateChatReceived(string(command , 10) , string(&command[10]));
 }
@@ -345,27 +351,35 @@ void MultiPlayScene::onPrivateChatReceived(std::string sender, std::string messa
                 userData->order=order;
                 scheduleOnce(schedule_selector(MultiPlayScene::prepareToStart) , 0);
                 latency = getCurrentTime();
+                sendSync();
+                syncCount++;
             }
-            sendSync();
-            syncCount++;
+            if(sender==enemyName) return;
             if(syncCount == SYNC_TIMES){
                 latency = (getCurrentTime()-latency)/(SYNC_TIMES-1);
                 CCLOG("latency %lu", latency);
+            }else{
+                sendSync();
+                syncCount++;
             }
         }else{
-            syncCount++;
+            if(sender==enemyName) return;
             if(syncCount == SYNC_TIMES){
                 latency = (getCurrentTime()-latency)/SYNC_TIMES;
                 CCLOG("latency %lu", latency);
                 sendStart();
-                scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0 + (float)latency/1000.0/1.8);
             }else{
                 sendSync();
+                syncCount++;
             }
         }
     }else if(message == "start"){
-        scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0);
-    }else if(message == "up"){
+        scheduleOnce(schedule_selector(MultiPlayScene::startGame) , 2.0 - (float)latency/1000.0/2.0);
+    }
+
+    if(sender == userName) return;
+
+    if(message == "up"){
         upHandler(ENEMY);
     }else if(message == "down"){
         downHandler(ENEMY);

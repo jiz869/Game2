@@ -52,6 +52,7 @@ public:
     virtual void onPrivateChatReceived(std::string sender, std::string message);
     virtual void onUserLeftRoom(AppWarp::room rData, std::string user);
     virtual void onRoomCreated(AppWarp::room rData);
+    virtual void onChatReceived(AppWarp::chat chatevent);
     void sendScore();
     void sendOver();
     void gameOver();
@@ -97,7 +98,7 @@ protected:
 
     string getUserName();
 
-    void sendUpdate(const char * command);
+    void sendUpdate(const char * command , bool useUdp);
 
     void processMsg();
 };
