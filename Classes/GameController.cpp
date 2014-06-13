@@ -140,7 +140,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     }
 
     userData.order = -1;
-    userData.inPvpMode = false;
+    userData.pvpMode = NONE;
 
     return true;
 }

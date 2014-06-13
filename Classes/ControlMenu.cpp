@@ -242,7 +242,7 @@ void ControlMenu::updateScore(bool isGood)
     SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSoundImage->getCString());
 }
 
-void ControlMenu::GameOver()
+void ControlMenu::gameOver()
 {
     status=OVER;
     gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
@@ -273,7 +273,7 @@ void ControlMenu::step(float dt){
     }
 
     if(seconds <= 0 && status != OVER)
-    	GameOver();
+    	gameOver();
 }
 
 bool ControlMenu::doScore(){
@@ -354,4 +354,8 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
         default:
             break;
     }
+}
+
+void ControlMenu::hideMenu(){
+    setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 }

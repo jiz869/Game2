@@ -55,6 +55,13 @@ void AppDelegate::applicationDidEnterBackground() {
     }
     // if you use SimpleAudioEngine, it must be pause
     // CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    UserData * userData = GameController::getGameController()->getUserData();
+    if(userData->pvpMode != NONE){
+        CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+        MultiPlayScene * multiPlayScene = (MultiPlayScene *)currentScene->getChildren()->objectAtIndex(0);
+        multiPlayScene->gameOver();
+        CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
+    }
 }
 
 // this function will be called when the app is active again
@@ -63,10 +70,4 @@ void AppDelegate::applicationWillEnterForeground() {
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     // if you use SimpleAudioEngine, it must resume here
     // CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    UserData * userData = GameController::getGameController()->getUserData();
-    if(userData->inPvpMode == true){
-        MultiPlayScene * currentScene = (MultiPlayScene *)CCDirector::sharedDirector()->getRunningScene();
-        currentScene->gameOver();
-        CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
-    }
 }

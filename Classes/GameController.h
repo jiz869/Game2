@@ -32,6 +32,16 @@ typedef enum{
     CHECKBOX_TYPE_NUM,
 }CheckboxType;
 
+typedef enum{
+    NONE=0X1<<0,
+    CONNECTED=0X1<<1,
+    JOIN_ROOM1=0X1<<2,
+    CREATE_ROOM=0X1<<3,
+    JOIN_ROOM2=0X1<<4,
+    SUBSCRIBE_ROOM=0X1<<5,
+    PREPARE_PLAY=0X1<<6,
+}PvpMode;
+
 class PlayerObj;
 class SpecialObj;
 
@@ -103,7 +113,7 @@ typedef struct{
     int order;
     int pvpInitDuration;
     int pvpMaxDuration;
-    bool inPvpMode;
+    PvpMode pvpMode;
 }UserData;
 
 class GameController {

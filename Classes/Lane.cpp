@@ -77,7 +77,7 @@ void Lane::addACar1(float dt){
 
 	UserData * userData = GameController::getGameController()->getUserData();
 
-    if(userData->inPvpMode){
+    if(userData->pvpMode == PREPARE_PLAY){
         interval = description->period;
     }else{
         interval = description->period - 0.1*getRandom(0,3);
@@ -105,7 +105,7 @@ void Lane::addACar2(float dt){
 
     UserData * userData = GameController::getGameController()->getUserData();
 
-    if(userData->inPvpMode){
+    if(userData->pvpMode == PREPARE_PLAY){
         interval = description->period;
     }else{
         interval = description->period - 0.1*getRandom(0,3);
