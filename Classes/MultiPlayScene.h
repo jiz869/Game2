@@ -19,7 +19,7 @@ using namespace std;
 #define APPWARP_APP_KEY     "6a62bddeb3c503c6ad766390357a403f2ea778316726be19c29d309064d37862"
 #define APPWARP_SECRET_KEY  "f87c2719986446f3d07816a58b5e89e7a7b8af1b04795e5cac8cb5e88afe0e16"
 
-//#define USE_UDP
+#define USE_UDP
 
 typedef enum{
     FIRST=0,
