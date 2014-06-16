@@ -26,6 +26,7 @@ public:
     void checkboxHandler(CCObject * sender);
     void changeSoundSetting(CheckboxType type);
     void scoreHandler(CCObject * sender);
+    void pvpHandler(CCObject * sender);
 
 private:
     CCMenu * startMenu;

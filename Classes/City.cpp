@@ -7,6 +7,9 @@
 
 #include "City.h"
 #include "Lane.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 
 City::City() {
 	// TODO Auto-generated constructor stub
@@ -24,66 +27,51 @@ bool City::init(){
 
 	winSize = CCDirector::sharedDirector()->getWinSize();
 
-	node = CCSpriteBatchNode::create("sprites.png");
+    addCityObj();
 
-	addChild(node);
-
-	road_tile_number = getRandom(0 , 6);
-    
     addRoad();
-
-	addCityObj();
 
 	return true;
 }
 
 void City::addRoad(){
 
-	for(float i = 0 ; i < 0.9 ; i+=0.1){
-		CCString * roadName = CCString::createWithFormat("road%d.png", road_tile_number);
+    int number = 5;//getRandom(0,6);
+    CCString * roadName = CCString::createWithFormat("road%d.png", number);;
+    CCSprite * road;
 
-		CCSprite * road = CCSprite::createWithSpriteFrameName(roadName->getCString());
+	for(int i = 0 ; i < 9 ; i++){
+		road = CCSprite::createWithSpriteFrameName(roadName->getCString());
 
-		road->setAnchorPoint(ccp(1 , 0.5));
-
-		road->setPosition(ccp(winSize.width , i * winSize.height));
+		road->setPosition(ccp(winSize.width/2 , winSize.height * 0.1 * i));
 
 		road->setScaleY(0.8);
 
-		node->addChild(road);
+		addChild(road);
 	}
 }
 
 void City::addCityObj(){
-    int number;
-	CCString * spriteName;
-	CCSprite * sprite;
-	float scaleX, scaleY;
 
-	for(int i = 0 ; i < 8 ; i++){
-		for(int j = 0 ; j < 21 ; j++){
-			if(j == 10) {
-				spriteName = CCString::createWithFormat("tile%d.png", road_tile_number);
-				scaleX = 1;
-				scaleY = 0.8;
-			}else if(toss(1)){
-				continue;
-			}else if(toss(0.5)){
-                number = getRandom(0 , 38);
-                spriteName = CCString::createWithFormat("house%d.png", number);
-                scaleX = 0.6;
-                scaleY = 0.6;
-            }else{
-                number = getRandom(0 , 16);
-                spriteName = CCString::createWithFormat("tree%d.png", number);
-                scaleX = 0.6;
-                scaleY = 0.6;
-            }
-            sprite = CCSprite::createWithSpriteFrameName(spriteName->getCString());
-			sprite->setPosition(ccp(j * 0.05 * winSize.width , (0.05 + i * 0.1) * winSize.height));
-			sprite->setScaleX(scaleX);
-			sprite->setScaleY(scaleY);
-			node->addChild(sprite);
-		}
-	}
+    CCSprite * background = CCSprite::create("background0.png");
+
+    background->setPosition(ccp(winSize.width/2 , winSize.height/2));
+
+    CCSize size = background->getContentSize();
+
+    background->setScaleY(winSize.height/size.height);
+
+    background->setScaleX(winSize.width/size.width);
+
+    background->setOpacity(128);
+
+    addChild(background);
+
+	schedule(schedule_selector(City::addHornSounds), 8, kCCRepeatForever, 0.1);
+}
+
+void City::addHornSounds(){
+    AnimationData * data = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(
+            data->hornSoundImages[getRandom(0,data->hornSoundImages.size()-1)]->getCString());
 }

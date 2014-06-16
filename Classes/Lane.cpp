@@ -12,7 +12,7 @@
 int getRandom(int low, int high)
 {
 	if ( low - high < 0x10000L )
-        return low + ( ( random() >> 8 ) % ( high + 1 - low ) );
+        return low + ( ( rand() >> 8 ) % ( high + 1 - low ) );
 
 	return low + ( random() % ( high + 1 - low ) );
 }
@@ -56,12 +56,12 @@ bool Lane::initWithDescription(LaneDescription * description){
 
 	this->description = description;
 
-	schedule(schedule_selector(Lane::addACar) , description->period , kCCRepeatForever , 0.1);
+	scheduleOnce(schedule_selector(Lane::addACar1) , 0);
 
 	return true;
 }
 
-void Lane::addACar(float dt){
+void Lane::addACar1(float dt){
 
 	timePassedFromLastSchedule = 0;
 
@@ -73,7 +73,48 @@ void Lane::addACar(float dt){
 
 	CarObj * car = new CarObj();
 
-    car->load(description->left2right, description->initPos, description->carSpeed, this , &description->carNumbers);
+	float speed , interval;
+
+	UserData * userData = GameController::getGameController()->getUserData();
+
+    if(userData->pvpMode == PREPARE_PLAY){
+        interval = description->period;
+    }else{
+        interval = description->period - 0.1*getRandom(0,3);
+    }
+    speed = description->carSpeed;
+
+    car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+
+    scheduleOnce(schedule_selector(Lane::addACar2) , interval);
+}
+
+void Lane::addACar2(float dt){
+
+    timePassedFromLastSchedule = 0;
+
+    if (toss(description->specialChance)) {
+        SpecialObj * speciaObj = new SpecialObj();
+        speciaObj->load(description->left2right, description->initPos, description->carSpeed, this);
+        return;
+    }
+
+    CarObj * car = new CarObj();
+
+    float speed , interval;
+
+    UserData * userData = GameController::getGameController()->getUserData();
+
+    if(userData->pvpMode == PREPARE_PLAY){
+        interval = description->period;
+    }else{
+        interval = description->period - 0.1*getRandom(0,3);
+    }
+    speed = description->carSpeed;
+
+    car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+
+    scheduleOnce(schedule_selector(Lane::addACar1) , interval);
 }
 
 void Lane::stopAtPosition(float x){
@@ -95,7 +136,7 @@ void Lane::stopAtPosition(float x){
         }
     }
 
-    unschedule(schedule_selector(Lane::addACar));
+    unscheduleAllSelectors();
 
     status = STOPPED;
 }
@@ -115,7 +156,7 @@ void Lane::stop(){
         }
     }
 
-    unschedule(schedule_selector(Lane::addACar));
+    unscheduleAllSelectors();
 
     status = STOPPED;
 }
@@ -140,8 +181,8 @@ void Lane::reStart(){
     if(timePassedFromLastSchedule > description->period) delay = 0.1;
     else delay = description->period - timePassedFromLastSchedule;
 
-    unschedule(schedule_selector(Lane::addACar));
-    schedule(schedule_selector(Lane::addACar) , description->period ,
+    unscheduleAllSelectors();
+    schedule(schedule_selector(Lane::addACar1) , description->period ,
     		kCCRepeatForever , delay);
 
     status = RUNNING;

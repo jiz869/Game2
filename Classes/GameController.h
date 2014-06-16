@@ -32,6 +32,16 @@ typedef enum{
     CHECKBOX_TYPE_NUM,
 }CheckboxType;
 
+typedef enum{
+    NONE=0X1<<0,
+    CONNECTED=0X1<<1,
+    JOIN_ROOM1=0X1<<2,
+    CREATE_ROOM=0X1<<3,
+    JOIN_ROOM2=0X1<<4,
+    SUBSCRIBE_ROOM=0X1<<5,
+    PREPARE_PLAY=0X1<<6,
+}PvpMode;
+
 class PlayerObj;
 class SpecialObj;
 
@@ -66,6 +76,7 @@ typedef struct{
     CCString * resetSoundImage;
     CCString * scoreSoundImage;
     CCString * levelupSoundImage;
+    vector<CCString *> hornSoundImages;
     CCAnimation * playerMoveAnim;
     CCAnimation * specialStopAnim;
     CCAnimation * specialHasteAnim;
@@ -92,13 +103,17 @@ typedef struct{
     CheckboxType controllerPosition;
 	int initDuration;
     int durationIncrease;
-	int topScore;
+	float topScore;
     int topLevel;
-	int lastScore;
+	float lastScore;
     int currentLevel;
     int maxDuration;
     vector<int> levels;
     int maxLevel;
+    int order;
+    int pvpInitDuration;
+    int pvpMaxDuration;
+    PvpMode pvpMode;
 }UserData;
 
 class GameController {
@@ -111,7 +126,7 @@ public:
     UserData * getUserData();
     void setUserData(const char * key , CheckboxType data , int value);
     void levelUp();
-    void setLastScore(int lastScore);
+    void setLastScore(float lastScore);
 
 private:
     GameController();

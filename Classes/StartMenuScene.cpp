@@ -9,8 +9,26 @@
 #include "StartMenuScene.h"
 #include "PlayScene.h"
 #include "SimpleAudioEngine.h"
+#include "MultiPlayScene.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+void onRequestError(int code){
+    CCLOG("onRequestError %d", code);
+}
+
+void onPaymentFinished(bool wasSuccessful){
+    CCLOG("onPaymentFinished %d", wasSuccessful);
+}
+
+void onRequestFinish(){
+    CCLOG("onRequestFinish");
+}
+
+extern void request();
+
+extern void purchase();
+
+extern bool canMakePayments();
 extern void setBannerViewHidden(bool);
 #define SET_BANNDER_HIDDEN(_hidden) setBannerViewHidden(_hidden)
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -58,6 +76,8 @@ bool StartMenuScene::init(){
     setPosition(ccp(winSize.width/2 , winSize.height/2));
     userData = GameController::getGameController()->getUserData();
 
+    userData->pvpMode = NONE;
+
     initMainMenu();
 
     initOptionsMenu();
@@ -68,7 +88,6 @@ bool StartMenuScene::init(){
 }
 
 void StartMenuScene::initScoreMenu(){
-	UserData * userData = GameController::getGameController()->getUserData();
 	CCString * gemName = CCString::createWithFormat("gem%d.png", userData->topLevel);
 	gem = CCMenuItemImage::create();
 	gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
@@ -78,7 +97,7 @@ void StartMenuScene::initScoreMenu(){
     scoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", "Verdana-Bold", 128 ));
     scoreLabel->setColor( ccc3(54, 255, 0) );
     scoreLabel->setAnchorPoint(ccp(-1,0.5));
-    CCString * score = CCString::createWithFormat("%d", userData->topScore);
+    CCString * score = CCString::createWithFormat("%.1f", userData->topScore);
     scoreLabel->setString(score->getCString());
     scoreLabel->setPosition(ccp(winSize.width/2, winSize.height*0.75));
 
@@ -106,9 +125,19 @@ void StartMenuScene::initMainMenu(){
     options->setScale(0.5);
     score->setScale(0.5);
 
-    startMenu = CCMenu::create(newGame , options, score , NULL);
-    startMenu->alignItemsInColumns(1 , 1 , 1);
+    CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
+    pvp->setScale(0.5);
+
+    startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
+    startMenu->alignItemsInColumns(2 , 2);
+
     addChild(startMenu);
+}
+
+void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
+    SET_BANNDER_HIDDEN(true);
+    CCScene * pvpScene = MultiPlayScene::scene();
+    CCDirector::sharedDirector()->replaceScene(pvpScene);
 }
 
 void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){

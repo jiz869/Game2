@@ -26,37 +26,42 @@ public:
     virtual bool init();
     bool isUpButtonSelected();
     void startNewGame();
-    void doScore();
-    void step(float dt);
+    virtual bool doScore();
+    virtual void step(float dt);
     void increaseDuration(int delta);
     void resumeDuration();
     void changeGameTime(int delta);
+    void changeScore(float delta , bool isGood);
     void changeControllerPosition(CheckboxType type);
     void pauseAndPlayHandler(CCObject * sender);
     void showGo();
     void showOver();
-    void showUp();
+    virtual void showUp();
     void nextScene();
+    virtual void gameOver();
+    void hideMenu();
 
-private:
+protected:
     CCSize winSize;
 
     CCLabelTTF* scoreLabel;
     CCSprite * gem;
+    CCSprite * gemLevelup;
 
     MenuForArrowButton * menu;
-    CCMenuItemImage * upButton , * downButton;
+    CCMenuItemImage * upButton , * downButton , * pauseAndPlay;
 
-    void initBloodBar();
-    void initScoreLabel();
+    virtual void initBloodBar();
+    virtual void initScoreLabel();
+    virtual void initMenu();
+    virtual void initMisc();
+    virtual void initLevelSplash();
 
     void updateGameTime();
-    void updateScore();
-
-    void GameOver();
+    virtual void updateScore(bool isGood);
 
     long numFrame;
-    int score;
+    float score;
     int initDuration;
     int durationIncrease;
     int maxDuration;
@@ -73,7 +78,6 @@ private:
     void pauseGame();
     void resumeGame();
     CCProgressTimer * bloodBar;
-    void initLevelSplash();
 
     CCSprite * goSplash;
     CCSprite * gameSplash;

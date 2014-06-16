@@ -16,12 +16,11 @@ public:
 	virtual ~City();
     CREATE_FUNC(City);
     virtual bool init();
+    void addHornSounds();
 private:
     CCSize winSize;
-    CCSpriteBatchNode * node;
     void addRoad();
     void addCityObj();
-    int road_tile_number;
 };
 
 #endif /* CITY_H_ */

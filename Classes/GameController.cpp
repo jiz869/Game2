@@ -106,17 +106,19 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.initDuration = CCSTRING_FOR_KEY(dataDict , "init_duration")->intValue();
     userData.durationIncrease = CCSTRING_FOR_KEY(dataDict , "duration_increase")->intValue();
     userData.maxDuration = CCSTRING_FOR_KEY(dataDict , "max_duration")->intValue();
-    userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->intValue();
+    userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->floatValue();
     userData.topLevel = CCSTRING_FOR_KEY(dataDict , "top_level")->intValue();
+    userData.pvpInitDuration = CCSTRING_FOR_KEY(dataDict , "pvp_init_duration")->intValue();
+    userData.pvpMaxDuration = CCSTRING_FOR_KEY(dataDict , "pvp_max_duration")->intValue();
     userData.lastScore = 0;
     userData.currentLevel = 0;
-    
+
     CCArray * levels = (CCArray *)dataDict->objectForKey("levels");
-    
+
     userData.maxLevel = levels->count();
-    
+
     userData.levels.reserve(userData.maxLevel);
-    
+
     for (int i = 0; i < userData.maxLevel; i++) {
         userData.levels.push_back(CCSTRING_AT_INDEX(levels, i)->intValue());
     }
@@ -136,6 +138,9 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     else{
         userData.controllerPosition = SIDE;
     }
+
+    userData.order = -1;
+    userData.pvpMode = NONE;
 
     return true;
 }
@@ -203,6 +208,14 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData.backgroundSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.scoreSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.levelupSoundImage->getCString());
+
+    CCArray * hornSoundFiles = (CCArray *)dataDict->objectForKey("horn_sound_files");
+    animationData.hornSoundImages.reserve(hornSoundFiles->count());
+    for(int i=0 ; i<hornSoundFiles->count() ; i++){
+        animationData.hornSoundImages.push_back(CCSTRING_AT_INDEX(hornSoundFiles , i));
+        SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.hornSoundImages[i]->getCString());
+    }
 
     CCArray * array = (CCArray *)dataDict->objectForKey("player_move_animation");
     animationData.playerMoveAnim = initAnimation(array);
@@ -383,15 +396,21 @@ void GameController::levelUp(){
     userData.currentLevel++;
     if (userData.currentLevel > userData.topLevel) {
         userData.topLevel = userData.currentLevel;
-        setUserData("top_level", CHECKBOX_TYPE_NUM, userData.topLevel);
+        CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
+        userDataDict->setObject(CCString::createWithFormat("%d", userData.topLevel), "top_level");
+        dict->setObject(userDataDict, "user_data");
+        dict->writeToFile(plistWritablePath.c_str());
     }
 }
 
-void GameController::setLastScore(int lastScore){
+void GameController::setLastScore(float lastScore){
     userData.lastScore = lastScore;
     if (lastScore > userData.topScore) {
         userData.topScore = lastScore;
-        setUserData("top_score", CHECKBOX_TYPE_NUM , lastScore);
+        CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
+        userDataDict->setObject(CCString::createWithFormat("%.1f", userData.topScore), "top_score");
+        dict->setObject(userDataDict, "user_data");
+        dict->writeToFile(plistWritablePath.c_str());
     }
 }
 

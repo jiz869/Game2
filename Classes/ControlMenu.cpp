@@ -28,6 +28,16 @@ bool ControlMenu::init(){
         return false;
     }
 
+    initMisc();
+    initMenu();
+    initBloodBar();
+    initScoreLabel();
+    initLevelSplash();
+
+    return true;
+}
+
+void ControlMenu::initMisc(){
     userData = GameController::getGameController()->getUserData();
     winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -35,14 +45,25 @@ bool ControlMenu::init(){
 
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
-	upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
+    numFrame=0;
+    score = 0;
+    initDuration = userData->initDuration;
+    maxDuration = userData->maxDuration;
+    durationIncrease = userData->durationIncrease;
+    seconds = initDuration;
+
+    startUpdateTime = false;
+}
+
+void ControlMenu::initMenu(){
+    upButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                          "button_arrow_selected.png" , this , menu_selector(ControlMenu::upHandler));
 
     upButton->setRotation(180);
     upButton->setScale(BUTTON_SCALE);
     upButton->setTag(UP);
 
-	downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
+    downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                            "button_arrow_selected.png" , this , menu_selector(ControlMenu::downHandler));
 
     downButton->setScale(BUTTON_SCALE);
@@ -50,7 +71,7 @@ bool ControlMenu::init(){
 
     changeControllerPosition(userData->controllerPosition);
 
-    CCMenuItemImage * pauseAndPlay = CCMenuItemImage::create("pause.png" ,
+    pauseAndPlay = CCMenuItemImage::create("pause.png" ,
             "play.png" , this , menu_selector(ControlMenu::pauseAndPlayHandler));
 
     pauseAndPlay->setScale(0.8);
@@ -63,36 +84,21 @@ bool ControlMenu::init(){
 
     CCArray * array = CCArray::createWithCapacity(CONTROL_BUTTON_MAX);
 
-	array->addObject(upButton);
+    array->addObject(upButton);
 
-	array->addObject(downButton);
+    array->addObject(downButton);
 
-	array->addObject(pauseAndPlay);
+    array->addObject(pauseAndPlay);
 
-	menu = MenuForArrowButton::createWithArray(array);
+    menu = MenuForArrowButton::createWithArray(array);
 
     menu->ignoreAnchorPointForPosition(false);
 
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 
-	menu->registerTouchendHandler(this , menu_selector(ControlMenu::touchendHandler));
+    menu->registerTouchendHandler(this , menu_selector(ControlMenu::touchendHandler));
 
-	addChild(menu);
-
-    numFrame=0;
-    score = 0;
-    initDuration = userData->initDuration;
-    maxDuration = userData->maxDuration;
-    durationIncrease = userData->durationIncrease;
-    seconds = initDuration;
-
-    startUpdateTime = false;
-
-    initBloodBar();
-    initScoreLabel();
-    initLevelSplash();
-
-    return true;
+    addChild(menu);
 }
 
 void ControlMenu::initLevelSplash(){
@@ -162,13 +168,13 @@ void ControlMenu::resumeGame(){
 
 
 void ControlMenu::upHandler(CCObject * sender){
-	((PlayScene *)getParent())->upHandler(NULL);
+	((PlayScene *)getParent())->upHandler(PLAYER);
 }
 void ControlMenu::downHandler(CCObject * sender){
-	((PlayScene *)getParent())->downHandler(NULL);
+	((PlayScene *)getParent())->downHandler(PLAYER);
 }
 void ControlMenu::touchendHandler(CCObject * sender){
-	((PlayScene *)getParent())->touchendHandler(NULL);
+	((PlayScene *)getParent())->touchendHandler(PLAYER);
 }
 
 void ControlMenu::initBloodBar(){
@@ -188,12 +194,21 @@ void ControlMenu::initBloodBar(){
 void ControlMenu::initScoreLabel(){
     CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
     gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
-    gem->setScale(0.6);
+    gem->setScale(0.8);
     gem->setPosition(ccp(winSize.width * 0.625 , winSize.height-50));
     addChild(gem);
 
+    if(userData->currentLevel < userData->maxLevel){
+        gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel + 1);
+        gemLevelup = CCSprite::createWithSpriteFrameName(gemName->getCString());
+        gemLevelup->setScale(0.8);
+        gemLevelup->setPosition(ccp(winSize.width * 0.625 , winSize.height-50));
+        gemLevelup->setOpacity(0);
+        addChild(gemLevelup);
+    }
+
     scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
-    scoreLabel->setColor( ccc3(54, 255, 0) );
+    scoreLabel->setColor( ccc3(168, 0, 0) );
     scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height - 50) );
     addChild(scoreLabel);
 }
@@ -216,26 +231,27 @@ void ControlMenu::updateGameTime()
     bloodBar->setPercentage((float)seconds/maxDuration * 100);
 }
 
-void ControlMenu::updateScore()
+void ControlMenu::updateScore(bool isGood)
 {
     char ss[10];
-    sprintf(ss, "%d", score);
+    sprintf(ss, "%.1f", score);
     scoreLabel->setString(ss);
+    if(!isGood) return;
     scoreLabel->runAction(CCSequence::create(CCScaleTo::create(0.5 , 2.5) , CCScaleTo::create(0.5 , 1.0), NULL));
 	AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSoundImage->getCString());
 }
 
-void ControlMenu::GameOver()
+void ControlMenu::gameOver()
 {
     status=OVER;
-    gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.2, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
+    gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     GameController::getGameController()->setLastScore(score);
 }
 
 void ControlMenu::showOver(){
-    overSplash->runAction(CCSequence::create(CCScaleTo::create(0.2, 0.6) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
+    overSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
 }
 
 void ControlMenu::nextScene(){
@@ -256,27 +272,29 @@ void ControlMenu::step(float dt){
         updateGameTime();
     }
 
-    if(seconds <= 0)
-    	GameOver();
+    if(seconds <= 0 && status != OVER)
+    	gameOver();
 }
 
-void ControlMenu::doScore(){
+bool ControlMenu::doScore(){
     if (status != PLAY) {
-        return;
+        return false;
     }
-	score++;
-	updateScore();
+	score+=1;
+	updateScore(true);
     if (userData->levels[userData->currentLevel] != 0 &&
         score >= userData->levels[userData->currentLevel]) {
         levelUp();
     }
 	seconds += durationIncrease;
 	updateGameTime();
+    return true;
 }
 
 void ControlMenu::levelUp(){
     status=LEVEL_UP;
     levelSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width/4, winSize.height*0.5)) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showUp)), NULL));
+    gem->runAction(CCFadeOut::create(0.8));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
@@ -285,11 +303,20 @@ void ControlMenu::levelUp(){
 
 void ControlMenu::showUp(){
     upSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width*0.75, winSize.height*0.5)) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
+    gemLevelup->runAction(CCFadeIn::create(0.8));
 }
 
 void ControlMenu::changeGameTime(int delta){
 	seconds += delta;
 	updateGameTime();
+}
+
+void ControlMenu::changeScore(float delta , bool isGood){
+    if (status != PLAY) {
+        return;
+    }
+    score += delta;
+    updateScore(isGood);
 }
 
 void ControlMenu::increaseDuration(int delta){
@@ -327,4 +354,8 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
         default:
             break;
     }
+}
+
+void ControlMenu::hideMenu(){
+    setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 }

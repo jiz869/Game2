@@ -13,6 +13,7 @@
 #include "ControlMenu.h"
 #include "SimpleAudioEngine.h"
 #include "City.h"
+#include "MultiPlayControlMenu.h"
 
 using namespace CocosDenshion;
 
@@ -31,9 +32,11 @@ CCScene* PlayScene::scene()
     return scene;
 }
 
+PlayScene::PlayScene() : player(NULL) {
+}
 
 PlayScene::~PlayScene(){
-	player->removeAllSpecials();
+    if (player) player->removeAllSpecials();
 
     for (b2Body * body = world->GetBodyList(); body; body = body->GetNext()) {
     	CCSprite *sprite = (CCSprite *)body->GetUserData();
@@ -45,7 +48,7 @@ PlayScene::~PlayScene(){
 }
 
 bool PlayScene::init(){
-    if (!CCLayerColor::initWithColor(ccc4(0x9f,0x9f,0x5f,255))) {
+    if (!CCLayerColor::initWithColor(ccc4(255,255,255,255))) {
         return false;
     }
 
@@ -98,8 +101,7 @@ void PlayScene::initMisc(){
 
 void PlayScene::initPlayer(){
 	player = new PlayerObj();
-	player->setData(data);
-	addChild(player->load());
+	addChild(player->load(PlayerObj::MIDDLE));
 }
 
 void PlayScene::initLanes(){
@@ -111,7 +113,7 @@ void PlayScene::initLanes(){
 }
 
 void PlayScene::initControlMenu(){
-	controlMenu = ControlMenu::create();
+    controlMenu = ControlMenu::create();
 	addChild(controlMenu);
 }
 
@@ -129,15 +131,15 @@ void PlayScene::initBoundary(){
 	addChild(boundary);
 }
 
-void PlayScene::upHandler(CCObject * sender){
+void PlayScene::upHandler(int tag){
 	player->jumpUp();
 }
 
-void PlayScene::downHandler(CCObject * sender){
+void PlayScene::downHandler(int tag){
 	player->jumpDown();
 }
 
-void PlayScene::touchendHandler(CCObject * sender){
+void PlayScene::touchendHandler(int tag){
 	player->wait();
 }
 
@@ -148,7 +150,6 @@ void PlayScene::BeginContact(b2Contact *contact){
     if (contactA->getTag() == PLAYER) {
         this->contact = contactB;
         scheduleOnce(schedule_selector(PlayScene::processContact), 0);
-
         return;
     }
 

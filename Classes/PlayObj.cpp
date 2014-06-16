@@ -17,31 +17,34 @@ using namespace CocosDenshion;
 PlayerObj::PlayerObj() : movingState(WAIT)
 {
     specials.reserve(MAX_SPECIAL_NUM);
+    UserData * userData = GameController::getGameController()->getUserData();
+    data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
 }
 
 PlayerObj::~PlayerObj(){
 }
 
-void PlayerObj::setData(PlaySceneData * data){
-	this->data = data;
-}
-
-B2Sprite * PlayerObj::load(){
+B2Sprite * PlayerObj::load(PlayerOrder order){
 
 	GameObj::load(data->playerWaitImageName->getCString() , b2_dynamicBody , PLAYER);
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+	float resetPosX;
+
+	if(order == PlayerObj::LEFT){
+	    resetPosX = size.width/2 - 30;
+	}else if(order == PlayerObj::RIGHT){
+	    resetPosX = size.width/2 + 30;
+	}else{
+	    resetPosX = size.width/2;
+	}
+
+	resetPos = ccp(resetPosX , gameObj->getContentSize().height/2+1);
 	reset();
     return gameObj;
 }
 
 void PlayerObj::reset(){
-	CCSize size = CCDirector::sharedDirector()->getWinSize();
-	setPosition(ccp(size.width/2 , gameObj->getContentSize().height/2+2));
-
-    PlayScene * playScene = (PlayScene *)gameObj->getParent();
-
-    if (playScene && playScene->controlMenu->isUpButtonSelected()) {
-        return;
-    }
+	setPosition(resetPos);
 
     velocity = ccp(0,0);
     acc = ccp(0,0);
@@ -140,17 +143,17 @@ void PlayerObj::step(float dt){
     setVelocity(b2Vec2(velocity.x , velocity.y));
 }
 
-void PlayerObj::processContact(cocos2d::CCSprite *contact){
+bool PlayerObj::processContact(cocos2d::CCSprite *contact){
     if (contact->getTag() == UPPER_BOUNDARY || contact->getTag() == LOWER_BOUNDARY) {
         reset();
-        return;
+        return false;
     }
 
     if (contact->getTag() == SPECIAL) {
         SpecialObj * specialObj = (SpecialObj *)contact->getUserData();
         beginWithSpecial(specialObj);
 
-        return;
+        return false;
     }
 
     if (contact->getTag() == CAR) {
@@ -168,13 +171,14 @@ void PlayerObj::processContact(cocos2d::CCSprite *contact){
 			AnimationData * animData = GameController::getGameController()->getAnimationData();
             SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
             PlayScene * playScene = (PlayScene *)getParent();
-            playScene->controlMenu->changeGameTime(-1);
+            playScene->controlMenu->changeScore(-0.1 , false);
         	reset();
         	removeAllSpecials();
         }
-        return;
+        return shouldPlayerReset;
     }
-
+    
+    return false;
 }
 
 void PlayerObj::removeAllSpecials(){
@@ -258,4 +262,8 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
 
 CCNode * PlayerObj::getParent(){
     return gameObj->getParent();
+}
+
+void PlayerObj::setTag(int tag){
+    gameObj->setTag(tag);
 }

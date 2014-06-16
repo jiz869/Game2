@@ -41,7 +41,14 @@ bool MenuForArrowButton::ccTouchBegan(CCTouch* touch, CCEvent* event){
 }
 
 void MenuForArrowButton::ccTouchEnded(CCTouch *touch, CCEvent* event){
-    CCMenu::ccTouchEnded(touch, event);
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(event);
+    CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
+    if (m_pSelectedItem)
+    {
+        m_pSelectedItem->unselected();
+    }
+    m_eState = kCCMenuStateWaiting;
     if(m_pSelectedItem && m_pSelectedItem->getTag() == PAUSE_PLAY) return;
     if (m_pSelectedItem)
     {
@@ -50,14 +57,6 @@ void MenuForArrowButton::ccTouchEnded(CCTouch *touch, CCEvent* event){
             (m_pListener->*m_pfnSelector)(m_pSelectedItem);
         }
     }
-}
-
-void MenuForArrowButton::ccTouchMoved(CCTouch *touch, CCEvent* event){
-	CCMenu::ccTouchMoved(touch, event);
-	if(m_pSelectedItem && m_pSelectedItem->getTag() == PAUSE_PLAY) return;
-	if (m_pSelectedItem){
-		m_pSelectedItem->activate();
-	}
 }
 
 void MenuForArrowButton::registerTouchendHandler(CCObject *target, SEL_MenuHandler selector){

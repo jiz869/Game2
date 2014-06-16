@@ -23,15 +23,22 @@ enum PlayerState {
 class PlayerObj : public GameObj {
 
 public:
+    typedef enum{
+        MIDDLE=0,
+        LEFT,
+        RIGHT,
+    }PlayerOrder;
+
+public:
     PlayerObj();
     ~PlayerObj();
-    virtual B2Sprite * load();
+    virtual B2Sprite * load(PlayerOrder order);
     void jumpUp();
     void jumpDown();
     void wait();
     void reset();
     void step(float dt);
-    void processContact(CCSprite * contact);
+    bool processContact(CCSprite * contact);
     bool hasSpecial(SpecialObj * specialObj);
     bool enoughSpecials();
     void beginWithSpecial(SpecialObj * specialObj);
@@ -41,8 +48,9 @@ public:
     void slowDown(float delta);
     void tagPlayer(SpecialObj * specialObj);
     CCNode * getParent();
-    void setData(PlaySceneData * data);
     void removeAllSpecials();
+    CCPoint resetPos;
+    void setTag(int tag);
 
 protected:
     PlayerState movingState;

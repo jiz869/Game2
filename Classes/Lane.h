@@ -34,7 +34,8 @@ public:
 
 private:
 	LaneDescription * description;
-	void addACar(float dt);
+	void addACar1(float dt);
+	void addACar2(float dt);
     LaneStatus status;
     float timePassedFromLastSchedule;
 };

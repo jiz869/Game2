@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "StartMenuScene.h"
 #include "SimpleAudioEngine.h"
+#include "MultiPlayScene.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -32,8 +33,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionFixedHeight);
 
-    GameController::getGameController();
-
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
@@ -56,6 +55,13 @@ void AppDelegate::applicationDidEnterBackground() {
     }
     // if you use SimpleAudioEngine, it must be pause
     // CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    UserData * userData = GameController::getGameController()->getUserData();
+    if(userData->pvpMode != NONE){
+        CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+        MultiPlayScene * multiPlayScene = (MultiPlayScene *)currentScene->getChildren()->objectAtIndex(0);
+        multiPlayScene->gameOver();
+        CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
+    }
 }
 
 // this function will be called when the app is active again

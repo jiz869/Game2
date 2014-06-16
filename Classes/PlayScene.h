@@ -18,6 +18,7 @@ class ControlMenu;
 class PlayScene : public cocos2d::CCLayerColor , public b2ContactListener
 {
 public:
+    PlayScene();
     ~PlayScene();
 
     virtual bool init();
@@ -38,13 +39,13 @@ public:
     virtual void slowAllLanes(float speed_decrease, float interval_increase);
     virtual void resumeAllLanesFromSlow(float speed_decrease, float interval_increase);
 
-    void upHandler(CCObject * sender);
-    void downHandler(CCObject * sender);
-    void touchendHandler(CCObject * sender);
+    virtual void upHandler(int tag);
+    virtual void downHandler(int tag);
+    virtual void touchendHandler(int tag);
 
     ControlMenu * controlMenu;
 
-private:
+protected:
 
     b2World * world;
 
@@ -55,19 +56,19 @@ private:
     PlaySceneData * data;
     UserData * userData;
 
-    void initMisc();
+    virtual void initMisc();
 
-    void initPlayer();
+    virtual void initPlayer();
 
-    void initControlMenu();
+    virtual void initControlMenu();
 
-    void initBoundary();
+    virtual void initBoundary();
 
-    void initLanes();
+    virtual void initLanes();
 
-    void processContact(float dt);
+    virtual void processContact(float dt);
 
-    void initCityObj();
+    virtual void initCityObj();
 
     PlayerObj * player;
     GameObj * lowerBoundary , * upperBoundary;
