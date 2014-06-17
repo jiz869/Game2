@@ -64,7 +64,7 @@ static P2PManager * manager;
 {
     _picker = [[GKPeerPickerController alloc] init];
     _picker.delegate = self;
-    _picker.connectionTypesMask = GKPeerPickerConnectionTypeOnline|GKPeerPickerConnectionTypeNearby;
+    _picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby;
     [_picker show];
 }
 
@@ -89,7 +89,7 @@ static P2PManager * manager;
     [self.picker release];
     _picker=nil;
     if (delegate) {
-        delegate->onConnect();
+        delegate->onConnect([_session.peerID UTF8String], [self.peerID UTF8String]);
     }
 }
 

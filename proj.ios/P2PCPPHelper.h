@@ -11,7 +11,7 @@
 
 class P2PManagerDelegate {
 public:
-    virtual void onConnect()=0;
+    virtual void onConnect(const char * myPeerId , const char * enemyPeerId)=0;
     virtual void onDisconnect()=0;
     virtual void onDataReceived(const char * command)=0;
 };
