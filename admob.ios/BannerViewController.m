@@ -8,8 +8,7 @@
 
 #import "BannerViewController.h"
 
-NSString * const BannerViewActionWillBegin = @"BannerViewActionWillBegin";
-NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
+NSString * const BannerViewIsClicked = @"BannerViewIsClicked";
 
 @interface BannerViewController () <GADBannerViewDelegate>
 
@@ -124,12 +123,23 @@ NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
 
 - (void)adViewWillPresentScreen:(GADBannerView *)bannerView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:BannerViewActionWillBegin object:self];
+    NSLog(@"adViewWillPresentScreen");
 }
 
 - (void)adViewWillDismissScreen:(GADBannerView *)bannerView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:BannerViewActionDidFinish object:self];
+    NSLog(@"adViewWillDismissScreen");
+}
+
+- (void)adViewDidDismissScreen:(GADBannerView *)adView
+{
+    NSLog(@"adViewDidDismissScreen");
+}
+
+- (void)adViewWillLeaveApplication:(GADBannerView *)adView
+{
+    NSLog(@"adViewWillLeaveApplication");
+    [[NSNotificationCenter defaultCenter] postNotificationName:BannerViewIsClicked object:self];
 }
 
 - (void)dealloc {

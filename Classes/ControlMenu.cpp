@@ -248,6 +248,7 @@ void ControlMenu::gameOver()
     gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     GameController::getGameController()->setLastScore(score);
+    GameController::getGameController()->setJustFailed(true);
 }
 
 void ControlMenu::showOver(){

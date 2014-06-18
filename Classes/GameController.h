@@ -114,6 +114,7 @@ typedef struct{
     int pvpInitDuration;
     int pvpMaxDuration;
     PvpMode pvpMode;
+    bool justFailed;
 }UserData;
 
 class GameController {
@@ -127,6 +128,7 @@ public:
     void setUserData(const char * key , CheckboxType data , int value);
     void levelUp();
     void setLastScore(float lastScore);
+    void setJustFailed(bool justFailed);
 
 private:
     GameController();

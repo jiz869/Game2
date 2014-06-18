@@ -34,6 +34,8 @@
 			<string>32</string>
 			<string>0</string>
 		</array>
+		<key>just_failed</key>
+		<string>false</string>
 	</dict>
 	<key>animation_data</key>
 	<dict>
@@ -42,7 +44,7 @@
 		<key>reset_sound_file</key>
 		<string>bzzzt.wav</string>
 		<key>background_sound_file</key>
-		<string>busy.WAV</string>
+		<string>busy.wav</string>
 		<key>levelup_sound_file</key>
 		<string>level_up.wav</string>
 		<key>horn_sound_files</key>

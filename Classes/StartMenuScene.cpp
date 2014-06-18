@@ -31,6 +31,11 @@ extern void purchase();
 extern bool canMakePayments();
 extern void setBannerViewHidden(bool);
 #define SET_BANNDER_HIDDEN(_hidden) setBannerViewHidden(_hidden)
+
+void onAdClicked(){
+    GameController::getGameController()->setJustFailed(false);
+}
+
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "../admob.android/AdmobHelper.h"
 #define SET_BANNDER_HIDDEN(_hidden) AdmobHelper::setBannerViewHidden(_hidden)
@@ -130,7 +135,13 @@ void StartMenuScene::initMainMenu(){
 
     startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
     startMenu->alignItemsInColumns(2 , 2);
-
+    
+    clickAd = CCSprite::create("click_ad.png");
+    clickAd->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    clickAd->setVisible(false);
+    clickAd->setScale(0.5);
+    addChild(clickAd);
+    
     addChild(startMenu);
 }
 
@@ -212,9 +223,22 @@ void StartMenuScene::initOptionsMenu(){
 }
 
 void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
+    if (userData->justFailed) {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+        clickAd->setVisible(true);
+        scheduleOnce(schedule_selector(StartMenuScene::hideClickAd), 2);
+        return;
+#endif
+    }
     SET_BANNDER_HIDDEN(true);
 	CCScene * playScene = PlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(playScene);
+}
+
+void StartMenuScene::hideClickAd(){
+    startMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
+    clickAd->setVisible(false);
 }
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){

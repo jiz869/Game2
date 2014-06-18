@@ -138,6 +138,12 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     else{
         userData.controllerPosition = SIDE;
     }
+    
+    if (CCSTRING_FOR_KEY(dataDict, "just_failed")->isEqual(CCString::create("false"))) {
+        userData.justFailed = false;
+    }else{
+        userData.justFailed = true;
+    }
 
     userData.order = -1;
     userData.pvpMode = NONE;
@@ -412,6 +418,21 @@ void GameController::setLastScore(float lastScore){
         dict->setObject(userDataDict, "user_data");
         dict->writeToFile(plistWritablePath.c_str());
     }
+}
+
+void GameController::setJustFailed(bool justFailed){
+    if (userData.justFailed == justFailed) {
+        return;
+    }
+    userData.justFailed = justFailed;
+    CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
+    if (justFailed == true) {
+        userDataDict->setObject(CCString::create("true"), "just_failed");
+    }else{
+        userDataDict->setObject(CCString::create("false"), "just_failed");
+    }
+    dict->setObject(userDataDict, "user_data");
+    dict->writeToFile(plistWritablePath.c_str());
 }
 
 

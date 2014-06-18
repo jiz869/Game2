@@ -41,6 +41,10 @@ bool MenuForArrowButton::ccTouchBegan(CCTouch* touch, CCEvent* event){
 }
 
 void MenuForArrowButton::ccTouchEnded(CCTouch *touch, CCEvent* event){
+    if(m_pSelectedItem && m_pSelectedItem->getTag() == PAUSE_PLAY){
+        CCMenu::ccTouchEnded(touch, event);
+        return;
+    }
     CC_UNUSED_PARAM(touch);
     CC_UNUSED_PARAM(event);
     CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");

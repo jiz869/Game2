@@ -27,6 +27,7 @@ public:
     void changeSoundSetting(CheckboxType type);
     void scoreHandler(CCObject * sender);
     void pvpHandler(CCObject * sender);
+     void hideClickAd();
 
 private:
     CCMenu * startMenu;
@@ -47,6 +48,8 @@ private:
 
     CCMenuItemImage * gem;
     CCMenuItemLabel * scoreLabel;
+    
+    CCSprite * clickAd;
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

@@ -2,14 +2,19 @@
 #import "BannerViewController.h"
 
 
+extern void onAdClicked();
+
 @implementation RootViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willBeginBannerViewActionNotification:) name:BannerViewActionWillBegin object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishBannerViewActionNotification:) name:BannerViewActionDidFinish object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBannerViewIsClicked) name:BannerViewIsClicked object:nil];
     }
     return self;
+}
+
+- (void) onBannerViewIsClicked{
+    onAdClicked();
 }
 
 /*

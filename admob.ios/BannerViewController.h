@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GADBannerView.h"
 
-extern NSString * const BannerViewActionWillBegin;
-extern NSString * const BannerViewActionDidFinish;
+extern NSString * const BannerViewIsClicked;
 
 @interface BannerViewController : UIViewController
 {
