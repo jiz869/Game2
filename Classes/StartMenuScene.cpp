@@ -38,7 +38,16 @@ void onAdClicked(){
 
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "../admob.android/AdmobHelper.h"
+#include <jni.h>
 #define SET_BANNDER_HIDDEN(_hidden) AdmobHelper::setBannerViewHidden(_hidden)
+
+extern "C"
+{
+	void Java_ca_welcomelm_crossRoad_crossRoad_onAdClicked( JNIEnv* env, jobject thiz ){
+		GameController::getGameController()->setJustFailed(false);
+	}
+}
+
 #else
 #define SET_BANNDER_HIDDEN(_hidden)
 #endif
@@ -224,7 +233,7 @@ void StartMenuScene::initOptionsMenu(){
 
 void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
     if (userData->justFailed) {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
         startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
         clickAd->setVisible(true);
         scheduleOnce(schedule_selector(StartMenuScene::hideClickAd), 2);

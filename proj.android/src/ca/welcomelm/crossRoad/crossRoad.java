@@ -36,6 +36,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -73,6 +74,11 @@ public class crossRoad extends Cocos2dxActivity{
 		.build();
 
 		adView.loadAd(adRequest);
+		adView.setAdListener(new AdListener(){
+			public void onAdLeftApplication(){
+				onAdClicked();
+			}
+		});
         addContentView(main,adParams);
 
 		_appActiviy = this;
@@ -143,4 +149,10 @@ public class crossRoad extends Cocos2dxActivity{
 		adView.destroy();
 		super.onDestroy();
 	}
+	
+	public native void onAdClicked();
+	
+    static {
+        System.loadLibrary("cocos2dcpp");
+    }
 }
