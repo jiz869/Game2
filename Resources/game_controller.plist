@@ -42,7 +42,7 @@
 		<key>reset_sound_file</key>
 		<string>bzzzt.wav</string>
 		<key>background_sound_file</key>
-		<string>busy.ogg</string>
+		<string>busy.WAV</string>
 		<key>levelup_sound_file</key>
 		<string>level_up.wav</string>
 		<key>horn_sound_files</key>
