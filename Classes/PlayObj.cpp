@@ -93,7 +93,9 @@ void PlayerObj::jumpDown()
 
 void PlayerObj::speedUp(float delta){
 
-    data->playerSpeed += delta;
+	playerAccSpeed = playerStopAccSpeed = 10000;
+
+//    data->playerSpeed += delta;
 
     if (movingState == WAIT) {
         return;
@@ -108,8 +110,11 @@ void PlayerObj::speedUp(float delta){
 
 void PlayerObj::slowDown(float delta){
 
-	data->playerSpeed -= delta;
+    playerAccSpeed = data->playerAccSpeed;
+    playerStopAccSpeed = data->playerStopAccSpeed;
 
+//	data->playerSpeed -= delta;
+//
     if (movingState == WAIT) {
         return;
     }else if (movingState == JMP_UP){
@@ -177,7 +182,7 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
         }
         return shouldPlayerReset;
     }
-    
+
     return false;
 }
 

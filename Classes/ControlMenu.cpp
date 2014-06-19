@@ -207,7 +207,7 @@ void ControlMenu::initScoreLabel(){
         addChild(gemLevelup);
     }
 
-    scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
+    scoreLabel = CCLabelTTF::create("0", "Times New Roman", 48 );
     scoreLabel->setColor( ccc3(168, 0, 0) );
     scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height - 50) );
     addChild(scoreLabel);
@@ -321,11 +321,11 @@ void ControlMenu::changeScore(float delta , bool isGood){
 }
 
 void ControlMenu::increaseDuration(int delta){
-    durationIncrease+=delta;
+    maxDuration+=delta;
 }
 
 void ControlMenu::resumeDuration(){
-    durationIncrease = userData->initDuration;
+    maxDuration = userData->maxDuration;
 }
 
 void ControlMenu::changeControllerPosition(CheckboxType type){

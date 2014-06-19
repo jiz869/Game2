@@ -105,15 +105,13 @@ void StartMenuScene::initScoreMenu(){
 	CCString * gemName = CCString::createWithFormat("gem%d.png", userData->topLevel);
 	gem = CCMenuItemImage::create();
 	gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
-	gem->setAnchorPoint(ccp(1,0.5));
-	gem->setPosition(ccp(winSize.width/2, winSize.height*0.75));
+	gem->setPosition(ccp(winSize.width/4, winSize.height*0.75));
 
-    scoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", "Verdana-Bold", 128 ));
+    scoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 96 ));
     scoreLabel->setColor( ccc3(54, 255, 0) );
-    scoreLabel->setAnchorPoint(ccp(-1,0.5));
     CCString * score = CCString::createWithFormat("%.1f", userData->topScore);
     scoreLabel->setString(score->getCString());
-    scoreLabel->setPosition(ccp(winSize.width/2, winSize.height*0.75));
+    scoreLabel->setPosition(ccp(winSize.width*0.75, winSize.height*0.75));
 
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.5);
@@ -144,13 +142,13 @@ void StartMenuScene::initMainMenu(){
 
     startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
     startMenu->alignItemsInColumns(2 , 2);
-    
+
     clickAd = CCSprite::create("click_ad.png");
     clickAd->setPosition(ccp(winSize.width/2 , winSize.height/2));
     clickAd->setVisible(false);
     clickAd->setScale(0.5);
     addChild(clickAd);
-    
+
     addChild(startMenu);
 }
 

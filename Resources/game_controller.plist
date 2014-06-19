@@ -66,7 +66,6 @@
 		</array>
 		<key>special_haste_animation</key>
 		<array>
-			<string>haste1.png</string>
 			<string>haste0.png</string>
 		</array>
 		<key>special_slow_animation</key>
@@ -106,7 +105,7 @@
 			<array>
 				<dict>
 					<key>special_chance</key>
-					<string>0.0</string>
+					<string>0.02</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -125,7 +124,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.0</string>
+					<string>0.03</string>
 					<key>period</key>
 					<string>2.3</string>
 					<key>speed</key>
@@ -144,7 +143,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.0</string>
+					<string>0.03</string>
 					<key>period</key>
 					<string>2.6</string>
 					<key>speed</key>
@@ -163,7 +162,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.0</string>
+					<string>0.02</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -182,7 +181,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.0</string>
+					<string>0.03</string>
 					<key>period</key>
 					<string>2.5</string>
 					<key>speed</key>
@@ -201,7 +200,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.0</string>
+					<string>0.02</string>
 					<key>period</key>
 					<string>2.8</string>
 					<key>speed</key>
@@ -220,7 +219,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.0</string>
+					<string>0.03</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -239,7 +238,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.0</string>
+					<string>0.03</string>
 					<key>period</key>
 					<string>2.0</string>
 					<key>speed</key>
@@ -1770,13 +1769,13 @@
 		<key>life</key>
 		<dict>
 			<key>duration</key>
-			<string>6</string>
+			<string>12</string>
 			<key>image_name</key>
 			<string>life0.png</string>
 			<key>min</key>
-			<string>2</string>
-			<key>max</key>
 			<string>6</string>
+			<key>max</key>
+			<string>8</string>
 		</dict>
 	</dict>
 </dict>

@@ -64,27 +64,27 @@ bool Lane::initWithDescription(LaneDescription * description){
 void Lane::addACar1(float dt){
 
 	timePassedFromLastSchedule = 0;
-
-    if (toss(description->specialChance)) {
-        SpecialObj * speciaObj = new SpecialObj();
-        speciaObj->load(description->left2right, description->initPos, description->carSpeed, this);
-        return;
-    }
-
-	CarObj * car = new CarObj();
-
 	float speed , interval;
 
 	UserData * userData = GameController::getGameController()->getUserData();
 
-    if(userData->pvpMode == PREPARE_PLAY){
-        interval = description->period;
-    }else{
-        interval = description->period - 0.1*getRandom(0,3);
-    }
-    speed = description->carSpeed;
+	if(userData->pvpMode == PREPARE_PLAY){
+		interval = description->period;
+	}else{
+		interval = description->period - 0.1*getRandom(0,3);
+	}
+	speed = description->carSpeed;
 
-    car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+
+    if (toss(description->specialChance)) {
+        SpecialObj * speciaObj = new SpecialObj();
+        speciaObj->load(description->left2right, description->initPos, speed, this);
+    }else{
+
+		CarObj * car = new CarObj();
+
+		car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+    }
 
     scheduleOnce(schedule_selector(Lane::addACar2) , interval);
 }
@@ -93,26 +93,26 @@ void Lane::addACar2(float dt){
 
     timePassedFromLastSchedule = 0;
 
+	float speed , interval;
+
+	UserData * userData = GameController::getGameController()->getUserData();
+
+	if(userData->pvpMode == PREPARE_PLAY){
+		interval = description->period;
+	}else{
+		interval = description->period - 0.1*getRandom(0,3);
+	}
+	speed = description->carSpeed;
+
     if (toss(description->specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
-        speciaObj->load(description->left2right, description->initPos, description->carSpeed, this);
-        return;
-    }
-
-    CarObj * car = new CarObj();
-
-    float speed , interval;
-
-    UserData * userData = GameController::getGameController()->getUserData();
-
-    if(userData->pvpMode == PREPARE_PLAY){
-        interval = description->period;
+        speciaObj->load(description->left2right, description->initPos, speed, this);
     }else{
-        interval = description->period - 0.1*getRandom(0,3);
-    }
-    speed = description->carSpeed;
 
-    car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+		CarObj * car = new CarObj();
+
+		car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+    }
 
     scheduleOnce(schedule_selector(Lane::addACar1) , interval);
 }
@@ -178,12 +178,10 @@ void Lane::reStart(){
 
     float delay;
 
-    if(timePassedFromLastSchedule > description->period) delay = 0.1;
+    if(timePassedFromLastSchedule > description->period) delay = 0;
     else delay = description->period - timePassedFromLastSchedule;
 
-    unscheduleAllSelectors();
-    schedule(schedule_selector(Lane::addACar1) , description->period ,
-    		kCCRepeatForever , delay);
+    scheduleOnce(schedule_selector(Lane::addACar1) , delay);
 
     status = RUNNING;
 }
