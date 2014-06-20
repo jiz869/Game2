@@ -36,6 +36,8 @@
 		</array>
 		<key>just_failed</key>
 		<string>false</string>
+		<key>has_payed</key>
+		<string>false</string>
 	</dict>
 	<key>animation_data</key>
 	<dict>

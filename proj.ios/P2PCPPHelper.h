@@ -27,4 +27,23 @@ private:
     ~P2PCPPHelper();
 };
 
+class IAPManagerDelegate {
+public:
+    virtual void onPaymentFinished(bool wasSuccessful) = 0;
+    
+    virtual void onRequestFinished(bool wasSuccessful) = 0;
+};
+
+class IAPCPPHelper {
+    
+public:
+    static IAPCPPHelper * sharedHelper();
+    void request(IAPManagerDelegate * delegate);
+    void purchase();
+    bool canMakePayments();
+private:
+    IAPCPPHelper();
+    ~IAPCPPHelper();
+};
+
 #endif

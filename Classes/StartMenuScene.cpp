@@ -12,25 +12,10 @@
 #include "MultiPlayScene.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-void onRequestError(int code){
-    CCLOG("onRequestError %d", code);
-}
-
-void onPaymentFinished(bool wasSuccessful){
-    CCLOG("onPaymentFinished %d", wasSuccessful);
-}
-
-void onRequestFinish(){
-    CCLOG("onRequestFinish");
-}
-
-extern void request();
-
-extern void purchase();
-
-extern bool canMakePayments();
 extern void setBannerViewHidden(bool);
-#define SET_BANNDER_HIDDEN(_hidden) setBannerViewHidden(_hidden)
+#define SET_BANNDER_HIDDEN(_hidden) \
+if(userData->hasPayed) setBannerViewHidden(true); \
+else setBannerViewHidden(_hidden)
 
 void onAdClicked(){
     GameController::getGameController()->setJustFailed(false);
@@ -39,7 +24,9 @@ void onAdClicked(){
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "../admob.android/AdmobHelper.h"
 #include <jni.h>
-#define SET_BANNDER_HIDDEN(_hidden) AdmobHelper::setBannerViewHidden(_hidden)
+#define SET_BANNDER_HIDDEN(_hidden) \
+if(userData->hasPayed) AdmobHelper::setBannerViewHidden(true); \
+else AdmobHelper::setBannerViewHidden(_hidden)
 
 extern "C"
 {
@@ -83,14 +70,14 @@ bool StartMenuScene::init(){
         return false;
     }
 
-    SET_BANNDER_HIDDEN(false);
-
     winSize = CCDirector::sharedDirector()->getWinSize();
     ignoreAnchorPointForPosition(false);
     setPosition(ccp(winSize.width/2 , winSize.height/2));
     userData = GameController::getGameController()->getUserData();
 
     userData->pvpMode = NONE;
+    
+    SET_BANNDER_HIDDEN(false);
 
     initMainMenu();
 
@@ -137,25 +124,33 @@ void StartMenuScene::initMainMenu(){
     options->setScale(0.5);
     score->setScale(0.5);
 
+#if 0
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
+#else
+    CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
+#endif
     pvp->setScale(0.5);
 
     startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
     startMenu->alignItemsInColumns(2 , 2);
 
-    clickAd = CCSprite::create("click_ad.png");
-    clickAd->setPosition(ccp(winSize.width/2 , winSize.height/2));
-    clickAd->setVisible(false);
-    clickAd->setScale(0.5);
-    addChild(clickAd);
+    infoLabel = CCLabelTTF::create("0", "Times New Roman", 32 );
+    infoLabel->setColor( ccc3(54, 255, 0) );
+    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    infoLabel->setString("");
+    addChild(infoLabel);
 
     addChild(startMenu);
 }
 
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
+#if 0
     SET_BANNDER_HIDDEN(true);
     CCScene * pvpScene = MultiPlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(pvpScene);
+#else
+    IAPCPPHelper::sharedHelper()->request(this);
+#endif
 }
 
 void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
@@ -230,11 +225,9 @@ void StartMenuScene::initOptionsMenu(){
 }
 
 void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
-    if (userData->justFailed) {
+    if (!userData->hasPayed && userData->justFailed) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-        clickAd->setVisible(true);
-        scheduleOnce(schedule_selector(StartMenuScene::hideClickAd), 2);
+        setInfoLabel("Please click the ad to support us \n or spend 99 cents to remove the ad. Thank you");
         return;
 #endif
     }
@@ -243,9 +236,15 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
     CCDirector::sharedDirector()->replaceScene(playScene);
 }
 
-void StartMenuScene::hideClickAd(){
+void StartMenuScene::setInfoLabel(const char *info){
+    startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+    infoLabel->setString(info);
+    scheduleOnce(schedule_selector(StartMenuScene::hideInfoLabel), 2);
+}
+
+void StartMenuScene::hideInfoLabel(){
     startMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
-    clickAd->setVisible(false);
+    infoLabel->setString("");
 }
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){
@@ -342,4 +341,23 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
         default:
             break;
     }
+}
+
+void StartMenuScene::onPaymentFinished(bool wasSuccessful){
+    if (wasSuccessful == true) {
+        GameController::getGameController()->setHasPayed(true);
+        setBannerViewHidden(true);
+    }else{
+        setInfoLabel("Payment Error");
+    }
+}
+
+void StartMenuScene::onRequestFinished(bool wasSuccessful){
+    CCLOG("onRequestFinished %d", wasSuccessful);
+    if (wasSuccessful == false || IAPCPPHelper::sharedHelper()->canMakePayments() == false) {
+        setInfoLabel("Payment Error");
+        return;
+    }
+    
+    IAPCPPHelper::sharedHelper()->purchase();
 }

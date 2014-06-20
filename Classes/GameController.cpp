@@ -144,6 +144,12 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     }else{
         userData.justFailed = true;
     }
+    
+    if (CCSTRING_FOR_KEY(dataDict, "has_payed")->isEqual(CCString::create("false"))) {
+        userData.hasPayed = false;
+    }else{
+        userData.hasPayed = true;
+    }
 
     userData.order = -1;
     userData.pvpMode = NONE;
@@ -430,6 +436,21 @@ void GameController::setJustFailed(bool justFailed){
         userDataDict->setObject(CCString::create("true"), "just_failed");
     }else{
         userDataDict->setObject(CCString::create("false"), "just_failed");
+    }
+    dict->setObject(userDataDict, "user_data");
+    dict->writeToFile(plistWritablePath.c_str());
+}
+
+void GameController::setHasPayed(bool hasPayed){
+    if (userData.hasPayed == hasPayed) {
+        return;
+    }
+    userData.hasPayed = hasPayed;
+    CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
+    if (hasPayed == true) {
+        userDataDict->setObject(CCString::create("true"), "has_payed");
+    }else{
+        userDataDict->setObject(CCString::create("false"), "has_payed");
     }
     dict->setObject(userDataDict, "user_data");
     dict->writeToFile(plistWritablePath.c_str());
