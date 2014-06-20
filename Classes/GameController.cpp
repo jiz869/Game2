@@ -18,15 +18,12 @@ using namespace CocosDenshion;
 void static stopBegin(PlayerObj * player, SpecialObj * specialObj);
 void static stopStep(PlayerObj * player, SpecialObj * specialObj);
 void static stopEnd(PlayerObj * player, SpecialObj * specialObj);
-bool static stopHitByCar(PlayerObj * player, SpecialObj * specialObj);
 
 void static hasteBegin(PlayerObj * player, SpecialObj * specialObj);
 void static hasteStep(PlayerObj * player, SpecialObj * specialObj);
 void static hasteEnd(PlayerObj * player, SpecialObj * specialObj);
-bool static hasteHitByCar(PlayerObj * player, SpecialObj * specialObj);
 
-void static slowBegin(PlayerObj * player, SpecialObj * specialObj);
-void static slowEnd(PlayerObj * player, SpecialObj * specialObj);
+bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj);
 
 void static lifeBegin(PlayerObj * player, SpecialObj * specialObj);
 void static lifeEnd(PlayerObj * player, SpecialObj * specialObj);
@@ -138,13 +135,13 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     else{
         userData.controllerPosition = SIDE;
     }
-    
+
     if (CCSTRING_FOR_KEY(dataDict, "just_failed")->isEqual(CCString::create("false"))) {
         userData.justFailed = false;
     }else{
         userData.justFailed = true;
     }
-    
+
     if (CCSTRING_FOR_KEY(dataDict, "has_payed")->isEqual(CCString::create("false"))) {
         userData.hasPayed = false;
     }else{
@@ -241,9 +238,9 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.specialHasteAnim = initAnimation(array);
     animationData.specialHasteAnim->setDelayPerUnit(0.3);
 
-    array = (CCArray *)dataDict->objectForKey("special_slow_animation");
-    animationData.specialSlowAnim = initAnimation(array);
-    animationData.specialSlowAnim->setDelayPerUnit(0.3);
+    array = (CCArray *)dataDict->objectForKey("special_strong_animation");
+    animationData.specialStrongAnim = initAnimation(array);
+    animationData.specialStrongAnim->setDelayPerUnit(0.3);
 
     array = (CCArray *)dataDict->objectForKey("special_life_animation");
     animationData.specialLifeAnim = initAnimation(array);
@@ -281,7 +278,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[STOP]->begin = &stopBegin;
     specialDatas[STOP]->step = &stopStep;
     specialDatas[STOP]->end = &stopEnd;
-    specialDatas[STOP]->hitByCar = &stopHitByCar;
+    specialDatas[STOP]->hitByCar = NULL;
     specialDatas[STOP]->animation = animationData.specialStopAnim;
 
     dict = (CCDictionary *)dataDict->objectForKey("haste");
@@ -292,20 +289,18 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[HASTE]->begin = &hasteBegin;
     specialDatas[HASTE]->step = &hasteStep;
     specialDatas[HASTE]->end = &hasteEnd;
-    specialDatas[HASTE]->hitByCar = &hasteHitByCar;
+    specialDatas[HASTE]->hitByCar = NULL;
     specialDatas[HASTE]->animation = animationData.specialHasteAnim;
 
-    dict = (CCDictionary *)dataDict->objectForKey("slow");
-    specialDatas[SLOW] = new SpecialData;
-    specialDatas[SLOW]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
-    specialDatas[SLOW]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-    specialDatas[SLOW]->userData1 = CCSTRING_FOR_KEY(dict, "speed_decrease")->floatValue();
-    specialDatas[SLOW]->userData2 = CCSTRING_FOR_KEY(dict, "interval_increase")->floatValue();
-    specialDatas[SLOW]->begin = &slowBegin;
-    specialDatas[SLOW]->step = NULL;
-    specialDatas[SLOW]->end = &slowEnd;
-    specialDatas[SLOW]->hitByCar = NULL;
-    specialDatas[SLOW]->animation = animationData.specialSlowAnim;
+    dict = (CCDictionary *)dataDict->objectForKey("strong");
+    specialDatas[STRONG] = new SpecialData;
+    specialDatas[STRONG]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[STRONG]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[STRONG]->begin = NULL;
+    specialDatas[STRONG]->step = NULL;
+    specialDatas[STRONG]->end = NULL;
+    specialDatas[STRONG]->hitByCar = &strongHitByCar;
+    specialDatas[STRONG]->animation = animationData.specialStrongAnim;
 
     dict = (CCDictionary *)dataDict->objectForKey("life");
     specialDatas[LIFE] = new SpecialData;
@@ -333,9 +328,6 @@ void static stopEnd(PlayerObj * player, SpecialObj * specialObj){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->restartAllLanes();
 }
-bool static stopHitByCar(PlayerObj * player, SpecialObj * specialObj){
-	return true;
-}
 
 //haste
 void static hasteBegin(PlayerObj * player, SpecialObj * specialObj){
@@ -347,18 +339,10 @@ void static hasteStep(PlayerObj * player, SpecialObj * specialObj){
 void static hasteEnd(PlayerObj * player, SpecialObj * specialObj){
     player->slowDown(specialObj->getSpecialData()->userData1);
 }
-bool static hasteHitByCar(PlayerObj * player, SpecialObj * specialObj){
-	return true;
-}
 
-//slow
-void static slowBegin(PlayerObj * player, SpecialObj * specialObj){
-    PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->slowAllLanes(specialObj->getSpecialData()->userData1 , specialObj->getSpecialData()->userData2);
-}
-void static slowEnd(PlayerObj * player, SpecialObj * specialObj){
-    PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->resumeAllLanesFromSlow(specialObj->getSpecialData()->userData1 , specialObj->getSpecialData()->userData2);
+//strong
+bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj){
+	return false;
 }
 
 //life

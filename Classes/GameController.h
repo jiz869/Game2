@@ -18,7 +18,7 @@ using namespace std;
 typedef enum{
     STOP = 0,
     HASTE,
-    SLOW,
+    STRONG,
     LIFE,
     SPECIAL_NUM,
 }SpecialID;
@@ -80,7 +80,7 @@ typedef struct{
     CCAnimation * playerMoveAnim;
     CCAnimation * specialStopAnim;
     CCAnimation * specialHasteAnim;
-    CCAnimation * specialSlowAnim;
+    CCAnimation * specialStrongAnim;
     CCAnimation * specialLifeAnim;
     CCAnimation * clockAnim;
 }AnimationData;

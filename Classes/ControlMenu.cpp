@@ -322,10 +322,13 @@ void ControlMenu::changeScore(float delta , bool isGood){
 
 void ControlMenu::increaseDuration(int delta){
     maxDuration+=delta;
+    seconds+=delta;
+    updateGameTime();
 }
 
 void ControlMenu::resumeDuration(){
     maxDuration = userData->maxDuration;
+    updateGameTime();
 }
 
 void ControlMenu::changeControllerPosition(CheckboxType type){

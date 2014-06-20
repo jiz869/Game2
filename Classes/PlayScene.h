@@ -36,9 +36,6 @@ public:
 
     virtual void restartAllLanes();
 
-    virtual void slowAllLanes(float speed_decrease, float interval_increase);
-    virtual void resumeAllLanesFromSlow(float speed_decrease, float interval_increase);
-
     virtual void upHandler(int tag);
     virtual void downHandler(int tag);
     virtual void touchendHandler(int tag);

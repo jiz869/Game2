@@ -214,17 +214,3 @@ void PlayScene::restartAllLanes(){
     }
 }
 
-void PlayScene::slowAllLanes(float speed_decrease, float interval_increase){
-	int size = lanes.size();
-    for (int i = 0; i < size; i++) {
-        lanes[i]->slow(speed_decrease, interval_increase);
-    }
-}
-
-void PlayScene::resumeAllLanesFromSlow(float speed_decrease, float interval_increase){
-	int size = lanes.size();
-    for (int i = 0; i < size; i++) {
-        lanes[i]->resumeFromSlow(speed_decrease, interval_increase);
-    }
-}
-

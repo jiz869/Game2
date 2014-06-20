@@ -70,9 +70,9 @@
 		<array>
 			<string>haste0.png</string>
 		</array>
-		<key>special_slow_animation</key>
+		<key>special_strong_animation</key>
 		<array>
-			<string>slow0.png</string>
+			<string>strong0.png</string>
 		</array>
 		<key>special_life_animation</key>
 		<array>
@@ -1757,16 +1757,12 @@
 			<key>speed_increase</key>
 			<string>1.5</string>
 		</dict>
-		<key>slow</key>
+		<key>strong</key>
 		<dict>
 			<key>duration</key>
 			<string>4</string>
 			<key>image_name</key>
-			<string>slow0.png</string>
-			<key>speed_decrease</key>
-			<string>0.8</string>
-			<key>interval_increase</key>
-			<string>0.6</string>
+			<string>strong0.png</string>
 		</dict>
 		<key>life</key>
 		<dict>

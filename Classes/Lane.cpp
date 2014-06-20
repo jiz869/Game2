@@ -186,35 +186,6 @@ void Lane::reStart(){
     status = RUNNING;
 }
 
-void Lane::slow(float speed_decrease , float interval_increase){
-
-	if (description->left2right){
-		description->carSpeed -= speed_decrease;
-	}else if (!description->left2right){
-		description->carSpeed += speed_decrease;
-	}
-
-	description->period += interval_increase;
-
-	if(status != STOPPED){
-		reStart();
-	}
-}
-
-void Lane::resumeFromSlow(float speed_decrease , float interval_increase){
-	if (description->left2right){
-		description->carSpeed += speed_decrease;
-	}else if (!description->left2right){
-		description->carSpeed -= speed_decrease;
-	}
-
-	description->period -= interval_increase;
-
-	if(status != STOPPED){
-		reStart();
-	}
-}
-
 void Lane::step(float dt){
 	if(status == RUNNING) timePassedFromLastSchedule += dt;
 }
