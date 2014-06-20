@@ -1,18 +1,21 @@
 #import <StoreKit/StoreKit.h>
 #import <Foundation/Foundation.h>
+#include "P2PCPPHelper.h"
 
-#define PRODUCT_ID "ca.welcomelm.ugp"
+#define PRODUCT_ID "lmini2170"
 
 @interface InAppPurchaseManager : NSObject <SKProductsRequestDelegate , SKPaymentTransactionObserver>
 {
     SKProduct * product;
     SKProductsRequest *productRequest;
+@public
+    IAPManagerDelegate * delegate;
 }
 
 // public methods
 - (void)loadStore;
-- (BOOL)canMakePurchases;
-- (void)purchaseProUpgrade;
+- (BOOL)canMakePayments;
+- (void)purchase;
 @end
 
 

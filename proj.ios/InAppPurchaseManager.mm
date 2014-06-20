@@ -8,22 +8,37 @@
 
 #import "InAppPurchaseManager.h"
 
-extern void onRequestError(int code);
+static IAPCPPHelper * helper;
 
-extern void onPaymentFinished(bool wasSuccessful);
-
-extern void onRequestFinish();
-
-void request(){
-    [[InAppPurchaseManager sharedManager] loadStore];
+IAPCPPHelper::IAPCPPHelper(){
+    
 }
 
-void purchase(){
-    [[InAppPurchaseManager sharedManager] purchase];
+IAPCPPHelper::~IAPCPPHelper(){
+    
 }
 
-bool canMakePayments(){
-    return [[InAppPurchaseManager sharedManager] canMakePayments];
+IAPCPPHelper * IAPCPPHelper::sharedHelper(){
+    if (helper==NULL) {
+        helper = new IAPCPPHelper();
+    }
+    return helper;
+}
+
+void IAPCPPHelper::request(IAPManagerDelegate *delegate){
+    InAppPurchaseManager * manager = [InAppPurchaseManager sharedManager];
+    manager->delegate = delegate;
+    [manager loadStore];
+}
+
+void IAPCPPHelper::purchase(){
+    InAppPurchaseManager * manager = [InAppPurchaseManager sharedManager];
+    [manager purchase];
+}
+
+bool IAPCPPHelper::canMakePayments(){
+    InAppPurchaseManager * manager = [InAppPurchaseManager sharedManager];
+    return [manager canMakePayments];
 }
 
 @implementation SKProduct(LocalizedPrice)
@@ -84,11 +99,13 @@ static InAppPurchaseManager * manager;
         NSLog(@"Product description: %@" , product.localizedDescription);
         NSLog(@"Product price: %@" , product.price);
         NSLog(@"Product id: %@" , product.productIdentifier);
+        delegate->onRequestFinished(true);
     }
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
     {
         NSLog(@"Invalid product id: %@" , invalidProductId);
+        delegate->onRequestFinished(false);
     }
 }
 
@@ -96,14 +113,12 @@ static InAppPurchaseManager * manager;
 {
     // finally release the reqest we alloc/init’ed in requestProUpgradeProductData
     [productRequest release];
-    
-    onRequestFinish();
 }
 
 -(void) request:(SKRequest *)request didFailWithError:(NSError *)error
 {
     NSLog(@"%@", error);
-    onRequestError([error code]);
+    delegate->onRequestFinished(false);
 }
 
 #pragma -
@@ -148,11 +163,11 @@ static InAppPurchaseManager * manager;
     
     if (wasSuccessful)
     {
-        onPaymentFinished(true);
+        delegate->onPaymentFinished(true);
     }
     else
     {
-        onPaymentFinished(false);
+        delegate->onPaymentFinished(false);
     }
 }
 

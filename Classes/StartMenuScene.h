@@ -10,10 +10,20 @@
 #define __crossRoad__StartMenuScene__
 
 #include "GameController.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "../proj.ios/P2PCPPHelper.h"
+#else
+class IAPManagerDelegate {
+public:
+    virtual void onPaymentFinished(bool wasSuccessful) = 0;
+    
+    virtual void onRequestFinished(bool wasSuccessful) = 0;
+};
+#endif
 
 USING_NS_CC;
 
-class StartMenuScene: public cocos2d::CCLayerColor {
+class StartMenuScene: public cocos2d::CCLayerColor , IAPManagerDelegate {
 public:
 	StartMenuScene();
 	virtual ~StartMenuScene();
@@ -27,7 +37,9 @@ public:
     void changeSoundSetting(CheckboxType type);
     void scoreHandler(CCObject * sender);
     void pvpHandler(CCObject * sender);
-     void hideClickAd();
+    void hideInfoLabel();
+    virtual void onPaymentFinished(bool wasSuccessful);
+    virtual void onRequestFinished(bool wasSuccessful);
 
 private:
     CCMenu * startMenu;
@@ -49,7 +61,9 @@ private:
     CCMenuItemImage * gem;
     CCMenuItemLabel * scoreLabel;
     
-    CCSprite * clickAd;
+    CCLabelTTF * infoLabel;
+    
+    void setInfoLabel(const char * info);
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */
