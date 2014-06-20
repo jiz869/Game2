@@ -76,7 +76,7 @@ bool StartMenuScene::init(){
     userData = GameController::getGameController()->getUserData();
 
     userData->pvpMode = NONE;
-    
+
     SET_BANNDER_HIDDEN(false);
 
     initMainMenu();
@@ -149,7 +149,9 @@ void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
     CCScene * pvpScene = MultiPlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(pvpScene);
 #else
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     IAPCPPHelper::sharedHelper()->request(this);
+#endif
 #endif
 }
 
@@ -344,20 +346,24 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
 }
 
 void StartMenuScene::onPaymentFinished(bool wasSuccessful){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     if (wasSuccessful == true) {
         GameController::getGameController()->setHasPayed(true);
         setBannerViewHidden(true);
     }else{
         setInfoLabel("Payment Error");
     }
+#endif
 }
 
 void StartMenuScene::onRequestFinished(bool wasSuccessful){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     CCLOG("onRequestFinished %d", wasSuccessful);
     if (wasSuccessful == false || IAPCPPHelper::sharedHelper()->canMakePayments() == false) {
         setInfoLabel("Payment Error");
         return;
     }
-    
+
     IAPCPPHelper::sharedHelper()->purchase();
+#endif
 }
