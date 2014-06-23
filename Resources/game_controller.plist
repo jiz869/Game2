@@ -8,16 +8,10 @@
 		<string>unmute</string>
 		<key>controller_position</key>
 		<string>right</string>
-		<key>init_duration</key>
-		<string>10</string>
 		<key>top_score</key>
 		<string>0</string>
 		<key>top_level</key>
 		<string>0</string>
-		<key>max_duration</key>
-		<string>10</string>
-		<key>duration_increase</key>
-		<string>5</string>
 		<key>pvp_init_duration</key>
 		<string>60</string>
 		<key>pvp_max_duration</key>
@@ -103,6 +97,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>20</string>
+			<key>max_duration</key>
+			<string>20</string>
+			<key>duration_increase</key>
+			<string>10</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -270,6 +270,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -437,6 +443,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -604,6 +616,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -771,6 +789,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -938,6 +962,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1105,6 +1135,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1272,6 +1308,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1439,6 +1481,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1606,6 +1654,12 @@
 			<string>0.16</string>
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
+			<key>init_duration</key>
+			<string>10</string>
+			<key>max_duration</key>
+			<string>10</string>
+			<key>duration_increase</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>

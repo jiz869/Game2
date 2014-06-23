@@ -69,6 +69,7 @@ protected:
     bool startUpdateTime;
 
     UserData * userData;
+    PlaySceneData * playSceneData;
 
     void upHandler(CCObject * sender);
     void downHandler(CCObject * sender);

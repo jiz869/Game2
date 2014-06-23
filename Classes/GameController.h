@@ -68,6 +68,9 @@ typedef struct{
     float playerSpeed;
     float playerAccSpeed;
     float playerStopAccSpeed;
+	int initDuration;
+    int maxDuration;
+    int durationIncrease;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 
@@ -101,13 +104,10 @@ typedef struct{
 typedef struct{
     CheckboxType sound;
     CheckboxType controllerPosition;
-	int initDuration;
-    int durationIncrease;
 	float topScore;
     int topLevel;
 	float lastScore;
     int currentLevel;
-    int maxDuration;
     vector<int> levels;
     int maxLevel;
     int order;

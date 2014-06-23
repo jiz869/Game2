@@ -100,9 +100,6 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
         return false;
     }
 
-    userData.initDuration = CCSTRING_FOR_KEY(dataDict , "init_duration")->intValue();
-    userData.durationIncrease = CCSTRING_FOR_KEY(dataDict , "duration_increase")->intValue();
-    userData.maxDuration = CCSTRING_FOR_KEY(dataDict , "max_duration")->intValue();
     userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->floatValue();
     userData.topLevel = CCSTRING_FOR_KEY(dataDict , "top_level")->intValue();
     userData.pvpInitDuration = CCSTRING_FOR_KEY(dataDict , "pvp_init_duration")->intValue();
@@ -164,6 +161,9 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
     for (int i = 0; i < dataArray->count(); i++) {
         PlaySceneData * data = new PlaySceneData();
         CCDictionary * dict = (CCDictionary *)dataArray->objectAtIndex(i);
+        data->initDuration = CCSTRING_FOR_KEY(dict , "init_duration")->intValue();
+        data->durationIncrease = CCSTRING_FOR_KEY(dict , "duration_increase")->intValue();
+        data->maxDuration = CCSTRING_FOR_KEY(dict , "max_duration")->intValue();
         data->laneNumber = CCSTRING_FOR_KEY(dict , "lane_number")->intValue();
         data->playerSpeed = CCSTRING_FOR_KEY(dict , "player_init_speed")->floatValue();
         data->playerWaitImageName = CCSTRING_FOR_KEY(dict, "player_wait_image");

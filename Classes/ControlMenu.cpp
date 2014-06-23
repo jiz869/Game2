@@ -39,6 +39,7 @@ bool ControlMenu::init(){
 
 void ControlMenu::initMisc(){
     userData = GameController::getGameController()->getUserData();
+    playSceneData = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
     winSize = CCDirector::sharedDirector()->getWinSize();
 
     ignoreAnchorPointForPosition(false);
@@ -47,9 +48,9 @@ void ControlMenu::initMisc(){
 
     numFrame=0;
     score = 0;
-    initDuration = userData->initDuration;
-    maxDuration = userData->maxDuration;
-    durationIncrease = userData->durationIncrease;
+    initDuration = playSceneData->initDuration;
+    maxDuration = playSceneData->maxDuration;
+    durationIncrease = playSceneData->durationIncrease;
     seconds = initDuration;
 
     startUpdateTime = false;
@@ -327,7 +328,7 @@ void ControlMenu::increaseDuration(int delta){
 }
 
 void ControlMenu::resumeDuration(){
-    maxDuration = userData->maxDuration;
+    maxDuration = playSceneData->maxDuration;
     updateGameTime();
 }
 
