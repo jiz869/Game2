@@ -162,7 +162,7 @@ void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
 #else
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     IAPCPPHelper::sharedHelper()->request(this);
-#else if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     purchase();
 #endif
 #endif
@@ -362,7 +362,7 @@ void StartMenuScene::onPaymentFinished(bool wasSuccessful){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     if (wasSuccessful == true) {
         GameController::getGameController()->setHasPayed(true);
-        setBannerViewHidden(true);
+        SET_BANNDER_HIDDEN(true);
     }else{
         setInfoLabel("Payment Error");
     }
@@ -389,5 +389,5 @@ void StartMenuScene::onPaymentError(){
 void StartMenuScene::onPaymentSuccess(){
 	CCLOG("onPaymentSuccess");
     GameController::getGameController()->setHasPayed(true);
-    setBannerViewHidden(true);
+    SET_BANNDER_HIDDEN(true);
 }
