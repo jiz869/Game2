@@ -1,16 +1,16 @@
 #include "AdmobHelper.h"
-
-bool AdmobHelper::isAdShowing = true;
-
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
-//#include <android/log.h>
 
 
 const char* AppActivityClassName = "ca/welcomelm/crossRoad/crossRoad";
 
-void AdmobHelper::hideAd()
+static bool isAdShowing = false;
+
+static void hideAd()
 {
+	if(isAdShowing == false) return;
+
     cocos2d::JniMethodInfo t;
     if (cocos2d::JniHelper::getStaticMethodInfo(t, AppActivityClassName, "hideAd", "()V"))
     {
@@ -23,8 +23,9 @@ void AdmobHelper::hideAd()
 
 
 
-void AdmobHelper::showAd()
+static void showAd()
 {
+	if(isAdShowing == true) return;
 
     cocos2d::JniMethodInfo t;
     if (cocos2d::JniHelper::getStaticMethodInfo(t, AppActivityClassName, "showAd", "()V"))
@@ -37,7 +38,7 @@ void AdmobHelper::showAd()
 
 }
 
-void AdmobHelper::setBannerViewHidden(bool hidden){
+void setBannerViewHidden(bool hidden){
 	switch(hidden){
 		case true:
 			hideAd();
@@ -48,4 +49,16 @@ void AdmobHelper::setBannerViewHidden(bool hidden){
 		default:
 			break;
 	}
+}
+
+void purchase()
+{
+    cocos2d::JniMethodInfo t;
+    if (cocos2d::JniHelper::getStaticMethodInfo(t, AppActivityClassName, "purchase", "()V"))
+    {
+
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+
 }

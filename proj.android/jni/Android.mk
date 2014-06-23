@@ -38,6 +38,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes $(LOCAL_PATH)/../../AppWarpX
 
+$(call import-add-path, /Users/welcomelm/cocos2d-x-2.2.3)
+$(call import-add-path, /Users/welcomelm/cocos2d-x-2.2.3/cocos2dx/platform/third_party/android/prebuilt)
+
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static

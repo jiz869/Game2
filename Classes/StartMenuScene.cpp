@@ -24,14 +24,25 @@ void onAdClicked(){
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "../admob.android/AdmobHelper.h"
 #include <jni.h>
+
 #define SET_BANNDER_HIDDEN(_hidden) \
-if(userData->hasPayed) AdmobHelper::setBannerViewHidden(true); \
-else AdmobHelper::setBannerViewHidden(_hidden)
+if(userData->hasPayed) setBannerViewHidden(true); \
+else setBannerViewHidden(_hidden)
 
 extern "C"
 {
 	void Java_ca_welcomelm_crossRoad_crossRoad_onAdClicked( JNIEnv* env, jobject thiz ){
 		GameController::getGameController()->setJustFailed(false);
+	}
+
+	void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentError( JNIEnv* env, jobject thiz ){
+		StartMenuScene * currentScene = (StartMenuScene *)CCDirector::sharedDirector()->getRunningScene()->getChildren()->objectAtIndex(0);
+		currentScene->onPaymentError();
+	}
+
+	void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentSuccess( JNIEnv* env, jobject thiz ){
+		StartMenuScene * currentScene = (StartMenuScene *)CCDirector::sharedDirector()->getRunningScene()->getChildren()->objectAtIndex(0);
+		currentScene->onPaymentSuccess();
 	}
 }
 
@@ -151,6 +162,8 @@ void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
 #else
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     IAPCPPHelper::sharedHelper()->request(this);
+#else if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    purchase();
 #endif
 #endif
 }
@@ -366,4 +379,15 @@ void StartMenuScene::onRequestFinished(bool wasSuccessful){
 
     IAPCPPHelper::sharedHelper()->purchase();
 #endif
+}
+
+void StartMenuScene::onPaymentError(){
+	CCLOG("onPaymentError");
+	setInfoLabel("Payment Error");
+}
+
+void StartMenuScene::onPaymentSuccess(){
+	CCLOG("onPaymentSuccess");
+    GameController::getGameController()->setHasPayed(true);
+    setBannerViewHidden(true);
 }

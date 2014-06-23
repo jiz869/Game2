@@ -26,12 +26,16 @@ package ca.welcomelm.crossRoad;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.annotation.TargetApi;
+import android.app.WallpaperManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
@@ -42,13 +46,27 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import ca.welcomelm.crossRoad.iapUtil.IabHelper;
+import ca.welcomelm.crossRoad.iapUtil.IabHelper.OnIabPurchaseFinishedListener;
+import ca.welcomelm.crossRoad.iapUtil.IabHelper.OnIabSetupFinishedListener;
+import ca.welcomelm.crossRoad.iapUtil.IabHelper.QueryInventoryFinishedListener;
+import ca.welcomelm.crossRoad.iapUtil.IabResult;
+import ca.welcomelm.crossRoad.iapUtil.Inventory;
+import ca.welcomelm.crossRoad.iapUtil.Purchase;
 
 import com.google.android.gms.ads.*;
 
-public class crossRoad extends Cocos2dxActivity{
+public class crossRoad extends Cocos2dxActivity implements OnIabSetupFinishedListener, 
+QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 	
 	private static crossRoad _appActiviy;
 	private AdView adView;
+	private IabHelper iabHelper;
+	private static final String SKU_PRODUCT = "ca.welcomelm.crossroad.ugp";
+	private static final int requestBuy = 8;
+	private boolean isIabSetup = false;
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -82,6 +100,10 @@ public class crossRoad extends Cocos2dxActivity{
         addContentView(main,adParams);
 
 		_appActiviy = this;
+		
+		String base64EncodedPublicKey = 
+                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAldFi+yJsiLACy9pyMk+s9SOS2uAREtJuwAewFogOXdNp++5Ry5m2PJ1ThGL0fDmgq/yt4+3vVk9Nv0+ov0WrxlEoJKjU+Vrjgd/160ABTnbnp2K/KLfzB/Mx9kXh9qZHv1lshkB7cqOXFACzTP/xbPukpcuoNd0QA60qkZ9lAr1iotbgqloZSpZz/XwFKiSPjCCBtk7/2nbbdP4yfz/l8PnDP2SdkgE6fL8+s4ftNVYAiAXqFS+ODCm4xDeVUblFhigPfFmghgqi79DhyBeL0Dh/7bK15H5Ew2MrW0dpcrQh74HdEn4De75wbVdmsBo8bNEn9I+XPae58vvdPHPFqQIDAQAB";
+		iabHelper = new IabHelper(this, base64EncodedPublicKey);
 	}
 
     public Cocos2dxGLSurfaceView onCreateView() {
@@ -152,7 +174,81 @@ public class crossRoad extends Cocos2dxActivity{
 	
 	public native void onAdClicked();
 	
-    static {
-        System.loadLibrary("cocos2dcpp");
-    }
+	public static void purchase(){
+		_appActiviy.runOnUiThread(new Runnable(){
+
+    		@Override
+    		public void run(){
+    			if(_appActiviy.isIabSetup == true){
+    				_appActiviy.iabHelper.queryInventoryAsync(_appActiviy);
+    			}else{
+    				_appActiviy.iabHelper.startSetup(_appActiviy);
+    			}
+    		}
+    	});		
+	}
+	
+	public native void onPaymentError();
+	public native void onPaymentSuccess();
+
+	@Override
+	public void onIabSetupFinished(IabResult result) {
+		// TODO Auto-generated method stub
+		if (result.isFailure()){
+			onPaymentError();
+		}else{
+			isIabSetup = true;
+			iabHelper.queryInventoryAsync(this);
+		}
+	}
+
+	@Override
+	public void onQueryInventoryFinished(IabResult result, Inventory inv) {
+		// TODO Auto-generated method stub
+		if (result.isFailure()) {
+			onPaymentError();
+			return;
+		}
+		
+		if (inv.hasPurchase(SKU_PRODUCT)){
+			onPaymentSuccess();
+		}else{
+			iabHelper.launchPurchaseFlow(this, 
+					SKU_PRODUCT, requestBuy, this);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		switch (requestCode) {
+		case requestBuy:
+
+		    // Pass on the activity result to the helper for handling
+		    if (!iabHelper.handleActivityResult(requestCode, resultCode, data)) {
+		        // not handled, so handle it ourselves (here's where you'd
+		        // perform any handling of activity results not related to in-app
+		        // billing...
+		        super.onActivityResult(requestCode, resultCode, data);
+		    }
+		    break;
+
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+			break;
+		}	
+	}
+
+	@Override
+	public void onIabPurchaseFinished(IabResult result, Purchase info) {
+		// TODO Auto-generated method stub
+		if (result.isFailure()) {
+			onPaymentError();
+			return;
+		}
+		
+		if (info.getSku().equals(SKU_PRODUCT)) {
+			iabHelper.queryInventoryAsync(this);
+		}		
+	}
 }

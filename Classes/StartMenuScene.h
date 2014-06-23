@@ -40,6 +40,8 @@ public:
     void hideInfoLabel();
     virtual void onPaymentFinished(bool wasSuccessful);
     virtual void onRequestFinished(bool wasSuccessful);
+    virtual void onPaymentError();
+    virtual void onPaymentSuccess();
 
 private:
     CCMenu * startMenu;
