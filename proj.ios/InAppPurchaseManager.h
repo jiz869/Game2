@@ -14,8 +14,6 @@
 
 // public methods
 - (void)loadStore;
-- (BOOL)canMakePayments;
-- (void)purchase;
 @end
 
 

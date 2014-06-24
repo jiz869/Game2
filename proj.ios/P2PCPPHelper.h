@@ -29,21 +29,11 @@ private:
 
 class IAPManagerDelegate {
 public:
-    virtual void onPaymentFinished(bool wasSuccessful) = 0;
-    
-    virtual void onRequestFinished(bool wasSuccessful) = 0;
+    virtual void onPaymentError() = 0;
+    virtual bool hasPayed() = 0;
+    virtual void onPaymentSuccess() = 0;
 };
 
-class IAPCPPHelper {
-    
-public:
-    static IAPCPPHelper * sharedHelper();
-    void request(IAPManagerDelegate * delegate);
-    void purchase();
-    bool canMakePayments();
-private:
-    IAPCPPHelper();
-    ~IAPCPPHelper();
-};
+extern void purchase(IAPManagerDelegate * delegate);
 
 #endif

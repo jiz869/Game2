@@ -5,7 +5,7 @@
 
 const char* AppActivityClassName = "ca/welcomelm/crossRoad/crossRoad";
 
-static bool isAdShowing = false;
+static bool isAdShowing = true;
 
 static void hideAd()
 {

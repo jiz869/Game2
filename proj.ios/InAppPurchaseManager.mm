@@ -8,37 +8,12 @@
 
 #import "InAppPurchaseManager.h"
 
-static IAPCPPHelper * helper;
-
-IAPCPPHelper::IAPCPPHelper(){
-    
-}
-
-IAPCPPHelper::~IAPCPPHelper(){
-    
-}
-
-IAPCPPHelper * IAPCPPHelper::sharedHelper(){
-    if (helper==NULL) {
-        helper = new IAPCPPHelper();
-    }
-    return helper;
-}
-
-void IAPCPPHelper::request(IAPManagerDelegate *delegate){
+void purchase(IAPManagerDelegate * delegate){
     InAppPurchaseManager * manager = [InAppPurchaseManager sharedManager];
+    
     manager->delegate = delegate;
+    
     [manager loadStore];
-}
-
-void IAPCPPHelper::purchase(){
-    InAppPurchaseManager * manager = [InAppPurchaseManager sharedManager];
-    [manager purchase];
-}
-
-bool IAPCPPHelper::canMakePayments(){
-    InAppPurchaseManager * manager = [InAppPurchaseManager sharedManager];
-    return [manager canMakePayments];
 }
 
 @implementation SKProduct(LocalizedPrice)
@@ -99,13 +74,13 @@ static InAppPurchaseManager * manager;
         NSLog(@"Product description: %@" , product.localizedDescription);
         NSLog(@"Product price: %@" , product.price);
         NSLog(@"Product id: %@" , product.productIdentifier);
-        delegate->onRequestFinished(true);
+        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     }
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
     {
         NSLog(@"Invalid product id: %@" , invalidProductId);
-        delegate->onRequestFinished(false);
+        delegate->onPaymentError();
     }
 }
 
@@ -118,7 +93,7 @@ static InAppPurchaseManager * manager;
 -(void) request:(SKRequest *)request didFailWithError:(NSError *)error
 {
     NSLog(@"%@", error);
-    delegate->onRequestFinished(false);
+    delegate->onPaymentError();
 }
 
 #pragma -
@@ -137,38 +112,12 @@ static InAppPurchaseManager * manager;
 }
 
 //
-// call this before making a purchase
-//
-- (BOOL)canMakePayments
-{
-    return [SKPaymentQueue canMakePayments];
-}
-
-//
 // kick off the upgrade transaction
 //
 - (void)purchase
 {
     SKPayment *payment = [SKPayment paymentWithProduct:product];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
-}
-
-//
-// removes the transaction from the queue and posts a notification with the transaction result
-//
-- (void)finishTransaction:(SKPaymentTransaction *)transaction wasSuccessful:(BOOL)wasSuccessful
-{
-    // remove the transaction from the payment queue.
-    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-    
-    if (wasSuccessful)
-    {
-        delegate->onPaymentFinished(true);
-    }
-    else
-    {
-        delegate->onPaymentFinished(false);
-    }
 }
 
 #pragma mark -
@@ -181,19 +130,41 @@ static InAppPurchaseManager * manager;
 {
     for (SKPaymentTransaction *transaction in transactions)
     {
+        if (![transaction.payment.productIdentifier isEqualToString:[NSString stringWithUTF8String:PRODUCT_ID]]) {
+            return;
+        }
+        
         switch (transaction.transactionState)
         {
             case SKPaymentTransactionStatePurchased:
             case SKPaymentTransactionStateRestored:
-                [self finishTransaction:transaction wasSuccessful:TRUE];
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                delegate->onPaymentSuccess();
                 break;
             case SKPaymentTransactionStateFailed:
-                [self finishTransaction:transaction wasSuccessful:FALSE];
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                delegate->onPaymentError();
                 break;
             default:
                 break;
         }
     }
+}
+
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
+{
+    if (delegate->hasPayed() == false) {
+        if ([SKPaymentQueue canMakePayments] == FALSE) {
+            delegate->onPaymentError();
+        }
+        [self purchase];
+    }
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+    NSLog(@"%@", error);
+    delegate->onPaymentError();
 }
 
 @end

@@ -11,6 +11,13 @@
 #include "SimpleAudioEngine.h"
 #include "MultiPlayScene.h"
 
+typedef enum{
+    NEW_GAME = 0,
+    OPTIONS,
+    SCORE,
+    PVP,
+}BUTTON_TAG;
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 extern void setBannerViewHidden(bool);
 #define SET_BANNDER_HIDDEN(_hidden) \
@@ -126,10 +133,13 @@ void StartMenuScene::initScoreMenu(){
 
 void StartMenuScene::initMainMenu(){
     CCMenuItemImage * newGame = CCMenuItemImage::create("button_new_game_normal.png", "button_new_game_selected.png", this, menu_selector(StartMenuScene::newGameHandler));
+    newGame->setTag(NEW_GAME);
 
     CCMenuItemImage * options = CCMenuItemImage::create("button_options_normal.png", "button_options_selected.png" , this , menu_selector(StartMenuScene::optionsHandler));
+    options->setTag(OPTIONS);
 
     CCMenuItemImage * score = CCMenuItemImage::create("top_score_normal.png", "top_score_selected.png" , this , menu_selector(StartMenuScene::scoreHandler));
+    score->setTag(SCORE);
 
     newGame->setScale(0.5);
     options->setScale(0.5);
@@ -137,18 +147,22 @@ void StartMenuScene::initMainMenu(){
 
 #if 0
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
-#else
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
-#endif
     pvp->setScale(0.5);
-
+    pvp->setTag(PVP);
+    
     startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
     startMenu->alignItemsInColumns(2 , 2);
+#else
+    startMenu = CCMenu::create(newGame , options, score , NULL);
+    startMenu->alignItemsInColumns(1 , 1 , 1);
+#endif
 
     infoLabel = CCLabelTTF::create("0", "Times New Roman", 32 );
     infoLabel->setColor( ccc3(54, 255, 0) );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
-    infoLabel->setString("");
+    infoLabel->setVisible(false);
     addChild(infoLabel);
 
     addChild(startMenu);
@@ -160,8 +174,9 @@ void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
     CCScene * pvpScene = MultiPlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(pvpScene);
 #else
+    enableButtonsForIap(false);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    IAPCPPHelper::sharedHelper()->request(this);
+    purchase(this);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     purchase();
 #endif
@@ -253,13 +268,16 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
 
 void StartMenuScene::setInfoLabel(const char *info){
     startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+    optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+    scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     infoLabel->setString(info);
+    infoLabel->setVisible(true);
     scheduleOnce(schedule_selector(StartMenuScene::hideInfoLabel), 2);
 }
 
 void StartMenuScene::hideInfoLabel(){
     startMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
-    infoLabel->setString("");
+    infoLabel->setVisible(false);
 }
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){
@@ -358,36 +376,27 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
     }
 }
 
-void StartMenuScene::onPaymentFinished(bool wasSuccessful){
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    if (wasSuccessful == true) {
-        GameController::getGameController()->setHasPayed(true);
-        SET_BANNDER_HIDDEN(true);
-    }else{
-        setInfoLabel("Payment Error");
-    }
-#endif
-}
-
-void StartMenuScene::onRequestFinished(bool wasSuccessful){
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    CCLOG("onRequestFinished %d", wasSuccessful);
-    if (wasSuccessful == false || IAPCPPHelper::sharedHelper()->canMakePayments() == false) {
-        setInfoLabel("Payment Error");
-        return;
-    }
-
-    IAPCPPHelper::sharedHelper()->purchase();
-#endif
-}
-
 void StartMenuScene::onPaymentError(){
 	CCLOG("onPaymentError");
 	setInfoLabel("Payment Error");
+    enableButtonsForIap(true);
 }
 
 void StartMenuScene::onPaymentSuccess(){
 	CCLOG("onPaymentSuccess");
+    setInfoLabel("Payment Success");
     GameController::getGameController()->setHasPayed(true);
     SET_BANNDER_HIDDEN(true);
+    enableButtonsForIap(true);
+}
+
+bool StartMenuScene::hasPayed(){
+    return userData->hasPayed;
+}
+
+void StartMenuScene::enableButtonsForIap(bool enable){
+    CCMenuItem * newGame = (CCMenuItem *)startMenu->getChildByTag(NEW_GAME);
+    CCMenuItem * pvp = (CCMenuItem *)startMenu->getChildByTag(PVP);
+    newGame->setEnabled(enable);
+    pvp->setEnabled(enable);
 }

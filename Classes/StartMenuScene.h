@@ -15,9 +15,9 @@
 #else
 class IAPManagerDelegate {
 public:
-    virtual void onPaymentFinished(bool wasSuccessful) = 0;
-    
-    virtual void onRequestFinished(bool wasSuccessful) = 0;
+    virtual void onPaymentError() = 0;
+    virtual bool hasPayed() = 0;
+    virtual void onPaymentSuccess() = 0;
 };
 #endif
 
@@ -38,10 +38,9 @@ public:
     void scoreHandler(CCObject * sender);
     void pvpHandler(CCObject * sender);
     void hideInfoLabel();
-    virtual void onPaymentFinished(bool wasSuccessful);
-    virtual void onRequestFinished(bool wasSuccessful);
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
+    virtual bool hasPayed();
 
 private:
     CCMenu * startMenu;
@@ -66,6 +65,8 @@ private:
     CCLabelTTF * infoLabel;
     
     void setInfoLabel(const char * info);
+    
+    void enableButtonsForIap(bool enable);
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */
