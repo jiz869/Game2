@@ -189,3 +189,24 @@ void Lane::reStart(){
 void Lane::step(float dt){
 	if(status == RUNNING) timePassedFromLastSchedule += dt;
 }
+
+void Lane::destroyLastCar(){
+    CCArray * children = getChildren();
+
+    B2Sprite * car = NULL , * lastCar = NULL;
+
+    CCObject * pObject;
+
+    CCARRAY_FOREACH(children, pObject){
+        car = (B2Sprite *)pObject;
+
+        if (car && car->getTag() != kCCNodeTagInvalid) {
+        	lastCar = car;
+        }
+    }
+
+    if(lastCar){
+    	lastCar->setPosition(ccp(-40 , -40));
+    }
+
+}

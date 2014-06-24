@@ -878,7 +878,7 @@
             <key>life0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{148,1298},{35,35}}</string>
+                <string>{{81,1356},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1057,6 +1057,19 @@
                 <key>sourceSize</key>
                 <string>{1300,40}</string>
             </dict>
+            <key>skull0.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{148,1335},{35,35}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{35,35}}</string>
+                <key>sourceSize</key>
+                <string>{35,35}</string>
+            </dict>
             <key>slow0.png</key>
             <dict>
                 <key>frame</key>
@@ -1073,7 +1086,7 @@
             <key>stop0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1350},{35,35}}</string>
+                <string>{{148,1298},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1099,7 +1112,7 @@
             <key>strong0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{44,1328},{35,35}}</string>
+                <string>{{2,1350},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1199,6 +1212,19 @@
                 <string>{{0,0},{40,40}}</string>
                 <key>sourceSize</key>
                 <string>{40,40}</string>
+            </dict>
+            <key>time0.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{44,1328},{35,35}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{35,35}}</string>
+                <key>sourceSize</key>
+                <string>{35,35}</string>
             </dict>
             <key>tree0.png</key>
             <dict>
@@ -1431,7 +1457,7 @@
             <key>size</key>
             <string>{512,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e7f8c3ddba35591ca6cdabf24ca4fdfe$</string>
+            <string>$TexturePacker:SmartUpdate:e79e8789d5d17f753ebcb53eafc2272c$</string>
             <key>textureFileName</key>
             <string>sprites.png</string>
         </dict>

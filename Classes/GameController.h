@@ -20,6 +20,8 @@ typedef enum{
     HASTE,
     STRONG,
     LIFE,
+    TIME,
+    SKULL,
     SPECIAL_NUM,
 }SpecialID;
 
@@ -85,7 +87,8 @@ typedef struct{
     CCAnimation * specialHasteAnim;
     CCAnimation * specialStrongAnim;
     CCAnimation * specialLifeAnim;
-    CCAnimation * clockAnim;
+    CCAnimation * specialTimeAnim;
+    CCAnimation * specialSkullAnim;
 }AnimationData;
 
 typedef struct{

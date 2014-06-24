@@ -364,3 +364,11 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
 void ControlMenu::hideMenu(){
     setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 }
+
+void ControlMenu::stopTime(){
+	startUpdateTime = false;
+}
+
+void ControlMenu::resumeTime(){
+	startUpdateTime = true;
+}

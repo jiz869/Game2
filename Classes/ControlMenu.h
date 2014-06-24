@@ -40,6 +40,8 @@ public:
     void nextScene();
     virtual void gameOver();
     void hideMenu();
+    void stopTime();
+    void resumeTime();
 
 protected:
     CCSize winSize;
