@@ -878,7 +878,7 @@
             <key>life0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{123,1633},{35,35}}</string>
+                <string>{{86,1605},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1073,7 +1073,7 @@
             <key>stop0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{86,1605},{35,35}}</string>
+                <string>{{126,1596},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1095,19 +1095,6 @@
                 <string>{{0,0},{40,40}}</string>
                 <key>sourceSize</key>
                 <string>{40,40}</string>
-            </dict>
-            <key>strong0.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{126,1596},{35,35}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{35,35}}</string>
-                <key>sourceSize</key>
-                <string>{35,35}</string>
             </dict>
             <key>tile0.png</key>
             <dict>
@@ -1431,7 +1418,7 @@
             <key>size</key>
             <string>{512,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bdf22008978b23f0e0867ed434713511$</string>
+            <string>$TexturePacker:SmartUpdate:aec854d9a6d1bd91ede6ccd0b7fa6f8f:8284d3ea1089b9eee38093d678582353:db71e206b3c010bfb176561963c50b15$</string>
             <key>textureFileName</key>
             <string>sprites.png</string>
         </dict>
