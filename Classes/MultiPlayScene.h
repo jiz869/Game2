@@ -90,8 +90,6 @@ protected:
     virtual void sendWait();
     virtual void sendHit();
 
-    unsigned long getCurrentTime();
-
     void startGame();
 
     virtual void processContact(float dt);

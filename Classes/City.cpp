@@ -37,7 +37,7 @@ bool City::init(){
 void City::addRoad(){
 
     int number = 5;//getRandom(0,6);
-    CCString * roadName = CCString::createWithFormat("road%d.png", number);;
+    CCString * roadName = CCString::createWithFormat("road0.png", number);;
     CCSprite * road;
 
 	for(int i = 0 ; i < 9 ; i++){
@@ -63,7 +63,7 @@ void City::addCityObj(){
 
     background->setScaleX(winSize.width/size.width);
 
-    background->setOpacity(128);
+    background->setOpacity(220);
 
     addChild(background);
 

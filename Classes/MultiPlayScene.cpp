@@ -408,12 +408,6 @@ void MultiPlayScene::initControlMenu(){
     addChild(controlMenu);
 }
 
-unsigned long MultiPlayScene::getCurrentTime(){
-    struct cc_timeval tv;
-    CCTime::gettimeofdayCocos2d(&tv, NULL);
-    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
-}
-
 void MultiPlayScene::upHandler(int tag){
     if (tag == PLAYER) {
         sendUp();

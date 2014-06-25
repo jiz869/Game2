@@ -19,6 +19,8 @@ PlayerObj::PlayerObj() : movingState(WAIT)
     specials.reserve(MAX_SPECIAL_NUM);
     UserData * userData = GameController::getGameController()->getUserData();
     data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
+    playerAccSpeed = data->playerAccSpeed;
+    playerStopAccSpeed = data->playerStopAccSpeed;
 }
 
 PlayerObj::~PlayerObj(){
@@ -48,8 +50,6 @@ void PlayerObj::reset(){
 
     velocity = ccp(0,0);
     acc = ccp(0,0);
-    playerAccSpeed = data->playerAccSpeed;
-    playerStopAccSpeed = data->playerStopAccSpeed;
     wait();
 }
 

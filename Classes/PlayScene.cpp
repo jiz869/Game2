@@ -118,6 +118,8 @@ void PlayScene::initCityObj(){
 }
 
 void PlayScene::initMisc(){
+	srandom(getCurrentTime());
+
     world = new b2World(b2Vec2(0 , 0));
     world->SetContactListener(this);
 
@@ -245,5 +247,17 @@ void PlayScene::restartAllLanes(){
     for (int i = 0; i < size; i++) {
             lanes[i]->reStart();
     }
+}
+
+unsigned long PlayScene::getCurrentTime(){
+    struct cc_timeval tv;
+    CCTime::gettimeofdayCocos2d(&tv, NULL);
+    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+}
+
+void PlayScene::destroyRandomCar(){
+	int laneNumber = getRandom(0, lanes.size()-1);
+	Lane * lane = lanes.at(laneNumber);
+	lane->destroyLastCar();
 }
 

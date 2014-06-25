@@ -28,6 +28,13 @@ bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj);
 void static lifeBegin(PlayerObj * player, SpecialObj * specialObj);
 void static lifeEnd(PlayerObj * player, SpecialObj * specialObj);
 
+void static timeBegin(PlayerObj * player, SpecialObj * specialObj);
+void static timeEnd(PlayerObj * player, SpecialObj * specialObj);
+
+void static skullBegin(PlayerObj * player, SpecialObj * specialObj);
+void static skullStep(PlayerObj * player, SpecialObj * specialObj);
+static int skullCount;
+
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
@@ -246,9 +253,13 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.specialLifeAnim = initAnimation(array);
     animationData.specialLifeAnim->setDelayPerUnit(0.3);
 
-    array = (CCArray *)dataDict->objectForKey("clock_animation");
-    animationData.clockAnim = initAnimation(array);
-    animationData.clockAnim->setDelayPerUnit(0.5);
+    array = (CCArray *)dataDict->objectForKey("special_time_animation");
+    animationData.specialTimeAnim = initAnimation(array);
+    animationData.specialTimeAnim->setDelayPerUnit(0.3);
+
+    array = (CCArray *)dataDict->objectForKey("special_skull_animation");
+    animationData.specialSkullAnim = initAnimation(array);
+    animationData.specialSkullAnim->setDelayPerUnit(0.3);
 
     return true;
 }
@@ -314,6 +325,26 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[LIFE]->hitByCar = NULL;
     specialDatas[LIFE]->animation = animationData.specialLifeAnim;
 
+    dict = (CCDictionary *)dataDict->objectForKey("time");
+    specialDatas[TIME] = new SpecialData;
+    specialDatas[TIME]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[TIME]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[TIME]->begin = &timeBegin;
+    specialDatas[TIME]->step = NULL;
+    specialDatas[TIME]->end = &timeEnd;
+    specialDatas[TIME]->hitByCar = NULL;
+    specialDatas[TIME]->animation = animationData.specialTimeAnim;
+
+    dict = (CCDictionary *)dataDict->objectForKey("skull");
+    specialDatas[SKULL] = new SpecialData;
+    specialDatas[SKULL]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[SKULL]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[SKULL]->begin = &skullBegin;
+    specialDatas[SKULL]->step = &skullStep;
+    specialDatas[SKULL]->end = NULL;
+    specialDatas[SKULL]->hitByCar = NULL;
+    specialDatas[SKULL]->animation = animationData.specialSkullAnim;
+
     return true;
 }
 
@@ -358,6 +389,24 @@ void static lifeEnd(PlayerObj * player, SpecialObj * specialObj){
     playScene->controlMenu->resumeDuration();
 }
 
+//time
+void static timeBegin(PlayerObj * player, SpecialObj * specialObj){
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->controlMenu->stopTime();
+}
+void static timeEnd(PlayerObj * player, SpecialObj * specialObj){
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->controlMenu->resumeTime();
+}
+
+//skull
+void static skullBegin(PlayerObj * player, SpecialObj * specialObj){
+	skullCount = 0;
+}
+void static skullStep(PlayerObj * player, SpecialObj * specialObj){
+	PlayScene * playScene = (PlayScene *)player->getParent();
+	if(skullCount++%60 == 0) playScene->destroyRandomCar();
+}
 
 PlaySceneData * GameController::getPlaySceneData(int level){
     return playSceneDatas[level];

@@ -40,6 +40,8 @@ public:
     virtual void downHandler(int tag);
     virtual void touchendHandler(int tag);
 
+    virtual void destroyRandomCar();
+
     ControlMenu * controlMenu;
 
 protected:
@@ -73,6 +75,8 @@ protected:
     vector<Lane *> lanes;
 
     CCSprite * contact;
+
+    unsigned long getCurrentTime();
 };
 
 #endif /* defined(__crossRoadMain__PlayScene__) */
