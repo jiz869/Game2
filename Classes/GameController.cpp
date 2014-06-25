@@ -23,7 +23,7 @@ void static hasteBegin(PlayerObj * player, SpecialObj * specialObj);
 void static hasteStep(PlayerObj * player, SpecialObj * specialObj);
 void static hasteEnd(PlayerObj * player, SpecialObj * specialObj);
 
-bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj);
+bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj , CCSprite * car);
 
 void static lifeBegin(PlayerObj * player, SpecialObj * specialObj);
 void static lifeEnd(PlayerObj * player, SpecialObj * specialObj);
@@ -32,8 +32,7 @@ void static timeBegin(PlayerObj * player, SpecialObj * specialObj);
 void static timeEnd(PlayerObj * player, SpecialObj * specialObj);
 
 void static skullBegin(PlayerObj * player, SpecialObj * specialObj);
-void static skullStep(PlayerObj * player, SpecialObj * specialObj);
-static int skullCount;
+bool static skullHitByCar(PlayerObj * player, SpecialObj * specialObj , CCSprite * car);
 
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
@@ -340,9 +339,11 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SKULL]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[SKULL]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
     specialDatas[SKULL]->begin = &skullBegin;
-    specialDatas[SKULL]->step = &skullStep;
+    specialDatas[SKULL]->step = NULL;
     specialDatas[SKULL]->end = NULL;
-    specialDatas[SKULL]->hitByCar = NULL;
+    specialDatas[SKULL]->hitByCar = &skullHitByCar;
+    specialDatas[SKULL]->userData3 = (void *)CCString::create("skull");
+    ((CCString *)(specialDatas[SKULL]->userData3))->retain();
     specialDatas[SKULL]->animation = animationData.specialSkullAnim;
 
     return true;
@@ -372,7 +373,8 @@ void static hasteEnd(PlayerObj * player, SpecialObj * specialObj){
 }
 
 //strong
-bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj){
+bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj , CCSprite * car){
+	car->runAction(CCBlink::create(2, 10));
 	return false;
 }
 
@@ -401,11 +403,15 @@ void static timeEnd(PlayerObj * player, SpecialObj * specialObj){
 
 //skull
 void static skullBegin(PlayerObj * player, SpecialObj * specialObj){
-	skullCount = 0;
-}
-void static skullStep(PlayerObj * player, SpecialObj * specialObj){
 	PlayScene * playScene = (PlayScene *)player->getParent();
-	if(skullCount++%60 == 0) playScene->destroyRandomCar();
+	CCObject * obj = (CCObject *)(specialObj->getSpecialData()->userData3);
+	playScene->destroyRandomCar(obj);
+}
+
+static bool skullHitByCar(PlayerObj * player, SpecialObj * specialObj , CCSprite * car){
+	CCObject * obj = (CCObject *)(specialObj->getSpecialData()->userData3);
+	if(car->getUserObject() == obj){ car->runAction(CCBlink::create(2, 10)); return false; }
+	return true;
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

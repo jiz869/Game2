@@ -128,9 +128,11 @@ void PlayerObj::slowDown(float delta){
 
 void PlayerObj::step(float dt){
 	int size = specials.size();
+
     for (int i = 0; i < size; i++) {
         specials[i]->step(this);
     }
+
     velocity = velocity + acc;
 
     if(movingState == WAIT && velocity.y*acc.y >= 0) {
@@ -166,7 +168,7 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
 
     	int size = specials.size();
         for (int i = 0; i < size; i++) {
-            if(specials[i]->hitByCar(this) == false){
+            if(specials[i]->hitByCar(this , contact) == false){
             	shouldPlayerReset = false;
             }
         }

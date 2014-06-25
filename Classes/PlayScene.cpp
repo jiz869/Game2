@@ -41,7 +41,7 @@ PlayScene::~PlayScene(){
     for (b2Body * body = world->GetBodyList(); body; body = body->GetNext()) {
     	CCSprite *sprite = (CCSprite *)body->GetUserData();
     	if(sprite) delete (GameObj *)(sprite->getUserData());
-        world->DestroyBody(body);
+    	world->DestroyBody(body);
     }
 
     delete world;
@@ -183,11 +183,12 @@ void PlayScene::update(float dt){
 	for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()){
 		CCSprite *sprite = (CCSprite *)b->GetUserData();
 
-		if (sprite != NULL && sprite->getTag() == CAR) {
+		if (sprite != NULL && (sprite->getTag() == CAR)) {
 			if(sprite->getPosition().x < 0 || sprite->getPosition().x > winSize.width){
 				delete (GameObj *)(sprite->getUserData());
-				sprite->removeFromParentAndCleanup(true);
 				world->DestroyBody(b);
+				sprite->removeAllChildren();
+				sprite->removeFromParent();
 			}
 		}
 	}
@@ -222,9 +223,10 @@ unsigned long PlayScene::getCurrentTime(){
     return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
-void PlayScene::destroyRandomCar(){
-	int laneNumber = getRandom(0, lanes.size()-1);
-	Lane * lane = lanes.at(laneNumber);
-	lane->destroyLastCar();
+void PlayScene::destroyRandomCar(CCObject * obj){
+	int size = lanes.size();
+    for (int i = getRandom(0,1); i < size; i+=2) {
+        lanes[i]->destroyLastCar(obj);
+    }
 }
 

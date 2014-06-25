@@ -51,7 +51,7 @@ class SpecialObj;
 #define CCSTRING_AT_INDEX(array , index)  ((CCString *)(array)->objectAtIndex(index))
 
 typedef void (* SpectialFunc)(PlayerObj * , SpecialObj *);
-typedef bool (* SpectialHitByCarFunc)(PlayerObj * , SpecialObj *);
+typedef bool (* SpectialHitByCarFunc)(PlayerObj * , SpecialObj * , CCSprite * car);
 
 typedef struct{
     CCPoint initPos;
@@ -96,7 +96,7 @@ typedef struct{
     CCString * imageName;
     float userData1;
     float userData2;
-    float userData3;
+    void * userData3;
     SpectialFunc begin;
     SpectialFunc step;
     SpectialFunc end;

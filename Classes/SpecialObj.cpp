@@ -38,6 +38,7 @@ void SpecialObj::step(PlayerObj *player){
 
     if (timer_count > specialData->duration) {
         end(player);
+        return;
     }
 
     if (specialData->step) {
@@ -53,9 +54,9 @@ void SpecialObj::end(PlayerObj *player){
     player->endWithSpecial(this);
 }
 
-bool SpecialObj::hitByCar(PlayerObj *player){
+bool SpecialObj::hitByCar(PlayerObj *player , CCSprite * car){
     if (specialData->hitByCar) {
-        return specialData->hitByCar(player , this);
+        return specialData->hitByCar(player , this , car);
     }
 
     //default is reset player when hit by car

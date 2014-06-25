@@ -190,7 +190,7 @@ void Lane::step(float dt){
 	if(status == RUNNING) timePassedFromLastSchedule += dt;
 }
 
-void Lane::destroyLastCar(){
+void Lane::destroyLastCar(CCObject * obj){
     CCArray * children = getChildren();
 
     B2Sprite * car = NULL , * lastCar = NULL;
@@ -206,7 +206,9 @@ void Lane::destroyLastCar(){
     }
 
     if(lastCar){
-    	lastCar->setPosition(ccp(-40 , -40));
+    	CCSprite * skull = CCSprite::createWithSpriteFrameName("skull0.png");
+    	skull->setPosition(ccp(lastCar->getContentSize().width/2 , lastCar->getContentSize().height/2));
+    	lastCar->addChild(skull);
+    	lastCar->setUserObject(obj);
     }
-
 }

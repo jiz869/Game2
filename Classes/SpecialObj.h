@@ -20,7 +20,7 @@ public:
     virtual void end(PlayerObj * player);
     virtual SpecialData * getSpecialData();
     virtual int getSpecialId();
-    virtual bool hitByCar(PlayerObj * player);
+    virtual bool hitByCar(PlayerObj * player , CCSprite * car);
 
 protected:
     int specialId;
