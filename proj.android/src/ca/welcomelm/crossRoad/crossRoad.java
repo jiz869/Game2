@@ -43,6 +43,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -250,5 +251,25 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 		if (info.getSku().equals(SKU_PRODUCT)) {
 			iabHelper.queryInventoryAsync(this);
 		}		
+	}
+	
+	public native void up();
+	public native void down();
+	public native void end();
+	
+	public boolean onKeyDown (int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_DPAD_UP){
+			up();
+		}else if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+			down();
+		}
+		return false;
+	}
+	
+	public boolean onKeyUp (int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+			end();
+		}
+		return false;
 	}
 }

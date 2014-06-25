@@ -16,6 +16,11 @@ USING_NS_CC;
 using namespace std;
 
 typedef enum{
+	STARTUP_MENU_SCENE=0,
+	PLAY_SCENE,
+}SceneTag;
+
+typedef enum{
     STOP = 0,
     HASTE,
     STRONG,

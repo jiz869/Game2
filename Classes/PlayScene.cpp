@@ -17,6 +17,37 @@
 
 using namespace CocosDenshion;
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include <jni.h>
+
+extern "C"
+{
+	void Java_ca_welcomelm_crossRoad_crossRoad_up( JNIEnv* env, jobject thiz ){
+		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
+		if(scene->getTag() != PLAY_SCENE) return;
+
+		PlayScene * playScene = (PlayScene *)scene->getChildren()->objectAtIndex(0);
+		playScene->upHandler(0);
+	}
+
+	void Java_ca_welcomelm_crossRoad_crossRoad_down( JNIEnv* env, jobject thiz ){
+		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
+		if(scene->getTag() != PLAY_SCENE) return;
+
+		PlayScene * playScene = (PlayScene *)scene->getChildren()->objectAtIndex(0);
+		playScene->downHandler(0);
+	}
+
+	void Java_ca_welcomelm_crossRoad_crossRoad_end( JNIEnv* env, jobject thiz ){
+		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
+		if(scene->getTag() != PLAY_SCENE) return;
+
+		PlayScene * playScene = (PlayScene *)scene->getChildren()->objectAtIndex(0);
+		playScene->touchendHandler(0);
+	}
+}
+#endif
+
 CCScene* PlayScene::scene()
 {
     // 'scene' is an autorelease object
@@ -27,6 +58,8 @@ CCScene* PlayScene::scene()
 
     // add layer as a child to scene
     scene->addChild(layer);
+
+    scene->setTag(PLAY_SCENE);
 
     // return the scene
     return scene;
