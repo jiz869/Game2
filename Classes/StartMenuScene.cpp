@@ -70,6 +70,8 @@ CCScene* StartMenuScene::scene()
     // add layer as a child to scene
     scene->addChild(layer);
 
+    scene->setTag(STARTUP_MENU_SCENE);
+
     // return the scene
     return scene;
 }
