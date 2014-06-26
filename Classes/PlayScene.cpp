@@ -65,7 +65,7 @@ CCScene* PlayScene::scene()
     return scene;
 }
 
-PlayScene::PlayScene() : player(NULL) {
+PlayScene::PlayScene() : player(NULL) , contact(NULL) {
 }
 
 PlayScene::~PlayScene(){
@@ -184,15 +184,9 @@ void PlayScene::BeginContact(b2Contact *contact){
 
     if (contactA->getTag() == PLAYER) {
         this->contact = contactB;
-        scheduleOnce(schedule_selector(PlayScene::processContact), 0);
-        return;
-    }
-
-    if (contactB->getTag() == PLAYER) {
+    }else if (contactB->getTag() == PLAYER) {
         this->contact = contactA;
-        scheduleOnce(schedule_selector(PlayScene::processContact), 0);
     }
-
 }
 
 void PlayScene::processContact(float dt)
@@ -207,21 +201,30 @@ void PlayScene::update(float dt){
 
 	world->Step(dt , 8 , 3);
 
+	if(contact != NULL){
+		processContact(0);
+		contact = NULL;
+	}
+
 	player->step(dt);
 
 	for(int i = 0 ; i < lanes.size() ; i++){
 		lanes[i]->step(dt);
 	}
 
-	for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()){
-		CCSprite *sprite = (CCSprite *)b->GetUserData();
+	for(b2Body *body = world->GetBodyList(); body; body=body->GetNext()){
+		CCSprite *sprite = (CCSprite *)body->GetUserData();
 
 		if (sprite != NULL && (sprite->getTag() == CAR)) {
 			if(sprite->getPosition().x < 0 || sprite->getPosition().x > winSize.width){
 				delete (GameObj *)(sprite->getUserData());
-				world->DestroyBody(b);
-				sprite->removeAllChildren();
-				sprite->removeFromParent();
+				world->DestroyBody(body);
+			}
+		}else if(sprite != NULL && (sprite->getTag() == SPECIAL)){
+			SpecialObj * special = (SpecialObj *)sprite->getUserData();
+			if(special->isExpired() == true && special->isTaken() == false ){
+				delete special;
+				world->DestroyBody(body);
 			}
 		}
 	}
@@ -258,7 +261,7 @@ unsigned long PlayScene::getCurrentTime(){
 
 void PlayScene::destroyRandomCar(CCObject * obj){
 	int size = lanes.size();
-    for (int i = getRandom(0,1); i < size; i+=2) {
+    for (int i = 0; i < size; i++) {
         lanes[i]->destroyLastCar(obj);
     }
 }

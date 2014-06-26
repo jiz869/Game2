@@ -177,6 +177,7 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
         data->laneDescriptions.reserve(data->laneNumber);
         data->playerAccSpeed = CCSTRING_FOR_KEY(dict , "player_start_acc_speed")->floatValue();
         data->playerStopAccSpeed = CCSTRING_FOR_KEY(dict , "player_stop_acc_speed")->floatValue();
+        data->specialInterval = CCSTRING_FOR_KEY(dict , "special_interval")->floatValue();
 
         CCArray * ldArray = (CCArray *)dict->objectForKey("lane_descriptions");
         for (int j = 0; j < ldArray->count(); j++) {

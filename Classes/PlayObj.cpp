@@ -201,6 +201,8 @@ void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
         return;
     }
 
+    specialObj->take();
+
     specials.push_back(specialObj);
 
     tagPlayer(specialObj);
@@ -241,7 +243,7 @@ bool PlayerObj::hasSpecial(SpecialObj *specialObj){
 void PlayerObj::endWithSpecial(SpecialObj *specialObj){
     gameObj->removeChildByTag(specialObj->getSpecialId());
     removeSpecial(specialObj);
-    delete specialObj;
+    specialObj->unTake();
 }
 
 void PlayerObj::removeSpecial(SpecialObj *specialObj){

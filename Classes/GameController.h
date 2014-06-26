@@ -78,6 +78,7 @@ typedef struct{
 	int initDuration;
     int maxDuration;
     int durationIncrease;
+    float specialInterval;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 

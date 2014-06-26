@@ -37,6 +37,7 @@ private:
 	void addACar2(float dt);
     LaneStatus status;
     float timePassedFromLastSchedule;
+    PlaySceneData * playSceneData;
 };
 
 int getRandom(int low, int high);

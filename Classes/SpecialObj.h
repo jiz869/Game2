@@ -15,17 +15,25 @@ public:
 	SpecialObj();
 	virtual ~SpecialObj();
     virtual B2Sprite * load(bool left2right , CCPoint initPos , float speed , Lane * lane);
+    virtual B2Sprite * load(CCPoint initPos);
     virtual void begin(PlayerObj * player);
     virtual void step(PlayerObj * player);
     virtual void end(PlayerObj * player);
     virtual SpecialData * getSpecialData();
     virtual int getSpecialId();
     virtual bool hitByCar(PlayerObj * player , CCSprite * car);
+    virtual void take();
+    virtual bool isTaken();
+    virtual void expire();
+    virtual bool isExpired();
+    virtual void unTake();
 
 protected:
     int specialId;
     SpecialData * specialData;
     float timer_count;
+    bool taken;
+    bool expired;
 };
 
 #endif /* SPECIALOBJ_H_ */

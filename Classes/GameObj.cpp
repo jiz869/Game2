@@ -10,12 +10,16 @@
 float GameObj::ptmRatio;
 b2World* GameObj::world;
 
-GameObj::GameObj() {
+GameObj::GameObj() : gameObj(NULL) {
 	// TODO Auto-generated constructor stub
 }
 
 GameObj::~GameObj() {
 	// TODO Auto-generated destructor stub
+	if(gameObj){
+		gameObj->removeAllChildren();
+		gameObj->removeFromParent();
+	}
 }
 
 

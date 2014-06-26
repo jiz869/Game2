@@ -17,10 +17,14 @@ public:
     CREATE_FUNC(City);
     virtual bool init();
     void addHornSounds();
+    void addSpecial();
 private:
     CCSize winSize;
     void addRoad();
     void addCityObj();
+    void scheduleSpecial();
+    PlaySceneData * playSceneData;
+    SpecialObj * lastSpecial;
 };
 
 #endif /* CITY_H_ */

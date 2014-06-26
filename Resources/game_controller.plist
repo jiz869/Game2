@@ -100,11 +100,13 @@
 			<string>20</string>
 			<key>duration_increase</key>
 			<string>10</string>
+			<key>special_interval</key>
+			<string>5</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.3</string>
 					<key>speed</key>
@@ -123,7 +125,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.04</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.6</string>
 					<key>speed</key>
@@ -142,7 +144,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.05</string>
+					<string>0</string>
 					<key>period</key>
 					<string>3</string>
 					<key>speed</key>
@@ -161,7 +163,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.3</string>
 					<key>speed</key>
@@ -181,7 +183,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.04</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.8</string>
 					<key>speed</key>
@@ -200,7 +202,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>3.1</string>
 					<key>speed</key>
@@ -219,7 +221,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.02</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.3</string>
 					<key>speed</key>
@@ -238,7 +240,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.04</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.2</string>
 					<key>speed</key>
@@ -274,11 +276,13 @@
 			<string>18</string>
 			<key>duration_increase</key>
 			<string>9</string>
+			<key>special_interval</key>
+			<string>6</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.2</string>
 					<key>speed</key>
@@ -297,7 +301,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.04</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.5</string>
 					<key>speed</key>
@@ -316,7 +320,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.04</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.9</string>
 					<key>speed</key>
@@ -335,7 +339,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.2</string>
 					<key>speed</key>
@@ -355,7 +359,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.6</string>
 					<key>speed</key>
@@ -374,7 +378,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.9</string>
 					<key>speed</key>
@@ -393,7 +397,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.02</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.1</string>
 					<key>speed</key>
@@ -412,7 +416,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.04</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.1</string>
 					<key>speed</key>
@@ -448,11 +452,13 @@
 			<string>17</string>
 			<key>duration_increase</key>
 			<string>8</string>
+			<key>special_interval</key>
+			<string>7</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
 					<key>special_chance</key>
-					<string>0.02</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -471,7 +477,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.04</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.3</string>
 					<key>speed</key>
@@ -490,7 +496,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.7</string>
 					<key>speed</key>
@@ -509,7 +515,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -529,7 +535,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.4</string>
 					<key>speed</key>
@@ -548,7 +554,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2.8</string>
 					<key>speed</key>
@@ -567,7 +573,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.02</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -586,7 +592,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.03</string>
+					<string>0</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -622,6 +628,8 @@
 			<string>10</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>special_interval</key>
+			<string>8</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -795,6 +803,8 @@
 			<string>10</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>special_interval</key>
+			<string>9</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -968,6 +978,8 @@
 			<string>10</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>special_interval</key>
+			<string>10</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1141,6 +1153,8 @@
 			<string>10</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>special_interval</key>
+			<string>11</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1314,6 +1328,8 @@
 			<string>10</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>special_interval</key>
+			<string>12</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1487,6 +1503,8 @@
 			<string>10</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>special_interval</key>
+			<string>13</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1660,6 +1678,8 @@
 			<string>10</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>special_interval</key>
+			<string>0</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1798,7 +1818,7 @@
 		<key>stop</key>
 		<dict>
 			<key>duration</key>
-			<string>1.2</string>
+			<string>1.6</string>
 			<key>image_name</key>
 			<string>stop0.png</string>
 		</dict>

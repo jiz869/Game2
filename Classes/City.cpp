@@ -8,10 +8,11 @@
 #include "City.h"
 #include "Lane.h"
 #include "SimpleAudioEngine.h"
+#include "SpecialObj.h"
 
 using namespace CocosDenshion;
 
-City::City() {
+City::City() : lastSpecial(NULL) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -30,6 +31,8 @@ bool City::init(){
     addCityObj();
 
     addRoad();
+
+    scheduleSpecial();
 
 	return true;
 }
@@ -74,4 +77,28 @@ void City::addHornSounds(){
     AnimationData * data = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(
             data->hornSoundImages[getRandom(0,data->hornSoundImages.size()-1)]->getCString());
+}
+
+void City::addSpecial(){
+	if(lastSpecial) lastSpecial->expire();
+
+	float initPosY = getRandom(1, playSceneData->laneNumber) * 0.1;
+
+	CCPoint initPos = ccp(winSize.width * 0.5 , initPosY * winSize.height);
+
+	SpecialObj * specialObj = new SpecialObj();
+
+	lastSpecial = specialObj;
+
+	CCSprite * special = specialObj->load(initPos);
+
+	addChild(special);
+}
+
+void City::scheduleSpecial(){
+	playSceneData = GameController::getGameController()->getPlaySceneData(
+			GameController::getGameController()->getUserData()->currentLevel);
+
+	if(playSceneData->specialInterval > 0.5)
+		schedule(schedule_selector(City::addSpecial) , playSceneData->specialInterval , kCCRepeatForever , 0.1);
 }

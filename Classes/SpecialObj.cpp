@@ -8,7 +8,7 @@
 #include "SpecialObj.h"
 #include "PlayObj.h"
 
-SpecialObj::SpecialObj() : timer_count(0) {
+SpecialObj::SpecialObj() : timer_count(0) , taken(false) , expired(false) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -25,9 +25,17 @@ B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float spe
     return gameObj;
 }
 
+B2Sprite * SpecialObj::load(cocos2d::CCPoint initPos){
+    specialId = getRandom(0, SPECIAL_NUM - 1);
+    specialData = GameController::getGameController()->getSpecialData(specialId);
+    GameObj::load(specialData->imageName->getCString() , b2_kinematicBody , SPECIAL);
+    gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
+    setPosition(initPos);
+    return gameObj;
+}
+
 void SpecialObj::begin(PlayerObj *player){
-    world->DestroyBody(gameObj->getB2Body());
-    gameObj->removeFromParent();
+    gameObj->setVisible(false);
     if (specialData->begin) {
         specialData->begin(player , this);
     }
@@ -69,4 +77,24 @@ SpecialData * SpecialObj::getSpecialData(){
 
 int SpecialObj::getSpecialId(){
     return specialId;
+}
+
+void SpecialObj::take(){
+	taken = true;
+}
+
+void SpecialObj::unTake(){
+	taken = false;
+}
+
+bool SpecialObj::isTaken(){
+	return taken;
+}
+
+void SpecialObj::expire(){
+	expired = true;
+}
+
+bool SpecialObj::isExpired(){
+	return expired;
 }
