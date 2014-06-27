@@ -58,7 +58,6 @@
 		<key>special_stop_animation</key>
 		<array>
 			<string>stop0.png</string>
-			<string>stop1.png</string>
 		</array>
 		<key>special_haste_animation</key>
 		<array>
@@ -1819,6 +1818,8 @@
 		<dict>
 			<key>duration</key>
 			<string>1.6</string>
+			<key>life</key>
+			<string>2.5</string>
 			<key>image_name</key>
 			<string>stop0.png</string>
 		</dict>
@@ -1826,6 +1827,8 @@
 		<dict>
 			<key>duration</key>
 			<string>6</string>
+			<key>life</key>
+			<string>3.5</string>
 			<key>image_name</key>
 			<string>haste0.png</string>
 			<key>speed_increase</key>
@@ -1834,25 +1837,31 @@
 		<key>strong</key>
 		<dict>
 			<key>duration</key>
-			<string>1.8</string>
+			<string>1.6</string>
+			<key>life</key>
+			<string>2.5</string>
 			<key>image_name</key>
 			<string>strong0.png</string>
 		</dict>
 		<key>life</key>
 		<dict>
 			<key>duration</key>
-			<string>12</string>
+			<string>10</string>
+			<key>life</key>
+			<string>4.5</string>
 			<key>image_name</key>
 			<string>life0.png</string>
 			<key>min</key>
-			<string>6</string>
+			<string>3</string>
 			<key>max</key>
-			<string>8</string>
+			<string>6</string>
 		</dict>
 		<key>time</key>
 		<dict>
 			<key>duration</key>
-			<string>10</string>
+			<string>8</string>
+			<key>life</key>
+			<string>4.5</string>
 			<key>image_name</key>
 			<string>time0.png</string>
 		</dict>
@@ -1860,6 +1869,8 @@
 		<dict>
 			<key>duration</key>
 			<string>3</string>
+			<key>life</key>
+			<string>2</string>
 			<key>image_name</key>
 			<string>skull0.png</string>
 		</dict>
