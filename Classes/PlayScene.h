@@ -40,7 +40,7 @@ public:
     virtual void downHandler(int tag);
     virtual void touchendHandler(int tag);
 
-    virtual void destroyRandomCar(CCObject * obj);
+    virtual void destroyRandomCar();
 
     ControlMenu * controlMenu;
 

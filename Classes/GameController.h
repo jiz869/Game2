@@ -55,8 +55,8 @@ class SpecialObj;
 #define CCSTRING_FOR_KEY(dict , key)  ((CCString *)(dict)->objectForKey(key))
 #define CCSTRING_AT_INDEX(array , index)  ((CCString *)(array)->objectAtIndex(index))
 
-typedef void (* SpectialFunc)(PlayerObj * , SpecialObj *);
-typedef bool (* SpectialHitByCarFunc)(PlayerObj * , SpecialObj * , CCSprite * car);
+typedef void (* SpectialFunc)(PlayerObj *);
+typedef bool (* SpectialHitByCarFunc)(PlayerObj * , CCSprite * car);
 
 typedef struct{
     CCPoint initPos;

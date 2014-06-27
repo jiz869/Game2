@@ -91,13 +91,13 @@ void City::addSpecial(){
 	lastSpecial = specialObj;
 
 	CCSprite * specialSprite = specialObj->load(initPos);
-    
+
     float specialDuration = lastSpecial->getSpecialData()->duration;
-    
+
     if (specialDuration > playSceneData->specialInterval){
         specialDuration = playSceneData->specialInterval;
     }
-    
+
     specialSprite->runAction(CCSequence::create(CCDelayTime::create(specialDuration) ,
                                               CCCallFuncN::create(this, callfuncN_selector(City::expireSpecial)) , NULL));
 
@@ -115,5 +115,5 @@ void City::scheduleSpecial(){
 			GameController::getGameController()->getUserData()->currentLevel);
 
 	if(playSceneData->specialInterval > 0.5)
-		schedule(schedule_selector(City::addSpecial) , playSceneData->specialInterval , kCCRepeatForever , 0.1);
+		schedule(schedule_selector(City::addSpecial) , playSceneData->specialInterval , kCCRepeatForever , 1.5);
 }

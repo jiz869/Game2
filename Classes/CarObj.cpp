@@ -7,7 +7,7 @@
 
 #include "CarObj.h"
 
-CarObj::CarObj() {
+CarObj::CarObj() : doomed(false) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -40,4 +40,12 @@ B2Sprite * CarObj::load(const char * name , bool left2right, cocos2d::CCPoint in
     this->lane = lane;
 
     return gameObj;
+}
+
+bool CarObj::isDoomed(){
+	return doomed;
+}
+
+void CarObj::doom(){
+	doomed = true;
 }

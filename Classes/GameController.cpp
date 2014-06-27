@@ -15,24 +15,22 @@
 
 using namespace CocosDenshion;
 
-void static stopBegin(PlayerObj * player, SpecialObj * specialObj);
-void static stopStep(PlayerObj * player, SpecialObj * specialObj);
-void static stopEnd(PlayerObj * player, SpecialObj * specialObj);
+void static stopBegin(PlayerObj * player);
+void static stopEnd(PlayerObj * player);
 
-void static hasteBegin(PlayerObj * player, SpecialObj * specialObj);
-void static hasteStep(PlayerObj * player, SpecialObj * specialObj);
-void static hasteEnd(PlayerObj * player, SpecialObj * specialObj);
+void static hasteBegin(PlayerObj * player);
+void static hasteEnd(PlayerObj * player);
 
-bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj , CCSprite * car);
+bool static strongHitByCar(PlayerObj * player, CCSprite * car);
 
-void static lifeBegin(PlayerObj * player, SpecialObj * specialObj);
-void static lifeEnd(PlayerObj * player, SpecialObj * specialObj);
+void static lifeBegin(PlayerObj * player);
+void static lifeEnd(PlayerObj * player);
 
-void static timeBegin(PlayerObj * player, SpecialObj * specialObj);
-void static timeEnd(PlayerObj * player, SpecialObj * specialObj);
+void static timeBegin(PlayerObj * player);
+void static timeEnd(PlayerObj * player);
 
-void static skullBegin(PlayerObj * player, SpecialObj * specialObj);
-bool static skullHitByCar(PlayerObj * player, SpecialObj * specialObj , CCSprite * car);
+void static skullBegin(PlayerObj * player);
+bool static skullHitByCar(PlayerObj * player, CCSprite * car);
 
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
@@ -153,6 +151,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
 
     userData.order = -1;
     userData.pvpMode = NONE;
+    userData.currentLevel = 3;
 
     return true;
 }
@@ -287,7 +286,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[STOP]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[STOP]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
     specialDatas[STOP]->begin = &stopBegin;
-    specialDatas[STOP]->step = &stopStep;
+    specialDatas[STOP]->step = NULL;
     specialDatas[STOP]->end = &stopEnd;
     specialDatas[STOP]->hitByCar = NULL;
     specialDatas[STOP]->animation = animationData.specialStopAnim;
@@ -298,7 +297,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[HASTE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
     specialDatas[HASTE]->userData1 = CCSTRING_FOR_KEY(dict, "speed_increase")->floatValue();
     specialDatas[HASTE]->begin = &hasteBegin;
-    specialDatas[HASTE]->step = &hasteStep;
+    specialDatas[HASTE]->step = NULL;
     specialDatas[HASTE]->end = &hasteEnd;
     specialDatas[HASTE]->hitByCar = NULL;
     specialDatas[HASTE]->animation = animationData.specialHasteAnim;
@@ -342,77 +341,68 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SKULL]->begin = &skullBegin;
     specialDatas[SKULL]->step = NULL;
     specialDatas[SKULL]->end = NULL;
-    specialDatas[SKULL]->hitByCar = &skullHitByCar;
-    specialDatas[SKULL]->userData3 = (void *)CCString::create("skull");
-    ((CCString *)(specialDatas[SKULL]->userData3))->retain();
+    specialDatas[SKULL]->hitByCar = NULL;
     specialDatas[SKULL]->animation = animationData.specialSkullAnim;
 
     return true;
 }
 
 //stop
-void static stopBegin(PlayerObj * player, SpecialObj * specialObj){
+void static stopBegin(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->stopAllLanes();
 }
-void static stopStep(PlayerObj * player, SpecialObj * specialObj){
-}
-void static stopEnd(PlayerObj * player, SpecialObj * specialObj){
+
+void static stopEnd(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->restartAllLanes();
 }
 
 //haste
-void static hasteBegin(PlayerObj * player, SpecialObj * specialObj){
-    player->speedUp(specialObj->getSpecialData()->userData1);
+void static hasteBegin(PlayerObj * player){
+	SpecialData * data = GameController::getGameController()->getSpecialData(HASTE);
+    player->speedUp(data->userData1);
 }
-void static hasteStep(PlayerObj * player, SpecialObj * specialObj){
 
-}
-void static hasteEnd(PlayerObj * player, SpecialObj * specialObj){
-    player->slowDown(specialObj->getSpecialData()->userData1);
+void static hasteEnd(PlayerObj * player){
+	SpecialData * data = GameController::getGameController()->getSpecialData(HASTE);
+    player->slowDown(data->userData1);
 }
 
 //strong
-bool static strongHitByCar(PlayerObj * player, SpecialObj * specialObj , CCSprite * car){
+bool static strongHitByCar(PlayerObj * player, CCSprite * car){
 	car->runAction(CCBlink::create(2, 10));
 	return false;
 }
 
 //life
-void static lifeBegin(PlayerObj * player, SpecialObj * specialObj){
-    int life = getRandom(specialObj->getSpecialData()->userData1,
-                         specialObj->getSpecialData()->userData2);
+void static lifeBegin(PlayerObj * player){
+	SpecialData * data = GameController::getGameController()->getSpecialData(LIFE);
+
+    int life = getRandom(data->userData1, data->userData2);
 
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->increaseDuration(life);
 }
-void static lifeEnd(PlayerObj * player, SpecialObj * specialObj){
+void static lifeEnd(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->resumeDuration();
 }
 
 //time
-void static timeBegin(PlayerObj * player, SpecialObj * specialObj){
+void static timeBegin(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->stopTime();
 }
-void static timeEnd(PlayerObj * player, SpecialObj * specialObj){
+void static timeEnd(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->resumeTime();
 }
 
 //skull
-void static skullBegin(PlayerObj * player, SpecialObj * specialObj){
+void static skullBegin(PlayerObj * player){
 	PlayScene * playScene = (PlayScene *)player->getParent();
-	CCObject * obj = (CCObject *)(specialObj->getSpecialData()->userData3);
-	playScene->destroyRandomCar(obj);
-}
-
-static bool skullHitByCar(PlayerObj * player, SpecialObj * specialObj , CCSprite * car){
-	CCObject * obj = (CCObject *)(specialObj->getSpecialData()->userData3);
-	if(car->getUserObject() == obj){ car->runAction(CCBlink::create(2, 10)); return false; }
-	return true;
+	playScene->destroyRandomCar();
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

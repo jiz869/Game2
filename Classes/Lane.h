@@ -29,7 +29,7 @@ public:
     virtual void stop();
     virtual void reStart();
     void step(float dt);
-    void destroyLastCar(CCObject * obj);
+    void destroyLastCar();
 
 private:
 	LaneDescription * description;

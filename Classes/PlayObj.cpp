@@ -164,25 +164,25 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
     }
 
     if (contact->getTag() == CAR) {
-    	bool shouldPlayerReset = true;
 
     	int size = specials.size();
         for (int i = 0; i < size; i++) {
             if(specials[i]->hitByCar(this , contact) == false){
-            	shouldPlayerReset = false;
+            	return false;
             }
         }
 
+        CarObj * carObj = (CarObj *)contact->getUserData();
+        if(carObj->isDoomed() == true) return false;
+
         //remove all specials when hit by car
-        if(shouldPlayerReset == true){
-			AnimationData * animData = GameController::getGameController()->getAnimationData();
-            SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
-            PlayScene * playScene = (PlayScene *)getParent();
-            playScene->controlMenu->changeScore(-2 , false);
-        	reset();
-        	removeAllSpecials();
-        }
-        return shouldPlayerReset;
+		AnimationData * animData = GameController::getGameController()->getAnimationData();
+		SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
+		PlayScene * playScene = (PlayScene *)getParent();
+		playScene->controlMenu->changeScore(-2 , false);
+		reset();
+		removeAllSpecials();
+        return true;
     }
 
     return false;

@@ -71,7 +71,7 @@ void Lane::addACar1(float dt){
 	if(userData->pvpMode == PREPARE_PLAY){
 		interval = description->period;
 	}else{
-		interval = description->period - 0.1*getRandom(0,3);
+		interval = description->period - 0.1*getRandom(0,2);
 	}
 	speed = description->carSpeed;
 
@@ -100,7 +100,7 @@ void Lane::addACar2(float dt){
 	if(userData->pvpMode == PREPARE_PLAY){
 		interval = description->period;
 	}else{
-		interval = description->period - 0.1*getRandom(0,3);
+		interval = description->period - 0.1*getRandom(0,2);
 	}
 	speed = description->carSpeed;
 
@@ -190,7 +190,7 @@ void Lane::step(float dt){
 	if(status == RUNNING) timePassedFromLastSchedule += dt;
 }
 
-void Lane::destroyLastCar(CCObject * obj){
+void Lane::destroyLastCar(){
     CCArray * children = getChildren();
 
     B2Sprite * car = NULL , * lastCar = NULL;
@@ -209,6 +209,7 @@ void Lane::destroyLastCar(CCObject * obj){
     	CCSprite * skull = CCSprite::createWithSpriteFrameName("skull0.png");
     	skull->setPosition(ccp(lastCar->getContentSize().width/2 , lastCar->getContentSize().height/2));
     	lastCar->addChild(skull);
-    	lastCar->setUserObject(obj);
+    	CarObj * carObj = (CarObj *)lastCar->getUserData();
+    	carObj->doom();
     }
 }

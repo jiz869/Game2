@@ -37,7 +37,7 @@ B2Sprite * SpecialObj::load(cocos2d::CCPoint initPos){
 void SpecialObj::begin(PlayerObj *player){
     gameObj->setVisible(false);
     if (specialData->begin) {
-        specialData->begin(player , this);
+        specialData->begin(player);
     }
 }
 
@@ -50,21 +50,21 @@ void SpecialObj::step(PlayerObj *player){
     }
 
     if (specialData->step) {
-        specialData->step(player , this);
+        specialData->step(player);
     }
 }
 
 void SpecialObj::end(PlayerObj *player){
     timer_count = 0;
     if (specialData->end) {
-        specialData->end(player , this);
+        specialData->end(player);
     }
     player->endWithSpecial(this);
 }
 
 bool SpecialObj::hitByCar(PlayerObj *player , CCSprite * car){
     if (specialData->hitByCar) {
-        return specialData->hitByCar(player , this , car);
+        return specialData->hitByCar(player , car);
     }
 
     //default is reset player when hit by car

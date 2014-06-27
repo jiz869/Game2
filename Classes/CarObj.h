@@ -18,8 +18,11 @@ public:
     virtual B2Sprite * load(bool left2right , CCPoint initPos , float speed , Lane * lane , vector<int> * carNumbers);
     virtual B2Sprite * load(const char * name , bool left2right , CCPoint initPos , float speed , Lane * lane , SpriteTag tag);
     Lane * lane;
+    virtual void doom();
+    virtual bool isDoomed();
 
 protected:
+    bool doomed;
 };
 
 #endif /* CAROBJ_H_ */

@@ -259,10 +259,10 @@ unsigned long PlayScene::getCurrentTime(){
     return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
-void PlayScene::destroyRandomCar(CCObject * obj){
+void PlayScene::destroyRandomCar(){
 	int size = lanes.size();
     for (int i = 0; i < size; i++) {
-        lanes[i]->destroyLastCar(obj);
+        lanes[i]->destroyLastCar();
     }
 }
 
