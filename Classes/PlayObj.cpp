@@ -178,7 +178,7 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
 			AnimationData * animData = GameController::getGameController()->getAnimationData();
             SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
             PlayScene * playScene = (PlayScene *)getParent();
-            playScene->controlMenu->changeScore(-1 , false);
+            playScene->controlMenu->changeScore(-2 , false);
         	reset();
         	removeAllSpecials();
         }
