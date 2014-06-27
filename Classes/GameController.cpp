@@ -260,6 +260,10 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.specialSkullAnim = initAnimation(array);
     animationData.specialSkullAnim->setDelayPerUnit(0.3);
 
+    array = (CCArray *)dataDict->objectForKey("special_score_animation");
+    animationData.specialScoreAnim = initAnimation(array);
+    animationData.specialScoreAnim->setDelayPerUnit(0.3);
+
     return true;
 }
 

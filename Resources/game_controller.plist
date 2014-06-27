@@ -79,6 +79,10 @@
 		<array>
 			<string>skull0.png</string>
 		</array>
+		<key>special_score_animation</key>
+		<array>
+			<string>score0.png</string>
+		</array>
 	</dict>
 	<key>play_scene_data</key>
 	<array>
@@ -1874,6 +1878,15 @@
 			<string>2</string>
 			<key>image_name</key>
 			<string>skull0.png</string>
+		</dict>
+		<key>score</key>
+		<dict>
+			<key>duration</key>
+			<string>8</string>
+			<key>life</key>
+			<string>5</string>
+			<key>image_name</key>
+			<string>score0.png</string>
 		</dict>
 	</dict>
 </dict>

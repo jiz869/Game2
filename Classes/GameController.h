@@ -95,6 +95,7 @@ typedef struct{
     CCAnimation * specialLifeAnim;
     CCAnimation * specialTimeAnim;
     CCAnimation * specialSkullAnim;
+    CCAnimation * specialScoreAnim;
 }AnimationData;
 
 typedef struct{
