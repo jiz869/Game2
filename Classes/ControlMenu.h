@@ -31,7 +31,7 @@ public:
     void increaseDuration(int delta);
     void resumeDuration();
     void changeGameTime(int delta);
-    void changeScore(float delta , bool isGood);
+    void changeScore(int delta , bool isGood);
     void changeControllerPosition(CheckboxType type);
     void pauseAndPlayHandler(CCObject * sender);
     void showGo();
@@ -63,7 +63,7 @@ protected:
     virtual void updateScore(bool isGood);
 
     long numFrame;
-    float score;
+    int score;
     int initDuration;
     int durationIncrease;
     int maxDuration;

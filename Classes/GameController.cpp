@@ -106,7 +106,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
         return false;
     }
 
-    userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->floatValue();
+    userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->intValue();
     userData.topLevel = CCSTRING_FOR_KEY(dataDict , "top_level")->intValue();
     userData.pvpInitDuration = CCSTRING_FOR_KEY(dataDict , "pvp_init_duration")->intValue();
     userData.pvpMaxDuration = CCSTRING_FOR_KEY(dataDict , "pvp_max_duration")->intValue();
@@ -455,12 +455,12 @@ void GameController::levelUp(){
     }
 }
 
-void GameController::setLastScore(float lastScore){
+void GameController::setLastScore(int lastScore){
     userData.lastScore = lastScore;
     if (lastScore > userData.topScore) {
         userData.topScore = lastScore;
         CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
-        userDataDict->setObject(CCString::createWithFormat("%.1f", userData.topScore), "top_score");
+        userDataDict->setObject(CCString::createWithFormat("%d", userData.topScore), "top_score");
         dict->setObject(userDataDict, "user_data");
         dict->writeToFile(plistWritablePath.c_str());
     }

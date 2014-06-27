@@ -113,9 +113,9 @@ typedef struct{
 typedef struct{
     CheckboxType sound;
     CheckboxType controllerPosition;
-	float topScore;
+	int topScore;
     int topLevel;
-	float lastScore;
+	int lastScore;
     int currentLevel;
     vector<int> levels;
     int maxLevel;
@@ -137,7 +137,7 @@ public:
     UserData * getUserData();
     void setUserData(const char * key , CheckboxType data , int value);
     void levelUp();
-    void setLastScore(float lastScore);
+    void setLastScore(int lastScore);
     void setJustFailed(bool justFailed);
     void setHasPayed(bool justFailed);
 

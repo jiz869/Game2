@@ -116,7 +116,7 @@ void StartMenuScene::initScoreMenu(){
 
     scoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 96 ));
     scoreLabel->setColor( ccc3(54, 255, 0) );
-    CCString * score = CCString::createWithFormat("%.1f", userData->topScore);
+    CCString * score = CCString::createWithFormat("%d", userData->topScore);
     scoreLabel->setString(score->getCString());
     scoreLabel->setPosition(ccp(winSize.width*0.75, winSize.height*0.75));
 

@@ -80,7 +80,7 @@ void City::addHornSounds(){
 }
 
 void City::addSpecial(){
-	if(lastSpecial) lastSpecial->expire();
+	//if(lastSpecial) lastSpecial->expire();
 
 	float initPosY = getRandom(1, playSceneData->laneNumber) * 0.1;
 
@@ -90,9 +90,24 @@ void City::addSpecial(){
 
 	lastSpecial = specialObj;
 
-	CCSprite * special = specialObj->load(initPos);
+	CCSprite * specialSprite = specialObj->load(initPos);
+    
+    float specialDuration = lastSpecial->getSpecialData()->duration;
+    
+    if (specialDuration > playSceneData->specialInterval){
+        specialDuration = playSceneData->specialInterval;
+    }
+    
+    specialSprite->runAction(CCSequence::create(CCDelayTime::create(specialDuration) ,
+                                              CCCallFuncN::create(this, callfuncN_selector(City::expireSpecial)) , NULL));
 
-	addChild(special);
+	addChild(specialSprite);
+}
+
+void City::expireSpecial(cocos2d::CCObject *special){
+    CCSprite * specialSprite = (CCSprite *)special;
+    SpecialObj * specialObj = (SpecialObj *)specialSprite->getUserData();
+    specialObj->expire();
 }
 
 void City::scheduleSpecial(){

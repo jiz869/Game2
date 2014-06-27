@@ -235,7 +235,7 @@ void ControlMenu::updateGameTime()
 void ControlMenu::updateScore(bool isGood)
 {
     char ss[10];
-    sprintf(ss, "%.1f", score);
+    sprintf(ss, "%d", score);
     scoreLabel->setString(ss);
     if(!isGood) return;
     scoreLabel->runAction(CCSequence::create(CCScaleTo::create(0.5 , 2.5) , CCScaleTo::create(0.5 , 1.0), NULL));
@@ -282,7 +282,7 @@ bool ControlMenu::doScore(){
     if (status != PLAY) {
         return false;
     }
-	score+=1;
+	score+=10;
 	updateScore(true);
     if (userData->levels[userData->currentLevel] != 0 &&
         score >= userData->levels[userData->currentLevel]) {
@@ -313,7 +313,7 @@ void ControlMenu::changeGameTime(int delta){
 	updateGameTime();
 }
 
-void ControlMenu::changeScore(float delta , bool isGood){
+void ControlMenu::changeScore(int delta , bool isGood){
     if (status != PLAY) {
         return;
     }

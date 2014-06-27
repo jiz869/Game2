@@ -18,14 +18,14 @@
 		<string>60</string>
 		<key>levels</key>
 		<array>
-			<string>4</string>
-			<string>8</string>
-			<string>12</string>
-			<string>16</string>
-			<string>20</string>
-			<string>24</string>
-			<string>28</string>
-			<string>32</string>
+			<string>40</string>
+			<string>80</string>
+			<string>120</string>
+			<string>160</string>
+			<string>200</string>
+			<string>240</string>
+			<string>280</string>
+			<string>320</string>
 			<string>0</string>
 		</array>
 		<key>just_failed</key>
@@ -101,7 +101,7 @@
 			<key>duration_increase</key>
 			<string>10</string>
 			<key>special_interval</key>
-			<string>5</string>
+			<string>12</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -277,7 +277,7 @@
 			<key>duration_increase</key>
 			<string>9</string>
 			<key>special_interval</key>
-			<string>6</string>
+			<string>12</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -453,7 +453,7 @@
 			<key>duration_increase</key>
 			<string>8</string>
 			<key>special_interval</key>
-			<string>7</string>
+			<string>14</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -629,7 +629,7 @@
 			<key>duration_increase</key>
 			<string>5</string>
 			<key>special_interval</key>
-			<string>8</string>
+			<string>14</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -804,7 +804,7 @@
 			<key>duration_increase</key>
 			<string>5</string>
 			<key>special_interval</key>
-			<string>9</string>
+			<string>16</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -979,7 +979,7 @@
 			<key>duration_increase</key>
 			<string>5</string>
 			<key>special_interval</key>
-			<string>10</string>
+			<string>16</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1154,7 +1154,7 @@
 			<key>duration_increase</key>
 			<string>5</string>
 			<key>special_interval</key>
-			<string>11</string>
+			<string>16</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1329,7 +1329,7 @@
 			<key>duration_increase</key>
 			<string>5</string>
 			<key>special_interval</key>
-			<string>12</string>
+			<string>18</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1504,7 +1504,7 @@
 			<key>duration_increase</key>
 			<string>5</string>
 			<key>special_interval</key>
-			<string>13</string>
+			<string>18</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>

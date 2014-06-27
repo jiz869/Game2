@@ -18,6 +18,7 @@ public:
     virtual bool init();
     void addHornSounds();
     void addSpecial();
+    void expireSpecial(CCObject * special);
 private:
     CCSize winSize;
     void addRoad();
