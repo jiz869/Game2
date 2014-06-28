@@ -22,11 +22,11 @@ typedef enum{
 
 typedef enum{
     STOP = 0,
-    HASTE,
     STRONG,
     LIFE,
     TIME,
     SKULL,
+    SCORE,
     SPECIAL_NUM,
 }SpecialID;
 
@@ -100,6 +100,7 @@ typedef struct{
 
 typedef struct{
     float duration;
+    float life;
     CCString * imageName;
     float userData1;
     float userData2;

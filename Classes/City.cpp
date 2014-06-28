@@ -12,7 +12,7 @@
 
 using namespace CocosDenshion;
 
-City::City() : lastSpecial(NULL) {
+City::City() {
 	// TODO Auto-generated constructor stub
 
 }
@@ -80,7 +80,6 @@ void City::addHornSounds(){
 }
 
 void City::addSpecial(){
-	//if(lastSpecial) lastSpecial->expire();
 
 	float initPosY = getRandom(1, playSceneData->laneNumber) * 0.1;
 
@@ -88,17 +87,9 @@ void City::addSpecial(){
 
 	SpecialObj * specialObj = new SpecialObj();
 
-	lastSpecial = specialObj;
-
 	CCSprite * specialSprite = specialObj->load(initPos);
 
-    float specialDuration = lastSpecial->getSpecialData()->duration;
-
-    if (specialDuration > playSceneData->specialInterval){
-        specialDuration = playSceneData->specialInterval;
-    }
-
-    specialSprite->runAction(CCSequence::create(CCDelayTime::create(specialDuration) ,
+    specialSprite->runAction(CCSequence::create(CCDelayTime::create(specialObj->getSpecialData()->life) ,
                                               CCCallFuncN::create(this, callfuncN_selector(City::expireSpecial)) , NULL));
 
 	addChild(specialSprite);

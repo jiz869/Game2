@@ -1887,6 +1887,10 @@
 			<string>5</string>
 			<key>image_name</key>
 			<string>score0.png</string>
+			<key>interval</key>
+			<string>1</string>
+			<key>score_increase</key>
+			<string>2</string>
 		</dict>
 	</dict>
 </dict>

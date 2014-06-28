@@ -14,7 +14,7 @@
 typedef enum{
     NEW_GAME = 0,
     OPTIONS,
-    SCORE,
+    TOP_SCORE,
     PVP,
 }BUTTON_TAG;
 
@@ -141,7 +141,7 @@ void StartMenuScene::initMainMenu(){
     options->setTag(OPTIONS);
 
     CCMenuItemImage * score = CCMenuItemImage::create("top_score_normal.png", "top_score_selected.png" , this , menu_selector(StartMenuScene::scoreHandler));
-    score->setTag(SCORE);
+    score->setTag(TOP_SCORE);
 
     newGame->setScale(0.5);
     options->setScale(0.5);
