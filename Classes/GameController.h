@@ -28,6 +28,7 @@ typedef enum{
     SKULL,
     SCORE,
     SPECIAL_NUM,
+    HASTE = SPECIAL_NUM,
 }SpecialID;
 
 typedef enum{
