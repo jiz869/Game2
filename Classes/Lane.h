@@ -30,6 +30,7 @@ public:
     virtual void reStart();
     void step(float dt);
     void destroyLastCar();
+    void destroyMe(cocos2d::CCObject *car);
 
 private:
 	LaneDescription * description;

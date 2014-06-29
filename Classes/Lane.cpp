@@ -206,10 +206,14 @@ void Lane::destroyLastCar(){
     }
 
     if(lastCar){
-    	CCSprite * skull = CCSprite::createWithSpriteFrameName("skull0.png");
-    	skull->setPosition(ccp(lastCar->getContentSize().width/2 , lastCar->getContentSize().height/2));
-    	lastCar->addChild(skull);
     	CarObj * carObj = (CarObj *)lastCar->getUserData();
     	carObj->doom();
+    	CCAnimate * animate = CCAnimate::create(GameController::getGameController()->getAnimationData()->explodeAnim);
+    	lastCar->runAction(CCSequence::createWithTwoActions(animate , CCCallFuncN::create(this, callfuncN_selector(Lane::destroyMe))));
     }
+}
+
+void Lane::destroyMe(CCObject * car){
+    B2Sprite * carSprite = (B2Sprite *)car;
+    carSprite->setPosition(ccp(-1000 , -1000));
 }

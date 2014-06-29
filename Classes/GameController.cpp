@@ -267,6 +267,9 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.specialScoreAnim = initAnimation(array);
     animationData.specialScoreAnim->setDelayPerUnit(0.3);
 
+    CCDictionary * animDict = (CCDictionary *)dataDict->objectForKey("explode_animation");
+    animationData.explodeAnim = initAnimation(animDict);
+
     return true;
 }
 
@@ -277,6 +280,20 @@ CCAnimation * GameController::initAnimation(cocos2d::CCArray *frameNameArray){
         CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(CCSTRING_AT_INDEX(frameNameArray, i)->getCString());
         anim->addSpriteFrame(frame);
     }
+    return anim;
+}
+
+CCAnimation * GameController::initAnimation(CCDictionary * animDict){
+    int picNum = CCSTRING_FOR_KEY(animDict, "number_of_pictures")->intValue();
+    float interval = CCSTRING_FOR_KEY(animDict, "interval")->floatValue();
+    CCAnimation * anim = CCAnimation::create();
+    anim->retain();
+    for (int i = 0; i < picNum; i++) {
+        CCString * pic = CCString::createWithFormat("explode%d.png", i);
+        CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pic->getCString());
+        anim->addSpriteFrame(frame);
+    }
+    anim->setDelayPerUnit(interval);
     return anim;
 }
 
@@ -434,19 +451,17 @@ void static skullBegin(PlayerObj * player){
 //score
 void static scoreBegin(PlayerObj * player){
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
-    specialData->userData3 = (void *)0;
+    specialData->count = 0;
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->changeScore(specialData->userData2, true);
 }
 void static scoreStep(PlayerObj * player){
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
-    int count = (int)specialData->userData3;
     int interval = (int)(specialData->userData1 * 60);
-    if(++count % interval == 0){
+    if(++specialData->count % interval == 0){
         PlayScene * playScene = (PlayScene *)player->getParent();
         playScene->controlMenu->changeScore(specialData->userData2, false);
     }
-    specialData->userData3 = (void *)count;
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

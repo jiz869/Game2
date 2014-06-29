@@ -97,6 +97,7 @@ typedef struct{
     CCAnimation * specialTimeAnim;
     CCAnimation * specialSkullAnim;
     CCAnimation * specialScoreAnim;
+    CCAnimation * explodeAnim;
 }AnimationData;
 
 typedef struct{
@@ -105,7 +106,8 @@ typedef struct{
     CCString * imageName;
     float userData1;
     float userData2;
-    void * userData3;
+    float userData3;
+    int count;
     SpectialFunc begin;
     SpectialFunc step;
     SpectialFunc end;
@@ -157,6 +159,7 @@ private:
     bool initSpecialData(CCDictionary * dataDict);
     bool initUserData(CCDictionary * dataDict);
     CCAnimation * initAnimation(CCArray * frameNameArray);
+    CCAnimation * initAnimation(CCDictionary * animDict);
     vector<SpecialData *> specialDatas;
     CCSize designSize;
     string plistWritablePath;

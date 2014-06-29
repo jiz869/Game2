@@ -83,6 +83,13 @@
 		<array>
 			<string>score0.png</string>
 		</array>
+		<key>explode_animation</key>
+		<dict>
+			<key>number_of_pictures</key>
+			<string>16</string>
+			<key>interval</key>
+			<string>0.05</string>
+		</dict>
 	</dict>
 	<key>play_scene_data</key>
 	<array>
@@ -1875,7 +1882,7 @@
 			<key>duration</key>
 			<string>3</string>
 			<key>life</key>
-			<string>2</string>
+			<string>3.5</string>
 			<key>image_name</key>
 			<string>skull0.png</string>
 		</dict>
