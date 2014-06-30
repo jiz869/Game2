@@ -39,6 +39,9 @@ void SpecialObj::begin(PlayerObj *player){
     if (specialData->begin) {
         specialData->begin(player);
     }
+    if(specialData->duration < 0.1){
+        end(player);
+    }
 }
 
 void SpecialObj::step(PlayerObj *player){

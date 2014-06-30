@@ -24,13 +24,11 @@ void static hasteEnd(PlayerObj * player);
 bool static strongHitByCar(PlayerObj * player, CCSprite * car);
 
 void static lifeBegin(PlayerObj * player);
-void static lifeEnd(PlayerObj * player);
 
 void static timeBegin(PlayerObj * player);
 void static timeEnd(PlayerObj * player);
 
 void static skullBegin(PlayerObj * player);
-bool static skullHitByCar(PlayerObj * player, CCSprite * car);
 
 void static scoreBegin(PlayerObj * player);
 void static scoreStep(PlayerObj * player);
@@ -154,7 +152,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
 
     userData.order = -1;
     userData.pvpMode = NONE;
-    userData.currentLevel = 3;
+    userData.currentLevel = 5;
 
     return true;
 }
@@ -344,11 +342,10 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[LIFE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[LIFE]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
     specialDatas[LIFE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-    specialDatas[LIFE]->userData1 = CCSTRING_FOR_KEY(dict, "min")->floatValue();
-    specialDatas[LIFE]->userData2 = CCSTRING_FOR_KEY(dict, "max")->floatValue();
+    specialDatas[LIFE]->userData1 = CCSTRING_FOR_KEY(dict, "time_increase")->floatValue();
     specialDatas[LIFE]->begin = &lifeBegin;
     specialDatas[LIFE]->step = NULL;
-    specialDatas[LIFE]->end = &lifeEnd;
+    specialDatas[LIFE]->end = NULL;
     specialDatas[LIFE]->hitByCar = NULL;
     specialDatas[LIFE]->animation = animationData.specialLifeAnim;
 
@@ -421,15 +418,8 @@ bool static strongHitByCar(PlayerObj * player, CCSprite * car){
 //life
 void static lifeBegin(PlayerObj * player){
 	SpecialData * data = GameController::getGameController()->getSpecialData(LIFE);
-
-    int life = getRandom(data->userData1, data->userData2);
-
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->increaseDuration(life);
-}
-void static lifeEnd(PlayerObj * player){
-    PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->resumeDuration();
+    playScene->controlMenu->increaseDuration((int)data->userData1 , 0);
 }
 
 //time

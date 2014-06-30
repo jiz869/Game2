@@ -985,11 +985,11 @@
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
 			<key>init_duration</key>
-			<string>10</string>
+			<string>14</string>
 			<key>max_duration</key>
-			<string>10</string>
+			<string>14</string>
 			<key>duration_increase</key>
-			<string>5</string>
+			<string>7</string>
 			<key>special_interval</key>
 			<string>12</string>
 			<key>lane_descriptions</key>
@@ -1064,10 +1064,11 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>4</string>
+						<string>5</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1102,10 +1103,9 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>4</string>
 					</array>
 				</dict>
 				<dict>
@@ -1140,10 +1140,9 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 			</array>
@@ -1859,29 +1858,27 @@
 		<key>life</key>
 		<dict>
 			<key>duration</key>
-			<string>10</string>
+			<string>0</string>
 			<key>life</key>
 			<string>4.5</string>
 			<key>image_name</key>
 			<string>life0.png</string>
-			<key>min</key>
-			<string>3</string>
-			<key>max</key>
-			<string>6</string>
+			<key>time_increase</key>
+			<string>5</string>
 		</dict>
 		<key>time</key>
 		<dict>
 			<key>duration</key>
-			<string>8</string>
+			<string>10</string>
 			<key>life</key>
-			<string>4.5</string>
+			<string>6</string>
 			<key>image_name</key>
 			<string>time0.png</string>
 		</dict>
 		<key>skull</key>
 		<dict>
 			<key>duration</key>
-			<string>3</string>
+			<string>0</string>
 			<key>life</key>
 			<string>3.5</string>
 			<key>image_name</key>

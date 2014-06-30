@@ -319,10 +319,14 @@ void ControlMenu::changeScore(int delta , bool isGood){
     }
     score += delta;
     updateScore(isGood);
+    if (userData->levels[userData->currentLevel] != 0 &&
+        score >= userData->levels[userData->currentLevel]) {
+        levelUp();
+    }
 }
 
-void ControlMenu::increaseDuration(int delta){
-    maxDuration+=delta;
+void ControlMenu::increaseDuration(int delta , int max_delta){
+    maxDuration+=max_delta;
     seconds+=delta;
     updateGameTime();
 }
