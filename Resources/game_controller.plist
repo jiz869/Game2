@@ -18,14 +18,14 @@
 		<string>60</string>
 		<key>levels</key>
 		<array>
-			<string>80</string>
-			<string>80</string>
-			<string>80</string>
-			<string>80</string>
-			<string>80</string>
-			<string>80</string>
-			<string>80</string>
-			<string>80</string>
+			<string>100</string>
+			<string>120</string>
+			<string>140</string>
+			<string>160</string>
+			<string>180</string>
+			<string>200</string>
+			<string>220</string>
+			<string>240</string>
 			<string>0</string>
 		</array>
 		<key>just_failed</key>
@@ -1159,11 +1159,11 @@
 			<key>player_stop_acc_speed</key>
 			<string>0.04</string>
 			<key>init_duration</key>
-			<string>10</string>
+			<string>13</string>
 			<key>max_duration</key>
-			<string>10</string>
+			<string>13</string>
 			<key>duration_increase</key>
-			<string>5</string>
+			<string>7</string>
 			<key>special_interval</key>
 			<string>12</string>
 			<key>lane_descriptions</key>
@@ -1200,10 +1200,11 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>4</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1229,7 +1230,7 @@
 					<key>special_chance</key>
 					<string>0.0</string>
 					<key>period</key>
-					<string>2</string>
+					<string>1.8</string>
 					<key>speed</key>
 					<string>6</string>
 					<key>init_position</key>
@@ -1238,10 +1239,11 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>4</string>
+						<string>5</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1276,10 +1278,9 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>4</string>
 					</array>
 				</dict>
 				<dict>
@@ -1295,10 +1296,10 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>5</string>
 					</array>
 				</dict>
 				<dict>
@@ -1314,10 +1315,9 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 			</array>

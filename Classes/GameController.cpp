@@ -152,7 +152,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
 
     userData.order = -1;
     userData.pvpMode = NONE;
-    userData.currentLevel = 5;
+    userData.currentLevel = 6;
 
     return true;
 }
