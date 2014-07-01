@@ -41,6 +41,8 @@ public:
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
     virtual bool hasPayed();
+    void initStartMenuScene();
+    void initGameController();
 
 private:
     CCMenu * startMenu;
@@ -61,12 +63,14 @@ private:
 
     CCMenuItemImage * gem;
     CCMenuItemLabel * scoreLabel;
-    
+
     CCLabelTTF * infoLabel;
-    
+
     void setInfoLabel(const char * info);
-    
+
     void enableButtonsForIap(bool enable);
+
+    CCSprite * splash;
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

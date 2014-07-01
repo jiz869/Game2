@@ -93,8 +93,27 @@ bool StartMenuScene::init(){
     winSize = CCDirector::sharedDirector()->getWinSize();
     ignoreAnchorPointForPosition(false);
     setPosition(ccp(winSize.width/2 , winSize.height/2));
-    userData = GameController::getGameController()->getUserData();
 
+    splash = CCSprite::create("splash.png");
+
+    splash->setPosition(ccp(winSize.width/2 , winSize.height/2));
+
+    splash->setScale(0.8);
+
+    addChild(splash);
+
+    scheduleOnce(schedule_selector(StartMenuScene::initGameController) , 1);
+
+    return true;
+}
+
+void StartMenuScene::initGameController(){
+    userData = GameController::getGameController()->getUserData();
+    splash->removeFromParent();
+    initStartMenuScene();
+}
+
+void StartMenuScene::initStartMenuScene(){
     userData->pvpMode = NONE;
 
     SET_BANNDER_HIDDEN(false);
@@ -104,8 +123,6 @@ bool StartMenuScene::init(){
     initOptionsMenu();
 
     initScoreMenu();
-
-    return true;
 }
 
 void StartMenuScene::initScoreMenu(){
@@ -153,7 +170,7 @@ void StartMenuScene::initMainMenu(){
     CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
     pvp->setScale(0.5);
     pvp->setTag(PVP);
-    
+
     startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
     startMenu->alignItemsInColumns(2 , 2);
 #else

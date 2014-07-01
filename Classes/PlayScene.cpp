@@ -9,7 +9,6 @@
 #include "PlayScene.h"
 #include "MenuForArrowButton.h"
 #include "Lane.h"
-#include "GameOverScene.h"
 #include "ControlMenu.h"
 #include "SimpleAudioEngine.h"
 #include "City.h"
