@@ -41,8 +41,6 @@ public:
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
     virtual bool hasPayed();
-    void initStartMenuScene();
-    void initGameController();
 
 private:
     CCMenu * startMenu;
@@ -69,8 +67,6 @@ private:
     void setInfoLabel(const char * info);
 
     void enableButtonsForIap(bool enable);
-
-    CCSprite * splash;
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

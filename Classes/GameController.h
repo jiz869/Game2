@@ -18,6 +18,7 @@ using namespace std;
 typedef enum{
 	STARTUP_MENU_SCENE=0,
 	PLAY_SCENE,
+	SPLASH_SCENE,
 }SceneTag;
 
 typedef enum{

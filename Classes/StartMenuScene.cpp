@@ -94,26 +94,8 @@ bool StartMenuScene::init(){
     ignoreAnchorPointForPosition(false);
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
-    splash = CCSprite::create("splash.png");
-
-    splash->setPosition(ccp(winSize.width/2 , winSize.height/2));
-
-    splash->setScale(0.8);
-
-    addChild(splash);
-
-    scheduleOnce(schedule_selector(StartMenuScene::initGameController) , 1);
-
-    return true;
-}
-
-void StartMenuScene::initGameController(){
     userData = GameController::getGameController()->getUserData();
-    splash->removeFromParent();
-    initStartMenuScene();
-}
 
-void StartMenuScene::initStartMenuScene(){
     userData->pvpMode = NONE;
 
     SET_BANNDER_HIDDEN(false);
@@ -123,6 +105,8 @@ void StartMenuScene::initStartMenuScene(){
     initOptionsMenu();
 
     initScoreMenu();
+
+    return true;
 }
 
 void StartMenuScene::initScoreMenu(){

@@ -1,4 +1,5 @@
 #include "AppDelegate.h"
+#include "SplashScene.h"
 #include "StartMenuScene.h"
 #include "SimpleAudioEngine.h"
 #include "MultiPlayScene.h"
@@ -39,7 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-    CCScene *pScene =StartMenuScene::scene();
+    CCScene *pScene =SplashScene::scene();
 
     // run
     pDirector->runWithScene(pScene);
