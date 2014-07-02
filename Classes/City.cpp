@@ -48,8 +48,6 @@ void City::addRoad(){
 
 		road->setPosition(ccp(winSize.width/2 , winSize.height * 0.1 * i));
 
-		road->setScaleY(0.8);
-
 		addChild(road);
 	}
 }

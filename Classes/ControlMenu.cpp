@@ -12,8 +12,6 @@
 
 using namespace CocosDenshion;
 
-#define BUTTON_SCALE 0.6
-
 ControlMenu::ControlMenu() : status(PLAY) {
 	// TODO Auto-generated constructor stub
 
@@ -61,13 +59,13 @@ void ControlMenu::initMenu(){
                                                          "button_arrow_selected.png" , this , menu_selector(ControlMenu::upHandler));
 
     upButton->setRotation(180);
-    upButton->setScale(BUTTON_SCALE);
+    upButton->setScale(0.8);
     upButton->setTag(UP);
 
     downButton = CCMenuItemImage::create("button_arrow_normal.png" ,
                                                            "button_arrow_selected.png" , this , menu_selector(ControlMenu::downHandler));
 
-    downButton->setScale(BUTTON_SCALE);
+    downButton->setScale(0.8);
     downButton->setTag(DOWN);
 
     changeControllerPosition(userData->controllerPosition);
@@ -75,11 +73,9 @@ void ControlMenu::initMenu(){
     pauseAndPlay = CCMenuItemImage::create("pause.png" ,
             "play.png" , this , menu_selector(ControlMenu::pauseAndPlayHandler));
 
-    pauseAndPlay->setScale(0.8);
-
     //pauseAndPlay->setAnchorPoint(ccp(1.5 , 0.5));
 
-    pauseAndPlay->setPosition(ccp(winSize.width * 0.875 , winSize.height - 50));
+    pauseAndPlay->setPosition(ccp(winSize.width * 0.875 , winSize.height * 0.9));
 
     pauseAndPlay->setTag(PAUSE_PLAY);
 
@@ -180,12 +176,12 @@ void ControlMenu::touchendHandler(CCObject * sender){
 
 void ControlMenu::initBloodBar(){
 	CCSprite * emptyBar = CCSprite::createWithSpriteFrameName("empty_bar.png");
-	emptyBar->setPosition(ccp(winSize.width/4, winSize.height - 50));
+	emptyBar->setPosition(ccp(winSize.width/4, winSize.height * 0.9));
 	addChild(emptyBar);
 
 	bloodBar = CCProgressTimer::create(CCSprite::createWithSpriteFrameName("blood_bar.png"));
 	bloodBar->setType(kCCProgressTimerTypeBar);
-	bloodBar->setPosition(ccp(winSize.width/4, winSize.height - 50));
+	bloodBar->setPosition(ccp(winSize.width/4, winSize.height * 0.9));
 	bloodBar->setBarChangeRate(ccp(1,0));
 	bloodBar->setMidpoint(ccp(0 , 1));
 	updateGameTime();
@@ -195,22 +191,20 @@ void ControlMenu::initBloodBar(){
 void ControlMenu::initScoreLabel(){
     CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
     gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
-    gem->setScale(0.8);
-    gem->setPosition(ccp(winSize.width * 0.625 , winSize.height-50));
+    gem->setPosition(ccp(winSize.width * 0.625 , winSize.height * 0.9));
     addChild(gem);
 
     if(userData->currentLevel < userData->maxLevel){
         gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel + 1);
         gemLevelup = CCSprite::createWithSpriteFrameName(gemName->getCString());
-        gemLevelup->setScale(0.8);
-        gemLevelup->setPosition(ccp(winSize.width * 0.625 , winSize.height-50));
+        gemLevelup->setPosition(ccp(winSize.width * 0.625 , winSize.height * 0.9));
         gemLevelup->setOpacity(0);
         addChild(gemLevelup);
     }
 
-    scoreLabel = CCLabelTTF::create("0", "Times New Roman", 48 );
+    scoreLabel = CCLabelTTF::create("0", "Times New Roman", 64 );
     scoreLabel->setColor( ccc3(168, 0, 0) );
-    scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height - 50) );
+    scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height * 0.9) );
     addChild(scoreLabel);
 }
 
@@ -341,23 +335,23 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
     switch (type) {
         case LEFT:
             //upButton is on the left side
-            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height*1.5*BUTTON_SCALE));
+            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height*1.5*0.8));
             //downButton is on the right side
-            downButton->setPosition(ccp(buttonSize.width/2 + 15, buttonSize.height/2*BUTTON_SCALE));
+            downButton->setPosition(ccp(buttonSize.width/2 + 15, buttonSize.height/2*0.8));
             break;
 
         case RIGHT:
             //upButton is on the left side
-            upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*BUTTON_SCALE));
+            upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*0.8));
             //downButton is on the right side
-            downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*BUTTON_SCALE));
+            downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*0.8));
             break;
 
         case SIDE:
             //upButton is on the left side
-            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height/2*BUTTON_SCALE));
+            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height/2));
             //downButton is on the right side
-            downButton->setPosition(ccp(winSize.width - buttonSize.width/2, buttonSize.height/2*BUTTON_SCALE));
+            downButton->setPosition(ccp(winSize.width - buttonSize.width/2, buttonSize.height/2));
             break;
 
         default:

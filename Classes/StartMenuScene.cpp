@@ -114,20 +114,27 @@ void StartMenuScene::initScoreMenu(){
 	gem = CCMenuItemImage::create();
 	gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
 	gem->setPosition(ccp(winSize.width/4, winSize.height*0.75));
+	gem->setEnabled(false);
 
     scoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 96 ));
     scoreLabel->setColor( ccc3(54, 255, 0) );
     CCString * score = CCString::createWithFormat("%d", userData->topScore);
     scoreLabel->setString(score->getCString());
     scoreLabel->setPosition(ccp(winSize.width*0.75, winSize.height*0.75));
+    scoreLabel->setEnabled(false);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.5);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.25));
 
-    scoreMenu = CCMenu::create(OK , NULL);
-    scoreMenu->addChild(gem);
-    scoreMenu->addChild(scoreLabel);
+    CCMenuItemImage * background = CCMenuItemImage::create("background.png" , NULL);
+    CCSize size = background->getContentSize();
+    background->setScaleY(winSize.height/size.height);
+    background->setScaleX(winSize.width/size.width);
+    background->setAnchorPoint(ccp(0,0));
+    background->setEnabled(false);
+
+    scoreMenu = CCMenu::create(background , gem , scoreLabel , OK , NULL);
 
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->ignoreAnchorPointForPosition(false);
@@ -148,6 +155,13 @@ void StartMenuScene::initMainMenu(){
     options->setScale(0.5);
     score->setScale(0.5);
 
+    CCMenuItemImage * background = CCMenuItemImage::create("background_main.png" , NULL);
+    CCSize size = background->getContentSize();
+    background->setScaleY(winSize.height/size.height);
+    background->setScaleX(winSize.width/size.width);
+    background->setAnchorPoint(ccp(0,0));
+    background->setEnabled(false);
+
 #if 0
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -158,8 +172,11 @@ void StartMenuScene::initMainMenu(){
     startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
     startMenu->alignItemsInColumns(2 , 2);
 #else
-    startMenu = CCMenu::create(newGame , options, score , NULL);
-    startMenu->alignItemsInColumns(1 , 1 , 1);
+    startMenu = CCMenu::create(background , newGame , options, score , NULL);
+    startMenu->ignoreAnchorPointForPosition(false);
+    newGame->setPosition(ccp(winSize.width*0.25 , winSize.height*0.375));
+    options->setPosition(ccp(winSize.width*0.5 , winSize.height*0.375));
+    score->setPosition(ccp(winSize.width*0.75 , winSize.height*0.375));
 #endif
 
     infoLabel = CCLabelTTF::create("0", "Times New Roman", 32 );
@@ -247,7 +264,15 @@ void StartMenuScene::initOptionsMenu(){
     OK->setScale(0.25);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
 
-    optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight , side_by_side , checkboxSide , sound , mute , checkboxMute , unmute, checkboxUnmute, OK , NULL);
+    //background
+    CCMenuItemImage * background = CCMenuItemImage::create("background.png" , NULL);
+    CCSize size = background->getContentSize();
+    background->setScaleY(winSize.height/size.height);
+    background->setScaleX(winSize.width/size.width);
+    background->setAnchorPoint(ccp(0,0));
+    background->setEnabled(false);
+
+    optionsMenu = CCMenu::create(background , controllerPositions , left , checkboxLeft , right , checkboxRight , side_by_side , checkboxSide , sound , mute , checkboxMute , unmute, checkboxUnmute, OK , NULL);
 
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->ignoreAnchorPointForPosition(false);

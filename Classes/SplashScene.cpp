@@ -49,8 +49,6 @@ bool SplashScene::init(){
 
     splash->setPosition(ccp(winSize.width/2 , winSize.height/2));
 
-    splash->setScale(0.8);
-
     addChild(splash);
 
     scheduleOnce(schedule_selector(SplashScene::initGameController) , 0.05);
