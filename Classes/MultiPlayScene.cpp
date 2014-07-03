@@ -5,6 +5,8 @@
  *      Author: mli
  */
 
+#ifdef MULTIPLAY
+
 #include "MultiPlayScene.h"
 #include "StartMenuScene.h"
 #include "MultiPlayControlMenu.h"
@@ -461,3 +463,5 @@ void MultiPlayScene::BeginContact(b2Contact *contact){
 void MultiPlayScene::resetEnemy(){
     enemy->reset();
 }
+
+#endif

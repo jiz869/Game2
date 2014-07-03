@@ -162,7 +162,7 @@ void StartMenuScene::initMainMenu(){
     background->setAnchorPoint(ccp(0,0));
     background->setEnabled(false);
 
-#if 0
+#ifdef MULTIPLAY
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
@@ -189,7 +189,7 @@ void StartMenuScene::initMainMenu(){
 }
 
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
-#if 0
+#ifdef MULTIPLAY
     SET_BANNDER_HIDDEN(true);
     CCScene * pvpScene = MultiPlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(pvpScene);

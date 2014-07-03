@@ -55,6 +55,15 @@
 									<listOptionValue builtIn="false" value="C:/cocos2d-x-2.2.3/CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="/AppWarpX"/>
 									<listOptionValue builtIn="false" value="C:/cocos2d-x-2.2.3/projects/crossRoad/AppWarpX"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/cJSON}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/Crypto}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/GameService}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/PushNotificationService}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/StorageService}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/UserService}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/Util}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/crossRoad/App42/Common/Exception}&quot;"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.677527501" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -142,8 +151,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Classes|AppWarp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="AppWarp"/>
+						<entry excluding="App42|Classes|AppWarp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="App42"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Classes"/>
 					</sourceEntries>
 				</configuration>

@@ -4,7 +4,7 @@
  *  Created on: Jun 6, 2014
  *      Author: mli
  */
-
+#ifdef MULTIPLAY
 #include "MultiPlayControlMenu.h"
 #include "MultiPlayScene.h"
 
@@ -116,9 +116,9 @@ void MultiPlayControlMenu::step(float dt){
             levelSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width/4, winSize.height*0.5)) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showUp)), NULL));
         }
     }
-}
+)
 
 void MultiPlayControlMenu::showUp(){
     upSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width*0.75, winSize.height*0.5)) , CCDelayTime::create(1) , CCCallFunc::create(this, callfunc_selector(ControlMenu::nextScene)), NULL));
 }
-
+#endif

@@ -7,7 +7,7 @@
 
 #ifndef MULTIPLAYSCENE_H_
 #define MULTIPLAYSCENE_H_
-
+#ifdef MULTIPLAY
 #include "cocos2d.h"
 #include "appwarp.h"
 #include "PlayScene.h"
@@ -100,5 +100,5 @@ protected:
 
     void processMsg();
 };
-
+#endif
 #endif /* MULTIPLAYSCENE_H_ */

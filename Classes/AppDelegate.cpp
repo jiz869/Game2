@@ -56,6 +56,7 @@ void AppDelegate::applicationDidEnterBackground() {
     }
     // if you use SimpleAudioEngine, it must be pause
     // CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+#ifdef MULTIPLAY
     UserData * userData = GameController::getGameController()->getUserData();
     if(userData->pvpMode != NONE){
         CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
@@ -63,6 +64,7 @@ void AppDelegate::applicationDidEnterBackground() {
         multiPlayScene->gameOver();
         CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
     }
+#endif
 }
 
 // this function will be called when the app is active again

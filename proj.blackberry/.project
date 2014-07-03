@@ -81,9 +81,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>AppWarp</name>
+			<name>App42</name>
 			<type>2</type>
-			<location>C:/cocos2d-x-2.2.3/projects/crossRoad/AppWarpX</location>
+			<location>C:/cocos2d-x-2.2.3/projects/crossRoad/App42</location>
 		</link>
 		<link>
 			<name>Classes</name>
