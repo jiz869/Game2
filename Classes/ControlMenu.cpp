@@ -45,7 +45,7 @@ void ControlMenu::initMisc(){
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
     numFrame=0;
-    score = 0;
+    score = userData->lastScore;
     initDuration = playSceneData->initDuration;
     maxDuration = playSceneData->maxDuration;
     durationIncrease = playSceneData->durationIncrease;
@@ -205,6 +205,9 @@ void ControlMenu::initScoreLabel(){
     scoreLabel = CCLabelTTF::create("0", "Times New Roman", 64 );
     scoreLabel->setColor( ccc3(168, 0, 0) );
     scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height * 0.9) );
+    char ss[10];
+    sprintf(ss, "%d", score);
+    scoreLabel->setString(ss);
     addChild(scoreLabel);
 }
 
@@ -242,7 +245,7 @@ void ControlMenu::gameOver()
     status=OVER;
     gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
-    GameController::getGameController()->setLastScore(score);
+    GameController::getGameController()->setLastScore(score , true);
     GameController::getGameController()->setJustFailed(true);
 }
 
@@ -294,6 +297,7 @@ void ControlMenu::levelUp(){
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
+    GameController::getGameController()->setLastScore(score , false);
     GameController::getGameController()->levelUp();
 }
 

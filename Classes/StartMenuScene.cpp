@@ -110,22 +110,12 @@ bool StartMenuScene::init(){
 }
 
 void StartMenuScene::initScoreMenu(){
-	CCString * gemName = CCString::createWithFormat("gem%d.png", userData->topLevel);
-	gem = CCMenuItemImage::create();
-	gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
-	gem->setPosition(ccp(winSize.width/4, winSize.height*0.75));
-	gem->setEnabled(false);
 
-    scoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 96 ));
-    scoreLabel->setColor( ccc3(54, 255, 0) );
-    CCString * score = CCString::createWithFormat("%d", userData->topScore);
-    scoreLabel->setString(score->getCString());
-    scoreLabel->setPosition(ccp(winSize.width*0.75, winSize.height*0.75));
-    scoreLabel->setEnabled(false);
+	ScoreRank * rank;
 
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.5);
-    OK->setPosition(ccp(winSize.width/2, winSize.height*0.25));
+    OK->setScale(0.25);
+    OK->setPosition(ccp(winSize.width/2, winSize.height*0.082));
 
     CCMenuItemImage * background = CCMenuItemImage::create("background.png" , NULL);
     CCSize size = background->getContentSize();
@@ -134,11 +124,31 @@ void StartMenuScene::initScoreMenu(){
     background->setAnchorPoint(ccp(0,0));
     background->setEnabled(false);
 
-    scoreMenu = CCMenu::create(background , gem , scoreLabel , OK , NULL);
+    scoreMenu = CCMenu::create(background , OK , NULL);
 
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->ignoreAnchorPointForPosition(false);
     addChild(scoreMenu);
+
+	for(int i = 0 ; i < MAX_RANKS ; i++){
+		rank = &GameController::getGameController()->ranks[i];
+		CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
+		gems[i] = CCMenuItemImage::create();
+		gems[i]->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
+		gems[i]->setPosition(ccp(winSize.width/4, winSize.height*(MAX_RANKS + 1 -i)*0.082));
+		gems[i]->setEnabled(false);
+		gems[i]->setScale(0.5);
+
+	    scoreLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 48 ));
+	    scoreLabels[i]->setColor( ccc3(54, 255, 0) );
+	    CCString * score = CCString::createWithFormat("%d", rank->score);
+	    scoreLabels[i]->setString(score->getCString());
+	    scoreLabels[i]->setPosition(ccp(winSize.width*0.75, winSize.height*(MAX_RANKS + 1 -i)*0.082));
+	    scoreLabels[i]->setEnabled(false);
+
+	    scoreMenu->addChild(gems[i]);
+	    scoreMenu->addChild(scoreLabels[i]);
+	}
 }
 
 void StartMenuScene::initMainMenu(){
@@ -204,6 +214,17 @@ void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
 }
 
 void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
+	ScoreRank * rank;
+
+	for(int i = 0 ; i < MAX_RANKS ; i++){
+		rank = &GameController::getGameController()->ranks[i];
+		CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
+		gems[i]->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
+
+	    CCString * score = CCString::createWithFormat("%d", rank->score);
+	    scoreLabels[i]->setString(score->getCString());
+	}
+
     SET_BANNDER_HIDDEN(true);
     startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height/2));

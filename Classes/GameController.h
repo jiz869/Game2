@@ -15,6 +15,9 @@
 USING_NS_CC;
 using namespace std;
 
+class GameService;
+class ScoreBoardService;
+
 typedef enum{
 	STARTUP_MENU_SCENE=0,
 	PLAY_SCENE,
@@ -133,7 +136,14 @@ typedef struct{
     bool hasPayed;
 }UserData;
 
-class GameController {
+typedef struct{
+	int level;
+	int score;
+}ScoreRank;
+
+#define MAX_RANKS (10)
+
+class GameController : CCObject {
 
 public:
     static GameController * getGameController();
@@ -143,9 +153,13 @@ public:
     UserData * getUserData();
     void setUserData(const char * key , CheckboxType data , int value);
     void levelUp();
-    void setLastScore(int lastScore);
+    void setLastScore(int lastScore , bool justFailed);
     void setJustFailed(bool justFailed);
     void setHasPayed(bool justFailed);
+    void onGameRequestCompleted(CCNode * node , void * response);
+    void onScoreBoardSaveCompleted(CCNode * node , void * response);
+    void onScoreBoardGetCompleted(CCNode * node , void * response);
+    ScoreRank ranks[MAX_RANKS];
 
 private:
     GameController();
@@ -164,6 +178,10 @@ private:
     vector<SpecialData *> specialDatas;
     CCSize designSize;
     string plistWritablePath;
+    void initLeaderboard();
+    GameService *gameService;
+    ScoreBoardService *scoreBoardService;
+    int getLevelByScore(int score);
 };
 
 #endif /* defined(__crossRoad__GameController__) */

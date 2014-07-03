@@ -19,13 +19,13 @@
 		<key>levels</key>
 		<array>
 			<string>100</string>
-			<string>120</string>
-			<string>140</string>
-			<string>160</string>
-			<string>180</string>
-			<string>200</string>
 			<string>220</string>
-			<string>240</string>
+			<string>360</string>
+			<string>520</string>
+			<string>700</string>
+			<string>900</string>
+			<string>1120</string>
+			<string>1360</string>
 			<string>0</string>
 		</array>
 		<key>just_failed</key>

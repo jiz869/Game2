@@ -59,8 +59,8 @@ private:
     void checkboxChooser(CheckboxType tag);
     void saveUserData(CheckboxType tag);
 
-    CCMenuItemImage * gem;
-    CCMenuItemLabel * scoreLabel;
+    CCMenuItemImage * gems[MAX_RANKS];
+    CCMenuItemLabel * scoreLabels[MAX_RANKS];
 
     CCLabelTTF * infoLabel;
 
