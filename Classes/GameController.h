@@ -160,6 +160,7 @@ public:
     void onScoreBoardSaveCompleted(CCNode * node , void * response);
     void onScoreBoardGetCompleted(CCNode * node , void * response);
     ScoreRank ranks[MAX_RANKS];
+    void getTopRankings();
 
 private:
     GameController();

@@ -651,4 +651,9 @@ int GameController::getLevelByScore(int score){
 	}
 }
 
+void GameController::getTopRankings(){
+    scoreBoardService->GetTopRankings("crossRoad",
+    		this, callfuncND_selector(GameController::onScoreBoardGetCompleted));
+}
+
 

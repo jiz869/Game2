@@ -57,6 +57,8 @@ extern "C"
 #define SET_BANNDER_HIDDEN(_hidden)
 #endif
 
+
+
 using namespace CocosDenshion;
 
 CCScene* StartMenuScene::scene()
@@ -215,6 +217,8 @@ void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
 
 void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 	ScoreRank * rank;
+
+	GameController::getGameController()->getTopRankings();
 
 	for(int i = 0 ; i < MAX_RANKS ; i++){
 		rank = &GameController::getGameController()->ranks[i];
