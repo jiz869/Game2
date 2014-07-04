@@ -22,6 +22,7 @@ typedef enum{
 	STARTUP_MENU_SCENE=0,
 	PLAY_SCENE,
 	SPLASH_SCENE,
+	GAME_OVER_SCENE,
 }SceneTag;
 
 typedef enum{
@@ -137,6 +138,7 @@ typedef struct{
 }UserData;
 
 typedef struct{
+	string userName;
 	int level;
 	int score;
 }ScoreRank;
@@ -154,13 +156,14 @@ public:
     void setUserData(const char * key , CheckboxType data , int value);
     void levelUp();
     void setLastScore(int lastScore , bool justFailed);
-    void setJustFailed(bool justFailed);
+    void setJustFailed(bool justFailed , bool updatePlist);
     void setHasPayed(bool justFailed);
     void onGameRequestCompleted(CCNode * node , void * response);
     void onScoreBoardSaveCompleted(CCNode * node , void * response);
     void onScoreBoardGetCompleted(CCNode * node , void * response);
     ScoreRank ranks[MAX_RANKS];
     void getTopRankings();
+    void saveLastScore(const char * userName);
 
 private:
     GameController();

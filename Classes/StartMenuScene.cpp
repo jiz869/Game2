@@ -25,7 +25,7 @@ if(userData->hasPayed) setBannerViewHidden(true); \
 else setBannerViewHidden(_hidden)
 
 void onAdClicked(){
-    GameController::getGameController()->setJustFailed(false);
+    GameController::getGameController()->setJustFailed(false , true);
 }
 
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -39,7 +39,7 @@ else setBannerViewHidden(_hidden)
 extern "C"
 {
 	void Java_ca_welcomelm_crossRoad_crossRoad_onAdClicked( JNIEnv* env, jobject thiz ){
-		GameController::getGameController()->setJustFailed(false);
+		GameController::getGameController()->setJustFailed(false , true);
 	}
 
 	void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentError( JNIEnv* env, jobject thiz ){
@@ -57,7 +57,8 @@ extern "C"
 #define SET_BANNDER_HIDDEN(_hidden)
 #endif
 
-
+ccColor3B labelColors[MAX_RANKS] = {ccRED , ccBLUE , ccMAGENTA , ccBLACK , ccWHITE ,
+		ccGREEN , ccRED , ccBLUE , ccMAGENTA , ccBLACK};
 
 using namespace CocosDenshion;
 
@@ -134,15 +135,22 @@ void StartMenuScene::initScoreMenu(){
 
 	for(int i = 0 ; i < MAX_RANKS ; i++){
 		rank = &GameController::getGameController()->ranks[i];
+
+	    nameLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 48 ));
+	    nameLabels[i]->setDisabledColor( labelColors[i] );
+	    nameLabels[i]->setString(rank->userName.c_str());
+	    nameLabels[i]->setPosition(ccp(winSize.width*0.25, winSize.height*(MAX_RANKS + 1 -i)*0.082));
+	    nameLabels[i]->setEnabled(false);
+
 		CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
 		gems[i] = CCMenuItemImage::create();
 		gems[i]->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
-		gems[i]->setPosition(ccp(winSize.width/4, winSize.height*(MAX_RANKS + 1 -i)*0.082));
+		gems[i]->setPosition(ccp(winSize.width/2, winSize.height*(MAX_RANKS + 1 -i)*0.082));
 		gems[i]->setEnabled(false);
 		gems[i]->setScale(0.5);
 
 	    scoreLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 48 ));
-	    scoreLabels[i]->setColor( ccc3(54, 255, 0) );
+	    scoreLabels[i]->setDisabledColor( labelColors[i] );
 	    CCString * score = CCString::createWithFormat("%d", rank->score);
 	    scoreLabels[i]->setString(score->getCString());
 	    scoreLabels[i]->setPosition(ccp(winSize.width*0.75, winSize.height*(MAX_RANKS + 1 -i)*0.082));
@@ -150,6 +158,7 @@ void StartMenuScene::initScoreMenu(){
 
 	    scoreMenu->addChild(gems[i]);
 	    scoreMenu->addChild(scoreLabels[i]);
+	    scoreMenu->addChild(nameLabels[i]);
 	}
 }
 
@@ -222,6 +231,9 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 
 	for(int i = 0 ; i < MAX_RANKS ; i++){
 		rank = &GameController::getGameController()->ranks[i];
+
+		nameLabels[i]->setString(rank->userName.c_str());
+
 		CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
 		gems[i]->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
 

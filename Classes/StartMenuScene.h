@@ -61,6 +61,7 @@ private:
 
     CCMenuItemImage * gems[MAX_RANKS];
     CCMenuItemLabel * scoreLabels[MAX_RANKS];
+    CCMenuItemLabel * nameLabels[MAX_RANKS];
 
     CCLabelTTF * infoLabel;
 

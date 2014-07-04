@@ -8,7 +8,7 @@
 #include "ControlMenu.h"
 #include "PlayScene.h"
 #include "SimpleAudioEngine.h"
-#include "StartMenuScene.h"
+#include "GameOverScene.h"
 
 using namespace CocosDenshion;
 
@@ -45,7 +45,17 @@ void ControlMenu::initMisc(){
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
     numFrame=0;
-    score = userData->lastScore;
+
+    if(userData->justFailed == true){
+        if(userData->currentLevel > 0){
+        	score = userData->levels[userData->currentLevel - 1];
+        }else{
+        	score = 0;
+        }
+    }else{
+        score = userData->lastScore;
+    }
+
     initDuration = playSceneData->initDuration;
     maxDuration = playSceneData->maxDuration;
     durationIncrease = playSceneData->durationIncrease;
@@ -194,7 +204,7 @@ void ControlMenu::initScoreLabel(){
     gem->setPosition(ccp(winSize.width * 0.625 , winSize.height * 0.9));
     addChild(gem);
 
-    if(userData->currentLevel < userData->maxLevel){
+    if(userData->currentLevel < userData->maxLevel - 1){
         gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel + 1);
         gemLevelup = CCSprite::createWithSpriteFrameName(gemName->getCString());
         gemLevelup->setPosition(ccp(winSize.width * 0.625 , winSize.height * 0.9));
@@ -246,7 +256,7 @@ void ControlMenu::gameOver()
     gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.6) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     GameController::getGameController()->setLastScore(score , true);
-    GameController::getGameController()->setJustFailed(true);
+    GameController::getGameController()->setJustFailed(true , true);
 }
 
 void ControlMenu::showOver(){
@@ -255,7 +265,7 @@ void ControlMenu::showOver(){
 
 void ControlMenu::nextScene(){
     if (status == OVER) {
-        CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
+        CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
     }else if (status == LEVEL_UP){
         CCDirector::sharedDirector()->replaceScene(PlayScene::scene());
     }
@@ -298,6 +308,7 @@ void ControlMenu::levelUp(){
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
     GameController::getGameController()->setLastScore(score , false);
+    GameController::getGameController()->setJustFailed(false , false);
     GameController::getGameController()->levelUp();
 }
 

@@ -503,19 +503,15 @@ void GameController::levelUp(){
 }
 
 void GameController::setLastScore(int lastScore , bool justFailed){
+
+	userData.lastScore = lastScore;
+
 	if(justFailed == false){
-		userData.lastScore = lastScore;
 		return;
 	}
 
-    if(userData.currentLevel > 0){
-    	userData.lastScore = userData.levels[userData.currentLevel - 1];
-    }
-
     if (lastScore > userData.topScore) {
         userData.topScore = lastScore;
-        scoreBoardService->SaveUserScore("crossRoad", "crossRoad", lastScore,
-        		this, callfuncND_selector(GameController::onScoreBoardSaveCompleted));
         CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
         userDataDict->setObject(CCString::createWithFormat("%d", userData.topScore), "top_score");
         dict->setObject(userDataDict, "user_data");
@@ -523,11 +519,14 @@ void GameController::setLastScore(int lastScore , bool justFailed){
     }
 }
 
-void GameController::setJustFailed(bool justFailed){
+void GameController::setJustFailed(bool justFailed , bool updatePlist){
     if (userData.justFailed == justFailed) {
         return;
     }
     userData.justFailed = justFailed;
+
+    if(updatePlist == false) return;
+
     CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
     if (justFailed == true) {
         userDataDict->setObject(CCString::create("true"), "just_failed");
@@ -559,9 +558,11 @@ void GameController::initLeaderboard(){
 	gameService = App42API::BuildGameService();
 	scoreBoardService = App42API::BuildScoreBoardService();
 
-	CCLOG("ranks size is %d", sizeof(ranks));
-
-	memset((void *)&ranks , 0 , sizeof(ranks));
+	for(int i = 0; i < MAX_RANKS ; i++){
+		ranks[i].userName = "nobody";
+		ranks[i].score = 0;
+		ranks[i].level = 0;
+	}
 
     scoreBoardService->GetTopRankings("crossRoad",
     		this, callfuncND_selector(GameController::onScoreBoardGetCompleted));
@@ -631,6 +632,7 @@ void GameController::onScoreBoardGetCompleted(CCNode * node , void * response){
 			CCLOG("UserName=%s\n",it->getUserName().c_str());
 			ranks[i].score = (int)it->getScoreValue();
 			ranks[i].level = getLevelByScore(ranks[i].score);
+			ranks[i].userName = it->getUserName();
 			i++;
 		}
 	}
@@ -644,11 +646,15 @@ void GameController::onScoreBoardGetCompleted(CCNode * node , void * response){
 }
 
 int GameController::getLevelByScore(int score){
-	for(int i = 0 ; i < userData.maxLevel ; i++){
+	int i;
+
+	for(i = 0 ; i < userData.maxLevel ; i++){
 		if(score < userData.levels[i]){
 			return i;
 		}
 	}
+
+	return i;
 }
 
 void GameController::getTopRankings(){
@@ -656,4 +662,21 @@ void GameController::getTopRankings(){
     		this, callfuncND_selector(GameController::onScoreBoardGetCompleted));
 }
 
+void GameController::saveLastScore(const char * userName){
 
+	int i;
+	char * name = "Penguin";
+
+	for(i = 0; i < MAX_RANKS ; i++){
+		if(userData.lastScore > ranks[i].score) break;
+	}
+
+	if(i == MAX_RANKS) return;
+
+	if(strlen(userName) != 0){
+		name = (char *)userName;
+	}
+
+    scoreBoardService->SaveUserScore("crossRoad", name, userData.lastScore,
+    		this, callfuncND_selector(GameController::onScoreBoardSaveCompleted));
+}
