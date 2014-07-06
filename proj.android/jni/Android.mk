@@ -6,37 +6,26 @@ LOCAL_MODULE := cocos2dcpp_shared
 
 LOCAL_MODULE_FILENAME := libcocos2dcpp
 
-LOCAL_SRC_FILES := hellocpp/main.cpp \
-                   ../../Classes/AppDelegate.cpp \
-                   ../../Classes/B2Sprite.cpp \
-                   ../../Classes/CarObj.cpp \
-                   ../../Classes/ControlMenu.cpp \
-                   ../../Classes/GameController.cpp \
-                   ../../Classes/GameObj.cpp \
-                   ../../Classes/GameOverScene.cpp \
-                   ../../Classes/Lane.cpp \
-                   ../../Classes/MenuForArrowButton.cpp \
-                   ../../Classes/PlayObj.cpp \
-                   ../../Classes/SpecialObj.cpp \
-                   ../../Classes/StartMenuScene.cpp \
-                   ../../Classes/PlayScene.cpp \
-                   ../../Classes/City.cpp \
-                   ../../Classes/MultiPlayScene.cpp \
-                   ../../Classes/MultiPlayControlMenu.cpp \
-                   ../../admob.android/AdmobHelper.cpp \
-                   ../../AppWarpX/appwarp.cpp \
-                   ../../AppWarpX/appwarp_extended.cpp \
-                   ../../AppWarpX/base64.cpp \
-                   ../../AppWarpX/cJSON.c \
-                   ../../AppWarpX/HMAC_SHA1.cpp \
-                   ../../AppWarpX/requests.cpp \
-                   ../../AppWarpX/SHA1.cpp \
-                   ../../AppWarpX/socket.cpp \
-                   ../../AppWarpX/udpsocket.cpp \
-                   ../../AppWarpX/urlencode.cpp \
-                   ../../AppWarpX/utilities.cpp                   
+COCOS2DX_FILES  := $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
+COCOS2DX_FILES  := $(COCOS2DX_FILES:$(LOCAL_PATH)/%=%)
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes $(LOCAL_PATH)/../../AppWarpX
+APP42_FILES     := $(wildcard $(LOCAL_PATH)/../../App42/cJSON/*.cpp)
+APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/Common/*.cpp)
+APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/Crypto/*.cpp)
+APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/GameService/*.cpp)
+APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/PushNotificationService/*.cpp)
+APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/StorageService/*.cpp)
+APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/UserService/*.cpp)
+APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/Util/*.cpp)
+APP42_FILES     := $(APP42_FILES:$(LOCAL_PATH)/%=%)
+
+LOCAL_SRC_FILES := $(COCOS2DX_FILES) $(APP42_FILES)                 
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes $(LOCAL_PATH)/../../App42/cJSON \
+					$(LOCAL_PATH)/../../App42/Common $(LOCAL_PATH)/../../App42/Crypto \
+					$(LOCAL_PATH)/../../App42/GameService $(LOCAL_PATH)/../../App42/PushNotificationService \
+					$(LOCAL_PATH)/../../App42/StorageService $(LOCAL_PATH)/../../App42/UserService \
+					$(LOCAL_PATH)/../../App42/Util $(LOCAL_PATH)/../../App42/Common/Exception
 
 $(call import-add-path, /Users/welcomelm/cocos2d-x-2.2.3)
 $(call import-add-path, /Users/welcomelm/cocos2d-x-2.2.3/cocos2dx/platform/third_party/android/prebuilt)

@@ -176,7 +176,7 @@ void StartMenuScene::initMainMenu(){
     options->setScale(0.5);
     score->setScale(0.5);
 
-    CCMenuItemImage * background = CCMenuItemImage::create("background_main.png" , NULL);
+    CCMenuItemImage * background = CCMenuItemImage::create("background_main.png" , "background_main.png");
     CCSize size = background->getContentSize();
     background->setScaleY(winSize.height/size.height);
     background->setScaleX(winSize.width/size.width);
@@ -190,8 +190,12 @@ void StartMenuScene::initMainMenu(){
     pvp->setScale(0.5);
     pvp->setTag(PVP);
 
-    startMenu = CCMenu::create(newGame , options, score , pvp , NULL);
-    startMenu->alignItemsInColumns(2 , 2);
+    startMenu = CCMenu::create(background , newGame , options, score , pvp , NULL);
+    startMenu->ignoreAnchorPointForPosition(false);
+    newGame->setPosition(ccp(winSize.width*0.25 , winSize.height*0.4));
+    options->setPosition(ccp(winSize.width*0.75 , winSize.height*0.4));
+    score->setPosition(ccp(winSize.width*0.25 , winSize.height*0.25));
+    pvp->setPosition(ccp(winSize.width*0.75 , winSize.height*0.25));
 #else
     startMenu = CCMenu::create(background , newGame , options, score , NULL);
     startMenu->ignoreAnchorPointForPosition(false);
@@ -302,7 +306,7 @@ void StartMenuScene::initOptionsMenu(){
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
 
     //background
-    CCMenuItemImage * background = CCMenuItemImage::create("background.png" , NULL);
+    CCMenuItemImage * background = CCMenuItemImage::create("background.png" , "background.png");
     CCSize size = background->getContentSize();
     background->setScaleY(winSize.height/size.height);
     background->setScaleX(winSize.width/size.width);

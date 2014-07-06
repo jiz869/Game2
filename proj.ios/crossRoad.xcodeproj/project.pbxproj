@@ -152,17 +152,6 @@
 		167ED3C1194F44BA00B71E79 /* BannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3B2194F44BA00B71E79 /* BannerViewController.m */; };
 		167ED3C2194F44BA00B71E79 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 167ED3BF194F44BA00B71E79 /* libGoogleAdMobAds.a */; };
 		167ED3C3194F44BA00B71E79 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 167ED3C0194F44BA00B71E79 /* README.txt */; };
-		167ED3DC194F44CD00B71E79 /* appwarp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3C5194F44CD00B71E79 /* appwarp.cpp */; };
-		167ED3DD194F44CD00B71E79 /* appwarp_extended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3C7194F44CD00B71E79 /* appwarp_extended.cpp */; };
-		167ED3DE194F44CD00B71E79 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3C8194F44CD00B71E79 /* base64.cpp */; };
-		167ED3DF194F44CD00B71E79 /* cJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3CA194F44CD00B71E79 /* cJSON.c */; };
-		167ED3E0194F44CD00B71E79 /* HMAC_SHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3CD194F44CD00B71E79 /* HMAC_SHA1.cpp */; };
-		167ED3E1194F44CD00B71E79 /* requests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3D0194F44CD00B71E79 /* requests.cpp */; };
-		167ED3E2194F44CD00B71E79 /* SHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3D2194F44CD00B71E79 /* SHA1.cpp */; };
-		167ED3E3194F44CD00B71E79 /* socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3D4194F44CD00B71E79 /* socket.cpp */; };
-		167ED3E4194F44CD00B71E79 /* udpsocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3D6194F44CD00B71E79 /* udpsocket.cpp */; };
-		167ED3E5194F44CD00B71E79 /* urlencode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3D8194F44CD00B71E79 /* urlencode.cpp */; };
-		167ED3E6194F44CD00B71E79 /* utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED3DA194F44CD00B71E79 /* utilities.cpp */; };
 		167ED3E8194F45A500B71E79 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167ED3E7194F45A500B71E79 /* AdSupport.framework */; };
 		167ED3EA194F45D500B71E79 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167ED3E9194F45D500B71E79 /* CoreTelephony.framework */; };
 		167ED3EC194F45DE00B71E79 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167ED3EB194F45DE00B71E79 /* MessageUI.framework */; };
@@ -212,6 +201,38 @@
 		169D58EE1951245C00EE290E /* click_ad.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58ED1951245C00EE290E /* click_ad.png */; };
 		169D58F51953D2DB00EE290E /* purchase_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58F31953D2DB00EE290E /* purchase_normal.png */; };
 		169D58F61953D2DB00EE290E /* purchase_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58F41953D2DB00EE290E /* purchase_selected.png */; };
+		16DBA3F8196878C80094C2CF /* cJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3B4196878C80094C2CF /* cJSON.c */; };
+		16DBA3F9196878C80094C2CF /* App42API.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3B7196878C80094C2CF /* App42API.cpp */; };
+		16DBA3FA196878C80094C2CF /* App42Response.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3BA196878C80094C2CF /* App42Response.cpp */; };
+		16DBA3FB196878C80094C2CF /* App42Service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3BC196878C80094C2CF /* App42Service.cpp */; };
+		16DBA3FC196878C80094C2CF /* App42Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3BF196878C80094C2CF /* App42Exception.cpp */; };
+		16DBA3FD196878C80094C2CF /* JSONDocument.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3C1196878C80094C2CF /* JSONDocument.cpp */; };
+		16DBA3FE196878C80094C2CF /* MetaResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3C3196878C80094C2CF /* MetaResponse.cpp */; };
+		16DBA3FF196878C80094C2CF /* Utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3C5196878C80094C2CF /* Utilities.cpp */; };
+		16DBA400196878C80094C2CF /* app42base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3C8196878C80094C2CF /* app42base64.cpp */; };
+		16DBA401196878C80094C2CF /* HMAC_SHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3CA196878C80094C2CF /* HMAC_SHA1.cpp */; };
+		16DBA402196878C80094C2CF /* SHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3CC196878C80094C2CF /* SHA1.cpp */; };
+		16DBA403196878C80094C2CF /* urlencode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3CE196878C80094C2CF /* urlencode.cpp */; };
+		16DBA404196878C80094C2CF /* App42GameResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3D1196878C80094C2CF /* App42GameResponse.cpp */; };
+		16DBA405196878C80094C2CF /* App42RewardResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3D3196878C80094C2CF /* App42RewardResponse.cpp */; };
+		16DBA406196878C80094C2CF /* App42Score.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3D5196878C80094C2CF /* App42Score.cpp */; };
+		16DBA407196878C80094C2CF /* GameService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3D7196878C80094C2CF /* GameService.cpp */; };
+		16DBA408196878C80094C2CF /* RewardService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3D9196878C80094C2CF /* RewardService.cpp */; };
+		16DBA409196878C80094C2CF /* ScoreBoardService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3DB196878C80094C2CF /* ScoreBoardService.cpp */; };
+		16DBA40A196878C80094C2CF /* ScoreService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3DD196878C80094C2CF /* ScoreService.cpp */; };
+		16DBA40B196878C80094C2CF /* App42PushNotificationResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3E0196878C80094C2CF /* App42PushNotificationResponse.cpp */; };
+		16DBA40C196878C80094C2CF /* PushNotificationService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3E2196878C80094C2CF /* PushNotificationService.cpp */; };
+		16DBA40D196878C80094C2CF /* App42StorageResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3E5196878C80094C2CF /* App42StorageResponse.cpp */; };
+		16DBA40E196878C80094C2CF /* Query.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3E7196878C80094C2CF /* Query.cpp */; };
+		16DBA40F196878C80094C2CF /* QueryBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3E9196878C80094C2CF /* QueryBuilder.cpp */; };
+		16DBA410196878C80094C2CF /* StorageService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3EB196878C80094C2CF /* StorageService.cpp */; };
+		16DBA411196878C80094C2CF /* App42UserResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3EE196878C80094C2CF /* App42UserResponse.cpp */; };
+		16DBA412196878C80094C2CF /* UserService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA3F0196878C80094C2CF /* UserService.cpp */; };
+		16DBA415196878E20094C2CF /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16DBA413196878E20094C2CF /* SplashScene.cpp */; };
+		16DBA41A196879DD0094C2CF /* background_main.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA416196879DD0094C2CF /* background_main.png */; };
+		16DBA41B196879DD0094C2CF /* background_other.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA417196879DD0094C2CF /* background_other.png */; };
+		16DBA41C196879DD0094C2CF /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA418196879DD0094C2CF /* background.png */; };
+		16DBA41D196879DD0094C2CF /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA419196879DD0094C2CF /* splash.png */; };
 		1A27573F1697CF2B00504026 /* CCEditBoxImplAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */; };
 		1A8F3B6E175E05DA00049216 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B43175E05DA00049216 /* Animation.cpp */; };
 		1A8F3B6F175E05DA00049216 /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B45175E05DA00049216 /* AnimationState.cpp */; };
@@ -655,29 +676,6 @@
 		167ED3BE194F44BA00B71E79 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
 		167ED3BF194F44BA00B71E79 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		167ED3C0194F44BA00B71E79 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		167ED3C5194F44CD00B71E79 /* appwarp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = appwarp.cpp; sourceTree = "<group>"; };
-		167ED3C6194F44CD00B71E79 /* appwarp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appwarp.h; sourceTree = "<group>"; };
-		167ED3C7194F44CD00B71E79 /* appwarp_extended.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = appwarp_extended.cpp; sourceTree = "<group>"; };
-		167ED3C8194F44CD00B71E79 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
-		167ED3C9194F44CD00B71E79 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
-		167ED3CA194F44CD00B71E79 /* cJSON.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cJSON.c; sourceTree = "<group>"; };
-		167ED3CB194F44CD00B71E79 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
-		167ED3CC194F44CD00B71E79 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
-		167ED3CD194F44CD00B71E79 /* HMAC_SHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HMAC_SHA1.cpp; sourceTree = "<group>"; };
-		167ED3CE194F44CD00B71E79 /* HMAC_SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAC_SHA1.h; sourceTree = "<group>"; };
-		167ED3CF194F44CD00B71E79 /* listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listener.h; sourceTree = "<group>"; };
-		167ED3D0194F44CD00B71E79 /* requests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = requests.cpp; sourceTree = "<group>"; };
-		167ED3D1194F44CD00B71E79 /* requests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = requests.h; sourceTree = "<group>"; };
-		167ED3D2194F44CD00B71E79 /* SHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SHA1.cpp; sourceTree = "<group>"; };
-		167ED3D3194F44CD00B71E79 /* SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA1.h; sourceTree = "<group>"; };
-		167ED3D4194F44CD00B71E79 /* socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = socket.cpp; sourceTree = "<group>"; };
-		167ED3D5194F44CD00B71E79 /* socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.h; sourceTree = "<group>"; };
-		167ED3D6194F44CD00B71E79 /* udpsocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = udpsocket.cpp; sourceTree = "<group>"; };
-		167ED3D7194F44CD00B71E79 /* udpsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udpsocket.h; sourceTree = "<group>"; };
-		167ED3D8194F44CD00B71E79 /* urlencode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = urlencode.cpp; sourceTree = "<group>"; };
-		167ED3D9194F44CD00B71E79 /* urlencode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = urlencode.h; sourceTree = "<group>"; };
-		167ED3DA194F44CD00B71E79 /* utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utilities.cpp; sourceTree = "<group>"; };
-		167ED3DB194F44CD00B71E79 /* utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utilities.h; sourceTree = "<group>"; };
 		167ED3E7194F45A500B71E79 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		167ED3E9194F45D500B71E79 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		167ED3EB194F45DE00B71E79 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -728,6 +726,72 @@
 		169D58ED1951245C00EE290E /* click_ad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = click_ad.png; sourceTree = "<group>"; };
 		169D58F31953D2DB00EE290E /* purchase_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purchase_normal.png; sourceTree = "<group>"; };
 		169D58F41953D2DB00EE290E /* purchase_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purchase_selected.png; sourceTree = "<group>"; };
+		16DBA3B4196878C80094C2CF /* cJSON.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cJSON.c; sourceTree = "<group>"; };
+		16DBA3B5196878C80094C2CF /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
+		16DBA3B7196878C80094C2CF /* App42API.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42API.cpp; sourceTree = "<group>"; };
+		16DBA3B8196878C80094C2CF /* App42API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42API.h; sourceTree = "<group>"; };
+		16DBA3B9196878C80094C2CF /* App42Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42Constants.h; sourceTree = "<group>"; };
+		16DBA3BA196878C80094C2CF /* App42Response.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42Response.cpp; sourceTree = "<group>"; };
+		16DBA3BB196878C80094C2CF /* App42Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42Response.h; sourceTree = "<group>"; };
+		16DBA3BC196878C80094C2CF /* App42Service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42Service.cpp; sourceTree = "<group>"; };
+		16DBA3BD196878C80094C2CF /* App42Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42Service.h; sourceTree = "<group>"; };
+		16DBA3BF196878C80094C2CF /* App42Exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42Exception.cpp; sourceTree = "<group>"; };
+		16DBA3C0196878C80094C2CF /* App42Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42Exception.h; sourceTree = "<group>"; };
+		16DBA3C1196878C80094C2CF /* JSONDocument.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSONDocument.cpp; sourceTree = "<group>"; };
+		16DBA3C2196878C80094C2CF /* JSONDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONDocument.h; sourceTree = "<group>"; };
+		16DBA3C3196878C80094C2CF /* MetaResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetaResponse.cpp; sourceTree = "<group>"; };
+		16DBA3C4196878C80094C2CF /* MetaResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaResponse.h; sourceTree = "<group>"; };
+		16DBA3C5196878C80094C2CF /* Utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utilities.cpp; sourceTree = "<group>"; };
+		16DBA3C6196878C80094C2CF /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		16DBA3C8196878C80094C2CF /* app42base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = app42base64.cpp; sourceTree = "<group>"; };
+		16DBA3C9196878C80094C2CF /* app42base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app42base64.h; sourceTree = "<group>"; };
+		16DBA3CA196878C80094C2CF /* HMAC_SHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HMAC_SHA1.cpp; sourceTree = "<group>"; };
+		16DBA3CB196878C80094C2CF /* HMAC_SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAC_SHA1.h; sourceTree = "<group>"; };
+		16DBA3CC196878C80094C2CF /* SHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SHA1.cpp; sourceTree = "<group>"; };
+		16DBA3CD196878C80094C2CF /* SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA1.h; sourceTree = "<group>"; };
+		16DBA3CE196878C80094C2CF /* urlencode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = urlencode.cpp; sourceTree = "<group>"; };
+		16DBA3CF196878C80094C2CF /* urlencode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = urlencode.h; sourceTree = "<group>"; };
+		16DBA3D1196878C80094C2CF /* App42GameResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42GameResponse.cpp; sourceTree = "<group>"; };
+		16DBA3D2196878C80094C2CF /* App42GameResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42GameResponse.h; sourceTree = "<group>"; };
+		16DBA3D3196878C80094C2CF /* App42RewardResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42RewardResponse.cpp; sourceTree = "<group>"; };
+		16DBA3D4196878C80094C2CF /* App42RewardResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42RewardResponse.h; sourceTree = "<group>"; };
+		16DBA3D5196878C80094C2CF /* App42Score.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42Score.cpp; sourceTree = "<group>"; };
+		16DBA3D6196878C80094C2CF /* App42Score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42Score.h; sourceTree = "<group>"; };
+		16DBA3D7196878C80094C2CF /* GameService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameService.cpp; sourceTree = "<group>"; };
+		16DBA3D8196878C80094C2CF /* GameService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameService.h; sourceTree = "<group>"; };
+		16DBA3D9196878C80094C2CF /* RewardService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RewardService.cpp; sourceTree = "<group>"; };
+		16DBA3DA196878C80094C2CF /* RewardService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardService.h; sourceTree = "<group>"; };
+		16DBA3DB196878C80094C2CF /* ScoreBoardService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScoreBoardService.cpp; sourceTree = "<group>"; };
+		16DBA3DC196878C80094C2CF /* ScoreBoardService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreBoardService.h; sourceTree = "<group>"; };
+		16DBA3DD196878C80094C2CF /* ScoreService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScoreService.cpp; sourceTree = "<group>"; };
+		16DBA3DE196878C80094C2CF /* ScoreService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreService.h; sourceTree = "<group>"; };
+		16DBA3E0196878C80094C2CF /* App42PushNotificationResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42PushNotificationResponse.cpp; sourceTree = "<group>"; };
+		16DBA3E1196878C80094C2CF /* App42PushNotificationResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42PushNotificationResponse.h; sourceTree = "<group>"; };
+		16DBA3E2196878C80094C2CF /* PushNotificationService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PushNotificationService.cpp; sourceTree = "<group>"; };
+		16DBA3E3196878C80094C2CF /* PushNotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationService.h; sourceTree = "<group>"; };
+		16DBA3E5196878C80094C2CF /* App42StorageResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42StorageResponse.cpp; sourceTree = "<group>"; };
+		16DBA3E6196878C80094C2CF /* App42StorageResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42StorageResponse.h; sourceTree = "<group>"; };
+		16DBA3E7196878C80094C2CF /* Query.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Query.cpp; sourceTree = "<group>"; };
+		16DBA3E8196878C80094C2CF /* Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Query.h; sourceTree = "<group>"; };
+		16DBA3E9196878C80094C2CF /* QueryBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QueryBuilder.cpp; sourceTree = "<group>"; };
+		16DBA3EA196878C80094C2CF /* QueryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryBuilder.h; sourceTree = "<group>"; };
+		16DBA3EB196878C80094C2CF /* StorageService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StorageService.cpp; sourceTree = "<group>"; };
+		16DBA3EC196878C80094C2CF /* StorageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
+		16DBA3EE196878C80094C2CF /* App42UserResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App42UserResponse.cpp; sourceTree = "<group>"; };
+		16DBA3EF196878C80094C2CF /* App42UserResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App42UserResponse.h; sourceTree = "<group>"; };
+		16DBA3F0196878C80094C2CF /* UserService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserService.cpp; sourceTree = "<group>"; };
+		16DBA3F1196878C80094C2CF /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
+		16DBA3F3196878C80094C2CF /* BodyBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyBuilder.h; sourceTree = "<group>"; };
+		16DBA3F4196878C80094C2CF /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		16DBA3F5196878C80094C2CF /* Connector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connector.h; sourceTree = "<group>"; };
+		16DBA3F6196878C80094C2CF /* Exceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exceptions.h; sourceTree = "<group>"; };
+		16DBA3F7196878C80094C2CF /* Signing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signing.h; sourceTree = "<group>"; };
+		16DBA413196878E20094C2CF /* SplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SplashScene.cpp; path = ../Classes/SplashScene.cpp; sourceTree = "<group>"; };
+		16DBA414196878E20094C2CF /* SplashScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashScene.h; path = ../Classes/SplashScene.h; sourceTree = "<group>"; };
+		16DBA416196879DD0094C2CF /* background_main.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_main.png; sourceTree = "<group>"; };
+		16DBA417196879DD0094C2CF /* background_other.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_other.png; sourceTree = "<group>"; };
+		16DBA418196879DD0094C2CF /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		16DBA419196879DD0094C2CF /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBoxImplAndroid.cpp; sourceTree = "<group>"; };
 		1A27573E1697CF2B00504026 /* CCEditBoxImplAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplAndroid.h; sourceTree = "<group>"; };
 		1A8F3B43175E05DA00049216 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
@@ -1489,6 +1553,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				16DBA413196878E20094C2CF /* SplashScene.cpp */,
+				16DBA414196878E20094C2CF /* SplashScene.h */,
 				169D58E81951140400EE290E /* MultiPlayScene.cpp */,
 				169D58E91951140400EE290E /* MultiPlayScene.h */,
 				167ED37C194F446200B71E79 /* B2Sprite.cpp */,
@@ -1550,40 +1616,13 @@
 			path = ../admob.ios;
 			sourceTree = "<group>";
 		};
-		167ED3C4194F44CD00B71E79 /* AppWarpX */ = {
-			isa = PBXGroup;
-			children = (
-				167ED3C5194F44CD00B71E79 /* appwarp.cpp */,
-				167ED3C6194F44CD00B71E79 /* appwarp.h */,
-				167ED3C7194F44CD00B71E79 /* appwarp_extended.cpp */,
-				167ED3C8194F44CD00B71E79 /* base64.cpp */,
-				167ED3C9194F44CD00B71E79 /* base64.h */,
-				167ED3CA194F44CD00B71E79 /* cJSON.c */,
-				167ED3CB194F44CD00B71E79 /* cJSON.h */,
-				167ED3CC194F44CD00B71E79 /* defines.h */,
-				167ED3CD194F44CD00B71E79 /* HMAC_SHA1.cpp */,
-				167ED3CE194F44CD00B71E79 /* HMAC_SHA1.h */,
-				167ED3CF194F44CD00B71E79 /* listener.h */,
-				167ED3D0194F44CD00B71E79 /* requests.cpp */,
-				167ED3D1194F44CD00B71E79 /* requests.h */,
-				167ED3D2194F44CD00B71E79 /* SHA1.cpp */,
-				167ED3D3194F44CD00B71E79 /* SHA1.h */,
-				167ED3D4194F44CD00B71E79 /* socket.cpp */,
-				167ED3D5194F44CD00B71E79 /* socket.h */,
-				167ED3D6194F44CD00B71E79 /* udpsocket.cpp */,
-				167ED3D7194F44CD00B71E79 /* udpsocket.h */,
-				167ED3D8194F44CD00B71E79 /* urlencode.cpp */,
-				167ED3D9194F44CD00B71E79 /* urlencode.h */,
-				167ED3DA194F44CD00B71E79 /* utilities.cpp */,
-				167ED3DB194F44CD00B71E79 /* utilities.h */,
-			);
-			name = AppWarpX;
-			path = ../AppWarpX;
-			sourceTree = "<group>";
-		};
 		169D5890194F494600EE290E /* hd */ = {
 			isa = PBXGroup;
 			children = (
+				16DBA416196879DD0094C2CF /* background_main.png */,
+				16DBA417196879DD0094C2CF /* background_other.png */,
+				16DBA418196879DD0094C2CF /* background.png */,
+				16DBA419196879DD0094C2CF /* splash.png */,
 				169D58F31953D2DB00EE290E /* purchase_normal.png */,
 				169D58F41953D2DB00EE290E /* purchase_selected.png */,
 				169D58ED1951245C00EE290E /* click_ad.png */,
@@ -1620,6 +1659,146 @@
 				169D58AF194F494600EE290E /* up.png */,
 			);
 			path = hd;
+			sourceTree = "<group>";
+		};
+		16DBA3B2196878C80094C2CF /* App42 */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3B3196878C80094C2CF /* cJSON */,
+				16DBA3B6196878C80094C2CF /* Common */,
+				16DBA3C7196878C80094C2CF /* Crypto */,
+				16DBA3D0196878C80094C2CF /* GameService */,
+				16DBA3DF196878C80094C2CF /* PushNotificationService */,
+				16DBA3E4196878C80094C2CF /* StorageService */,
+				16DBA3ED196878C80094C2CF /* UserService */,
+				16DBA3F2196878C80094C2CF /* Util */,
+			);
+			name = App42;
+			path = ../App42;
+			sourceTree = "<group>";
+		};
+		16DBA3B3196878C80094C2CF /* cJSON */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3B4196878C80094C2CF /* cJSON.c */,
+				16DBA3B5196878C80094C2CF /* cJSON.h */,
+			);
+			path = cJSON;
+			sourceTree = "<group>";
+		};
+		16DBA3B6196878C80094C2CF /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3B7196878C80094C2CF /* App42API.cpp */,
+				16DBA3B8196878C80094C2CF /* App42API.h */,
+				16DBA3B9196878C80094C2CF /* App42Constants.h */,
+				16DBA3BA196878C80094C2CF /* App42Response.cpp */,
+				16DBA3BB196878C80094C2CF /* App42Response.h */,
+				16DBA3BC196878C80094C2CF /* App42Service.cpp */,
+				16DBA3BD196878C80094C2CF /* App42Service.h */,
+				16DBA3BE196878C80094C2CF /* Exception */,
+				16DBA3C1196878C80094C2CF /* JSONDocument.cpp */,
+				16DBA3C2196878C80094C2CF /* JSONDocument.h */,
+				16DBA3C3196878C80094C2CF /* MetaResponse.cpp */,
+				16DBA3C4196878C80094C2CF /* MetaResponse.h */,
+				16DBA3C5196878C80094C2CF /* Utilities.cpp */,
+				16DBA3C6196878C80094C2CF /* Utilities.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		16DBA3BE196878C80094C2CF /* Exception */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3BF196878C80094C2CF /* App42Exception.cpp */,
+				16DBA3C0196878C80094C2CF /* App42Exception.h */,
+			);
+			path = Exception;
+			sourceTree = "<group>";
+		};
+		16DBA3C7196878C80094C2CF /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3C8196878C80094C2CF /* app42base64.cpp */,
+				16DBA3C9196878C80094C2CF /* app42base64.h */,
+				16DBA3CA196878C80094C2CF /* HMAC_SHA1.cpp */,
+				16DBA3CB196878C80094C2CF /* HMAC_SHA1.h */,
+				16DBA3CC196878C80094C2CF /* SHA1.cpp */,
+				16DBA3CD196878C80094C2CF /* SHA1.h */,
+				16DBA3CE196878C80094C2CF /* urlencode.cpp */,
+				16DBA3CF196878C80094C2CF /* urlencode.h */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
+		16DBA3D0196878C80094C2CF /* GameService */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3D1196878C80094C2CF /* App42GameResponse.cpp */,
+				16DBA3D2196878C80094C2CF /* App42GameResponse.h */,
+				16DBA3D3196878C80094C2CF /* App42RewardResponse.cpp */,
+				16DBA3D4196878C80094C2CF /* App42RewardResponse.h */,
+				16DBA3D5196878C80094C2CF /* App42Score.cpp */,
+				16DBA3D6196878C80094C2CF /* App42Score.h */,
+				16DBA3D7196878C80094C2CF /* GameService.cpp */,
+				16DBA3D8196878C80094C2CF /* GameService.h */,
+				16DBA3D9196878C80094C2CF /* RewardService.cpp */,
+				16DBA3DA196878C80094C2CF /* RewardService.h */,
+				16DBA3DB196878C80094C2CF /* ScoreBoardService.cpp */,
+				16DBA3DC196878C80094C2CF /* ScoreBoardService.h */,
+				16DBA3DD196878C80094C2CF /* ScoreService.cpp */,
+				16DBA3DE196878C80094C2CF /* ScoreService.h */,
+			);
+			path = GameService;
+			sourceTree = "<group>";
+		};
+		16DBA3DF196878C80094C2CF /* PushNotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3E0196878C80094C2CF /* App42PushNotificationResponse.cpp */,
+				16DBA3E1196878C80094C2CF /* App42PushNotificationResponse.h */,
+				16DBA3E2196878C80094C2CF /* PushNotificationService.cpp */,
+				16DBA3E3196878C80094C2CF /* PushNotificationService.h */,
+			);
+			path = PushNotificationService;
+			sourceTree = "<group>";
+		};
+		16DBA3E4196878C80094C2CF /* StorageService */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3E5196878C80094C2CF /* App42StorageResponse.cpp */,
+				16DBA3E6196878C80094C2CF /* App42StorageResponse.h */,
+				16DBA3E7196878C80094C2CF /* Query.cpp */,
+				16DBA3E8196878C80094C2CF /* Query.h */,
+				16DBA3E9196878C80094C2CF /* QueryBuilder.cpp */,
+				16DBA3EA196878C80094C2CF /* QueryBuilder.h */,
+				16DBA3EB196878C80094C2CF /* StorageService.cpp */,
+				16DBA3EC196878C80094C2CF /* StorageService.h */,
+			);
+			path = StorageService;
+			sourceTree = "<group>";
+		};
+		16DBA3ED196878C80094C2CF /* UserService */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3EE196878C80094C2CF /* App42UserResponse.cpp */,
+				16DBA3EF196878C80094C2CF /* App42UserResponse.h */,
+				16DBA3F0196878C80094C2CF /* UserService.cpp */,
+				16DBA3F1196878C80094C2CF /* UserService.h */,
+			);
+			path = UserService;
+			sourceTree = "<group>";
+		};
+		16DBA3F2196878C80094C2CF /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				16DBA3F3196878C80094C2CF /* BodyBuilder.h */,
+				16DBA3F4196878C80094C2CF /* Common.h */,
+				16DBA3F5196878C80094C2CF /* Connector.h */,
+				16DBA3F6196878C80094C2CF /* Exceptions.h */,
+				16DBA3F7196878C80094C2CF /* Signing.h */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -1866,7 +2045,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				167ED3C4194F44CD00B71E79 /* AppWarpX */,
+				16DBA3B2196878C80094C2CF /* App42 */,
 				167ED3B0194F44BA00B71E79 /* admob.ios */,
 				15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */,
 				15A3D8871682F7D5002FB0C5 /* Box2D */,
@@ -2331,6 +2510,7 @@
 				169D58BE194F494600EE290E /* button_new_game_selected.png in Resources */,
 				169D58EC19511DFA00EE290E /* busy.wav in Resources */,
 				169D58C5194F494600EE290E /* go.png in Resources */,
+				16DBA41C196879DD0094C2CF /* background.png in Resources */,
 				169D58C2194F494600EE290E /* check_box_selected.png in Resources */,
 				169D58C9194F494600EE290E /* ok_normal.png in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
@@ -2339,6 +2519,7 @@
 				169D58C3194F494600EE290E /* controller_positions.png in Resources */,
 				169D58BD194F494600EE290E /* button_new_game_normal.png in Resources */,
 				169D58C6194F494600EE290E /* left.png in Resources */,
+				16DBA41A196879DD0094C2CF /* background_main.png in Resources */,
 				169D58F61953D2DB00EE290E /* purchase_selected.png in Resources */,
 				169D58CD194F494600EE290E /* play.png in Resources */,
 				169D58D1194F494600EE290E /* side_by_side.png in Resources */,
@@ -2350,7 +2531,9 @@
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
 				169D58D3194F494600EE290E /* sprites.plist in Resources */,
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
+				16DBA41D196879DD0094C2CF /* splash.png in Resources */,
 				169D58C8194F494600EE290E /* mute.png in Resources */,
+				16DBA41B196879DD0094C2CF /* background_other.png in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
 				169D58DD194F494600EE290E /* score.wav in Resources */,
 				169D58BA194F494600EE290E /* background0.png in Resources */,
@@ -2379,26 +2562,31 @@
 				15A3D9041682F7D5002FB0C5 /* b2Distance.cpp in Sources */,
 				15A3D9051682F7D5002FB0C5 /* b2DynamicTree.cpp in Sources */,
 				15A3D9061682F7D5002FB0C5 /* b2TimeOfImpact.cpp in Sources */,
+				16DBA409196878C80094C2CF /* ScoreBoardService.cpp in Sources */,
 				15A3D9071682F7D5002FB0C5 /* b2ChainShape.cpp in Sources */,
 				15A3D9081682F7D5002FB0C5 /* b2CircleShape.cpp in Sources */,
 				15A3D9091682F7D5002FB0C5 /* b2EdgeShape.cpp in Sources */,
+				16DBA40C196878C80094C2CF /* PushNotificationService.cpp in Sources */,
 				15A3D90A1682F7D5002FB0C5 /* b2PolygonShape.cpp in Sources */,
 				15A3D90B1682F7D5002FB0C5 /* b2BlockAllocator.cpp in Sources */,
 				15A3D90C1682F7D5002FB0C5 /* b2Draw.cpp in Sources */,
+				16DBA402196878C80094C2CF /* SHA1.cpp in Sources */,
 				375BD4C61868411B0024609E /* TriggerObj.cpp in Sources */,
 				375BD4C31868411B0024609E /* ObjectFactory.cpp in Sources */,
 				15A3D90D1682F7D5002FB0C5 /* b2Math.cpp in Sources */,
 				15A3D90E1682F7D5002FB0C5 /* b2Settings.cpp in Sources */,
 				15A3D90F1682F7D5002FB0C5 /* b2StackAllocator.cpp in Sources */,
 				15A3D9101682F7D5002FB0C5 /* b2Timer.cpp in Sources */,
+				16DBA3F8196878C80094C2CF /* cJSON.c in Sources */,
 				15A3D9111682F7D5002FB0C5 /* b2Body.cpp in Sources */,
 				15A3D9121682F7D5002FB0C5 /* b2ContactManager.cpp in Sources */,
 				15A3D9131682F7D5002FB0C5 /* b2Fixture.cpp in Sources */,
 				15A3D9141682F7D5002FB0C5 /* b2Island.cpp in Sources */,
+				16DBA3FF196878C80094C2CF /* Utilities.cpp in Sources */,
+				16DBA40F196878C80094C2CF /* QueryBuilder.cpp in Sources */,
 				15A3D9151682F7D5002FB0C5 /* b2World.cpp in Sources */,
 				15A3D9161682F7D5002FB0C5 /* b2WorldCallbacks.cpp in Sources */,
 				167ED39B194F446200B71E79 /* CarObj.cpp in Sources */,
-				167ED3E1194F44CD00B71E79 /* requests.cpp in Sources */,
 				167ED39F194F446200B71E79 /* GameObj.cpp in Sources */,
 				15A3D9171682F7D5002FB0C5 /* b2ChainAndCircleContact.cpp in Sources */,
 				15A3D9181682F7D5002FB0C5 /* b2ChainAndPolygonContact.cpp in Sources */,
@@ -2407,7 +2595,6 @@
 				15A3D9191682F7D5002FB0C5 /* b2CircleContact.cpp in Sources */,
 				169D58EA1951140400EE290E /* MultiPlayScene.cpp in Sources */,
 				15A3D91A1682F7D5002FB0C5 /* b2Contact.cpp in Sources */,
-				167ED3E4194F44CD00B71E79 /* udpsocket.cpp in Sources */,
 				15A3D91B1682F7D5002FB0C5 /* b2ContactSolver.cpp in Sources */,
 				298B29BA18D0668400C1920F /* ButtonReader.cpp in Sources */,
 				15A3D91C1682F7D5002FB0C5 /* b2EdgeAndCircleContact.cpp in Sources */,
@@ -2416,17 +2603,18 @@
 				15A3D91E1682F7D5002FB0C5 /* b2PolygonAndCircleContact.cpp in Sources */,
 				15A3D91F1682F7D5002FB0C5 /* b2PolygonContact.cpp in Sources */,
 				15A3D9201682F7D5002FB0C5 /* b2DistanceJoint.cpp in Sources */,
+				16DBA3FB196878C80094C2CF /* App42Service.cpp in Sources */,
 				298B29BD18D0668400C1920F /* LabelAtlasReader.cpp in Sources */,
 				15A3D9211682F7D5002FB0C5 /* b2FrictionJoint.cpp in Sources */,
 				15A3D9221682F7D5002FB0C5 /* b2GearJoint.cpp in Sources */,
 				15A3D9231682F7D5002FB0C5 /* b2Joint.cpp in Sources */,
+				16DBA412196878C80094C2CF /* UserService.cpp in Sources */,
 				15A3D9241682F7D5002FB0C5 /* b2MouseJoint.cpp in Sources */,
 				15A3D9251682F7D5002FB0C5 /* b2PrismaticJoint.cpp in Sources */,
 				15A3D9261682F7D5002FB0C5 /* b2PulleyJoint.cpp in Sources */,
 				15A3D9271682F7D5002FB0C5 /* b2RevoluteJoint.cpp in Sources */,
 				15A3D9281682F7D5002FB0C5 /* b2RopeJoint.cpp in Sources */,
 				15A3D9291682F7D5002FB0C5 /* b2WeldJoint.cpp in Sources */,
-				167ED3DF194F44CD00B71E79 /* cJSON.c in Sources */,
 				15A3D92A1682F7D5002FB0C5 /* b2WheelJoint.cpp in Sources */,
 				15A3D9391682F7D5002FB0C5 /* b2Rope.cpp in Sources */,
 				15A3D9951682F7F9002FB0C5 /* chipmunk.c in Sources */,
@@ -2436,19 +2624,21 @@
 				15A3D9991682F7F9002FB0C5 /* cpDampedSpring.c in Sources */,
 				15A3D99A1682F7F9002FB0C5 /* cpGearJoint.c in Sources */,
 				15A3D99B1682F7F9002FB0C5 /* cpGrooveJoint.c in Sources */,
+				16DBA405196878C80094C2CF /* App42RewardResponse.cpp in Sources */,
 				15A3D99C1682F7F9002FB0C5 /* cpPinJoint.c in Sources */,
 				15A3D99D1682F7F9002FB0C5 /* cpPivotJoint.c in Sources */,
+				16DBA408196878C80094C2CF /* RewardService.cpp in Sources */,
 				15A3D99E1682F7F9002FB0C5 /* cpRatchetJoint.c in Sources */,
 				15A3D99F1682F7F9002FB0C5 /* cpRotaryLimitJoint.c in Sources */,
 				15A3D9A01682F7F9002FB0C5 /* cpSimpleMotor.c in Sources */,
 				15A3D9A11682F7F9002FB0C5 /* cpSlideJoint.c in Sources */,
-				167ED3E5194F44CD00B71E79 /* urlencode.cpp in Sources */,
 				15A3D9A21682F7F9002FB0C5 /* cpArbiter.c in Sources */,
 				15A3D9A31682F7F9002FB0C5 /* cpArray.c in Sources */,
 				15A3D9A41682F7F9002FB0C5 /* cpBB.c in Sources */,
 				15A3D9A51682F7F9002FB0C5 /* cpBBTree.c in Sources */,
 				15A3D9A61682F7F9002FB0C5 /* cpBody.c in Sources */,
 				15A3D9A71682F7F9002FB0C5 /* cpCollision.c in Sources */,
+				16DBA40E196878C80094C2CF /* Query.cpp in Sources */,
 				15A3D9A81682F7F9002FB0C5 /* cpHashSet.c in Sources */,
 				15A3D9A91682F7F9002FB0C5 /* cpPolyShape.c in Sources */,
 				15A3D9AA1682F7F9002FB0C5 /* cpShape.c in Sources */,
@@ -2459,8 +2649,8 @@
 				15A3D9AF1682F7F9002FB0C5 /* cpSpaceStep.c in Sources */,
 				167ED3AE194F449200B71E79 /* InAppPurchaseManager.mm in Sources */,
 				15A3D9B01682F7F9002FB0C5 /* cpSpatialIndex.c in Sources */,
+				16DBA400196878C80094C2CF /* app42base64.cpp in Sources */,
 				15A3D9B11682F7F9002FB0C5 /* cpSweep1D.c in Sources */,
-				167ED3DD194F44CD00B71E79 /* appwarp_extended.cpp in Sources */,
 				15A3D9B21682F7F9002FB0C5 /* cpVect.c in Sources */,
 				15A3DA311682F826002FB0C5 /* CCBAnimationManager.cpp in Sources */,
 				15A3DA321682F826002FB0C5 /* CCBFileLoader.cpp in Sources */,
@@ -2483,12 +2673,13 @@
 				375BD5101868454E0024609E /* CCActionFrameEasing.cpp in Sources */,
 				298B29C318D0668400C1920F /* PageViewReader.cpp in Sources */,
 				15A3DA411682F826002FB0C5 /* CCMenuItemLoader.cpp in Sources */,
+				16DBA3FE196878C80094C2CF /* MetaResponse.cpp in Sources */,
+				16DBA410196878C80094C2CF /* StorageService.cpp in Sources */,
+				16DBA404196878C80094C2CF /* App42GameResponse.cpp in Sources */,
 				15A3DA421682F826002FB0C5 /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				15A3DA431682F826002FB0C5 /* CCNodeLoader.cpp in Sources */,
-				167ED3E0194F44CD00B71E79 /* HMAC_SHA1.cpp in Sources */,
 				15A3DA441682F826002FB0C5 /* CCNodeLoaderLibrary.cpp in Sources */,
 				298B29C118D0668400C1920F /* ListViewReader.cpp in Sources */,
-				167ED3E3194F44CD00B71E79 /* socket.cpp in Sources */,
 				15A3DA451682F826002FB0C5 /* CCParticleSystemQuadLoader.cpp in Sources */,
 				15A3DA461682F826002FB0C5 /* CCScale9SpriteLoader.cpp in Sources */,
 				15A3DA471682F826002FB0C5 /* CCScrollViewLoader.cpp in Sources */,
@@ -2499,6 +2690,7 @@
 				15A3DA4B1682F826002FB0C5 /* CCControlColourPicker.cpp in Sources */,
 				298B29BF18D0668400C1920F /* LabelReader.cpp in Sources */,
 				15A3DA4C1682F826002FB0C5 /* CCControlHuePicker.cpp in Sources */,
+				16DBA415196878E20094C2CF /* SplashScene.cpp in Sources */,
 				375BD50F1868454E0024609E /* CCActionFrame.cpp in Sources */,
 				15A3DA4D1682F826002FB0C5 /* CCControlPotentiometer.cpp in Sources */,
 				15A3DA4E1682F826002FB0C5 /* CCControlSaturationBrightnessPicker.cpp in Sources */,
@@ -2506,17 +2698,18 @@
 				15A3DA501682F826002FB0C5 /* CCControlStepper.cpp in Sources */,
 				15A3DA511682F826002FB0C5 /* CCControlSwitch.cpp in Sources */,
 				298B29C718D0668400C1920F /* WidgetReader.cpp in Sources */,
+				16DBA403196878C80094C2CF /* urlencode.cpp in Sources */,
 				15A3DA521682F826002FB0C5 /* CCControlUtils.cpp in Sources */,
 				375BD4C41868411B0024609E /* TriggerBase.cpp in Sources */,
 				298B29BB18D0668400C1920F /* CheckBoxReader.cpp in Sources */,
-				167ED3E6194F44CD00B71E79 /* utilities.cpp in Sources */,
 				15A3DA531682F826002FB0C5 /* CCInvocation.cpp in Sources */,
 				15A3DA541682F826002FB0C5 /* CCScale9Sprite.cpp in Sources */,
+				16DBA411196878C80094C2CF /* App42UserResponse.cpp in Sources */,
 				167ED3A2194F446200B71E79 /* MenuForArrowButton.cpp in Sources */,
 				15A3DA551682F826002FB0C5 /* CCEditBox.cpp in Sources */,
+				16DBA40D196878C80094C2CF /* App42StorageResponse.cpp in Sources */,
 				15A3DA571682F826002FB0C5 /* CCEditBoxImplIOS.mm in Sources */,
 				15A3DA591682F826002FB0C5 /* CCScrollView.cpp in Sources */,
-				167ED3DC194F44CD00B71E79 /* appwarp.cpp in Sources */,
 				15A3DA5A1682F826002FB0C5 /* CCSorting.cpp in Sources */,
 				167ED39C194F446200B71E79 /* City.cpp in Sources */,
 				15A3DA5B1682F826002FB0C5 /* CCTableView.cpp in Sources */,
@@ -2538,9 +2731,13 @@
 				1AFCDA8216D4A25900906EA6 /* RootViewController.mm in Sources */,
 				1A8F3B6E175E05DA00049216 /* Animation.cpp in Sources */,
 				1A8F3B6F175E05DA00049216 /* AnimationState.cpp in Sources */,
+				16DBA3FA196878C80094C2CF /* App42Response.cpp in Sources */,
+				16DBA3F9196878C80094C2CF /* App42API.cpp in Sources */,
 				1A8F3B70175E05DA00049216 /* AnimationStateData.cpp in Sources */,
+				16DBA40B196878C80094C2CF /* App42PushNotificationResponse.cpp in Sources */,
 				1A8F3B71175E05DA00049216 /* Atlas.cpp in Sources */,
 				1A8F3B72175E05DA00049216 /* AtlasAttachmentLoader.cpp in Sources */,
+				16DBA401196878C80094C2CF /* HMAC_SHA1.cpp in Sources */,
 				298B29C618D0668400C1920F /* TextFieldReader.cpp in Sources */,
 				1A8F3B73175E05DA00049216 /* Attachment.cpp in Sources */,
 				1A8F3B74175E05DA00049216 /* AttachmentLoader.cpp in Sources */,
@@ -2549,6 +2746,7 @@
 				1A8F3B77175E05DA00049216 /* CCSkeleton.cpp in Sources */,
 				1A8F3B78175E05DA00049216 /* CCSkeletonAnimation.cpp in Sources */,
 				375BD5121868454E0024609E /* CCActionNode.cpp in Sources */,
+				16DBA3FC196878C80094C2CF /* App42Exception.cpp in Sources */,
 				1A8F3B79175E05DA00049216 /* extension.cpp in Sources */,
 				1A8F3B7A175E05DA00049216 /* Json.cpp in Sources */,
 				1A8F3B7B175E05DA00049216 /* RegionAttachment.cpp in Sources */,
@@ -2558,6 +2756,7 @@
 				1A8F3B7E175E05DA00049216 /* SkeletonJson.cpp in Sources */,
 				1A8F3B7F175E05DA00049216 /* Skin.cpp in Sources */,
 				167ED3C1194F44BA00B71E79 /* BannerViewController.m in Sources */,
+				16DBA406196878C80094C2CF /* App42Score.cpp in Sources */,
 				167ED3AF194F449200B71E79 /* P2PManager.mm in Sources */,
 				167ED39A194F446200B71E79 /* B2Sprite.cpp in Sources */,
 				167ED3A1194F446200B71E79 /* Lane.cpp in Sources */,
@@ -2568,13 +2767,14 @@
 				298B29C418D0668400C1920F /* ScrollViewReader.cpp in Sources */,
 				1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */,
 				375BD4C51868411B0024609E /* TriggerMng.cpp in Sources */,
+				16DBA407196878C80094C2CF /* GameService.cpp in Sources */,
 				1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */,
 				379BB99A17F03F3700829B88 /* CCArmatureAnimation.cpp in Sources */,
 				379BB99B17F03F3700829B88 /* CCProcessBase.cpp in Sources */,
 				379BB99C17F03F3700829B88 /* CCTween.cpp in Sources */,
-				167ED3E2194F44CD00B71E79 /* SHA1.cpp in Sources */,
 				379BB99D17F03F3700829B88 /* CCArmature.cpp in Sources */,
 				379BB99E17F03F3700829B88 /* CCBone.cpp in Sources */,
+				16DBA3FD196878C80094C2CF /* JSONDocument.cpp in Sources */,
 				379BB99F17F03F3700829B88 /* CCDatas.cpp in Sources */,
 				379BB9A017F03F3700829B88 /* CCBatchNode.cpp in Sources */,
 				379BB9A117F03F3700829B88 /* CCDecorativeDisplay.cpp in Sources */,
@@ -2585,7 +2785,6 @@
 				379BB9A517F03F3700829B88 /* CCColliderDetector.cpp in Sources */,
 				379BB9A617F03F3700829B88 /* CCArmatureDataManager.cpp in Sources */,
 				379BB9A717F03F3700829B88 /* CCArmatureDefine.cpp in Sources */,
-				167ED3DE194F44CD00B71E79 /* base64.cpp in Sources */,
 				379BB9A817F03F3700829B88 /* CCDataReaderHelper.cpp in Sources */,
 				379BB9A917F03F3700829B88 /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				379BB9AA17F03F3700829B88 /* CCTransformHelp.cpp in Sources */,
@@ -2618,6 +2817,7 @@
 				167ED39D194F446200B71E79 /* ControlMenu.cpp in Sources */,
 				379BB9C717F03F3700829B88 /* UISlider.cpp in Sources */,
 				379BB9C917F03F3700829B88 /* UITextField.cpp in Sources */,
+				16DBA40A196878C80094C2CF /* ScoreService.cpp in Sources */,
 				379BB9CB17F03F3700829B88 /* DictionaryHelper.cpp in Sources */,
 				379BB9D317F03F3700829B88 /* GUIReader.cpp in Sources */,
 				379BB9D417F03F3700829B88 /* SceneReader.cpp in Sources */,
