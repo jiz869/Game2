@@ -22,6 +22,7 @@ void static stopEnd(PlayerObj * player);
 void static hasteBegin(PlayerObj * player);
 void static hasteEnd(PlayerObj * player);
 
+void static strongBegin(PlayerObj * player);
 bool static strongHitByCar(PlayerObj * player, CCSprite * car);
 
 void static lifeBegin(PlayerObj * player);
@@ -228,11 +229,23 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.resetSoundImage = CCSTRING_FOR_KEY(dataDict, "reset_sound_file");
     animationData.scoreSoundImage = CCSTRING_FOR_KEY(dataDict, "score_sound_file");
     animationData.levelupSoundImage = CCSTRING_FOR_KEY(dataDict, "levelup_sound_file");
+    animationData.stopSoundImage = CCSTRING_FOR_KEY(dataDict, "special_stop_sound");
+    animationData.skullSoundImage = CCSTRING_FOR_KEY(dataDict, "special_skull_sound");
+    animationData.scoreSpecialSoundImage = CCSTRING_FOR_KEY(dataDict, "special_score_sound");
+    animationData.lifeSoundImage = CCSTRING_FOR_KEY(dataDict, "special_life_sound");
+    animationData.timeSoundImage = CCSTRING_FOR_KEY(dataDict, "special_time_sound");
+    animationData.strongSoundImage = CCSTRING_FOR_KEY(dataDict, "special_strong_sound");
 
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData.backgroundSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.scoreSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.levelupSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.stopSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.skullSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.lifeSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.timeSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.scoreSpecialSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.strongSoundImage->getCString());
 
     CCArray * hornSoundFiles = (CCArray *)dataDict->objectForKey("horn_sound_files");
     animationData.hornSoundImages.reserve(hornSoundFiles->count());
@@ -339,7 +352,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[STRONG]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[STRONG]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
     specialDatas[STRONG]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-    specialDatas[STRONG]->begin = NULL;
+    specialDatas[STRONG]->begin = &strongBegin;
     specialDatas[STRONG]->step = NULL;
     specialDatas[STRONG]->end = NULL;
     specialDatas[STRONG]->hitByCar = &strongHitByCar;
@@ -397,6 +410,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
 
 //stop
 void static stopBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->stopSoundImage->getCString());
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->stopAllLanes();
 }
@@ -418,6 +433,11 @@ void static hasteEnd(PlayerObj * player){
 }
 
 //strong
+void static strongBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->strongSoundImage->getCString());
+}
+
 bool static strongHitByCar(PlayerObj * player, CCSprite * car){
 	car->runAction(CCBlink::create(2, 10));
 	return false;
@@ -425,6 +445,8 @@ bool static strongHitByCar(PlayerObj * player, CCSprite * car){
 
 //life
 void static lifeBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->lifeSoundImage->getCString());
 	SpecialData * data = GameController::getGameController()->getSpecialData(LIFE);
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->increaseDuration((int)data->userData1 , 0);
@@ -432,6 +454,8 @@ void static lifeBegin(PlayerObj * player){
 
 //time
 void static timeBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->timeSoundImage->getCString());
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->stopTime();
 }
@@ -442,12 +466,16 @@ void static timeEnd(PlayerObj * player){
 
 //skull
 void static skullBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->skullSoundImage->getCString());
 	PlayScene * playScene = (PlayScene *)player->getParent();
 	playScene->destroyRandomCar();
 }
 
 //score
 void static scoreBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSpecialSoundImage->getCString());
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
     specialData->count = 0;
     PlayScene * playScene = (PlayScene *)player->getParent();

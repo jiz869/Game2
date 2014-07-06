@@ -35,10 +35,22 @@
 	</dict>
 	<key>animation_data</key>
 	<dict>
-		<key>score_sound_file</key>
+		<key>special_skull_sound</key>
+		<string>skull.wav</string>
+		<key>special_time_sound</key>
+		<string>time.wav</string>
+		<key>special_life_sound</key>
+		<string>life.wav</string>
+		<key>special_score_sound</key>
 		<string>score.wav</string>
+		<key>special_stop_sound</key>
+		<string>stop.wav</string>
+		<key>score_sound_file</key>
+		<string>success.wav</string>
 		<key>reset_sound_file</key>
 		<string>bzzzt.wav</string>
+		<key>special_strong_sound</key>
+		<string>strong.wav</string>
 		<key>background_sound_file</key>
 		<string>busy.wav</string>
 		<key>levelup_sound_file</key>
@@ -1844,7 +1856,7 @@
 		<key>strong</key>
 		<dict>
 			<key>duration</key>
-			<string>1.6</string>
+			<string>2</string>
 			<key>life</key>
 			<string>2.5</string>
 			<key>image_name</key>
