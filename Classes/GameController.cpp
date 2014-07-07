@@ -13,6 +13,7 @@
 #include "ControlMenu.h"
 #include "SimpleAudioEngine.h"
 #include "App42API.h"
+#include "app42base64.h"
 
 using namespace CocosDenshion;
 
@@ -660,7 +661,7 @@ void GameController::onScoreBoardGetCompleted(CCNode * node , void * response){
 			CCLOG("UserName=%s\n",it->getUserName().c_str());
 			ranks[i].score = (int)it->getScoreValue();
 			ranks[i].level = getLevelByScore(ranks[i].score);
-			ranks[i].userName = it->getUserName();
+			ranks[i].userName = base64_decode(it->getUserName());
 			i++;
 		}
 	}
@@ -705,6 +706,6 @@ void GameController::saveLastScore(const char * userName){
 		name = (char *)userName;
 	}
 
-    scoreBoardService->SaveUserScore("crossRoad", name, userData.lastScore,
-    		this, callfuncND_selector(GameController::onScoreBoardSaveCompleted));
+    scoreBoardService->SaveUserScore("crossRoad", base64_encode((unsigned char const*)name, strlen(name))
+    		, userData.lastScore, this, callfuncND_selector(GameController::onScoreBoardSaveCompleted));
 }
