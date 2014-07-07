@@ -82,8 +82,6 @@ std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_
 
 }
 
-
-/*
 std::string base64_decode(std::string const& encoded_string) {
   int in_len = encoded_string.size();
   int i = 0;
@@ -123,4 +121,4 @@ std::string base64_decode(std::string const& encoded_string) {
   }
 
   return ret;
-}*/
+}
