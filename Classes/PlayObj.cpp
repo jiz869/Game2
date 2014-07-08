@@ -17,6 +17,7 @@ using namespace CocosDenshion;
 PlayerObj::PlayerObj() : movingState(WAIT)
 {
     specials.reserve(MAX_SPECIAL_NUM);
+    badSpecials.reserve(MAX_SPECIAL_NUM);
     UserData * userData = GameController::getGameController()->getUserData();
     data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
     playerAccSpeed = data->playerAccSpeed;
@@ -108,6 +109,21 @@ void PlayerObj::speedUp(float delta){
     }
 }
 
+void PlayerObj::freeze(){
+
+	playerAccSpeed = playerStopAccSpeed = 0;
+
+	hitByCar();
+}
+
+void PlayerObj::unfreeze(){
+
+    playerAccSpeed = data->playerAccSpeed;
+    playerStopAccSpeed = data->playerStopAccSpeed;
+
+}
+
+
 void PlayerObj::slowDown(float delta){
 
     playerAccSpeed = data->playerAccSpeed;
@@ -131,6 +147,12 @@ void PlayerObj::step(float dt){
 
     for (int i = 0; i < size; i++) {
         specials[i]->step(this);
+    }
+
+    size = badSpecials.size();
+
+    for (int i = 0; i < size; i++) {
+        badSpecials[i]->step(this);
     }
 
     velocity = velocity + acc;
@@ -178,14 +200,18 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
         //remove all specials when hit by car
 		AnimationData * animData = GameController::getGameController()->getAnimationData();
 		SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
-		PlayScene * playScene = (PlayScene *)getParent();
-		playScene->controlMenu->changeScore(-2 , false);
-		reset();
-		removeAllSpecials();
+		hitByCar();
         return true;
     }
 
     return false;
+}
+
+void PlayerObj::hitByCar(){
+	PlayScene * playScene = (PlayScene *)getParent();
+	playScene->controlMenu->changeScore(-2 , false);
+	reset();
+	removeAllSpecials();
 }
 
 void PlayerObj::removeAllSpecials(){
@@ -197,13 +223,17 @@ void PlayerObj::removeAllSpecials(){
 
 void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
 
-    if (hasSpecial(specialObj) || enoughSpecials()) {
+    if (hasSpecial(specialObj) || enoughSpecials(specialObj)) {
         return;
     }
 
     specialObj->take();
 
-    specials.push_back(specialObj);
+    if(specialObj->getSpecialId() > SPECIAL_NUM){
+    	badSpecials.push_back(specialObj);
+    }else{
+    	specials.push_back(specialObj);
+    }
 
     tagPlayer(specialObj);
 
@@ -218,26 +248,45 @@ void PlayerObj::tagPlayer(SpecialObj *specialObj){
 
     gameObj->addChild(tag);
 
+    if(specialObj->getSpecialId() > SPECIAL_NUM){
+    	tag->setPosition(ccp(-(badSpecials.size()-0.5)*tagSize.width , playerSize.height/2));
+    }else{
     //Todo: need a better way and animation to tag player
-    tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
+    	tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
+    }
 
     tag->runAction(CCSequence::createWithTwoActions(CCScaleTo::create(0.2, 1.5), CCScaleTo::create(0.2, 0.8)));
     tag->setTag(specialObj->getSpecialId());
 }
 
-bool PlayerObj::enoughSpecials(){
-    return specials.size() == MAX_SPECIAL_NUM;
+bool PlayerObj::enoughSpecials(SpecialObj *specialObj){
+	if(specialObj->getSpecialId() > SPECIAL_NUM){
+		return badSpecials.size() == MAX_SPECIAL_NUM;
+	}else{
+		return specials.size() == MAX_SPECIAL_NUM;
+	}
 }
 
 bool PlayerObj::hasSpecial(SpecialObj *specialObj){
-	int size = specials.size();
-    for (int i = 0; i < size; i++) {
-        if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
-            return true;
-        }
-    }
+	if(specialObj->getSpecialId() < SPECIAL_NUM){
+		int size = specials.size();
+	    for (int i = 0; i < size; i++) {
+	        if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
+	            return true;
+	        }
+	    }
 
-    return false;
+	    return false;
+	}else{
+		int size = badSpecials.size();
+	    for (int i = 0; i < size; i++) {
+	        if (badSpecials[i]->getSpecialId() == specialObj->getSpecialId()) {
+	            return true;
+	        }
+	    }
+
+	    return false;
+	}
 }
 
 void PlayerObj::endWithSpecial(SpecialObj *specialObj){
@@ -247,26 +296,47 @@ void PlayerObj::endWithSpecial(SpecialObj *specialObj){
 }
 
 void PlayerObj::removeSpecial(SpecialObj *specialObj){
-	int size = specials.size();
-    for (int i = 0; i < size; i++) {
-        if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
-            specials.erase(specials.begin() + i);
-            break;
-        }
-    }
+	if(specialObj->getSpecialId() > SPECIAL_NUM){
+		int size = badSpecials.size();
+		for (int i = 0; i < size; i++) {
+			if (badSpecials[i]->getSpecialId() == specialObj->getSpecialId()) {
+				badSpecials.erase(badSpecials.begin() + i);
+				break;
+			}
+		}
 
-    CCSize tagSize;
-    CCSize playerSize = gameObj->getContentSize();
+		CCSize tagSize;
+		CCSize playerSize = gameObj->getContentSize();
 
-    size = specials.size();
-    for (int i = 0; i < size; i++) {
-        CCSprite * tag = (CCSprite *)gameObj->getChildByTag(specials[i]->getSpecialId());
+		size = badSpecials.size();
+		for (int i = 0; i < size; i++) {
+			CCSprite * tag = (CCSprite *)gameObj->getChildByTag(badSpecials[i]->getSpecialId());
 
-        tagSize = tag->getContentSize();
+			tagSize = tag->getContentSize();
 
-        tag->setPosition(ccp(playerSize.width+(size-0.5)*tagSize.width , playerSize.height/2));
-    }
+			tag->setPosition(ccp(-(size-0.5)*tagSize.width , playerSize.height/2));
+		}
+	}else{
+		int size = specials.size();
+		for (int i = 0; i < size; i++) {
+			if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
+				specials.erase(specials.begin() + i);
+				break;
+			}
+		}
 
+		CCSize tagSize;
+		CCSize playerSize = gameObj->getContentSize();
+
+		size = specials.size();
+		for (int i = 0; i < size; i++) {
+			CCSprite * tag = (CCSprite *)gameObj->getChildByTag(specials[i]->getSpecialId());
+
+			tagSize = tag->getContentSize();
+
+			tag->setPosition(ccp(playerSize.width+(size-0.5)*tagSize.width , playerSize.height/2));
+		}
+	}
 }
 
 CCNode * PlayerObj::getParent(){

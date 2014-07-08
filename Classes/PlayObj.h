@@ -40,7 +40,7 @@ public:
     void step(float dt);
     bool processContact(CCSprite * contact);
     bool hasSpecial(SpecialObj * specialObj);
-    bool enoughSpecials();
+    bool enoughSpecials(SpecialObj * specialObj);
     void beginWithSpecial(SpecialObj * specialObj);
     void endWithSpecial(SpecialObj * specialObj);
     void removeSpecial(SpecialObj * specialObj);
@@ -51,15 +51,19 @@ public:
     void removeAllSpecials();
     CCPoint resetPos;
     void setTag(int tag);
+    void freeze();
+    void unfreeze();
 
 protected:
     PlayerState movingState;
     vector<SpecialObj *> specials;
+    vector<SpecialObj *> badSpecials;
     PlaySceneData * data;
     CCPoint velocity;
     CCPoint acc;	//acceleration
     float playerAccSpeed;		//starting acceleration
     float playerStopAccSpeed;	//stopping acceleration
+    void hitByCar();
 };
 
 #endif /* defined(__crossRoadMain__PlayObj__) */

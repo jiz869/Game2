@@ -221,6 +221,13 @@ void PlayScene::update(float dt){
 			}
 		}else if(sprite != NULL && (sprite->getTag() == SPECIAL)){
 			SpecialObj * special = (SpecialObj *)sprite->getUserData();
+
+			if(special->getSpecialId() > SPECIAL_NUM){
+				if(sprite->getPosition().x < 0 || sprite->getPosition().x > winSize.width){
+					special->expire();
+				}
+			}
+
 			if(special->isExpired() == true && special->isTaken() == false ){
 				delete special;
 				world->DestroyBody(body);

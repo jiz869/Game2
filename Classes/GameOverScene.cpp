@@ -101,9 +101,13 @@ void GameOverScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 	if(nameField->boundingBox().containsPoint(touchPoint)){
 		nameField->attachWithIME();
 	}else{
+		const char * name = nameField->getString();
+		if(strlen(name) == 0){
+			nameField->setPlaceHolder("Penguin");
+		}
 		nameField->detachWithIME();
 		if(OK->boundingBox().containsPoint(touchPoint)){
-			GameController::getGameController()->saveLastScore(nameField->getString());
+			GameController::getGameController()->saveLastScore(name);
 			CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
 		}
 	}

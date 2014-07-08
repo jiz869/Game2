@@ -18,7 +18,7 @@ SpecialObj::~SpecialObj() {
 }
 
 B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float speed, Lane *lane){
-    specialId = getRandom(0, SPECIAL_NUM - 1);
+    specialId = getRandom(SPECIAL_NUM + 1, BAD_SPECIAL_NUM - 1);
     specialData = GameController::getGameController()->getSpecialData(specialId);
     CarObj::load(specialData->imageName->getCString(), left2right, initPos, speed, lane , SPECIAL);
     gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
@@ -35,7 +35,10 @@ B2Sprite * SpecialObj::load(cocos2d::CCPoint initPos){
 }
 
 void SpecialObj::begin(PlayerObj *player){
-    gameObj->setVisible(false);
+	if(specialId < SPECIAL_NUM){
+		gameObj->setVisible(false);
+		gameObj->setPosition(ccp(-1000 , -1000));
+	}
     if (specialData->begin) {
         specialData->begin(player);
     }

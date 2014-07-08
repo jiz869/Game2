@@ -34,6 +34,8 @@ typedef enum{
     SCORE,
     SPECIAL_NUM,
     HASTE = SPECIAL_NUM,
+    POLICE = SPECIAL_NUM + 1,
+    BAD_SPECIAL_NUM,
 }SpecialID;
 
 typedef enum{
@@ -108,6 +110,7 @@ typedef struct{
     CCAnimation * specialTimeAnim;
     CCAnimation * specialSkullAnim;
     CCAnimation * specialScoreAnim;
+    CCAnimation * specialPoliceAnim;
     CCAnimation * explodeAnim;
 }AnimationData;
 

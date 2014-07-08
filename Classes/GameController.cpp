@@ -36,6 +36,9 @@ void static skullBegin(PlayerObj * player);
 void static scoreBegin(PlayerObj * player);
 void static scoreStep(PlayerObj * player);
 
+void static policeBegin(PlayerObj * player);
+void static policeEnd(PlayerObj * player);
+
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
@@ -287,6 +290,10 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.specialScoreAnim = initAnimation(array);
     animationData.specialScoreAnim->setDelayPerUnit(0.3);
 
+    array = (CCArray *)dataDict->objectForKey("special_police_animation");
+    animationData.specialPoliceAnim = initAnimation(array);
+    animationData.specialPoliceAnim->setDelayPerUnit(0.3);
+
     CCDictionary * animDict = (CCDictionary *)dataDict->objectForKey("explode_animation");
     animationData.explodeAnim = initAnimation(animDict);
 
@@ -406,6 +413,16 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SCORE]->hitByCar = NULL;
     specialDatas[SCORE]->animation = animationData.specialScoreAnim;
 
+    dict = (CCDictionary *)dataDict->objectForKey("police");
+    specialDatas[POLICE] = new SpecialData;
+    specialDatas[POLICE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[POLICE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[POLICE]->begin = &policeBegin;
+    specialDatas[POLICE]->step = NULL;
+    specialDatas[POLICE]->end = &policeEnd;
+    specialDatas[POLICE]->hitByCar = NULL;
+    specialDatas[POLICE]->animation = animationData.specialPoliceAnim;
+
     return true;
 }
 
@@ -489,6 +506,14 @@ void static scoreStep(PlayerObj * player){
         PlayScene * playScene = (PlayScene *)player->getParent();
         playScene->controlMenu->changeScore(specialData->userData2, false);
     }
+}
+
+//police
+void static policeBegin(PlayerObj * player){
+	player->freeze();
+}
+void static policeEnd(PlayerObj * player){
+	player->unfreeze();
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){
@@ -621,17 +646,17 @@ void GameController::onGameRequestCompleted(CCNode * node , void * response){
 
 void GameController::onScoreBoardSaveCompleted(CCNode * node , void * response){
 	App42GameResponse *scoreResponse = (App42GameResponse*)response;
-	CCLOG("code=%d",scoreResponse->getCode());
-	CCLOG("Response Body=%s",scoreResponse->getBody().c_str());
+//	CCLOG("code=%d",scoreResponse->getCode());
+//	CCLOG("Response Body=%s",scoreResponse->getBody().c_str());
 	if (scoreResponse->isSuccess)
 	{
 		for(std::vector<App42Score>::iterator it = scoreResponse->scores.begin(); it != scoreResponse->scores.end(); ++it)
 		{
-			CCLOG("CreatedAt=%s",it->getCreatedOn().c_str());
-			CCLOG("Rank=%s\n",it->getRank().c_str());
-			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
-			CCLOG("ScoreValue=%f\n",it->getScoreValue());
-			CCLOG("UserName=%s\n",it->getUserName().c_str());
+//			CCLOG("CreatedAt=%s",it->getCreatedOn().c_str());
+//			CCLOG("Rank=%s\n",it->getRank().c_str());
+//			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
+//			CCLOG("ScoreValue=%f\n",it->getScoreValue());
+//			CCLOG("UserName=%s\n",it->getUserName().c_str());
 
 		}
 	}
@@ -646,19 +671,19 @@ void GameController::onScoreBoardSaveCompleted(CCNode * node , void * response){
 
 void GameController::onScoreBoardGetCompleted(CCNode * node , void * response){
 	App42GameResponse *scoreResponse = (App42GameResponse*)response;
-	CCLOG("code=%d",scoreResponse->getCode());
-	CCLOG("Response Body=%s",scoreResponse->getBody().c_str());
+//	CCLOG("code=%d",scoreResponse->getCode());
+//	CCLOG("Response Body=%s",scoreResponse->getBody().c_str());
 	int i = 0;
 	if (scoreResponse->isSuccess)
 	{
 		for(std::vector<App42Score>::iterator it = scoreResponse->scores.begin(); it != scoreResponse->scores.end(); ++it)
 		{
 			if(i == MAX_RANKS) break;
-			CCLOG("CreatedAt=%s",it->getCreatedOn().c_str());
-			CCLOG("Rank=%s\n",it->getRank().c_str());
-			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
-			CCLOG("ScoreValue=%f\n",it->getScoreValue());
-			CCLOG("UserName=%s\n",it->getUserName().c_str());
+//			CCLOG("CreatedAt=%s",it->getCreatedOn().c_str());
+//			CCLOG("Rank=%s\n",it->getRank().c_str());
+//			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
+//			CCLOG("ScoreValue=%f\n",it->getScoreValue());
+//			CCLOG("UserName=%s\n",it->getUserName().c_str());
 			ranks[i].score = (int)it->getScoreValue();
 			ranks[i].level = getLevelByScore(ranks[i].score);
 			ranks[i].userName = base64_decode(it->getUserName());
