@@ -108,3 +108,7 @@ void GameOverScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 		}
 	}
 }
+
+void GameOverScene::keyboardWillShow(CCIMEKeyboardNotificationInfo& info){
+    nameField->setPlaceHolder("");
+}

@@ -10,7 +10,7 @@
 
 #include "GameController.h"
 
-class GameOverScene: public cocos2d::CCLayer {
+class GameOverScene: public cocos2d::CCLayer , CCIMEDelegate {
 public:
 	GameOverScene();
 	virtual ~GameOverScene();
@@ -18,6 +18,8 @@ public:
     CREATE_FUNC(GameOverScene);
     virtual bool init();
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+protected:
+    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
 private:
     CCSize winSize;
     CCTextFieldTTF * nameField;
