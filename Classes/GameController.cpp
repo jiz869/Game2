@@ -42,6 +42,12 @@ void static policeEnd(PlayerObj * player);
 void static slowBegin(PlayerObj * player);
 void static slowEnd(PlayerObj * player);
 
+void static curseBegin(PlayerObj * player);
+void static curseEnd(PlayerObj * player);
+
+void static bombBegin(PlayerObj * player);
+void static bombEnd(PlayerObj * player);
+
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
@@ -68,6 +74,8 @@ GameController::~GameController(){
 }
 
 bool GameController::init(){
+
+	CCLOG("GameController::init");
 
 	plistWritablePath = CCFileUtils::sharedFileUtils()->getWritablePath().append("game_controller.plist");
 
@@ -425,7 +433,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[POLICE]->end = &policeEnd;
     specialDatas[POLICE]->hitByCar = NULL;
     specialDatas[POLICE]->animation = animationData.specialPoliceAnim;
-    
+
     dict = (CCDictionary *)dataDict->objectForKey("slow");
     specialDatas[SLOW] = new SpecialData;
     specialDatas[SLOW]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
@@ -436,6 +444,24 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SLOW]->step = NULL;
     specialDatas[SLOW]->end = &slowEnd;
     specialDatas[SLOW]->hitByCar = NULL;
+
+    dict = (CCDictionary *)dataDict->objectForKey("curse");
+    specialDatas[CURSE] = new SpecialData;
+    specialDatas[CURSE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[CURSE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[CURSE]->begin = &curseBegin;
+    specialDatas[CURSE]->step = NULL;
+    specialDatas[CURSE]->end = &curseEnd;
+    specialDatas[CURSE]->hitByCar = NULL;
+
+    dict = (CCDictionary *)dataDict->objectForKey("bomb");
+    specialDatas[BOMB] = new SpecialData;
+    specialDatas[BOMB]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[BOMB]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[BOMB]->begin = &bombBegin;
+    specialDatas[BOMB]->step = NULL;
+    specialDatas[BOMB]->end = &bombEnd;
+    specialDatas[BOMB]->hitByCar = NULL;
 
     return true;
 }
@@ -527,7 +553,7 @@ void static policeBegin(PlayerObj * player){
 	player->freeze();
 }
 void static policeEnd(PlayerObj * player){
-	player->resumeAcc();
+	player->unfreeze();
 }
 
 //slow
@@ -537,6 +563,26 @@ void static slowBegin(PlayerObj * player){
 }
 void static slowEnd(PlayerObj * player){
 	player->resumeAcc();
+}
+
+//curse
+void static curseBegin(PlayerObj * player){
+	player->hitByCar();
+}
+void static curseEnd(PlayerObj * player){
+
+}
+
+//bomb
+void static bombBegin(PlayerObj * player){
+	player->hitByCar();
+}
+void static bombEnd(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->skullSoundImage->getCString());
+	CCAnimate * animate = CCAnimate::create(GameController::getGameController()->getAnimationData()->explodeAnim);
+	player->runAction(animate);
+	player->hitByCar();
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

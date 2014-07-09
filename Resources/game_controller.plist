@@ -1922,9 +1922,23 @@
 			<key>image_name</key>
 			<string>slow0.png</string>
 			<key>up_acc_delta</key>
-			<string>0.02</string>
+			<string>0.06</string>
 			<key>down_acc_delta</key>
-			<string>0.01</string>
+			<string>0.02</string>
+		</dict>
+		<key>curse</key>
+		<dict>
+			<key>duration</key>
+			<string>10</string>
+			<key>image_name</key>
+			<string>curse0.png</string>
+		</dict>
+		<key>bomb</key>
+		<dict>
+			<key>duration</key>
+			<string>6</string>
+			<key>image_name</key>
+			<string>bomb0.png</string>
 		</dict>
 	</dict>
 </dict>

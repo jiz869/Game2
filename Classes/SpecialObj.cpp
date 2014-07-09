@@ -25,10 +25,16 @@ B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float spe
     CarObj::load(carName->getCString(), left2right, initPos, speed, lane , SPECIAL);
     //gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
     CCSprite * tag = CCSprite::createWithSpriteFrameName(specialData->imageName->getCString());
-    tag->setScale(0.6);
+    //tag->setScale(0.8);
     gameObj->addChild(tag);
     CCSize size = gameObj->getContentSize();
-    tag->setPosition(ccp(size.width/2, size.height/2));
+    if(left2right == true){
+    	tag->setAnchorPoint(ccp(1,0.5));
+    	tag->setPosition(ccp(0 , size.height/2));
+    }else{
+    	tag->setAnchorPoint(ccp(0,0.5));
+    	tag->setPosition(ccp(size.width , size.height/2));
+    }
     return gameObj;
 }
 
@@ -48,6 +54,9 @@ void SpecialObj::begin(PlayerObj *player){
 	}else{
         gameObj->removeAllChildren();
     }
+
+	timer_count = 0;
+
     if (specialData->begin) {
         specialData->begin(player);
     }

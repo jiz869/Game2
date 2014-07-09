@@ -190,9 +190,6 @@ void PlayScene::BeginContact(b2Contact *contact){
 
 void PlayScene::processContact(float dt)
 {
-	if( contact->getTag() == UPPER_BOUNDARY ) {
-		controlMenu->doScore();
-	}
     player->processContact(contact);
 }
 

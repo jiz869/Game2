@@ -14,7 +14,7 @@
 
 using namespace CocosDenshion;
 
-PlayerObj::PlayerObj() : movingState(WAIT)
+PlayerObj::PlayerObj() : movingState(WAIT) , frozen(false)
 {
     specials.reserve(MAX_SPECIAL_NUM);
     badSpecials.reserve(MAX_SPECIAL_NUM);
@@ -108,17 +108,19 @@ void PlayerObj::speedUp(float delta){
 }
 
 void PlayerObj::freeze(){
-	playerAccSpeed = 0;
-    
-    playerStopAccSpeed = 0;
-    
+	frozen = true;
 	hitByCar();
 }
+
+void PlayerObj::unfreeze(){
+	frozen = false;
+}
+
 
 void PlayerObj::changeAcc(float up_delta, float down_delta){
 
 	playerAccSpeed += up_delta;
-    
+
     playerStopAccSpeed += down_delta;
 
 	hitByCar();
@@ -171,6 +173,8 @@ void PlayerObj::step(float dt){
         badSpecials[i]->step(this);
     }
 
+    if(frozen == true) return;
+
     velocity = velocity + acc;
 
     if(movingState == WAIT && velocity.y*acc.y >= 0) {
@@ -190,6 +194,12 @@ void PlayerObj::step(float dt){
 
 bool PlayerObj::processContact(cocos2d::CCSprite *contact){
     if (contact->getTag() == UPPER_BOUNDARY || contact->getTag() == LOWER_BOUNDARY) {
+    	if( contact->getTag() == UPPER_BOUNDARY ) {
+    		PlayScene * playScene = (PlayScene *)getParent();
+    		playScene->controlMenu->doScore();
+    		SpecialObj * bomb = hasSpecial(BOMB);
+    		if(bomb != NULL) endWithSpecial(bomb);
+    	}
         reset();
         return false;
     }
@@ -239,11 +249,18 @@ void PlayerObj::removeAllSpecials(){
 
 void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
 
-    if (hasSpecial(specialObj->getSpecialId()) || enoughSpecials(specialObj->getSpecialId())) {
+    if (hasSpecial(specialObj->getSpecialId()) != NULL || enoughSpecials(specialObj->getSpecialId())) {
+    	if(specialObj->getSpecialId() > SPECIAL_NUM){
+    		hitByCar();
+    	}
         return;
     }
-    
-    if (hasSpecial(STRONG) && specialObj->getSpecialId() > SPECIAL_NUM) {
+
+    if (hasSpecial(CURSE) != NULL && specialObj->getSpecialId() < SPECIAL_NUM) {
+        return;
+    }
+
+    if (hasSpecial(STRONG) != NULL && specialObj->getSpecialId() > SPECIAL_NUM) {
         specialObj->runAction(CCBlink::create(2, 10));
         return;
     }
@@ -288,25 +305,25 @@ bool PlayerObj::enoughSpecials(int specialId){
 	}
 }
 
-bool PlayerObj::hasSpecial(int specialId){
+SpecialObj * PlayerObj::hasSpecial(int specialId){
 	if(specialId < SPECIAL_NUM){
 		int size = specials.size();
 	    for (int i = 0; i < size; i++) {
 	        if (specials[i]->getSpecialId() == specialId) {
-	            return true;
+	            return specials[i];
 	        }
 	    }
 
-	    return false;
+	    return NULL;
 	}else{
 		int size = badSpecials.size();
 	    for (int i = 0; i < size; i++) {
 	        if (badSpecials[i]->getSpecialId() == specialId) {
-	            return true;
+	            return badSpecials[i];
 	        }
 	    }
 
-	    return false;
+	    return NULL;
 	}
 }
 
