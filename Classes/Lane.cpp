@@ -78,7 +78,7 @@ void Lane::addACar1(float dt){
 
     if (toss(description->specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
-        speciaObj->load(description->left2right, description->initPos, speed, this);
+        speciaObj->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
     }else{
 
 		CarObj * car = new CarObj();
@@ -106,7 +106,7 @@ void Lane::addACar2(float dt){
 
     if (toss(description->specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
-        speciaObj->load(description->left2right, description->initPos, speed, this);
+        speciaObj->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
     }else{
 
 		CarObj * car = new CarObj();

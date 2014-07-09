@@ -17,11 +17,18 @@ SpecialObj::~SpecialObj() {
 	// TODO Auto-generated destructor stub
 }
 
-B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float speed, Lane *lane){
+B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float speed, Lane *lane , vector<int> * carNumbers){
     specialId = getRandom(SPECIAL_NUM + 1, BAD_SPECIAL_NUM - 1);
     specialData = GameController::getGameController()->getSpecialData(specialId);
-    CarObj::load(specialData->imageName->getCString(), left2right, initPos, speed, lane , SPECIAL);
-    gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
+    int carNumber = getRandom(0, carNumbers->size()-1);
+    CCString * carName = CCString::createWithFormat("car%d.png", carNumbers->at(carNumber));
+    CarObj::load(carName->getCString(), left2right, initPos, speed, lane , SPECIAL);
+    //gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
+    CCSprite * tag = CCSprite::createWithSpriteFrameName(specialData->imageName->getCString());
+    tag->setScale(0.6);
+    gameObj->addChild(tag);
+    CCSize size = gameObj->getContentSize();
+    tag->setPosition(ccp(size.width/2, size.height/2));
     return gameObj;
 }
 
@@ -38,7 +45,9 @@ void SpecialObj::begin(PlayerObj *player){
 	if(specialId < SPECIAL_NUM){
 		gameObj->setVisible(false);
 		gameObj->setPosition(ccp(-1000 , -1000));
-	}
+	}else{
+        gameObj->removeAllChildren();
+    }
     if (specialData->begin) {
         specialData->begin(player);
     }

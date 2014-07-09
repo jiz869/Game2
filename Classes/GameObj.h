@@ -37,6 +37,7 @@ public:
     static void setB2world(b2World * world , float ptmRatio);
     virtual const CCSize& getSize();
     virtual bool isBottom();
+    virtual void runAction(CCAction* action);
 
 protected:
 	B2Sprite * gameObj;

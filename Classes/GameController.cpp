@@ -39,6 +39,9 @@ void static scoreStep(PlayerObj * player);
 void static policeBegin(PlayerObj * player);
 void static policeEnd(PlayerObj * player);
 
+void static slowBegin(PlayerObj * player);
+void static slowEnd(PlayerObj * player);
+
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
@@ -422,6 +425,17 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[POLICE]->end = &policeEnd;
     specialDatas[POLICE]->hitByCar = NULL;
     specialDatas[POLICE]->animation = animationData.specialPoliceAnim;
+    
+    dict = (CCDictionary *)dataDict->objectForKey("slow");
+    specialDatas[SLOW] = new SpecialData;
+    specialDatas[SLOW]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[SLOW]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[SLOW]->userData1 = CCSTRING_FOR_KEY(dict, "up_acc_delta")->floatValue();
+    specialDatas[SLOW]->userData2 = CCSTRING_FOR_KEY(dict, "down_acc_delta")->floatValue();
+    specialDatas[SLOW]->begin = &slowBegin;
+    specialDatas[SLOW]->step = NULL;
+    specialDatas[SLOW]->end = &slowEnd;
+    specialDatas[SLOW]->hitByCar = NULL;
 
     return true;
 }
@@ -513,7 +527,16 @@ void static policeBegin(PlayerObj * player){
 	player->freeze();
 }
 void static policeEnd(PlayerObj * player){
-	player->unfreeze();
+	player->resumeAcc();
+}
+
+//slow
+void static slowBegin(PlayerObj * player){
+    SpecialData * specialData = GameController::getGameController()->getSpecialData(SLOW);
+	player->changeAcc(-specialData->userData1, -specialData->userData2);
+}
+void static slowEnd(PlayerObj * player){
+	player->resumeAcc();
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

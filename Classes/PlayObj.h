@@ -39,8 +39,8 @@ public:
     void reset();
     void step(float dt);
     bool processContact(CCSprite * contact);
-    bool hasSpecial(SpecialObj * specialObj);
-    bool enoughSpecials(SpecialObj * specialObj);
+    bool hasSpecial(int specialId);
+    bool enoughSpecials(int specialId);
     void beginWithSpecial(SpecialObj * specialObj);
     void endWithSpecial(SpecialObj * specialObj);
     void removeSpecial(SpecialObj * specialObj);
@@ -52,7 +52,8 @@ public:
     CCPoint resetPos;
     void setTag(int tag);
     void freeze();
-    void unfreeze();
+    void changeAcc(float up_delta , float down_delta);
+    void resumeAcc();
 
 protected:
     PlayerState movingState;

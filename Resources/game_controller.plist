@@ -97,7 +97,7 @@
 		</array>
 		<key>special_police_animation</key>
 		<array>
-			<string>police0.png</string>
+			<string>jail.png</string>
 		</array>
 		<key>explode_animation</key>
 		<dict>
@@ -1186,7 +1186,7 @@
 			<array>
 				<dict>
 					<key>special_chance</key>
-					<string>0.1</string>
+					<string>0.7</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -1205,7 +1205,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.2</string>
+					<string>0.7</string>
 					<key>period</key>
 					<string>2.3</string>
 					<key>speed</key>
@@ -1225,7 +1225,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.2</string>
+					<string>0.7</string>
 					<key>period</key>
 					<string>2.6</string>
 					<key>speed</key>
@@ -1244,7 +1244,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.3</string>
+					<string>0.7</string>
 					<key>period</key>
 					<string>1.8</string>
 					<key>speed</key>
@@ -1264,7 +1264,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.2</string>
+					<string>0.7</string>
 					<key>period</key>
 					<string>2.5</string>
 					<key>speed</key>
@@ -1283,7 +1283,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.2</string>
+					<string>0.7</string>
 					<key>period</key>
 					<string>2.8</string>
 					<key>speed</key>
@@ -1301,7 +1301,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.1</string>
+					<string>0.7</string>
 					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
@@ -1320,7 +1320,7 @@
 				</dict>
 				<dict>
 					<key>special_chance</key>
-					<string>0.3</string>
+					<string>0.7</string>
 					<key>period</key>
 					<string>2.0</string>
 					<key>speed</key>
@@ -1914,6 +1914,17 @@
 			<string>2</string>
 			<key>image_name</key>
 			<string>jail.png</string>
+		</dict>
+		<key>slow</key>
+		<dict>
+			<key>duration</key>
+			<string>4</string>
+			<key>image_name</key>
+			<string>slow0.png</string>
+			<key>up_acc_delta</key>
+			<string>0.02</string>
+			<key>down_acc_delta</key>
+			<string>0.01</string>
 		</dict>
 	</dict>
 </dict>

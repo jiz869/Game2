@@ -35,6 +35,7 @@ typedef enum{
     SPECIAL_NUM,
     HASTE = SPECIAL_NUM,
     POLICE = SPECIAL_NUM + 1,
+    SLOW,
     BAD_SPECIAL_NUM,
 }SpecialID;
 

@@ -94,3 +94,7 @@ bool GameObj::isBottom(){
     return (gameObj->getPosition().y - gameObj->getContentSize().height / 2 < 1);
 }
 
+void GameObj::runAction(cocos2d::CCAction *action){
+    gameObj->runAction(action);
+}
+

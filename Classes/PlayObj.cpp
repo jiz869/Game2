@@ -96,8 +96,6 @@ void PlayerObj::speedUp(float delta){
 
 	playerAccSpeed = playerStopAccSpeed = 10000;
 
-//    data->playerSpeed += delta;
-
     if (movingState == WAIT) {
         return;
     }else if (movingState == JMP_UP){
@@ -110,16 +108,36 @@ void PlayerObj::speedUp(float delta){
 }
 
 void PlayerObj::freeze(){
+	playerAccSpeed = 0;
+    
+    playerStopAccSpeed = 0;
+    
+	hitByCar();
+}
 
-	playerAccSpeed = playerStopAccSpeed = 0;
+void PlayerObj::changeAcc(float up_delta, float down_delta){
+
+	playerAccSpeed += up_delta;
+    
+    playerStopAccSpeed += down_delta;
 
 	hitByCar();
 }
 
-void PlayerObj::unfreeze(){
+void PlayerObj::resumeAcc(){
 
     playerAccSpeed = data->playerAccSpeed;
     playerStopAccSpeed = data->playerStopAccSpeed;
+
+    if (movingState == WAIT) {
+        return;
+    }else if (movingState == JMP_UP){
+        wait();
+        jumpUp();
+    }else{
+        wait();
+        jumpDown();
+    }
 
 }
 
@@ -129,8 +147,6 @@ void PlayerObj::slowDown(float delta){
     playerAccSpeed = data->playerAccSpeed;
     playerStopAccSpeed = data->playerStopAccSpeed;
 
-//	data->playerSpeed -= delta;
-//
     if (movingState == WAIT) {
         return;
     }else if (movingState == JMP_UP){
@@ -198,8 +214,6 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
         if(carObj->isDoomed() == true) return false;
 
         //remove all specials when hit by car
-		AnimationData * animData = GameController::getGameController()->getAnimationData();
-		SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
 		hitByCar();
         return true;
     }
@@ -208,6 +222,8 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
 }
 
 void PlayerObj::hitByCar(){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
 	PlayScene * playScene = (PlayScene *)getParent();
 	playScene->controlMenu->changeScore(-2 , false);
 	reset();
@@ -223,7 +239,12 @@ void PlayerObj::removeAllSpecials(){
 
 void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
 
-    if (hasSpecial(specialObj) || enoughSpecials(specialObj)) {
+    if (hasSpecial(specialObj->getSpecialId()) || enoughSpecials(specialObj->getSpecialId())) {
+        return;
+    }
+    
+    if (hasSpecial(STRONG) && specialObj->getSpecialId() > SPECIAL_NUM) {
+        specialObj->runAction(CCBlink::create(2, 10));
         return;
     }
 
@@ -259,19 +280,19 @@ void PlayerObj::tagPlayer(SpecialObj *specialObj){
     tag->setTag(specialObj->getSpecialId());
 }
 
-bool PlayerObj::enoughSpecials(SpecialObj *specialObj){
-	if(specialObj->getSpecialId() > SPECIAL_NUM){
+bool PlayerObj::enoughSpecials(int specialId){
+	if(specialId > SPECIAL_NUM){
 		return badSpecials.size() == MAX_SPECIAL_NUM;
 	}else{
 		return specials.size() == MAX_SPECIAL_NUM;
 	}
 }
 
-bool PlayerObj::hasSpecial(SpecialObj *specialObj){
-	if(specialObj->getSpecialId() < SPECIAL_NUM){
+bool PlayerObj::hasSpecial(int specialId){
+	if(specialId < SPECIAL_NUM){
 		int size = specials.size();
 	    for (int i = 0; i < size; i++) {
-	        if (specials[i]->getSpecialId() == specialObj->getSpecialId()) {
+	        if (specials[i]->getSpecialId() == specialId) {
 	            return true;
 	        }
 	    }
@@ -280,7 +301,7 @@ bool PlayerObj::hasSpecial(SpecialObj *specialObj){
 	}else{
 		int size = badSpecials.size();
 	    for (int i = 0; i < size; i++) {
-	        if (badSpecials[i]->getSpecialId() == specialObj->getSpecialId()) {
+	        if (badSpecials[i]->getSpecialId() == specialId) {
 	            return true;
 	        }
 	    }
