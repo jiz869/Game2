@@ -36,7 +36,7 @@ B2Sprite * SpecialObj::load(cocos2d::CCPoint initPos){
     specialId = getRandom(0, SPECIAL_NUM - 1);
     specialData = GameController::getGameController()->getSpecialData(specialId);
     GameObj::load(specialData->imageName->getCString() , b2_kinematicBody , SPECIAL);
-    gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
+    //gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
     setPosition(initPos);
     return gameObj;
 }
@@ -68,7 +68,7 @@ void SpecialObj::step(PlayerObj *player){
     }
 
     if (specialData->step) {
-        specialData->step(player);
+        specialData->step(player , timer_count);
     }
 }
 

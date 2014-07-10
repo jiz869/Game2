@@ -45,6 +45,8 @@
 		<string>score.wav</string>
 		<key>special_stop_sound</key>
 		<string>stop.wav</string>
+		<key>special_bless_sound</key>
+		<string>bless.wav</string>
 		<key>score_sound_file</key>
 		<string>success.wav</string>
 		<key>reset_sound_file</key>
@@ -1939,6 +1941,19 @@
 			<string>6</string>
 			<key>image_name</key>
 			<string>bomb0.png</string>
+			<key>deadline</key>
+			<string>5</string>
+		</dict>
+		<key>bless</key>
+		<dict>
+			<key>duration</key>
+			<string>10</string>
+			<key>life</key>
+			<string>6</string>
+			<key>image_name</key>
+			<string>bless0.png</string>
+			<key>chance</key>
+			<string>0.5</string>
 		</dict>
 	</dict>
 </dict>

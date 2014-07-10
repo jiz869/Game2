@@ -19,6 +19,7 @@ enum PlayerState {
 };
 
 #define MAX_SPECIAL_NUM 2
+#define MAX_BAD_SPECIAL_NUM 3
 
 class PlayerObj : public GameObj {
 
@@ -49,6 +50,7 @@ public:
     void tagPlayer(SpecialObj * specialObj);
     CCNode * getParent();
     void removeAllSpecials();
+    void removeAllBadSpecials();
     CCPoint resetPos;
     void setTag(int tag);
     void freeze();

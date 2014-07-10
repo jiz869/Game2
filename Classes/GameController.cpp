@@ -34,7 +34,7 @@ void static timeEnd(PlayerObj * player);
 void static skullBegin(PlayerObj * player);
 
 void static scoreBegin(PlayerObj * player);
-void static scoreStep(PlayerObj * player);
+void static scoreStep(PlayerObj * player , float timer_count);
 
 void static policeBegin(PlayerObj * player);
 void static policeEnd(PlayerObj * player);
@@ -46,7 +46,11 @@ void static curseBegin(PlayerObj * player);
 void static curseEnd(PlayerObj * player);
 
 void static bombBegin(PlayerObj * player);
+void static bombStep(PlayerObj * player , float timer_count);
 void static bombEnd(PlayerObj * player);
+
+void static blessBegin(PlayerObj * player);
+void static blessEnd(PlayerObj * player);
 
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
@@ -172,7 +176,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
 
     userData.order = -1;
     userData.pvpMode = NONE;
-    userData.currentLevel = 6;
+    userData.currentLevel = 7;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -250,6 +254,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.lifeSoundImage = CCSTRING_FOR_KEY(dataDict, "special_life_sound");
     animationData.timeSoundImage = CCSTRING_FOR_KEY(dataDict, "special_time_sound");
     animationData.strongSoundImage = CCSTRING_FOR_KEY(dataDict, "special_strong_sound");
+    animationData.blessSoundImage = CCSTRING_FOR_KEY(dataDict, "special_bless_sound");
 
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData.backgroundSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
@@ -261,6 +266,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.timeSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.scoreSpecialSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.strongSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.blessSoundImage->getCString());
 
     CCArray * hornSoundFiles = (CCArray *)dataDict->objectForKey("horn_sound_files");
     animationData.hornSoundImages.reserve(hornSoundFiles->count());
@@ -458,10 +464,22 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[BOMB] = new SpecialData;
     specialDatas[BOMB]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[BOMB]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[BOMB]->userData1 = CCSTRING_FOR_KEY(dict, "deadline")->floatValue();
     specialDatas[BOMB]->begin = &bombBegin;
-    specialDatas[BOMB]->step = NULL;
+    specialDatas[BOMB]->step = &bombStep;
     specialDatas[BOMB]->end = &bombEnd;
     specialDatas[BOMB]->hitByCar = NULL;
+
+    dict = (CCDictionary *)dataDict->objectForKey("bless");
+    specialDatas[BLESS] = new SpecialData;
+    specialDatas[BLESS]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[BLESS]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
+    specialDatas[BLESS]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[BLESS]->userData1 = CCSTRING_FOR_KEY(dict, "chance")->floatValue();
+    specialDatas[BLESS]->begin = &blessBegin;
+    specialDatas[BLESS]->step = NULL;
+    specialDatas[BLESS]->end = &blessEnd;
+    specialDatas[BLESS]->hitByCar = NULL;
 
     return true;
 }
@@ -535,14 +553,14 @@ void static scoreBegin(PlayerObj * player){
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSpecialSoundImage->getCString());
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
-    specialData->count = 0;
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->changeScore(specialData->userData2, true);
 }
-void static scoreStep(PlayerObj * player){
+void static scoreStep(PlayerObj * player , float timer_count){
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
     int interval = (int)(specialData->userData1 * 60);
-    if(++specialData->count % interval == 0){
+    int count = (int)(timer_count * 60);
+    if(count % interval == 0){
         PlayScene * playScene = (PlayScene *)player->getParent();
         playScene->controlMenu->changeScore(specialData->userData2, false);
     }
@@ -578,11 +596,29 @@ void static bombBegin(PlayerObj * player){
 	player->hitByCar();
 }
 void static bombEnd(PlayerObj * player){
+
+}
+void static bombStep(PlayerObj * player , float timer_count){
+    SpecialData * specialData = GameController::getGameController()->getSpecialData(BOMB);
+    if(timer_count > specialData->userData1){
+        AnimationData * animData = GameController::getGameController()->getAnimationData();
+        SimpleAudioEngine::sharedEngine()->playEffect(animData->skullSoundImage->getCString());
+    	CCAnimate * animate = CCAnimate::create(GameController::getGameController()->getAnimationData()->explodeAnim);
+    	animate->setTag(PLAYER_BOMB);
+    	player->runAction(animate);
+    	player->hitByCar();
+    	player->endWithSpecial(player->hasSpecial(BOMB));
+    }
+}
+
+//bless
+void static blessBegin(PlayerObj * player){
     AnimationData * animData = GameController::getGameController()->getAnimationData();
-    SimpleAudioEngine::sharedEngine()->playEffect(animData->skullSoundImage->getCString());
-	CCAnimate * animate = CCAnimate::create(GameController::getGameController()->getAnimationData()->explodeAnim);
-	player->runAction(animate);
-	player->hitByCar();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->blessSoundImage->getCString());
+    player->removeAllBadSpecials();
+}
+void static blessEnd(PlayerObj * player){
+
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

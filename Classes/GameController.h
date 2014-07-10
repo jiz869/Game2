@@ -32,6 +32,7 @@ typedef enum{
     TIME,
     SKULL,
     SCORE,
+    BLESS,
     SPECIAL_NUM,
     HASTE = SPECIAL_NUM,
     POLICE = SPECIAL_NUM + 1,
@@ -60,6 +61,11 @@ typedef enum{
     PREPARE_PLAY=0X1<<6,
 }PvpMode;
 
+typedef enum{
+	PLAYER_MOVE=0,
+	PLAYER_BOMB,
+}ActionTag;
+
 class PlayerObj;
 class SpecialObj;
 
@@ -67,6 +73,7 @@ class SpecialObj;
 #define CCSTRING_AT_INDEX(array , index)  ((CCString *)(array)->objectAtIndex(index))
 
 typedef void (* SpectialFunc)(PlayerObj *);
+typedef void (* SpectialStepFunc)(PlayerObj * , float timer_count);
 typedef bool (* SpectialHitByCarFunc)(PlayerObj * , CCSprite * car);
 
 typedef struct{
@@ -103,6 +110,7 @@ typedef struct{
     CCString * lifeSoundImage;
     CCString * timeSoundImage;
     CCString * strongSoundImage;
+    CCString * blessSoundImage;
     CCString * scoreSpecialSoundImage;
     vector<CCString *> hornSoundImages;
     CCAnimation * playerMoveAnim;
@@ -124,9 +132,8 @@ typedef struct{
     float userData1;
     float userData2;
     float userData3;
-    int count;
     SpectialFunc begin;
-    SpectialFunc step;
+    SpectialStepFunc step;
     SpectialFunc end;
     SpectialHitByCarFunc hitByCar;
     CCAnimation * animation;

@@ -17,7 +17,7 @@ using namespace CocosDenshion;
 PlayerObj::PlayerObj() : movingState(WAIT) , frozen(false)
 {
     specials.reserve(MAX_SPECIAL_NUM);
-    badSpecials.reserve(MAX_SPECIAL_NUM);
+    badSpecials.reserve(MAX_BAD_SPECIAL_NUM);
     UserData * userData = GameController::getGameController()->getUserData();
     data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
     playerAccSpeed = data->playerAccSpeed;
@@ -65,10 +65,14 @@ void PlayerObj::wait()
 //Customize
 void PlayerObj::jumpUp()
 {
+	if(frozen == true) return;
+
     if( movingState != JMP_UP ) {
-        gameObj->stopAllActions();
-        CCAnimate * moveUp= CCAnimate::create(data->playerMoveAnim);
-        gameObj->runAction(CCRepeatForever::create(moveUp));
+    	if(gameObj->getActionByTag(PLAYER_MOVE) == NULL){
+			CCRepeatForever * move = CCRepeatForever::create(CCAnimate::create(data->playerMoveAnim));
+			move->setTag(PLAYER_MOVE);
+			gameObj->runAction(move);
+    	}
         movingState = JMP_UP;
         acc = ccp(0, playerAccSpeed);
         //setVelocity(b2Vec2(0 , data->playerSpeed));
@@ -78,14 +82,16 @@ void PlayerObj::jumpUp()
 
 void PlayerObj::jumpDown()
 {
-    if (isBottom()) {
+    if (isBottom() || frozen == true) {
         return;
     }
 
     if( movingState != JMP_DOWN ) {
-        gameObj->stopAllActions();
-        CCAnimate * moveUp= CCAnimate::create(data->playerMoveAnim);
-        gameObj->runAction(CCRepeatForever::create(moveUp));
+    	if(gameObj->getActionByTag(PLAYER_MOVE) == NULL){
+			CCRepeatForever * move = CCRepeatForever::create(CCAnimate::create(data->playerMoveAnim));
+			move->setTag(PLAYER_MOVE);
+			gameObj->runAction(move);
+    	}
         movingState = JMP_DOWN;
         acc = ccp(0, -playerAccSpeed);
         //setVelocity(b2Vec2(0 , -data->playerSpeed));
@@ -174,16 +180,22 @@ void PlayerObj::step(float dt){
         badSpecials[i]->step(this);
     }
 
-    if(frozen == true) return;
+    if(frozen == true){
+    	gameObj->stopActionByTag(PLAYER_MOVE);
+    	return;
+    }
 
     velocity = velocity + acc;
 
     if(movingState == WAIT && velocity.y*acc.y >= 0) {
     	velocity = ccp(0,0);
     	acc = ccp(0,0);
-    	gameObj->stopAllActions();
-        CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(data->playerWaitImageName->getCString());
-        gameObj->setDisplayFrame(frame);
+    	gameObj->stopActionByTag(PLAYER_MOVE);
+    	if(gameObj->getActionByTag(PLAYER_BOMB) == NULL){
+    		CCSpriteFrame * frame = CCSpriteFrameCache::sharedSpriteFrameCache()->
+    				spriteFrameByName(data->playerWaitImageName->getCString());
+    		gameObj->setDisplayFrame(frame);
+    	}
     }else if( velocity.y > data->playerSpeed) {
     	velocity = ccp(0, data->playerSpeed);
     }else if( velocity.y < -data->playerSpeed) {
@@ -248,6 +260,13 @@ void PlayerObj::removeAllSpecials(){
     }
 }
 
+void PlayerObj::removeAllBadSpecials(){
+    while(badSpecials.size()){
+    	vector<SpecialObj *>::iterator it = badSpecials.begin();
+    	(*it)->end(this);
+    }
+}
+
 void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
 
     if (hasSpecial(specialObj->getSpecialId()) != NULL || enoughSpecials(specialObj->getSpecialId())) {
@@ -257,7 +276,15 @@ void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
         return;
     }
 
-    if (hasSpecial(CURSE) != NULL && specialObj->getSpecialId() < SPECIAL_NUM) {
+    if (hasSpecial(BLESS) != NULL && specialObj->getSpecialId() > SPECIAL_NUM) {
+    	SpecialData * data = GameController::getGameController()->getSpecialData(BLESS);
+    	if(toss(data->userData1) == false) hitByCar();
+    	else specialObj->runAction(CCBlink::create(2, 10));
+        return;
+    }
+
+    if (hasSpecial(CURSE) != NULL && specialObj->getSpecialId() < SPECIAL_NUM
+    		&& specialObj->getSpecialId() != BLESS) {
         return;
     }
 
@@ -300,7 +327,7 @@ void PlayerObj::tagPlayer(SpecialObj *specialObj){
 
 bool PlayerObj::enoughSpecials(int specialId){
 	if(specialId > SPECIAL_NUM){
-		return badSpecials.size() == MAX_SPECIAL_NUM;
+		return badSpecials.size() == MAX_BAD_SPECIAL_NUM;
 	}else{
 		return specials.size() == MAX_SPECIAL_NUM;
 	}
