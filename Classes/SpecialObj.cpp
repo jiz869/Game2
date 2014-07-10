@@ -28,13 +28,7 @@ B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float spe
     //tag->setScale(0.8);
     gameObj->addChild(tag);
     CCSize size = gameObj->getContentSize();
-    if(left2right == true){
-    	tag->setAnchorPoint(ccp(1,0.5));
-    	tag->setPosition(ccp(0 , size.height/2));
-    }else{
-    	tag->setAnchorPoint(ccp(0,0.5));
-    	tag->setPosition(ccp(size.width , size.height/2));
-    }
+    tag->setPosition(ccp(size.width/2 , size.height/2));
     return gameObj;
 }
 

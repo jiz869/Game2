@@ -50,6 +50,7 @@ void PlayerObj::reset(){
 	setPosition(resetPos);
 
     velocity = ccp(0,0);
+    setVelocity(b2Vec2(velocity.x , velocity.y));
     acc = ccp(0,0);
     wait();
 }
