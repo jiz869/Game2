@@ -28,7 +28,8 @@ namespace Util {
     {
         std::string value;
 
-        json = json->child;
+        if (json) json = json->child;
+        
         while(json != NULL)
         {
             if((json->string!=NULL) && (strcmp(json->string,name.c_str()) == 0))
@@ -48,7 +49,8 @@ namespace Util {
     {
         double value = 0;
 
-        json = json->child;
+        if (json) json = json->child;
+        
         while(json != NULL)
         {
             if((json->string!=NULL) && (strcmp(json->string,name.c_str()) ==  0))
@@ -65,7 +67,8 @@ namespace Util {
     {
         int value = 0;
 
-        json = json->child;
+        if (json) json = json->child;
+        
         while(json != NULL)
         {
             if((json->string!=NULL) && (strcmp(json->string,name.c_str()) ==  0))
@@ -81,7 +84,8 @@ namespace Util {
 
     static cJSON* getJSONChild(string name,cJSON *json)
     {
-        json = json->child;
+        if (json) json = json->child;
+        
         while(json != NULL)
         {
             if((json->string!=NULL) && (strcmp(json->string,name.c_str()) ==  0))
