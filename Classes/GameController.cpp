@@ -50,6 +50,7 @@ void static bombStep(PlayerObj * player , float timer_count);
 void static bombEnd(PlayerObj * player);
 
 void static blessBegin(PlayerObj * player);
+bool static blessHitByCar(PlayerObj * player, CCSprite * car);
 void static blessEnd(PlayerObj * player);
 
 char * userDataValue[CHECKBOX_TYPE_NUM];
@@ -176,7 +177,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
 
     userData.order = -1;
     userData.pvpMode = NONE;
-    userData.currentLevel = 7;
+    //userData.currentLevel = 7;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -476,10 +477,12 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[BLESS]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
     specialDatas[BLESS]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
     specialDatas[BLESS]->userData1 = CCSTRING_FOR_KEY(dict, "chance")->floatValue();
+    specialDatas[BLESS]->userData2 = CCSTRING_FOR_KEY(dict, "time_increase")->floatValue();
+    specialDatas[BLESS]->userData3 = CCSTRING_FOR_KEY(dict, "score_increase")->floatValue();
     specialDatas[BLESS]->begin = &blessBegin;
     specialDatas[BLESS]->step = NULL;
     specialDatas[BLESS]->end = &blessEnd;
-    specialDatas[BLESS]->hitByCar = NULL;
+    specialDatas[BLESS]->hitByCar = &blessHitByCar;
 
     return true;
 }
@@ -554,7 +557,7 @@ void static scoreBegin(PlayerObj * player){
     SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSpecialSoundImage->getCString());
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->changeScore(specialData->userData2, true);
+    playScene->controlMenu->changeScore(specialData->userData2, false);
 }
 void static scoreStep(PlayerObj * player , float timer_count){
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
@@ -616,9 +619,18 @@ void static blessBegin(PlayerObj * player){
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->blessSoundImage->getCString());
     player->removeAllBadSpecials();
+    SpecialData * specialData = GameController::getGameController()->getSpecialData(BLESS);
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->controlMenu->changeScore(specialData->userData3, false);
+    playScene->controlMenu->increaseDuration(specialData->userData2 , 0);
 }
 void static blessEnd(PlayerObj * player){
 
+}
+bool static blessHitByCar(PlayerObj * player, CCSprite * car){
+	SpecialData * specialData = GameController::getGameController()->getSpecialData(BLESS);
+	if(toss(specialData->userData1) == true) return false;
+	return true;
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){
