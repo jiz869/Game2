@@ -41,6 +41,15 @@ B2Sprite * SpecialObj::load(cocos2d::CCPoint initPos){
     return gameObj;
 }
 
+B2Sprite * SpecialObj::load(int specialId){
+    this->specialId = specialId;
+    specialData = GameController::getGameController()->getSpecialData(specialId);
+    GameObj::load(specialData->imageName->getCString() , b2_kinematicBody , SPECIAL);
+    //gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
+    setPosition(ccp(-1000 , -1000));
+    return gameObj;
+}
+
 void SpecialObj::begin(PlayerObj *player){
 	if(specialId < SPECIAL_NUM){
 		gameObj->setVisible(false);

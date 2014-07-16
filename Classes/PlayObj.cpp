@@ -277,9 +277,10 @@ void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
     }
 
     if (hasSpecial(BLESS) != NULL && specialObj->getSpecialId() > SPECIAL_NUM) {
-    	SpecialData * data = GameController::getGameController()->getSpecialData(BLESS);
-    	if(toss(data->userData1) == false) hitByCar();
-    	else specialObj->runAction(CCBlink::create(2, 10));
+//    	SpecialData * data = GameController::getGameController()->getSpecialData(BLESS);
+//    	if(toss(data->userData1) == false) hitByCar();
+//    	else specialObj->runAction(CCBlink::create(2, 10));
+    	hitByCar();
         return;
     }
 

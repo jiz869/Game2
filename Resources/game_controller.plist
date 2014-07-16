@@ -1953,7 +1953,7 @@
 			<key>image_name</key>
 			<string>bless0.png</string>
 			<key>chance</key>
-			<string>0.5</string>
+			<string>0.8</string>
 			<key>time_increase</key>
 			<string>2</string>
 			<key>score_increase</key>

@@ -16,6 +16,7 @@ public:
 	virtual ~SpecialObj();
     virtual B2Sprite * load(bool left2right , CCPoint initPos , float speed , Lane * lane , vector<int> * carNumbers);
     virtual B2Sprite * load(CCPoint initPos);
+    virtual B2Sprite * load(int specialId);
     virtual void begin(PlayerObj * player);
     virtual void step(PlayerObj * player);
     virtual void end(PlayerObj * player);

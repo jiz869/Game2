@@ -623,13 +623,18 @@ void static blessBegin(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->changeScore(specialData->userData3, false);
     playScene->controlMenu->increaseDuration(specialData->userData2 , 0);
+
+    if(toss(specialData->userData1) == false) return;
+    SpecialObj * specialObj = new SpecialObj();
+    playScene->addChild(specialObj->load(getRandom(0 , BLESS - 1)));
+    player->beginWithSpecial(specialObj);
 }
 void static blessEnd(PlayerObj * player){
 
 }
 bool static blessHitByCar(PlayerObj * player, CCSprite * car){
-	SpecialData * specialData = GameController::getGameController()->getSpecialData(BLESS);
-	if(toss(specialData->userData1) == true) return false;
+//	SpecialData * specialData = GameController::getGameController()->getSpecialData(BLESS);
+//	if(toss(specialData->userData1) == true) return false;
 	return true;
 }
 
