@@ -109,6 +109,14 @@ bool StartMenuScene::init(){
 
     initScoreMenu();
 
+    AnimationData * animationData = GameController::getGameController()->getAnimationData();
+	SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
+			animationData->backgroundSoundImage->getCString(), true);
+
+    if(checkboxMute->isSelected()){
+    	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0);
+    }
+
     return true;
 }
 

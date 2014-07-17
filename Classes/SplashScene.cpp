@@ -7,6 +7,9 @@
 
 #include "SplashScene.h"
 #include "StartMenuScene.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 
 SplashScene::SplashScene()
 {
@@ -45,18 +48,47 @@ bool SplashScene::init(){
     ignoreAnchorPointForPosition(false);
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
-    splash = CCSprite::create("splash.png");
+    CCSprite * background = CCSprite::create("background_main.png");
 
-    splash->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    CCSize size = background->getContentSize();
+    background->setScaleY(winSize.height/size.height);
+    background->setScaleX(winSize.width/size.width);
+    background->setAnchorPoint(ccp(0,0));
 
-    addChild(splash);
+    addChild(background);
 
-    scheduleOnce(schedule_selector(SplashScene::initGameController) , 0.05);
+    CCAnimation * animation = CCAnimation::create();
+
+    for(int i = 0 ; i < 2 ; i++){
+    	CCString * imageName = CCString::createWithFormat("penguinside%d.png", i);
+    	CCSprite * sprite = CCSprite::create(imageName->getCString());
+    	CCRect rect = CCRectZero;
+        rect.size = sprite->getContentSize();
+    	CCSpriteFrame * frame = CCSpriteFrame::createWithTexture(sprite->getTexture() , rect);
+    	animation->addSpriteFrame(frame);
+    }
+
+    animation->setDelayPerUnit(0.2);
+
+    CCSprite * walkingPenguin = CCSprite::create();
+
+    addChild(walkingPenguin);
+
+    walkingPenguin->setPosition(ccp(winSize.width*0.25 , winSize.height*0.25));
+
+    walkingPenguin->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
+
+    walkingPenguin->runAction(CCMoveTo::create(2 , ccp(winSize.width*0.75 , winSize.height*0.25)));
+
+    SimpleAudioEngine::sharedEngine()->preloadEffect("splash.wav");
+
+    scheduleOnce(schedule_selector(SplashScene::initGameController) , 1.6);
 
     return true;
 }
 
 void SplashScene::initGameController(){
     data = GameController::getGameController()->getUserData();
+    SimpleAudioEngine::sharedEngine()->playEffect("splash.wav");
     CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
 }

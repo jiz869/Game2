@@ -151,7 +151,6 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
         userData.sound = MUTE;
     }else{
         userData.sound = UNMUTE;
-        SimpleAudioEngine::sharedEngine()->playBackgroundMusic(animationData.backgroundSoundImage->getCString(), true);
     }
 
     if (CCSTRING_FOR_KEY(dataDict, "controller_position")->isEqual(CCString::create("left"))) {

@@ -55,7 +55,7 @@ bool GameOverScene::init(){
     CCLabelTTF * yourNameLabel = CCLabelTTF::create("0", FONT, 48);
     yourNameLabel->setColor( ccBLUE );
     yourNameLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.8));
-    yourNameLabel->setAnchorPoint(ccp(1.1 , 0.5));
+    yourNameLabel->setAnchorPoint(ccp(1 , 0.5));
     info = CCString::create("Input your name");
     yourNameLabel->setString(info->getCString());
     addChild(yourNameLabel);
@@ -63,7 +63,7 @@ bool GameOverScene::init(){
     nameField = CCTextFieldTTF::textFieldWithPlaceHolder("Penguin" , FONT, 64);
     nameField->setColorSpaceHolder( ccGREEN );
     nameField->setColor( ccGREEN );
-    nameField->setPosition(ccp(winSize.width * 0.6 , winSize.height*0.8));
+    nameField->setPosition(ccp(winSize.width * 0.55 , winSize.height*0.8));
     nameField->setAnchorPoint(ccp(0 , 0.5));
     addChild(nameField);
 

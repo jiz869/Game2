@@ -24,7 +24,6 @@ public:
     void initGameController();
 
 private:
-    CCSprite * splash;
     UserData * data;
 };
 
