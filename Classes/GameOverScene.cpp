@@ -52,30 +52,30 @@ bool GameOverScene::init(){
     background->setPosition(ccp(winSize.width/2 , winSize.height/2));
     addChild(background);
 
-    CCLabelTTF * yourNameLabel = CCLabelTTF::create("0", "Times New Roman", 48);
+    CCLabelTTF * yourNameLabel = CCLabelTTF::create("0", FONT, 48);
     yourNameLabel->setColor( ccBLUE );
     yourNameLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.8));
     yourNameLabel->setAnchorPoint(ccp(1.1 , 0.5));
-    info = CCString::create("Your name is");
+    info = CCString::create("Input your name");
     yourNameLabel->setString(info->getCString());
     addChild(yourNameLabel);
 
-    nameField = CCTextFieldTTF::textFieldWithPlaceHolder("Penguin" , "Zapfino", 64);
+    nameField = CCTextFieldTTF::textFieldWithPlaceHolder("Penguin" , FONT, 64);
     nameField->setColorSpaceHolder( ccGREEN );
     nameField->setColor( ccGREEN );
-    nameField->setPosition(ccp(winSize.width/2 , winSize.height*0.8));
+    nameField->setPosition(ccp(winSize.width * 0.6 , winSize.height*0.8));
     nameField->setAnchorPoint(ccp(0 , 0.5));
     addChild(nameField);
 
 
-    CCLabelTTF * topScoreLabel = CCLabelTTF::create("0", "Times New Roman", 64);
+    CCLabelTTF * topScoreLabel = CCLabelTTF::create("0", FONT, 64);
     topScoreLabel->setColor( ccMAGENTA );
     topScoreLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.6));
     info = CCString::createWithFormat("TOP score is %d", userData->topScore);
     topScoreLabel->setString(info->getCString());
     addChild(topScoreLabel);
 
-    CCLabelTTF * lastScoreLabel = CCLabelTTF::create("0", "Times New Roman", 64);
+    CCLabelTTF * lastScoreLabel = CCLabelTTF::create("0", FONT, 64);
     lastScoreLabel->setColor( ccBLACK );
     lastScoreLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.4));
     info = CCString::createWithFormat("Last score is %d", userData->lastScore);

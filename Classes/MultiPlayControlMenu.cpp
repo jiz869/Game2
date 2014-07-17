@@ -63,12 +63,12 @@ void MultiPlayControlMenu::initScoreLabel(){
         playerCPPX = winSize.width * 0.82;
     }
 
-    scoreLabel = CCLabelTTF::create("0", "Verdana-Bold", 64 );
+    scoreLabel = CCLabelTTF::create("0", FONT, 64 );
     scoreLabel->setColor( ccRED );
     scoreLabel->setPosition( ccp(playerCPPX, winSize.height - 50) );
     addChild(scoreLabel);
 
-    scoreLabelEnemy = CCLabelTTF::create("0", "Verdana-Bold", 64 );
+    scoreLabelEnemy = CCLabelTTF::create("0", FONT, 64 );
     scoreLabelEnemy->setColor( ccBLACK );
     scoreLabelEnemy->setPosition( ccp(enemyCCPX, winSize.height - 50) );
     addChild(scoreLabelEnemy);

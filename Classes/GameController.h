@@ -164,6 +164,12 @@ typedef struct{
 
 #define MAX_RANKS (10)
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+#define FONT "Courier New"
+#else
+#define FONT "Courier New"
+#endif
+
 class GameController : CCObject {
 
 public:

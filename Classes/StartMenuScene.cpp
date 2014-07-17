@@ -117,8 +117,8 @@ void StartMenuScene::initScoreMenu(){
 	ScoreRank * rank;
 
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.25);
-    OK->setPosition(ccp(winSize.width/2, winSize.height*0.082));
+    OK->setScale(0.3);
+    OK->setPosition(ccp(winSize.width/2, winSize.height*0.07));
 
     CCMenuItemImage * background = CCMenuItemImage::create("background.png" , NULL);
     CCSize size = background->getContentSize();
@@ -136,7 +136,7 @@ void StartMenuScene::initScoreMenu(){
 	for(int i = 0 ; i < MAX_RANKS ; i++){
 		rank = &GameController::getGameController()->ranks[i];
 
-	    nameLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 48 ));
+	    nameLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 48 ));
 	    nameLabels[i]->setDisabledColor( labelColors[i] );
 	    nameLabels[i]->setString(rank->userName.c_str());
 	    nameLabels[i]->setPosition(ccp(winSize.width*0.25, winSize.height*(MAX_RANKS + 1 -i)*0.082));
@@ -149,7 +149,7 @@ void StartMenuScene::initScoreMenu(){
 		gems[i]->setEnabled(false);
 		gems[i]->setScale(0.5);
 
-	    scoreLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", "Times New Roman", 48 ));
+	    scoreLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 48 ));
 	    scoreLabels[i]->setDisabledColor( labelColors[i] );
 	    CCString * score = CCString::createWithFormat("%d", rank->score);
 	    scoreLabels[i]->setString(score->getCString());
@@ -253,56 +253,70 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 void StartMenuScene::initOptionsMenu(){
 
     //row 1
-    CCMenuItemImage * controllerPositions = CCMenuItemImage::create("controller_positions.png", NULL);
+    CCMenuItemLabel * controllerPositions = CCMenuItemLabel::create(
+    		CCLabelTTF::create("CONTROLLER POSITIONS", FONT , 64));
+    controllerPositions->setColor(ccBLUE);
     controllerPositions->setPosition(ccp(winSize.width/2, winSize.height*0.9));
 
     //row 2
-    CCMenuItemImage * left = CCMenuItemImage::create("left.png", NULL);
+    CCMenuItemLabel * left = CCMenuItemLabel::create(
+    		CCLabelTTF::create("ON THE LEFT", FONT , 48));
+    left->setColor(ccBLACK);
     checkboxLeft = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxLeft->setTag(LEFT);
     checkboxLeft->setScale(0.25);
-    left->setPosition(ccp(winSize.width/4, winSize.height*0.75));
+    left->setPosition(ccp(winSize.width * 0.35, winSize.height*0.75));
     checkboxLeft->setPosition(ccp(winSize.width*0.75, winSize.height*0.75));
 
     //row 3
-    CCMenuItemImage * right = CCMenuItemImage::create("right.png", NULL);
+    CCMenuItemLabel * right = CCMenuItemLabel::create(
+    		CCLabelTTF::create("ON THE RIGHT", FONT , 48));
+    right->setColor(ccMAGENTA);
     checkboxRight = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxRight->setTag(RIGHT);
     checkboxRight->setScale(0.25);
-    right->setPosition(ccp(winSize.width/4, winSize.height*0.65));
+    right->setPosition(ccp(winSize.width * 0.35, winSize.height*0.65));
     checkboxRight->setPosition(ccp(winSize.width*0.75, winSize.height*0.65));
 
     //row 4
-    CCMenuItemImage * side_by_side = CCMenuItemImage::create("side_by_side.png", NULL);
+    CCMenuItemLabel * leftUp = CCMenuItemLabel::create(
+    		CCLabelTTF::create("LEFT UP RIGHT DOWN", FONT , 48));
+    leftUp->setColor(ccGREEN);
     checkboxSide = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSide->setTag(SIDE);
     checkboxSide->setScale(0.25);
-    side_by_side->setPosition(ccp(winSize.width/4, winSize.height*0.55));
+    leftUp->setPosition(ccp(winSize.width * 0.35, winSize.height*0.55));
     checkboxSide->setPosition(ccp(winSize.width*0.75, winSize.height*0.55));
 
     //row 5
-    CCMenuItemImage * sound = CCMenuItemImage::create("sound.png", NULL);
+    CCMenuItemLabel * sound = CCMenuItemLabel::create(
+    		CCLabelTTF::create("SOUND", FONT , 64));
+    sound->setColor(ccBLUE);
     sound->setPosition(ccp(winSize.width/2, winSize.height*0.4));
 
     //row 6
-    CCMenuItemImage * mute = CCMenuItemImage::create("mute.png", NULL);
+    CCMenuItemLabel * mute = CCMenuItemLabel::create(
+    		CCLabelTTF::create("MUTE", FONT , 48));
+    mute->setColor(ccRED);
     checkboxMute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxMute->setTag(MUTE);
-    mute->setPosition(ccp(winSize.width/4, winSize.height*0.3));
+    mute->setPosition(ccp(winSize.width * 0.3, winSize.height*0.3));
     checkboxMute->setPosition(winSize.width*0.75, winSize.height*0.3);
     checkboxMute->setScale(0.25);
 
     //row 7
-    CCMenuItemImage * unmute = CCMenuItemImage::create("unmute.png", NULL);
+    CCMenuItemLabel * unMute = CCMenuItemLabel::create(
+    		CCLabelTTF::create("UNMUTE", FONT , 48));
+    unMute->setColor(ccBLACK);
     checkboxUnmute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxUnmute->setTag(UNMUTE);
-    unmute->setPosition(ccp(winSize.width/4, winSize.height*0.2));
+    unMute->setPosition(ccp(winSize.width * 0.3, winSize.height*0.2));
     checkboxUnmute->setPosition(winSize.width*0.75, winSize.height*0.2);
     checkboxUnmute->setScale(0.25);
 
     //row 8
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.25);
+    OK->setScale(0.4);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
 
     //background
@@ -313,7 +327,7 @@ void StartMenuScene::initOptionsMenu(){
     background->setAnchorPoint(ccp(0,0));
     background->setEnabled(false);
 
-    optionsMenu = CCMenu::create(background , controllerPositions , left , checkboxLeft , right , checkboxRight , side_by_side , checkboxSide , sound , mute , checkboxMute , unmute, checkboxUnmute, OK , NULL);
+    optionsMenu = CCMenu::create(background , controllerPositions , left , checkboxLeft , right , checkboxRight , leftUp , checkboxSide , sound , mute , checkboxMute , unMute, checkboxUnmute, OK , NULL);
 
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->ignoreAnchorPointForPosition(false);

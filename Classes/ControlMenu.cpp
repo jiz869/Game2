@@ -216,7 +216,7 @@ void ControlMenu::initScoreLabel(){
         addChild(gemLevelup);
     }
 
-    scoreLabel = CCLabelTTF::create("0", "Times New Roman", 60 );
+    scoreLabel = CCLabelTTF::create("0", FONT, 60 );
     scoreLabel->setColor( ccc3(168, 0, 0) );
     scoreLabel->setPosition( ccp(winSize.width * 0.775, winSize.height * 0.9) );
     char ss[10];

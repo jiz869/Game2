@@ -60,7 +60,7 @@ void MultiPlayScene::initMisc(){
 
     CCLog("initCityObj");
 
-    infoLabel = CCLabelTTF::create("", "Verdana", 32);
+    infoLabel = CCLabelTTF::create("", FONT, 32);
     infoLabel->setColor( ccc3(168, 0, 0) );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height - 50));
     addChild(infoLabel);
