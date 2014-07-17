@@ -208,6 +208,7 @@ void Lane::destroyLastCar(){
     if(lastCar){
     	CarObj * carObj = (CarObj *)lastCar->getUserData();
     	carObj->doom();
+    	lastCar->removeAllChildren();
     	CCAnimate * animate = CCAnimate::create(GameController::getGameController()->getAnimationData()->explodeAnim);
     	lastCar->runAction(CCSequence::createWithTwoActions(animate , CCCallFuncN::create(this, callfuncN_selector(Lane::destroyMe))));
     }

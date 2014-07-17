@@ -85,9 +85,11 @@ void ControlMenu::initMenu(){
 
     //pauseAndPlay->setAnchorPoint(ccp(1.5 , 0.5));
 
-    pauseAndPlay->setPosition(ccp(winSize.width * 0.875 , winSize.height * 0.9));
+    pauseAndPlay->setPosition(ccp(winSize.width * 0.925 , winSize.height * 0.9));
 
     pauseAndPlay->setTag(PAUSE_PLAY);
+
+    pauseAndPlay->setScale(0.8);
 
     CCArray * array = CCArray::createWithCapacity(CONTROL_BUTTON_MAX);
 
@@ -202,6 +204,7 @@ void ControlMenu::initScoreLabel(){
     CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
     gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
     gem->setPosition(ccp(winSize.width * 0.625 , winSize.height * 0.9));
+    gem->setScale(0.8);
     addChild(gem);
 
     if(userData->currentLevel < userData->maxLevel - 1){
@@ -209,12 +212,13 @@ void ControlMenu::initScoreLabel(){
         gemLevelup = CCSprite::createWithSpriteFrameName(gemName->getCString());
         gemLevelup->setPosition(ccp(winSize.width * 0.625 , winSize.height * 0.9));
         gemLevelup->setOpacity(0);
+        gemLevelup->setScale(0.8);
         addChild(gemLevelup);
     }
 
-    scoreLabel = CCLabelTTF::create("0", "Times New Roman", 64 );
+    scoreLabel = CCLabelTTF::create("0", "Times New Roman", 60 );
     scoreLabel->setColor( ccc3(168, 0, 0) );
-    scoreLabel->setPosition( ccp(winSize.width * 0.75, winSize.height * 0.9) );
+    scoreLabel->setPosition( ccp(winSize.width * 0.775, winSize.height * 0.9) );
     char ss[10];
     sprintf(ss, "%d", score);
     scoreLabel->setString(ss);

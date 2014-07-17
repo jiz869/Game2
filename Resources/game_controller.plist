@@ -1871,7 +1871,7 @@
 		<key>life</key>
 		<dict>
 			<key>duration</key>
-			<string>0</string>
+			<string>1</string>
 			<key>life</key>
 			<string>4.5</string>
 			<key>image_name</key>
@@ -1891,7 +1891,7 @@
 		<key>skull</key>
 		<dict>
 			<key>duration</key>
-			<string>0</string>
+			<string>1</string>
 			<key>life</key>
 			<string>3.5</string>
 			<key>image_name</key>
