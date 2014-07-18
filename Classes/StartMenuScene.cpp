@@ -115,6 +115,10 @@ bool StartMenuScene::init(){
 
     if(checkboxMute->isSelected()){
     	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0);
+    	SimpleAudioEngine::sharedEngine()->setEffectsVolume(0);
+    }else{
+    	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(1);
+    	SimpleAudioEngine::sharedEngine()->setEffectsVolume(1);
     }
 
     return true;
@@ -212,7 +216,7 @@ void StartMenuScene::initMainMenu(){
     score->setPosition(ccp(winSize.width*0.75 , winSize.height*0.375));
 #endif
 
-    infoLabel = CCLabelTTF::create("0", "Times New Roman", 32 );
+    infoLabel = CCLabelTTF::create("0", FONT, 32 );
     infoLabel->setColor( ccc3(54, 255, 0) );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     infoLabel->setVisible(false);

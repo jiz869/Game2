@@ -84,7 +84,7 @@ bool GameOverScene::init(){
 
     OK = CCSprite::create("ok_normal.png");
     OK->setPosition(ccp(winSize.width/2 , winSize.height*0.2));
-    OK->setScale(0.5);
+    OK->setScale(0.4);
     addChild(OK);
 
     setTouchEnabled(true);

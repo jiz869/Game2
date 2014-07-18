@@ -22,6 +22,7 @@ public:
     virtual bool init();
 
     void initGameController();
+    void splashOver();
 
 private:
     UserData * data;

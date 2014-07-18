@@ -167,7 +167,7 @@ typedef struct{
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #define FONT "Firenze"
 #else
-#define FONT "fonts/Firenze.ttf"
+#define FONT "fonts/Sweetie Love.ttf"
 #endif
 
 class GameController : CCObject {

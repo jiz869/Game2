@@ -11,6 +11,8 @@
 
 using namespace CocosDenshion;
 
+#define SPLASH_TIME 2 //seconds
+
 SplashScene::SplashScene()
 {
     // TODO Auto-generated constructor stub
@@ -74,21 +76,25 @@ bool SplashScene::init(){
 
     addChild(walkingPenguin);
 
-    walkingPenguin->setPosition(ccp(winSize.width*0.25 , winSize.height*0.25));
+    walkingPenguin->setPosition(ccp(winSize.width*0.2 , winSize.height*0.25));
 
     walkingPenguin->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 
-    walkingPenguin->runAction(CCMoveTo::create(2 , ccp(winSize.width*0.75 , winSize.height*0.25)));
+    walkingPenguin->runAction(CCMoveTo::create(SPLASH_TIME , ccp(winSize.width*0.8 , winSize.height*0.25)));
 
     SimpleAudioEngine::sharedEngine()->preloadEffect("splash.wav");
 
-    scheduleOnce(schedule_selector(SplashScene::initGameController) , 1.6);
+    scheduleOnce(schedule_selector(SplashScene::initGameController) , 0.2);
+    scheduleOnce(schedule_selector(SplashScene::splashOver) , SPLASH_TIME);
 
     return true;
 }
 
 void SplashScene::initGameController(){
     data = GameController::getGameController()->getUserData();
+}
+
+void SplashScene::splashOver(){
     SimpleAudioEngine::sharedEngine()->playEffect("splash.wav");
     CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
 }
