@@ -14,7 +14,7 @@
                   "a-z , A-Z, 0-9 , _ , -\n" \
 	              "Must start with alphabet"
 
-#define DEFAULT_NAME "penguin"
+#define DEFAULT_NAME "Penguin"
 
 GameOverScene::GameOverScene() {
 	// TODO Auto-generated constructor stub

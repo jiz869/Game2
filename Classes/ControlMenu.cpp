@@ -222,7 +222,7 @@ void ControlMenu::initScoreLabel(){
     }
 
     scoreLabel = CCLabelTTF::create("0", FONT, 72 );
-    scoreLabel->setColor( ccc3(168, 0, 0) );
+    scoreLabel->setColor( ccGREEN );
     scoreLabel->setPosition( ccp(winSize.width * 0.775, winSize.height * 0.9) );
     char ss[10];
     sprintf(ss, "%d", score);

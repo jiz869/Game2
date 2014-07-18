@@ -148,7 +148,7 @@ void StartMenuScene::initScoreMenu(){
 	for(int i = 0 ; i < MAX_RANKS ; i++){
 		rank = &GameController::getGameController()->ranks[i];
 
-	    nameLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 48 ));
+	    nameLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 56 ));
 	    nameLabels[i]->setDisabledColor( labelColors[i] );
 	    nameLabels[i]->setString(rank->userName.c_str());
 	    nameLabels[i]->setPosition(ccp(winSize.width*0.25, winSize.height*(MAX_RANKS + 1 -i)*0.082));
@@ -161,7 +161,7 @@ void StartMenuScene::initScoreMenu(){
 		gems[i]->setEnabled(false);
 		gems[i]->setScale(0.5);
 
-	    scoreLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 48 ));
+	    scoreLabels[i] = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 56 ));
 	    scoreLabels[i]->setDisabledColor( labelColors[i] );
 	    CCString * score = CCString::createWithFormat("%d", rank->score);
 	    scoreLabels[i]->setString(score->getCString());

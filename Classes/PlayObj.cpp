@@ -276,6 +276,11 @@ void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
         return;
     }
 
+    if (hasSpecial(STRONG) != NULL && specialObj->getSpecialId() > SPECIAL_NUM) {
+        specialObj->runAction(CCBlink::create(2, 10));
+        return;
+    }
+
     if (hasSpecial(BLESS) != NULL && specialObj->getSpecialId() > SPECIAL_NUM) {
 //    	SpecialData * data = GameController::getGameController()->getSpecialData(BLESS);
 //    	if(toss(data->userData1) == false) hitByCar();
@@ -286,11 +291,6 @@ void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
 
     if (hasSpecial(CURSE) != NULL && specialObj->getSpecialId() < SPECIAL_NUM
     		&& specialObj->getSpecialId() != BLESS) {
-        return;
-    }
-
-    if (hasSpecial(STRONG) != NULL && specialObj->getSpecialId() > SPECIAL_NUM) {
-        specialObj->runAction(CCBlink::create(2, 10));
         return;
     }
 

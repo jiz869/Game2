@@ -54,7 +54,11 @@ void City::addRoad(){
 
 void City::addCityObj(){
 
-    CCSprite * background = CCSprite::create("background0.png");
+	UserData * userData = GameController::getGameController()->getUserData();
+
+	CCString * name = CCString::createWithFormat("background%d.png", userData->currentLevel);
+
+    CCSprite * background = CCSprite::create(name->getCString());
 
     background->setPosition(ccp(winSize.width/2 , winSize.height/2));
 
@@ -64,7 +68,7 @@ void City::addCityObj(){
 
     background->setScaleX(winSize.width/size.width);
 
-    background->setOpacity(220);
+    background->setOpacity(180);
 
     addChild(background);
 
