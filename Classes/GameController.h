@@ -166,6 +166,8 @@ typedef struct{
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 #define FONT "Courier New"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#define FONT "Firenze"
 #else
 #define FONT "Courier New"
 #endif

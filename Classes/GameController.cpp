@@ -176,7 +176,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
 
     userData.order = -1;
     userData.pvpMode = NONE;
-    //userData.currentLevel = 8;
+    userData.currentLevel = 8;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -829,7 +829,7 @@ int GameController::getLevelByScore(int score){
 		}
 	}
 
-	return i;
+	return i-1;
 }
 
 void GameController::getTopRankings(){
