@@ -18,12 +18,17 @@ public:
     CREATE_FUNC(GameOverScene);
     virtual bool init();
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    void hideInfoLabel();
 protected:
     virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
 private:
     CCSize winSize;
     CCTextFieldTTF * nameField;
     CCSprite * OK;
+    CCSprite * container;
+    CCLabelTTF * infoLabel;
+    bool checkName(const char * name);
+    void setInfoLabel(const char * info);
 };
 
 #endif /* GAMEOVERSCENE_H_ */
