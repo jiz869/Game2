@@ -1934,6 +1934,8 @@
 			<string>10</string>
 			<key>image_name</key>
 			<string>curse0.png</string>
+			<key>time_decrease</key>
+			<string>2</string>
 		</dict>
 		<key>bomb</key>
 		<dict>
@@ -1953,7 +1955,7 @@
 			<key>image_name</key>
 			<string>bless0.png</string>
 			<key>chance</key>
-			<string>0.80</string>
+			<string>0.9</string>
 			<key>time_increase</key>
 			<string>2</string>
 			<key>score_increase</key>

@@ -264,6 +264,19 @@
                 <key>sourceSize</key>
                 <string>{35,35}</string>
             </dict>
+            <key>curse1.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{475,995},{35,35}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{35,35}}</string>
+                <key>sourceSize</key>
+                <string>{35,35}</string>
+            </dict>
             <key>empty_bar.png</key>
             <dict>
                 <key>frame</key>
@@ -605,7 +618,7 @@
             <key>haste0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{475,995},{35,35}}</string>
+                <string>{{475,958},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1138,7 +1151,7 @@
             <key>jail.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{475,958},{35,35}}</string>
+                <string>{{475,921},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1151,7 +1164,7 @@
             <key>life0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{475,921},{35,35}}</string>
+                <string>{{475,884},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1372,7 +1385,7 @@
             <key>score0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{475,884},{35,35}}</string>
+                <string>{{475,847},{35,35}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1385,15 +1398,15 @@
             <key>skull0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{475,847},{35,35}}</string>
+                <string>{{412,1828},{36,36}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{35,35}}</string>
+                <string>{{0,0},{36,36}}</string>
                 <key>sourceSize</key>
-                <string>{35,35}</string>
+                <string>{36,36}</string>
             </dict>
             <key>slow0.png</key>
             <dict>
@@ -1782,7 +1795,7 @@
             <key>size</key>
             <string>{512,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:15e061d3c528b3095fa63d836b2a4e48$</string>
+            <string>$TexturePacker:SmartUpdate:adb9a1c09c738b16afec3669d2ede664:1/1$</string>
             <key>textureFileName</key>
             <string>sprites.png</string>
         </dict>

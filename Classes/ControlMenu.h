@@ -42,6 +42,8 @@ public:
     void hideMenu();
     void stopTime();
     void resumeTime();
+    void changeDurationIncrease(int delta);
+    void resumeDurationIncrease();
 
 protected:
     CCSize winSize;

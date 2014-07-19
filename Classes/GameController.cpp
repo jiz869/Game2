@@ -177,7 +177,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.order = -1;
     userData.pvpMode = NONE;
     userData.justWon = false;
-    //userData.currentLevel = 8;
+    userData.currentLevel = 8;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -456,6 +456,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[CURSE] = new SpecialData;
     specialDatas[CURSE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[CURSE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[CURSE]->userData1 = CCSTRING_FOR_KEY(dict, "time_decrease")->floatValue();
     specialDatas[CURSE]->begin = &curseBegin;
     specialDatas[CURSE]->step = NULL;
     specialDatas[CURSE]->end = &curseEnd;
@@ -588,10 +589,14 @@ void static slowEnd(PlayerObj * player){
 
 //curse
 void static curseBegin(PlayerObj * player){
+    SpecialData * specialData = GameController::getGameController()->getSpecialData(CURSE);
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->controlMenu->changeDurationIncrease(specialData->userData1);
 	player->hitByCar();
 }
 void static curseEnd(PlayerObj * player){
-
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->controlMenu->resumeDurationIncrease();
 }
 
 //bomb

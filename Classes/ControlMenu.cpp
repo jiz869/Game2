@@ -356,6 +356,14 @@ void ControlMenu::resumeDuration(){
     updateGameTime();
 }
 
+void ControlMenu::changeDurationIncrease(int delta){
+    durationIncrease += delta;
+}
+
+void ControlMenu::resumeDurationIncrease(){
+    durationIncrease = playSceneData->durationIncrease;
+}
+
 void ControlMenu::changeControllerPosition(CheckboxType type){
     CCSize buttonSize = upButton->getContentSize();
     switch (type) {
