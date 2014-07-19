@@ -154,6 +154,7 @@ typedef struct{
     PvpMode pvpMode;
     bool justFailed;
     bool hasPayed;
+    bool justWon;
 }UserData;
 
 typedef struct{
@@ -165,7 +166,7 @@ typedef struct{
 #define MAX_RANKS (10)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-#define FONT "Firenze"
+#define FONT "Sweetie Love"
 #else
 #define FONT "fonts/Sweetie Love.ttf"
 #endif

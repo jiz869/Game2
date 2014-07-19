@@ -65,7 +65,7 @@ private:
 
     CCLabelTTF * infoLabel;
 
-    void setInfoLabel(const char * info);
+    void setInfoLabel(const char * info , float delay);
 
     void enableButtonsForIap(bool enable);
 };

@@ -352,7 +352,7 @@ void StartMenuScene::initOptionsMenu(){
 void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
     if (!userData->hasPayed && userData->justFailed) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        setInfoLabel("Please click the ad to support us \n or spend 99 cents to remove the ad. Thank you");
+        setInfoLabel("Please click the ads to support us \nor spend 99 cents to remove the ads.\nThank you!!!" , 4);
         return;
 #endif
     }
@@ -361,13 +361,13 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
     CCDirector::sharedDirector()->replaceScene(playScene);
 }
 
-void StartMenuScene::setInfoLabel(const char *info){
+void StartMenuScene::setInfoLabel(const char *info , float delay){
     startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     infoLabel->setString(info);
     infoLabel->setVisible(true);
-    scheduleOnce(schedule_selector(StartMenuScene::hideInfoLabel), 2);
+    scheduleOnce(schedule_selector(StartMenuScene::hideInfoLabel), delay);
 }
 
 void StartMenuScene::hideInfoLabel(){
@@ -473,13 +473,13 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
 
 void StartMenuScene::onPaymentError(){
 	CCLOG("onPaymentError");
-	setInfoLabel("Payment Error");
+	setInfoLabel("Payment Error" , 2);
     enableButtonsForIap(true);
 }
 
 void StartMenuScene::onPaymentSuccess(){
 	CCLOG("onPaymentSuccess");
-    setInfoLabel("Payment Success");
+    setInfoLabel("Payment Success" , 2);
     GameController::getGameController()->setHasPayed(true);
     SET_BANNDER_HIDDEN(true);
     enableButtonsForIap(true);

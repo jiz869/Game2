@@ -41,6 +41,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Firenze.ttf</string>
+		<string>HONEB.ttf</string>
+		<string>Sweetie Love.ttf</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>

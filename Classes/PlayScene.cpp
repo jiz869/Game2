@@ -127,6 +127,10 @@ void PlayScene::initMisc(){
 
     winSize = CCDirector::sharedDirector()->getWinSize();
     ptmRatio = winSize.height / 10;
+    
+    for(b2Body *body = world->GetBodyList(); body; body=body->GetNext()){
+        world->DestroyBody(body);
+    }
 
     GameObj::setB2world(world , ptmRatio);
 
@@ -214,6 +218,7 @@ void PlayScene::update(float dt){
 		if (sprite != NULL && (sprite->getTag() == CAR)) {
 			if(sprite->getPosition().x < 0 || sprite->getPosition().x > winSize.width){
 				delete (GameObj *)(sprite->getUserData());
+                body->SetUserData(NULL);
 				world->DestroyBody(body);
 			}
 		}else if(sprite != NULL && (sprite->getTag() == SPECIAL)){
@@ -227,6 +232,7 @@ void PlayScene::update(float dt){
 
 			if(special->isExpired() == true && special->isTaken() == false ){
 				delete special;
+                body->SetUserData(NULL);
 				world->DestroyBody(body);
 			}
 		}

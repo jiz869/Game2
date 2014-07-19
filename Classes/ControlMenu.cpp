@@ -46,7 +46,7 @@ void ControlMenu::initMisc(){
 
     numFrame=0;
 
-    if(userData->justFailed == true){
+    if(userData->justWon == false){
         if(userData->currentLevel > 0){
         	score = userData->levels[userData->currentLevel - 1];
         }else{
@@ -118,13 +118,13 @@ void ControlMenu::initLevelSplash(){
     goSplash->setScale(0);
 
     gameSplash = CCLabelTTF::create("GAME" , FONT , 196);
-    gameSplash->setPosition(ccp(winSize.width * 0.3, winSize.height*0.5));
+    gameSplash->setPosition(ccp(winSize.width * 0.25, winSize.height*0.5));
     gameSplash->setColor(ccc3(168, 0, 0));
     addChild(gameSplash);
     gameSplash->setScale(0.0);
 
     overSplash = CCLabelTTF::create("OVER" , FONT , 196);
-    overSplash->setPosition(ccp(winSize.width * 0.7, winSize.height*0.5));
+    overSplash->setPosition(ccp(winSize.width * 0.75, winSize.height*0.5));
     overSplash->setColor(ccc3(168, 0, 0));
     addChild(overSplash);
     overSplash->setScale(0.0);
@@ -221,7 +221,7 @@ void ControlMenu::initScoreLabel(){
         addChild(gemLevelup);
     }
 
-    scoreLabel = CCLabelTTF::create("0", FONT, 72 );
+    scoreLabel = CCLabelTTF::create("0", FONT, 64 );
     scoreLabel->setColor( ccGREEN );
     scoreLabel->setPosition( ccp(winSize.width * 0.775, winSize.height * 0.9) );
     char ss[10];
@@ -254,7 +254,7 @@ void ControlMenu::updateScore(bool isGood)
     sprintf(ss, "%d", score);
     scoreLabel->setString(ss);
     if(!isGood) return;
-    scoreLabel->runAction(CCSequence::create(CCScaleTo::create(0.5 , 2.0) , CCScaleTo::create(0.5 , 1.0), NULL));
+    scoreLabel->runAction(CCSequence::create(CCScaleTo::create(0.5 , 2) , CCScaleTo::create(0.5 , 1.0), NULL));
 	AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSoundImage->getCString());
 }
@@ -266,6 +266,7 @@ void ControlMenu::gameOver()
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     GameController::getGameController()->setLastScore(score , true);
     GameController::getGameController()->setJustFailed(true , true);
+    userData->justWon = false;
 }
 
 void ControlMenu::showOver(){
@@ -318,6 +319,7 @@ void ControlMenu::levelUp(){
     SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
     GameController::getGameController()->setLastScore(score , false);
     GameController::getGameController()->setJustFailed(false , false);
+    userData->justWon=true;
     GameController::getGameController()->levelUp();
 }
 
