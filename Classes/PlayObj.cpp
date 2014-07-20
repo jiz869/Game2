@@ -116,7 +116,6 @@ void PlayerObj::speedUp(float delta){
 
 void PlayerObj::freeze(){
 	frozen = true;
-	hitByCar();
 }
 
 void PlayerObj::unfreeze(){
@@ -129,8 +128,6 @@ void PlayerObj::changeAcc(float up_delta, float down_delta){
 	playerAccSpeed += up_delta;
 
     playerStopAccSpeed += down_delta;
-
-	hitByCar();
 }
 
 void PlayerObj::resumeAcc(){
@@ -244,9 +241,11 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
     return false;
 }
 
-void PlayerObj::hitByCar(){
-    AnimationData * animData = GameController::getGameController()->getAnimationData();
-    SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
+void PlayerObj::hitByCar(bool playDefaultSound){
+    if(playDefaultSound == true){
+        AnimationData * animData = GameController::getGameController()->getAnimationData();
+        SimpleAudioEngine::sharedEngine()->playEffect(animData->resetSoundImage->getCString());
+    }
 	PlayScene * playScene = (PlayScene *)getParent();
 	playScene->controlMenu->changeScore(-2 , false);
 	reset();

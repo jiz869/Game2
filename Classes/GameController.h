@@ -111,6 +111,10 @@ typedef struct{
     CCString * timeSoundImage;
     CCString * strongSoundImage;
     CCString * blessSoundImage;
+    CCString * policeSoundImage;
+    CCString * slowSoundImage;
+    CCString * curseSoundImage;
+    CCString * bombSoundImage;
     CCString * scoreSpecialSoundImage;
     vector<CCString *> hornSoundImages;
     CCAnimation * playerMoveAnim;

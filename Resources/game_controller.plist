@@ -47,6 +47,14 @@
 		<string>stop.wav</string>
 		<key>special_bless_sound</key>
 		<string>bless.wav</string>
+		<key>special_police_sound</key>
+		<string>police.wav</string>
+		<key>special_slow_sound</key>
+		<string>slow.wav</string>
+		<key>special_curse_sound</key>
+		<string>curse.wav</string>
+		<key>special_bomb_sound</key>
+		<string>bomb.wav</string>
 		<key>score_sound_file</key>
 		<string>success.wav</string>
 		<key>reset_sound_file</key>

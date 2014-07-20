@@ -256,6 +256,10 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.timeSoundImage = CCSTRING_FOR_KEY(dataDict, "special_time_sound");
     animationData.strongSoundImage = CCSTRING_FOR_KEY(dataDict, "special_strong_sound");
     animationData.blessSoundImage = CCSTRING_FOR_KEY(dataDict, "special_bless_sound");
+    animationData.policeSoundImage = CCSTRING_FOR_KEY(dataDict, "special_police_sound");
+    animationData.slowSoundImage = CCSTRING_FOR_KEY(dataDict, "special_slow_sound");
+    animationData.curseSoundImage = CCSTRING_FOR_KEY(dataDict, "special_curse_sound");
+    animationData.bombSoundImage = CCSTRING_FOR_KEY(dataDict, "special_bomb_sound");
 
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData.backgroundSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
@@ -268,6 +272,10 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.scoreSpecialSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.strongSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.blessSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.policeSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.curseSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.slowSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.bombSoundImage->getCString());
 
     CCArray * hornSoundFiles = (CCArray *)dataDict->objectForKey("horn_sound_files");
     animationData.hornSoundImages.reserve(hornSoundFiles->count());
@@ -572,7 +580,10 @@ void static scoreStep(PlayerObj * player , float timer_count){
 
 //police
 void static policeBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->policeSoundImage->getCString());
 	player->freeze();
+	player->hitByCar(false);
 }
 void static policeEnd(PlayerObj * player){
 	player->unfreeze();
@@ -580,8 +591,11 @@ void static policeEnd(PlayerObj * player){
 
 //slow
 void static slowBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->slowSoundImage->getCString());
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SLOW);
 	player->changeAcc(-specialData->userData1, -specialData->userData2);
+	player->hitByCar(false);
 }
 void static slowEnd(PlayerObj * player){
 	player->resumeAcc();
@@ -589,10 +603,12 @@ void static slowEnd(PlayerObj * player){
 
 //curse
 void static curseBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->curseSoundImage->getCString());
     SpecialData * specialData = GameController::getGameController()->getSpecialData(CURSE);
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->changeDurationIncrease(specialData->userData1);
-	player->hitByCar();
+    playScene->controlMenu->changeDurationIncrease(-specialData->userData1);
+	player->hitByCar(false);
 }
 void static curseEnd(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
@@ -601,7 +617,9 @@ void static curseEnd(PlayerObj * player){
 
 //bomb
 void static bombBegin(PlayerObj * player){
-	player->hitByCar();
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->bombSoundImage->getCString());
+	player->hitByCar(false);
 }
 void static bombEnd(PlayerObj * player){
 

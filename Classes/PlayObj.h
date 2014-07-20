@@ -57,7 +57,7 @@ public:
     void unfreeze();
     void changeAcc(float up_delta , float down_delta);
     void resumeAcc();
-    void hitByCar();
+    void hitByCar(bool playDefaultSound = true);
 
 protected:
     PlayerState movingState;
