@@ -42,7 +42,7 @@ B2Sprite* B2Sprite::create()
     {
         CC_SAFE_DELETE(pRet);
     }
-    
+
     return pRet;
 }
 
@@ -57,7 +57,7 @@ B2Sprite* B2Sprite::createWithTexture(CCTexture2D *pTexture)
     {
         CC_SAFE_DELETE(pRet);
     }
-    
+
     return pRet;
 }
 
@@ -72,7 +72,7 @@ B2Sprite* B2Sprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     {
         CC_SAFE_DELETE(pRet);
     }
-    
+
     return pRet;
 }
 
@@ -87,7 +87,7 @@ B2Sprite* B2Sprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     {
         CC_SAFE_DELETE(pRet);
     }
-    
+
     return pRet;
 }
 
@@ -102,7 +102,7 @@ B2Sprite* B2Sprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
     {
         CC_SAFE_DELETE(pRet);
     }
-    
+
     return pRet;
 }
 
@@ -117,7 +117,7 @@ B2Sprite* B2Sprite::create(const char *pszFileName)
     {
         CC_SAFE_DELETE(pRet);
     }
-    
+
     return pRet;
 }
 
@@ -132,7 +132,7 @@ B2Sprite* B2Sprite::create(const char *pszFileName, const CCRect& rect)
     {
         CC_SAFE_DELETE(pRet);
     }
-    
+
     return pRet;
 }
 
@@ -239,21 +239,21 @@ void B2Sprite::setRotation(float fRotation)
 CCAffineTransform B2Sprite::nodeToParentTransform()
 {
     b2Vec2 pos  = m_pB2Body->GetPosition();
-    
+
 	float x = pos.x * m_fPTMRatio;
 	float y = pos.y * m_fPTMRatio;
-    
+
 	if (m_bIgnoreAnchorPointForPosition)
     {
 		x += m_obAnchorPointInPoints.x;
 		y += m_obAnchorPointInPoints.y;
 	}
-    
+
 	// Make matrix
 	float radians = m_pB2Body->GetAngle();
 	float c = cosf(radians);
 	float s = sinf(radians);
-    
+
 	// Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
 	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
@@ -262,11 +262,11 @@ CCAffineTransform B2Sprite::nodeToParentTransform()
 		x += ((c * -m_obAnchorPointInPoints.x * m_fScaleX) + (-s * -m_obAnchorPointInPoints.y * m_fScaleY));
 		y += ((s * -m_obAnchorPointInPoints.x * m_fScaleX) + (c * -m_obAnchorPointInPoints.y * m_fScaleY));
 	}
-    
+
 	// Rot, Translate Matrix
 	m_sTransform = CCAffineTransformMake( c * m_fScaleX,	s * m_fScaleX,
 									     -s * m_fScaleY,	c * m_fScaleY,
 									     x,	y );
-    
+
 	return m_sTransform;
 }

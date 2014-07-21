@@ -10,6 +10,8 @@
 #define __crossRoad__StartMenuScene__
 
 #include "GameController.h"
+#include "cocos-ext.h"
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "../proj.ios/P2PCPPHelper.h"
 #else
@@ -22,8 +24,10 @@ public:
 #endif
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 
-class StartMenuScene: public cocos2d::CCLayerColor , IAPManagerDelegate {
+class StartMenuScene: public cocos2d::CCLayerColor , IAPManagerDelegate ,
+									CCTableViewDelegate , CCTableViewDataSource {
 public:
 	StartMenuScene();
 	virtual ~StartMenuScene();
@@ -41,11 +45,22 @@ public:
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
     virtual bool hasPayed();
+    virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell);
+    virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx);
+    virtual unsigned int numberOfCellsInTableView(CCTableView *table);
+    virtual CCSize cellSizeForTable(CCTableView *table);
+    virtual void scrollViewDidScroll(CCScrollView* view);
+    virtual void scrollViewDidZoom(CCScrollView* view);
 
 private:
     CCMenu * startMenu;
     CCMenu * optionsMenu;
+#ifdef LISTVIEW_LEADERBOARD
+    CCLayer * scoreMenu;
+    CCTableView * scoreTable;
+#else
     CCMenu * scoreMenu;
+#endif
     CCSize winSize;
     void initMainMenu();
     void initOptionsMenu();

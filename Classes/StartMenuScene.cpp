@@ -18,6 +18,12 @@ typedef enum{
     PVP,
 }BUTTON_TAG;
 
+typedef enum{
+    NAME_LABEL = 0,
+    GEM_LABEL,
+    SCORE_LABEL,
+}SCORE_MENU_TAG;
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 extern void setBannerViewHidden(bool);
 #define SET_BANNDER_HIDDEN(_hidden) \
@@ -125,7 +131,38 @@ bool StartMenuScene::init(){
 }
 
 void StartMenuScene::initScoreMenu(){
+#ifdef LISTVIEW_LEADERBOARD
+	scoreMenu = CCLayer::create();
+	scoreMenu->ignoreAnchorPointForPosition(false);
+	scoreMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+	addChild(scoreMenu);
 
+	CCSprite * background = CCSprite::create("background.png");
+    CCSize size = background->getContentSize();
+    background->setScaleY(winSize.height/size.height);
+    background->setScaleX(winSize.width/size.width);
+    background->setAnchorPoint(ccp(0,0));
+    scoreMenu->addChild(background);
+
+    CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    OK->setScale(0.3);
+    OK->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
+    CCMenu * okMenu = CCMenu::create(OK , NULL);
+    okMenu->setPosition(ccp(0, 0));
+    okMenu->setAnchorPoint(ccp(0,0));
+    okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)));
+    okMenu->ignoreAnchorPointForPosition(false);
+    scoreMenu->addChild(okMenu);
+
+    scoreTable = CCTableView::create(this ,
+    		CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE-1)));
+    scoreTable->setDirection(kCCScrollViewDirectionVertical);
+    //scoreTable->setAnchorPoint(ccp(0 , 1));
+    scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1)));
+    scoreTable->setVerticalFillOrder(kCCTableViewFillTopDown);
+    scoreMenu->addChild(scoreTable);
+    scoreTable->reloadData();
+#else
 	ScoreRank * rank;
 
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
@@ -172,6 +209,80 @@ void StartMenuScene::initScoreMenu(){
 	    scoreMenu->addChild(scoreLabels[i]);
 	    scoreMenu->addChild(nameLabels[i]);
 	}
+#endif
+}
+
+void StartMenuScene::tableCellTouched(CCTableView* table, CCTableViewCell* cell){
+	CCLOG("cell touched at index: %i", cell->getIdx());
+}
+
+CCTableViewCell * StartMenuScene::tableCellAtIndex(CCTableView *table, unsigned int idx){
+	ScoreRank * rank = &GameController::getGameController()->ranks[idx];
+
+    CCTableViewCell * cell = table->dequeueCell();
+
+    if(!cell){
+    	cell = new CCTableViewCell();
+    	cell->autorelease();
+
+    	CCLabelTTF * name = CCLabelTTF::create("0", FONT, 64 );
+    	name->setColor( labelColors[idx%RANK_PERPAGE] );
+        name->setString(rank->userName.c_str());
+        name->setPosition(ccp(winSize.width*0.25, winSize.height/(RANK_PERPAGE + 1)/2));
+        name->setTag(NAME_LABEL);
+        cell->addChild(name);
+
+    	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
+    	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
+    	gem->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
+    	gem->setScale(0.8);
+    	gem->setTag(GEM_LABEL);
+    	cell->addChild(gem);
+
+    	CCLabelTTF * scoreLabel = CCLabelTTF::create("0", FONT, 64 );
+    	scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
+        CCString * score = CCString::createWithFormat("%d", rank->score);
+        scoreLabel->setString(score->getCString());
+        scoreLabel->setPosition(ccp(winSize.width*0.75, winSize.height/(RANK_PERPAGE + 1)/2));
+        scoreLabel->setTag(SCORE_LABEL);
+        cell->addChild(scoreLabel);
+    }else{
+    	CCLabelTTF * name = (CCLabelTTF *)cell->getChildByTag(NAME_LABEL);
+    	name->setColor( labelColors[idx%RANK_PERPAGE] );
+    	name->setString(rank->userName.c_str());
+
+    	cell->removeChildByTag(GEM_LABEL);
+    	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
+    	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
+    	gem->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
+    	gem->setScale(0.8);
+    	gem->setTag(GEM_LABEL);
+    	cell->addChild(gem);
+
+
+    	CCLabelTTF * scoreLabel = (CCLabelTTF *)cell->getChildByTag(SCORE_LABEL);
+        CCString * score = CCString::createWithFormat("%d", rank->score);
+        scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
+        scoreLabel->setString(score->getCString());
+    }
+
+    return cell;
+}
+
+unsigned int StartMenuScene::numberOfCellsInTableView(CCTableView *table){
+	return MAX_RANKS;
+}
+
+CCSize StartMenuScene::cellSizeForTable(CCTableView *table){
+	return CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1));
+}
+
+void StartMenuScene::scrollViewDidScroll(CCScrollView* view){
+
+}
+
+void StartMenuScene::scrollViewDidZoom(CCScrollView* view){
+
 }
 
 void StartMenuScene::initMainMenu(){
@@ -241,6 +352,10 @@ void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
 }
 
 void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
+#ifdef LISTVIEW_LEADERBOARD
+	GameController::getGameController()->getTopRankings();
+	scoreTable->reloadData();
+#else
 	ScoreRank * rank;
 
 	GameController::getGameController()->getTopRankings();
@@ -256,6 +371,7 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 	    CCString * score = CCString::createWithFormat("%d", rank->score);
 	    scoreLabels[i]->setString(score->getCString());
 	}
+#endif
 
     SET_BANNDER_HIDDEN(true);
     startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));

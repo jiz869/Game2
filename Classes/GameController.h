@@ -167,7 +167,14 @@ typedef struct{
 	int score;
 }ScoreRank;
 
+#define LISTVIEW_LEADERBOARD
+
+#ifdef LISTVIEW_LEADERBOARD
+#define MAX_RANKS (50)
+#else
 #define MAX_RANKS (10)
+#endif
+#define RANK_PERPAGE (8)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #define FONT "Sweetie Love"
