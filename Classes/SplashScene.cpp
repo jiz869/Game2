@@ -50,9 +50,17 @@ bool SplashScene::init(){
     ignoreAnchorPointForPosition(false);
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
-    CCSprite * background = CCSprite::create("background_main.png");
+    CCSprite * background = CCSprite::create("background.png");
 
     CCSize size = background->getContentSize();
+    background->setScaleY(winSize.height/size.height);
+    background->setScaleX(winSize.width/size.width);
+    background->setAnchorPoint(ccp(0,0));
+
+    addChild(background);
+
+    background = CCSprite::create("background_main.png");
+
     background->setScaleY(winSize.height/size.height);
     background->setScaleX(winSize.width/size.width);
     background->setAnchorPoint(ccp(0,0));

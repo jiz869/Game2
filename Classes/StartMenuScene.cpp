@@ -109,6 +109,13 @@ bool StartMenuScene::init(){
 
     SET_BANNDER_HIDDEN(false);
 
+	CCSprite * background = CCSprite::create("background.png");
+    CCSize size = background->getContentSize();
+    background->setScaleY(winSize.height/size.height);
+    background->setScaleX(winSize.width/size.width);
+    background->setAnchorPoint(ccp(0,0));
+    addChild(background);
+
     initMainMenu();
 
     initOptionsMenu();
@@ -144,12 +151,13 @@ void StartMenuScene::initScoreMenu(){
 	scoreMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 	addChild(scoreMenu);
 
-	CCSprite * background = CCSprite::create("background.png");
-    CCSize size = background->getContentSize();
-    background->setScaleY(winSize.height/size.height);
-    background->setScaleX(winSize.width/size.width);
-    background->setAnchorPoint(ccp(0,0));
-    scoreMenu->addChild(background);
+	CCLabelTTF * rankLabel = CCLabelTTF::create("0", FONT, 64 );
+	rankLabel->setColor( ccBLUE );
+	CCString * rankInfo = CCString::createWithFormat("%s's rank is : %s",
+			userData->userName.c_str(), userData->rank.c_str());
+	rankLabel->setString(rankInfo->getCString());
+	rankLabel->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE)));
+	scoreMenu->addChild(rankLabel);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.3);
@@ -162,7 +170,7 @@ void StartMenuScene::initScoreMenu(){
     scoreMenu->addChild(okMenu);
 
     scoreTable = CCTableView::create(this ,
-    		CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE-1)));
+    		CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE-2)));
     scoreTable->setDirection(kCCScrollViewDirectionVertical);
     //scoreTable->setAnchorPoint(ccp(0 , 1));
     scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) + winSize.height * 0.05));
@@ -176,14 +184,7 @@ void StartMenuScene::initScoreMenu(){
     OK->setScale(0.3);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.07));
 
-    CCMenuItemImage * background = CCMenuItemImage::create("background.png" , NULL);
-    CCSize size = background->getContentSize();
-    background->setScaleY(winSize.height/size.height);
-    background->setScaleX(winSize.width/size.width);
-    background->setAnchorPoint(ccp(0,0));
-    background->setEnabled(false);
-
-    scoreMenu = CCMenu::create(background , OK , NULL);
+    scoreMenu = CCMenu::create(OK , NULL);
 
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->ignoreAnchorPointForPosition(false);
@@ -334,7 +335,7 @@ void StartMenuScene::initMainMenu(){
     score->setPosition(ccp(winSize.width*0.75 , winSize.height*0.375));
 #endif
 
-    infoLabel = CCLabelTTF::create("0", FONT, 48 );
+    infoLabel = CCLabelTTF::create("0", INFO_FONT, 48 );
     infoLabel->setColor( ccRED );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     infoLabel->setVisible(false);
@@ -454,15 +455,7 @@ void StartMenuScene::initOptionsMenu(){
     OK->setScale(0.4);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.12));
 
-    //background
-    CCMenuItemImage * background = CCMenuItemImage::create("background.png" , "background.png");
-    CCSize size = background->getContentSize();
-    background->setScaleY(winSize.height/size.height);
-    background->setScaleX(winSize.width/size.width);
-    background->setAnchorPoint(ccp(0,0));
-    background->setEnabled(false);
-
-    optionsMenu = CCMenu::create(background , controllerPositions , left , checkboxLeft , right , checkboxRight , leftUp , checkboxSide , sound , mute , checkboxMute , unMute, checkboxUnmute, OK , NULL);
+    optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight , leftUp , checkboxSide , sound , mute , checkboxMute , unMute, checkboxUnmute, OK , NULL);
 
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->ignoreAnchorPointForPosition(false);

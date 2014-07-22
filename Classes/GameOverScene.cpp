@@ -54,7 +54,7 @@ bool GameOverScene::init(){
     //ignoreAnchorPointForPosition(false);
 
     winSize = CCDirector::sharedDirector()->getWinSize();
-    UserData * userData = GameController::getGameController()->getUserData();
+    userData = GameController::getGameController()->getUserData();
     CCString * info;
 
     CCSprite * background = CCSprite::create("background.png");
@@ -64,7 +64,7 @@ bool GameOverScene::init(){
     background->setPosition(ccp(winSize.width/2 , winSize.height/2));
     addChild(background);
 
-    infoLabel = CCLabelTTF::create("" , FONT , 40);
+    infoLabel = CCLabelTTF::create("" , INFO_FONT , 40);
     infoLabel->setString("");
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     infoLabel->setVisible(false);
@@ -85,7 +85,7 @@ bool GameOverScene::init(){
     container->addChild(yourNameLabel);
 
     nameField = CCTextFieldTTF::textFieldWithPlaceHolder(NULL , FONT, 64);
-    nameField->setString(DEFAULT_NAME);
+    nameField->setString(userData->userName.c_str());
     nameField->setColorSpaceHolder( ccRED );
     nameField->setColor( ccRED );
     nameField->setPosition(ccp(winSize.width * 0.55 , winSize.height*0.8));
@@ -130,16 +130,17 @@ void GameOverScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 		nameField->detachWithIME();
 		const char * name = nameField->getString();
 		if(strlen(name) == 0){
-			nameField->setString(DEFAULT_NAME);
+			nameField->setString(userData->userName.c_str());
 			return;
 		}
 		if(OK->boundingBox().containsPoint(touchPoint)){
 			if(checkName(name) == false){
-				nameField->setString(DEFAULT_NAME);
+				nameField->setString(userData->userName.c_str());
 				setInfoLabel(NAME_RULE);
 				return;
 			}
-			GameController::getGameController()->saveLastScore(name);
+			GameController::getGameController()->saveUserName(name);
+			GameController::getGameController()->saveLastScore();
 			CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
 		}
 	}
@@ -159,7 +160,7 @@ bool GameOverScene::checkName(const char * name){
 	for(int i = 0 ; i < length ; i++){
 		if((name[i] < 'a' || name[i] > 'z')
 				&& (name[i] < 'A' || name[i] > 'Z')
-				&& (name[i] < '1' || name[i] > '9')
+				&& (name[i] < '0' || name[i] > '9')
 				&& (name[i] != '_') && (name[i] != '-')){
 			return false;
 		}

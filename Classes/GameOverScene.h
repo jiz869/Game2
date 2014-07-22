@@ -30,6 +30,7 @@ private:
     CCLabelTTF * infoLabel;
     bool checkName(const char * name);
     void setInfoLabel(const char * info);
+    UserData * userData;
 };
 
 #endif /* GAMEOVERSCENE_H_ */

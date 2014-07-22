@@ -183,6 +183,10 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
     }
 
+    userData.userName = CCSTRING_FOR_KEY(dataDict, "user_name")->getCString();
+
+    userData.rank = "unknown";
+
     return true;
 }
 
@@ -765,6 +769,10 @@ void GameController::initLeaderboard(){
 
     scoreBoardService->GetTopRankings("crossRoad",
     		this, callfuncND_selector(GameController::onScoreBoardGetCompleted));
+    scoreBoardService->GetUserRanking("crossRoad",
+    		base64_encode((unsigned char const*)userData.userName.c_str(), userData.userName.length()),
+    		this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
+
 	//gameService->CreateGame("crossRoad","crossRoad", this, callfuncND_selector(GameController::onGameRequestCompleted));
 }
 
@@ -802,7 +810,6 @@ void GameController::onScoreBoardSaveCompleted(CCNode * node , void * response){
 //			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
 //			CCLOG("ScoreValue=%f\n",it->getScoreValue());
 //			CCLOG("UserName=%s\n",it->getUserName().c_str());
-
 		}
 	}
 	else
@@ -844,6 +851,32 @@ void GameController::onScoreBoardGetCompleted(CCNode * node , void * response){
 	}
 }
 
+void GameController::onScoreBoardGetUserRankingCompleted(CCNode * node , void * response){
+	App42GameResponse *scoreResponse = (App42GameResponse*)response;
+//	CCLOG("code=%d",scoreResponse->getCode());
+//	CCLOG("Response Body=%s",scoreResponse->getBody().c_str());
+	if (scoreResponse->isSuccess)
+	{
+		for(std::vector<App42Score>::iterator it = scoreResponse->scores.begin(); it != scoreResponse->scores.end(); ++it)
+		{
+//			CCLOG("CreatedAt=%s",it->getCreatedOn().c_str());
+//			CCLOG("Rank=%s\n",it->getRank().c_str());
+//			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
+//			CCLOG("ScoreValue=%f\n",it->getScoreValue());
+//			CCLOG("UserName=%s\n",it->getUserName().c_str());
+			userData.rank = it->getRank();
+			break;
+		}
+	}
+	else
+	{
+		CCLOG("errordetails:%s",scoreResponse->errorDetails.c_str());
+		CCLOG("errorMessage:%s",scoreResponse->errorMessage.c_str());
+		CCLOG("appErrorCode:%d",scoreResponse->appErrorCode);
+		CCLOG("httpErrorCode:%d",scoreResponse->httpErrorCode);
+	}
+}
+
 int GameController::getLevelByScore(int score){
 	int i;
 
@@ -861,21 +894,22 @@ void GameController::getTopRankings(){
     		this, callfuncND_selector(GameController::onScoreBoardGetCompleted));
 }
 
-void GameController::saveLastScore(const char * userName){
-
-	int i;
-	char * name = "Penguin";
-
-	for(i = 0; i < MAX_RANKS ; i++){
-		if(userData.lastScore > ranks[i].score) break;
-	}
-
-	if(i == MAX_RANKS) return;
-
-	if(strlen(userName) != 0){
-		name = (char *)userName;
-	}
-
-    scoreBoardService->SaveUserScore("crossRoad", base64_encode((unsigned char const*)name, strlen(name))
+void GameController::saveLastScore(){
+    scoreBoardService->SaveUserScore("crossRoad",
+    		base64_encode((unsigned char const*)userData.userName.c_str(), userData.userName.length())
     		, userData.lastScore, this, callfuncND_selector(GameController::onScoreBoardSaveCompleted));
+    scoreBoardService->GetUserRanking("crossRoad",
+    		base64_encode((unsigned char const*)userData.userName.c_str(), userData.userName.length()),
+    		this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
+}
+
+void GameController::saveUserName(const char * userName){
+    if (userData.userName == userName) {
+        return;
+    }
+    userData.userName = userName;
+    CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
+    userDataDict->setObject(CCString::create(userName), "user_name");
+    dict->setObject(userDataDict, "user_data");
+    dict->writeToFile(plistWritablePath.c_str());
 }
