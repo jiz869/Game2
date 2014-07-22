@@ -49,6 +49,8 @@ bool GameOverScene::init(){
 
     GameController::getGameController()->getTopRankings();
 
+    setKeypadEnabled(true);
+
     //ignoreAnchorPointForPosition(false);
 
     winSize = CCDirector::sharedDirector()->getWinSize();
@@ -66,7 +68,7 @@ bool GameOverScene::init(){
     infoLabel->setString("");
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     infoLabel->setVisible(false);
-    infoLabel->setColor(ccGREEN);
+    infoLabel->setColor(ccRED);
     addChild(infoLabel);
 
     container = CCSprite::create();
@@ -84,8 +86,8 @@ bool GameOverScene::init(){
 
     nameField = CCTextFieldTTF::textFieldWithPlaceHolder(NULL , FONT, 64);
     nameField->setString(DEFAULT_NAME);
-    nameField->setColorSpaceHolder( ccGREEN );
-    nameField->setColor( ccGREEN );
+    nameField->setColorSpaceHolder( ccRED );
+    nameField->setColor( ccRED );
     nameField->setPosition(ccp(winSize.width * 0.55 , winSize.height*0.8));
     nameField->setAnchorPoint(ccp(0 , 0.5));
     nameField->runAction(CCBlink::create(3, 10));
@@ -176,4 +178,9 @@ void GameOverScene::setInfoLabel(const char * info){
 void GameOverScene::hideInfoLabel(){
 	container->setPosition(ccp(winSize.width/2, winSize.height/2));
     infoLabel->setVisible(false);
+}
+
+void GameOverScene::keyBackClicked(){
+	CCLayer::keyBackClicked();
+	CCDirector::sharedDirector()->end();
 }

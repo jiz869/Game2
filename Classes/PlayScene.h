@@ -44,6 +44,8 @@ public:
 
     ControlMenu * controlMenu;
 
+    virtual void keyBackClicked();
+
 protected:
 
     b2World * world;

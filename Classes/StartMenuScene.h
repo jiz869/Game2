@@ -54,6 +54,7 @@ public:
     virtual CCSize cellSizeForTable(CCTableView *table);
     virtual void scrollViewDidScroll(CCScrollView* view);
     virtual void scrollViewDidZoom(CCScrollView* view);
+    virtual void keyBackClicked();
     void setPaymentError();
     void setPaymentSuccess();
 

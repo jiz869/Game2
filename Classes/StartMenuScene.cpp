@@ -64,7 +64,7 @@ extern "C"
 #endif
 
 ccColor3B labelColors[MAX_RANKS] = {ccRED , ccBLUE , ccMAGENTA , ccBLACK , ccWHITE ,
-		ccGREEN , ccRED , ccBLUE , ccMAGENTA , ccBLACK};
+		ccORANGE , ccRED , ccBLUE , ccMAGENTA , ccBLACK};
 
 using namespace CocosDenshion;
 
@@ -127,7 +127,14 @@ bool StartMenuScene::init(){
     	SimpleAudioEngine::sharedEngine()->setEffectsVolume(1);
     }
 
+    setKeypadEnabled(true);
+
     return true;
+}
+
+void StartMenuScene::keyBackClicked(){
+	CCLayer::keyBackClicked();
+	CCDirector::sharedDirector()->end();
 }
 
 void StartMenuScene::initScoreMenu(){
@@ -146,9 +153,9 @@ void StartMenuScene::initScoreMenu(){
 
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.3);
-    OK->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
+    OK->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)*0.85));
     CCMenu * okMenu = CCMenu::create(OK , NULL);
-    okMenu->setPosition(ccp(0, 0));
+    okMenu->setPosition(ccp(0, 0.05));
     okMenu->setAnchorPoint(ccp(0,0));
     okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)));
     okMenu->ignoreAnchorPointForPosition(false);
@@ -158,7 +165,7 @@ void StartMenuScene::initScoreMenu(){
     		CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE-1)));
     scoreTable->setDirection(kCCScrollViewDirectionVertical);
     //scoreTable->setAnchorPoint(ccp(0 , 1));
-    scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1)));
+    scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) + winSize.height * 0.05));
     scoreTable->setVerticalFillOrder(kCCTableViewFillTopDown);
     scoreMenu->addChild(scoreTable);
     scoreTable->reloadData();
@@ -328,7 +335,7 @@ void StartMenuScene::initMainMenu(){
 #endif
 
     infoLabel = CCLabelTTF::create("0", FONT, 48 );
-    infoLabel->setColor( ccc3(54, 255, 0) );
+    infoLabel->setColor( ccRED );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     infoLabel->setVisible(false);
     addChild(infoLabel);
@@ -384,7 +391,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * controllerPositions = CCMenuItemLabel::create(
     		CCLabelTTF::create("CONTROLLER POSITIONS", FONT , 64));
     controllerPositions->setColor(ccBLUE);
-    controllerPositions->setPosition(ccp(winSize.width/2, winSize.height*0.9));
+    controllerPositions->setPosition(ccp(winSize.width/2, winSize.height*0.88));
 
     //row 2
     CCMenuItemLabel * left = CCMenuItemLabel::create(
@@ -409,7 +416,7 @@ void StartMenuScene::initOptionsMenu(){
     //row 4
     CCMenuItemLabel * leftUp = CCMenuItemLabel::create(
     		CCLabelTTF::create("LEFT UP RIGHT DOWN", FONT , 48));
-    leftUp->setColor(ccGREEN);
+    leftUp->setColor(ccORANGE);
     checkboxSide = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSide->setTag(SIDE);
     checkboxSide->setScale(0.25);
@@ -445,7 +452,7 @@ void StartMenuScene::initOptionsMenu(){
     //row 8
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.4);
-    OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
+    OK->setPosition(ccp(winSize.width/2, winSize.height*0.12));
 
     //background
     CCMenuItemImage * background = CCMenuItemImage::create("background.png" , "background.png");
