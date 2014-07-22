@@ -327,7 +327,7 @@ void StartMenuScene::initMainMenu(){
     score->setPosition(ccp(winSize.width*0.75 , winSize.height*0.375));
 #endif
 
-    infoLabel = CCLabelTTF::create("0", FONT, 32 );
+    infoLabel = CCLabelTTF::create("0", FONT, 48 );
     infoLabel->setColor( ccc3(54, 255, 0) );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     infoLabel->setVisible(false);
@@ -589,16 +589,24 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
 
 void StartMenuScene::onPaymentError(){
 	CCLOG("onPaymentError");
-	setInfoLabel("Payment Error" , 2);
+	scheduleOnce(schedule_selector(StartMenuScene::setPaymentError),0);
     enableButtonsForIap(true);
 }
 
 void StartMenuScene::onPaymentSuccess(){
 	CCLOG("onPaymentSuccess");
-    setInfoLabel("Payment Success" , 2);
+	scheduleOnce(schedule_selector(StartMenuScene::setPaymentSuccess),0);
     GameController::getGameController()->setHasPayed(true);
     SET_BANNDER_HIDDEN(true);
     enableButtonsForIap(true);
+}
+
+void StartMenuScene::setPaymentError(){
+	setInfoLabel("Payment Error" , 2);
+}
+
+void StartMenuScene::setPaymentSuccess(){
+	setInfoLabel("Payment Success" , 2);
 }
 
 bool StartMenuScene::hasPayed(){

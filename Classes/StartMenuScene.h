@@ -9,6 +9,9 @@
 #ifndef __crossRoad__StartMenuScene__
 #define __crossRoad__StartMenuScene__
 
+#define CC_ENABLE_CHIPMUNK_INTEGRATION 0
+#define CC_ENABLE_BOX2D_INTEGRATION 0
+
 #include "GameController.h"
 #include "cocos-ext.h"
 
@@ -51,6 +54,8 @@ public:
     virtual CCSize cellSizeForTable(CCTableView *table);
     virtual void scrollViewDidScroll(CCScrollView* view);
     virtual void scrollViewDidZoom(CCScrollView* view);
+    void setPaymentError();
+    void setPaymentSuccess();
 
 private:
     CCMenu * startMenu;
