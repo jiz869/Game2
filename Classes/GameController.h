@@ -177,9 +177,9 @@ typedef struct{
 #define RANK_PERPAGE (8)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-#define FONT "Sweetie Love"
+#define FONT "CroissantD"
 #else
-#define FONT "fonts/Sweetie Love.ttf"
+#define FONT "fonts/CroissantD.ttf"
 #endif
 
 class GameController : CCObject {
