@@ -185,7 +185,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
 
     userData.userName = CCSTRING_FOR_KEY(dataDict, "user_name")->getCString();
 
-    userData.rank = "unknown";
+    userData.rank = 0;
 
     return true;
 }
@@ -864,8 +864,7 @@ void GameController::onScoreBoardGetUserRankingCompleted(CCNode * node , void * 
 //			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
 //			CCLOG("ScoreValue=%f\n",it->getScoreValue());
 //			CCLOG("UserName=%s\n",it->getUserName().c_str());
-            CCString * rank = CCString::createWithFormat("%d", it->getRank());
-			userData.rank = rank->getCString();
+			userData.rank = it->getRank();
 			break;
 		}
 	}
@@ -909,6 +908,7 @@ void GameController::saveUserName(const char * userName){
         return;
     }
     userData.userName = userName;
+    userData.rank = 0;
     CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
     userDataDict->setObject(CCString::create(userName), "user_name");
     dict->setObject(userDataDict, "user_data");

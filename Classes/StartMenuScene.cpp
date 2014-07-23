@@ -151,10 +151,10 @@ void StartMenuScene::initScoreMenu(){
 	scoreMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 	addChild(scoreMenu);
 
-	CCLabelTTF * rankLabel = CCLabelTTF::create("0", FONT, 64 );
+	rankLabel = CCLabelTTF::create("0", FONT, 64 );
 	rankLabel->setColor( ccBLUE );
-	CCString * rankInfo = CCString::createWithFormat("%s's rank is : %s",
-			userData->userName.c_str(), userData->rank.c_str());
+	CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
+			userData->userName.c_str(), userData->rank);
 	rankLabel->setString(rankInfo->getCString());
 	rankLabel->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE)));
 	scoreMenu->addChild(rankLabel);
@@ -363,6 +363,9 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 #ifdef LISTVIEW_LEADERBOARD
 	GameController::getGameController()->getTopRankings();
 	scoreTable->reloadData();
+    CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
+            userData->userName.c_str(), userData->rank);
+    rankLabel->setString(rankInfo->getCString());
 #else
 	ScoreRank * rank;
 

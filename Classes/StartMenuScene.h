@@ -89,6 +89,8 @@ private:
     void setInfoLabel(const char * info , float delay);
 
     void enableButtonsForIap(bool enable);
+
+    CCLabelTTF * rankLabel;
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

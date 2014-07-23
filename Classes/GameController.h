@@ -160,7 +160,7 @@ typedef struct{
     bool hasPayed;
     bool justWon;
     string userName;
-    string rank;
+    int rank;
 }UserData;
 
 typedef struct{
