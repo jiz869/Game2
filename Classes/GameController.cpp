@@ -860,11 +860,12 @@ void GameController::onScoreBoardGetUserRankingCompleted(CCNode * node , void * 
 		for(std::vector<App42Score>::iterator it = scoreResponse->scores.begin(); it != scoreResponse->scores.end(); ++it)
 		{
 //			CCLOG("CreatedAt=%s",it->getCreatedOn().c_str());
-//			CCLOG("Rank=%s\n",it->getRank().c_str());
+//			CCLOG("Rank=%d\n",it->getRank());
 //			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
 //			CCLOG("ScoreValue=%f\n",it->getScoreValue());
 //			CCLOG("UserName=%s\n",it->getUserName().c_str());
-			userData.rank = it->getRank();
+            CCString * rank = CCString::createWithFormat("%d", it->getRank());
+			userData.rank = rank->getCString();
 			break;
 		}
 	}

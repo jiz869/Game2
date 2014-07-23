@@ -20,7 +20,7 @@ class App42Score : public MetaResponse
      * Getters
      */
     string getUserName(){return userName;};
-    string getRank(){return rank;};
+    int getRank(){return rank;};
     string getCreatedOn(){return createdOn;};
     string getScoreId(){return scoreId;};
     double getScoreValue(){return value;};
@@ -29,7 +29,7 @@ class App42Score : public MetaResponse
      * Setters
      */
     void setUserName(string _userName){userName=_userName;};
-    void setRank(string _rank){ rank=_rank;};
+    void setRank(int _rank){ rank=_rank;};
     void setCreatedOn(string _createdOn){ createdOn=_createdOn;};
     void setScoreId(string _scoreId){ scoreId=_scoreId;};
     void setScoreValue(double _value){ value=_value;};
@@ -37,7 +37,7 @@ class App42Score : public MetaResponse
     protected:
     
     std::string userName;
-    std::string rank;
+    int rank;
     std::string createdOn;
     std::string scoreId;
     double value;

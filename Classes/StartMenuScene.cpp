@@ -243,7 +243,7 @@ CCTableViewCell * StartMenuScene::tableCellAtIndex(CCTableView *table, unsigned 
     	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
     	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
     	gem->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
-    	gem->setScale(0.8);
+    	gem->setScale(0.7);
     	gem->setTag(GEM_LABEL);
     	cell->addChild(gem);
 
@@ -263,7 +263,7 @@ CCTableViewCell * StartMenuScene::tableCellAtIndex(CCTableView *table, unsigned 
     	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
     	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
     	gem->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
-    	gem->setScale(0.8);
+    	gem->setScale(0.7);
     	gem->setTag(GEM_LABEL);
     	cell->addChild(gem);
 

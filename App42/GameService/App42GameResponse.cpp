@@ -72,7 +72,7 @@ void App42GameResponse::init()
             {
 				App42Score app42Score;
                 app42Score.setUserName(Util::getJSONString("userName", child));
-                app42Score.setRank(Util::getJSONString("rank", child));
+                app42Score.setRank(Util::getJSONInt("rank", child));
                 app42Score.setScoreId(Util::getJSONString("scoreId", child));
                 app42Score.setScoreValue(Util::getJSONDouble("value", child));
                 app42Score.setCreatedOn(Util::getJSONString("createdOn", child));
