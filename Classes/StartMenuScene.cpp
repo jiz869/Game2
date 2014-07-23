@@ -18,6 +18,12 @@ typedef enum{
     PVP,
 }BUTTON_TAG;
 
+typedef enum{
+    NAME_LABEL = 0,
+    GEM_LABEL,
+    SCORE_LABEL,
+}SCORE_MENU_TAG;
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 extern void setBannerViewHidden(bool);
 #define SET_BANNDER_HIDDEN(_hidden) \
@@ -58,7 +64,7 @@ extern "C"
 #endif
 
 ccColor3B labelColors[MAX_RANKS] = {ccRED , ccBLUE , ccMAGENTA , ccBLACK , ccWHITE ,
-		ccGREEN , ccRED , ccBLUE , ccMAGENTA , ccBLACK};
+		ccORANGE , ccRED , ccBLUE , ccMAGENTA , ccBLACK};
 
 using namespace CocosDenshion;
 
@@ -103,6 +109,13 @@ bool StartMenuScene::init(){
 
     SET_BANNDER_HIDDEN(false);
 
+	CCSprite * background = CCSprite::create("background.png");
+    CCSize size = background->getContentSize();
+    background->setScaleY(winSize.height/size.height);
+    background->setScaleX(winSize.width/size.width);
+    background->setAnchorPoint(ccp(0,0));
+    addChild(background);
+
     initMainMenu();
 
     initOptionsMenu();
@@ -121,25 +134,57 @@ bool StartMenuScene::init(){
     	SimpleAudioEngine::sharedEngine()->setEffectsVolume(1);
     }
 
+    setKeypadEnabled(true);
+
     return true;
 }
 
-void StartMenuScene::initScoreMenu(){
+void StartMenuScene::keyBackClicked(){
+	CCLayer::keyBackClicked();
+	CCDirector::sharedDirector()->end();
+}
 
+void StartMenuScene::initScoreMenu(){
+#ifdef LISTVIEW_LEADERBOARD
+	scoreMenu = CCLayer::create();
+	scoreMenu->ignoreAnchorPointForPosition(false);
+	scoreMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+	addChild(scoreMenu);
+
+	CCLabelTTF * rankLabel = CCLabelTTF::create("0", FONT, 64 );
+	rankLabel->setColor( ccBLUE );
+	CCString * rankInfo = CCString::createWithFormat("%s's rank is : %s",
+			userData->userName.c_str(), userData->rank.c_str());
+	rankLabel->setString(rankInfo->getCString());
+	rankLabel->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE)));
+	scoreMenu->addChild(rankLabel);
+
+    CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    OK->setScale(0.3);
+    OK->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    CCMenu * okMenu = CCMenu::create(OK , NULL);
+    okMenu->setPosition(ccp(0, 0.05));
+    okMenu->setAnchorPoint(ccp(0,0));
+    okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)));
+    okMenu->ignoreAnchorPointForPosition(false);
+    scoreMenu->addChild(okMenu);
+
+    scoreTable = CCTableView::create(this ,
+    		CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE-2)));
+    scoreTable->setDirection(kCCScrollViewDirectionVertical);
+    //scoreTable->setAnchorPoint(ccp(0 , 1));
+    scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) + winSize.height * 0.05));
+    scoreTable->setVerticalFillOrder(kCCTableViewFillTopDown);
+    scoreMenu->addChild(scoreTable);
+    scoreTable->reloadData();
+#else
 	ScoreRank * rank;
 
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.3);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.07));
 
-    CCMenuItemImage * background = CCMenuItemImage::create("background.png" , NULL);
-    CCSize size = background->getContentSize();
-    background->setScaleY(winSize.height/size.height);
-    background->setScaleX(winSize.width/size.width);
-    background->setAnchorPoint(ccp(0,0));
-    background->setEnabled(false);
-
-    scoreMenu = CCMenu::create(background , OK , NULL);
+    scoreMenu = CCMenu::create(OK , NULL);
 
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->ignoreAnchorPointForPosition(false);
@@ -172,6 +217,80 @@ void StartMenuScene::initScoreMenu(){
 	    scoreMenu->addChild(scoreLabels[i]);
 	    scoreMenu->addChild(nameLabels[i]);
 	}
+#endif
+}
+
+void StartMenuScene::tableCellTouched(CCTableView* table, CCTableViewCell* cell){
+	CCLOG("cell touched at index: %i", cell->getIdx());
+}
+
+CCTableViewCell * StartMenuScene::tableCellAtIndex(CCTableView *table, unsigned int idx){
+	ScoreRank * rank = &GameController::getGameController()->ranks[idx];
+
+    CCTableViewCell * cell = table->dequeueCell();
+
+    if(!cell){
+    	cell = new CCTableViewCell();
+    	cell->autorelease();
+
+    	CCLabelTTF * name = CCLabelTTF::create("0", FONT, 64 );
+    	name->setColor( labelColors[idx%RANK_PERPAGE] );
+        name->setString(rank->userName.c_str());
+        name->setPosition(ccp(winSize.width*0.25, winSize.height/(RANK_PERPAGE + 1)/2));
+        name->setTag(NAME_LABEL);
+        cell->addChild(name);
+
+    	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
+    	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
+    	gem->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
+    	gem->setScale(0.8);
+    	gem->setTag(GEM_LABEL);
+    	cell->addChild(gem);
+
+    	CCLabelTTF * scoreLabel = CCLabelTTF::create("0", FONT, 64 );
+    	scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
+        CCString * score = CCString::createWithFormat("%d", rank->score);
+        scoreLabel->setString(score->getCString());
+        scoreLabel->setPosition(ccp(winSize.width*0.75, winSize.height/(RANK_PERPAGE + 1)/2));
+        scoreLabel->setTag(SCORE_LABEL);
+        cell->addChild(scoreLabel);
+    }else{
+    	CCLabelTTF * name = (CCLabelTTF *)cell->getChildByTag(NAME_LABEL);
+    	name->setColor( labelColors[idx%RANK_PERPAGE] );
+    	name->setString(rank->userName.c_str());
+
+    	cell->removeChildByTag(GEM_LABEL);
+    	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
+    	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
+    	gem->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
+    	gem->setScale(0.8);
+    	gem->setTag(GEM_LABEL);
+    	cell->addChild(gem);
+
+
+    	CCLabelTTF * scoreLabel = (CCLabelTTF *)cell->getChildByTag(SCORE_LABEL);
+        CCString * score = CCString::createWithFormat("%d", rank->score);
+        scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
+        scoreLabel->setString(score->getCString());
+    }
+
+    return cell;
+}
+
+unsigned int StartMenuScene::numberOfCellsInTableView(CCTableView *table){
+	return MAX_RANKS;
+}
+
+CCSize StartMenuScene::cellSizeForTable(CCTableView *table){
+	return CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1));
+}
+
+void StartMenuScene::scrollViewDidScroll(CCScrollView* view){
+
+}
+
+void StartMenuScene::scrollViewDidZoom(CCScrollView* view){
+
 }
 
 void StartMenuScene::initMainMenu(){
@@ -216,8 +335,8 @@ void StartMenuScene::initMainMenu(){
     score->setPosition(ccp(winSize.width*0.75 , winSize.height*0.375));
 #endif
 
-    infoLabel = CCLabelTTF::create("0", FONT, 32 );
-    infoLabel->setColor( ccc3(54, 255, 0) );
+    infoLabel = CCLabelTTF::create("0", INFO_FONT, 48 );
+    infoLabel->setColor( ccRED );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
     infoLabel->setVisible(false);
     addChild(infoLabel);
@@ -241,6 +360,10 @@ void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
 }
 
 void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
+#ifdef LISTVIEW_LEADERBOARD
+	GameController::getGameController()->getTopRankings();
+	scoreTable->reloadData();
+#else
 	ScoreRank * rank;
 
 	GameController::getGameController()->getTopRankings();
@@ -256,6 +379,7 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 	    CCString * score = CCString::createWithFormat("%d", rank->score);
 	    scoreLabels[i]->setString(score->getCString());
 	}
+#endif
 
     SET_BANNDER_HIDDEN(true);
     startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
@@ -268,7 +392,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * controllerPositions = CCMenuItemLabel::create(
     		CCLabelTTF::create("CONTROLLER POSITIONS", FONT , 64));
     controllerPositions->setColor(ccBLUE);
-    controllerPositions->setPosition(ccp(winSize.width/2, winSize.height*0.9));
+    controllerPositions->setPosition(ccp(winSize.width/2, winSize.height*0.88));
 
     //row 2
     CCMenuItemLabel * left = CCMenuItemLabel::create(
@@ -293,7 +417,7 @@ void StartMenuScene::initOptionsMenu(){
     //row 4
     CCMenuItemLabel * leftUp = CCMenuItemLabel::create(
     		CCLabelTTF::create("LEFT UP RIGHT DOWN", FONT , 48));
-    leftUp->setColor(ccGREEN);
+    leftUp->setColor(ccORANGE);
     checkboxSide = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSide->setTag(SIDE);
     checkboxSide->setScale(0.25);
@@ -329,17 +453,9 @@ void StartMenuScene::initOptionsMenu(){
     //row 8
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.4);
-    OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
+    OK->setPosition(ccp(winSize.width/2, winSize.height*0.12));
 
-    //background
-    CCMenuItemImage * background = CCMenuItemImage::create("background.png" , "background.png");
-    CCSize size = background->getContentSize();
-    background->setScaleY(winSize.height/size.height);
-    background->setScaleX(winSize.width/size.width);
-    background->setAnchorPoint(ccp(0,0));
-    background->setEnabled(false);
-
-    optionsMenu = CCMenu::create(background , controllerPositions , left , checkboxLeft , right , checkboxRight , leftUp , checkboxSide , sound , mute , checkboxMute , unMute, checkboxUnmute, OK , NULL);
+    optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight , leftUp , checkboxSide , sound , mute , checkboxMute , unMute, checkboxUnmute, OK , NULL);
 
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->ignoreAnchorPointForPosition(false);
@@ -473,16 +589,24 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
 
 void StartMenuScene::onPaymentError(){
 	CCLOG("onPaymentError");
-	setInfoLabel("Payment Error" , 2);
+	scheduleOnce(schedule_selector(StartMenuScene::setPaymentError),0);
     enableButtonsForIap(true);
 }
 
 void StartMenuScene::onPaymentSuccess(){
 	CCLOG("onPaymentSuccess");
-    setInfoLabel("Payment Success" , 2);
+	scheduleOnce(schedule_selector(StartMenuScene::setPaymentSuccess),0);
     GameController::getGameController()->setHasPayed(true);
     SET_BANNDER_HIDDEN(true);
     enableButtonsForIap(true);
+}
+
+void StartMenuScene::setPaymentError(){
+	setInfoLabel("Payment Error" , 2);
+}
+
+void StartMenuScene::setPaymentSuccess(){
+	setInfoLabel("Payment Success" , 2);
 }
 
 bool StartMenuScene::hasPayed(){

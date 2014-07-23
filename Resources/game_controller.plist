@@ -32,6 +32,8 @@
 		<string>false</string>
 		<key>has_payed</key>
 		<string>false</string>
+		<key>user_name</key>
+		<string>Penguin</string>
 	</dict>
 	<key>animation_data</key>
 	<dict>

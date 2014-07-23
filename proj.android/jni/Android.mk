@@ -9,8 +9,12 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 COCOS2DX_FILES  := $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
 COCOS2DX_FILES  := $(COCOS2DX_FILES:$(LOCAL_PATH)/%=%)
 
-APP42_FILES     := $(wildcard $(LOCAL_PATH)/../../App42/cJSON/*.cpp)
+ADMOB_FILES     := $(wildcard $(LOCAL_PATH)/../../admob.android/*.cpp)
+ADMOB_FILES     := $(ADMOB_FILES:$(LOCAL_PATH)/%=%)
+
+APP42_FILES     := $(wildcard $(LOCAL_PATH)/../../App42/cJSON/*.c)
 APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/Common/*.cpp)
+APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/Common/Exception/*.cpp)
 APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/Crypto/*.cpp)
 APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/GameService/*.cpp)
 APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/PushNotificationService/*.cpp)
@@ -19,7 +23,7 @@ APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/UserService/*.cpp)
 APP42_FILES     += $(wildcard $(LOCAL_PATH)/../../App42/Util/*.cpp)
 APP42_FILES     := $(APP42_FILES:$(LOCAL_PATH)/%=%)
 
-LOCAL_SRC_FILES := $(COCOS2DX_FILES) $(APP42_FILES)                 
+LOCAL_SRC_FILES := $(COCOS2DX_FILES) $(APP42_FILES) $(ADMOB_FILES) hellocpp/main.cpp                 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes $(LOCAL_PATH)/../../App42/cJSON \
 					$(LOCAL_PATH)/../../App42/Common $(LOCAL_PATH)/../../App42/Crypto \

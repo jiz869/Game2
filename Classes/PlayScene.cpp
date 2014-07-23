@@ -135,6 +135,13 @@ void PlayScene::initMisc(){
     GameObj::setB2world(world , ptmRatio);
 
     scheduleUpdate();
+
+    setKeypadEnabled(true);
+}
+
+void PlayScene::keyBackClicked(){
+	CCLayer::keyBackClicked();
+	CCDirector::sharedDirector()->end();
 }
 
 void PlayScene::initPlayer(){

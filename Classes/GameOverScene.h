@@ -19,6 +19,7 @@ public:
     virtual bool init();
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void hideInfoLabel();
+    virtual void keyBackClicked();
 protected:
     virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
 private:
@@ -29,6 +30,7 @@ private:
     CCLabelTTF * infoLabel;
     bool checkName(const char * name);
     void setInfoLabel(const char * info);
+    UserData * userData;
 };
 
 #endif /* GAMEOVERSCENE_H_ */

@@ -159,6 +159,8 @@ typedef struct{
     bool justFailed;
     bool hasPayed;
     bool justWon;
+    string userName;
+    string rank;
 }UserData;
 
 typedef struct{
@@ -167,12 +169,21 @@ typedef struct{
 	int score;
 }ScoreRank;
 
+#define LISTVIEW_LEADERBOARD
+
+#ifdef LISTVIEW_LEADERBOARD
+#define MAX_RANKS (50)
+#else
 #define MAX_RANKS (10)
+#endif
+#define RANK_PERPAGE (8)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-#define FONT "Sweetie Love"
+#define FONT "CroissantD"
+#define INFO_FONT "Arial"
 #else
-#define FONT "fonts/Sweetie Love.ttf"
+#define FONT "fonts/CroissantD.ttf"
+#define INFO_FONT "fonts/Arial.ttf"
 #endif
 
 class GameController : CCObject {
@@ -191,9 +202,11 @@ public:
     void onGameRequestCompleted(CCNode * node , void * response);
     void onScoreBoardSaveCompleted(CCNode * node , void * response);
     void onScoreBoardGetCompleted(CCNode * node , void * response);
+    void onScoreBoardGetUserRankingCompleted(CCNode * node , void * response);
     ScoreRank ranks[MAX_RANKS];
     void getTopRankings();
-    void saveLastScore(const char * userName);
+    void saveLastScore();
+    void saveUserName(const char * userName);
 
 private:
     GameController();
