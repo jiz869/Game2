@@ -233,16 +233,18 @@ CCTableViewCell * StartMenuScene::tableCellAtIndex(CCTableView *table, unsigned 
     	cell = new CCTableViewCell();
     	cell->autorelease();
 
-    	CCLabelTTF * name = CCLabelTTF::create("0", FONT, 64 );
+    	CCLabelTTF * name = CCLabelTTF::create("0", FONT, 64 ,
+    			CCSizeMake(winSize.width*0.35 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
     	name->setColor( labelColors[idx%RANK_PERPAGE] );
-        name->setString(rank->userName.c_str());
+    	CCString * body = CCString::createWithFormat("%d  %s", idx+1 , rank->userName.c_str());
+        name->setString(body->getCString());
         name->setPosition(ccp(winSize.width*0.25, winSize.height/(RANK_PERPAGE + 1)/2));
         name->setTag(NAME_LABEL);
         cell->addChild(name);
 
     	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
     	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
-    	gem->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
+    	gem->setPosition(ccp(winSize.width*0.7, winSize.height/(RANK_PERPAGE + 1)/2));
     	gem->setScale(0.7);
     	gem->setTag(GEM_LABEL);
     	cell->addChild(gem);
@@ -251,25 +253,26 @@ CCTableViewCell * StartMenuScene::tableCellAtIndex(CCTableView *table, unsigned 
     	scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
         CCString * score = CCString::createWithFormat("%d", rank->score);
         scoreLabel->setString(score->getCString());
-        scoreLabel->setPosition(ccp(winSize.width*0.75, winSize.height/(RANK_PERPAGE + 1)/2));
+        scoreLabel->setPosition(ccp(winSize.width*0.8, winSize.height/(RANK_PERPAGE + 1)/2));
         scoreLabel->setTag(SCORE_LABEL);
         cell->addChild(scoreLabel);
     }else{
     	CCLabelTTF * name = (CCLabelTTF *)cell->getChildByTag(NAME_LABEL);
     	name->setColor( labelColors[idx%RANK_PERPAGE] );
-    	name->setString(rank->userName.c_str());
+    	CCString * body = CCString::createWithFormat("%d  %s", idx+1 , rank->userName.c_str());
+        name->setString(body->getCString());
 
     	cell->removeChildByTag(GEM_LABEL);
     	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
     	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
-    	gem->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)/2));
+    	gem->setPosition(ccp(winSize.width*0.7, winSize.height/(RANK_PERPAGE + 1)/2));
     	gem->setScale(0.7);
     	gem->setTag(GEM_LABEL);
     	cell->addChild(gem);
 
 
     	CCLabelTTF * scoreLabel = (CCLabelTTF *)cell->getChildByTag(SCORE_LABEL);
-        CCString * score = CCString::createWithFormat("%d", rank->score);
+    	CCString * score = CCString::createWithFormat("%d", rank->score);
         scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
         scoreLabel->setString(score->getCString());
     }

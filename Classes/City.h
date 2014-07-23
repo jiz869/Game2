@@ -25,6 +25,7 @@ private:
     void addCityObj();
     void scheduleSpecial();
     PlaySceneData * playSceneData;
+    UserData * userData;
 };
 
 #endif /* CITY_H_ */

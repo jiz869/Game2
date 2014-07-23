@@ -27,6 +27,7 @@ bool City::init(){
 	}
 
 	winSize = CCDirector::sharedDirector()->getWinSize();
+	userData = GameController::getGameController()->getUserData();
 
     addCityObj();
 
@@ -39,8 +40,7 @@ bool City::init(){
 
 void City::addRoad(){
 
-    int number = 5;//getRandom(0,6);
-    CCString * roadName = CCString::createWithFormat("road0.png");//, number);
+    CCString * roadName = CCString::createWithFormat("road%d.png", userData->currentLevel);
     CCSprite * road;
 
 	for(int i = 0 ; i < 9 ; i++){
@@ -54,7 +54,7 @@ void City::addRoad(){
 
 void City::addCityObj(){
 
-	UserData * userData = GameController::getGameController()->getUserData();
+
 
 	CCString * name = CCString::createWithFormat("background%d.png", userData->currentLevel);
 
