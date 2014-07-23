@@ -397,7 +397,7 @@ void StartMenuScene::initOptionsMenu(){
 
     //row 1
     CCMenuItemLabel * controllerPositions = CCMenuItemLabel::create(
-    		CCLabelTTF::create("CONTROLLER POSITIONS", FONT , 64));
+    		CCLabelTTF::create("CONTROLLER POSITION", FONT , 64));
     controllerPositions->setColor(ccBLUE);
     controllerPositions->setPosition(ccp(winSize.width/2, winSize.height*0.88));
 
