@@ -239,6 +239,13 @@
 		16DBA4A11979FC5F0094C2CF /* background6.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA4991979FC5F0094C2CF /* background6.png */; };
 		16DBA4A21979FC5F0094C2CF /* background7.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA49A1979FC5F0094C2CF /* background7.png */; };
 		16DBA4A31979FC5F0094C2CF /* background8.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA49B1979FC5F0094C2CF /* background8.png */; };
+		16DBA4C8197F46A10094C2CF /* bless.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA4C2197F46A10094C2CF /* bless.wav */; };
+		16DBA4C9197F46A10094C2CF /* bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA4C3197F46A10094C2CF /* bomb.wav */; };
+		16DBA4CA197F46A10094C2CF /* curse.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA4C4197F46A10094C2CF /* curse.wav */; };
+		16DBA4CB197F46A10094C2CF /* police.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA4C5197F46A10094C2CF /* police.wav */; };
+		16DBA4CC197F46A10094C2CF /* slow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA4C6197F46A10094C2CF /* slow.wav */; };
+		16DBA4CD197F46A10094C2CF /* splash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA4C7197F46A10094C2CF /* splash.wav */; };
+		16DBA4CF197F46AF0094C2CF /* CroissantD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 16DBA4CE197F46AF0094C2CF /* CroissantD.ttf */; };
 		1A27573F1697CF2B00504026 /* CCEditBoxImplAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */; };
 		1A8F3B6E175E05DA00049216 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B43175E05DA00049216 /* Animation.cpp */; };
 		1A8F3B6F175E05DA00049216 /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B45175E05DA00049216 /* AnimationState.cpp */; };
@@ -804,6 +811,13 @@
 		16DBA4991979FC5F0094C2CF /* background6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background6.png; sourceTree = "<group>"; };
 		16DBA49A1979FC5F0094C2CF /* background7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background7.png; sourceTree = "<group>"; };
 		16DBA49B1979FC5F0094C2CF /* background8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background8.png; sourceTree = "<group>"; };
+		16DBA4C2197F46A10094C2CF /* bless.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bless.wav; sourceTree = "<group>"; };
+		16DBA4C3197F46A10094C2CF /* bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bomb.wav; sourceTree = "<group>"; };
+		16DBA4C4197F46A10094C2CF /* curse.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = curse.wav; sourceTree = "<group>"; };
+		16DBA4C5197F46A10094C2CF /* police.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = police.wav; sourceTree = "<group>"; };
+		16DBA4C6197F46A10094C2CF /* slow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slow.wav; sourceTree = "<group>"; };
+		16DBA4C7197F46A10094C2CF /* splash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = splash.wav; sourceTree = "<group>"; };
+		16DBA4CE197F46AF0094C2CF /* CroissantD.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CroissantD.ttf; path = fonts/CroissantD.ttf; sourceTree = "<group>"; };
 		1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBoxImplAndroid.cpp; sourceTree = "<group>"; };
 		1A27573E1697CF2B00504026 /* CCEditBoxImplAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplAndroid.h; sourceTree = "<group>"; };
 		1A8F3B43175E05DA00049216 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
@@ -2408,6 +2422,13 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				16DBA4CE197F46AF0094C2CF /* CroissantD.ttf */,
+				16DBA4C2197F46A10094C2CF /* bless.wav */,
+				16DBA4C3197F46A10094C2CF /* bomb.wav */,
+				16DBA4C4197F46A10094C2CF /* curse.wav */,
+				16DBA4C5197F46A10094C2CF /* police.wav */,
+				16DBA4C6197F46A10094C2CF /* slow.wav */,
+				16DBA4C7197F46A10094C2CF /* splash.wav */,
 				16DBA4801979FC3C0094C2CF /* HONEB.ttf */,
 				16DBA4811979FC3C0094C2CF /* Sweetie Love.ttf */,
 				16DBA4781978BD060094C2CF /* Firenze.ttf */,
@@ -2509,9 +2530,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16DBA4C9197F46A10094C2CF /* bomb.wav in Resources */,
 				169D58F51953D2DB00EE290E /* purchase_normal.png in Resources */,
 				16DBA4A11979FC5F0094C2CF /* background6.png in Resources */,
+				16DBA4CA197F46A10094C2CF /* curse.wav in Resources */,
 				16DBA49F1979FC5F0094C2CF /* background4.png in Resources */,
+				16DBA4C8197F46A10094C2CF /* bless.wav in Resources */,
 				169D58CA194F494600EE290E /* ok_selected.png in Resources */,
 				169D58DC194F494600EE290E /* level_up.wav in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
@@ -2523,6 +2547,7 @@
 				169D58D6194F494600EE290E /* top_score_selected.png in Resources */,
 				169D58BF194F494600EE290E /* button_options_normal.png in Resources */,
 				169D58DB194F494600EE290E /* horn2.wav in Resources */,
+				16DBA4CD197F46A10094C2CF /* splash.wav in Resources */,
 				169D58B9194F494600EE290E /* game_controller.plist in Resources */,
 				169D58D5194F494600EE290E /* top_score_normal.png in Resources */,
 				16DBA4821979FC3C0094C2CF /* HONEB.ttf in Resources */,
@@ -2530,6 +2555,7 @@
 				169D58BE194F494600EE290E /* button_new_game_selected.png in Resources */,
 				16DBA4A01979FC5F0094C2CF /* background5.png in Resources */,
 				169D58EC19511DFA00EE290E /* busy.wav in Resources */,
+				16DBA4CC197F46A10094C2CF /* slow.wav in Resources */,
 				16DBA49C1979FC5F0094C2CF /* background1.png in Resources */,
 				16DBA41C196879DD0094C2CF /* background.png in Resources */,
 				16DBA4A21979FC5F0094C2CF /* background7.png in Resources */,
@@ -2540,12 +2566,14 @@
 				16DBA4271969E0730094C2CF /* success.wav in Resources */,
 				16DBA4251969E0730094C2CF /* life.wav in Resources */,
 				169D58BC194F494600EE290E /* button_arrow_selected.png in Resources */,
+				16DBA4CB197F46A10094C2CF /* police.wav in Resources */,
 				169D58BD194F494600EE290E /* button_new_game_normal.png in Resources */,
 				16DBA41A196879DD0094C2CF /* background_main.png in Resources */,
 				169D58F61953D2DB00EE290E /* purchase_selected.png in Resources */,
 				169D58CD194F494600EE290E /* play.png in Resources */,
 				169D58D9194F494600EE290E /* horn0.wav in Resources */,
 				169D58D4194F494600EE290E /* sprites.png in Resources */,
+				16DBA4CF197F46AF0094C2CF /* CroissantD.ttf in Resources */,
 				16DBA4791978BD060094C2CF /* Firenze.ttf in Resources */,
 				169D58C1194F494600EE290E /* check_box_normal.png in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,

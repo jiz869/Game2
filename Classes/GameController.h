@@ -180,7 +180,7 @@ typedef struct{
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #define FONT "CroissantD"
-#define INFO_FONT "Arial"
+#define INFO_FONT "Arial Rounded MT Bold"
 #else
 #define FONT "fonts/CroissantD.ttf"
 #define INFO_FONT "fonts/Arial.ttf"
