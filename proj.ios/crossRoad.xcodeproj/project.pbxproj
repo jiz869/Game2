@@ -2891,8 +2891,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Min Li (FXWRKQ6EV6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Min Li (FXWRKQ6EV6)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2925,13 +2925,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
-					"/Users/welcomelm/cocos2d-x-2.2.3/projects/crossRoad/admob.ios",
+					"\"$(SRCROOT)/../crossRoad/admob.ios\"",
 				);
 				OTHER_CFLAGS = "-O2";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = crossRoad;
-				PROVISIONING_PROFILE = "C318E1FD-6D56-4360-99AD-3661225D58FC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C318E1FD-6D56-4360-99AD-3661225D58FC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2943,8 +2941,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Min Li (FXWRKQ6EV6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Min Li (FXWRKQ6EV6)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2975,12 +2973,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
-					"/Users/welcomelm/cocos2d-x-2.2.3/projects/crossRoad/admob.ios",
+					"\"$(SRCROOT)/../crossRoad/admob.ios\"",
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = crossRoad;
-				PROVISIONING_PROFILE = "C318E1FD-6D56-4360-99AD-3661225D58FC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C318E1FD-6D56-4360-99AD-3661225D58FC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
