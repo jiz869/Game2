@@ -63,7 +63,7 @@ extern "C"
 #define SET_BANNDER_HIDDEN(_hidden)
 #endif
 
-ccColor3B labelColors[MAX_RANKS] = {ccRED , ccBLUE , ccMAGENTA , ccBLACK , ccWHITE ,
+ccColor3B labelColors[MAX_RANKS] = {ccBLUE , ccRED , ccMAGENTA , ccBLACK , ccWHITE ,
 		ccORANGE , ccRED , ccBLUE , ccMAGENTA , ccBLACK};
 
 using namespace CocosDenshion;
@@ -152,7 +152,7 @@ void StartMenuScene::initScoreMenu(){
 	addChild(scoreMenu);
 
 	rankLabel = CCLabelTTF::create("0", FONT, 64 );
-	rankLabel->setColor( ccBLUE );
+	rankLabel->setColor( ccRED );
 	CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
 			userData->userName.c_str(), userData->rank);
 	rankLabel->setString(rankInfo->getCString());
@@ -173,7 +173,7 @@ void StartMenuScene::initScoreMenu(){
     		CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE-2)));
     scoreTable->setDirection(kCCScrollViewDirectionVertical);
     //scoreTable->setAnchorPoint(ccp(0 , 1));
-    scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) + winSize.height * 0.05));
+    scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) + winSize.height * 0.04));
     scoreTable->setVerticalFillOrder(kCCTableViewFillTopDown);
     scoreMenu->addChild(scoreTable);
     scoreTable->reloadData();
@@ -398,76 +398,96 @@ void StartMenuScene::initOptionsMenu(){
     //row 1
     CCMenuItemLabel * controllerPositions = CCMenuItemLabel::create(
     		CCLabelTTF::create("CONTROLLER POSITION", FONT , 64));
-    controllerPositions->setColor(ccBLUE);
+    controllerPositions->setDisabledColor(ccBLUE);
     controllerPositions->setPosition(ccp(winSize.width/2, winSize.height*0.88));
+    controllerPositions->setEnabled(false);
 
     //row 2
     CCMenuItemLabel * left = CCMenuItemLabel::create(
     		CCLabelTTF::create("ON THE LEFT", FONT , 48 ,
     		CCSizeMake(winSize.width*0.4 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    left->setColor(ccBLACK);
+    left->setDisabledColor(ccBLACK);
     checkboxLeft = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxLeft->setTag(LEFT);
     checkboxLeft->setScale(0.25);
-    left->setPosition(ccp(winSize.width * 0.35, winSize.height*0.75));
-    checkboxLeft->setPosition(ccp(winSize.width*0.8, winSize.height*0.75));
+    left->setPosition(ccp(winSize.width * 0.35, winSize.height*0.76));
+    checkboxLeft->setPosition(ccp(winSize.width*0.8, winSize.height*0.76));
+    left->setEnabled(false);
 
     //row 3
     CCMenuItemLabel * right = CCMenuItemLabel::create(
     		CCLabelTTF::create("ON THE RIGHT", FONT , 48 ,
     		CCSizeMake(winSize.width*0.4 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    right->setColor(ccMAGENTA);
+    right->setDisabledColor(ccMAGENTA);
     checkboxRight = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxRight->setTag(RIGHT);
     checkboxRight->setScale(0.25);
-    right->setPosition(ccp(winSize.width * 0.35, winSize.height*0.65));
-    checkboxRight->setPosition(ccp(winSize.width*0.8, winSize.height*0.65));
+    right->setPosition(ccp(winSize.width * 0.35, winSize.height*0.67));
+    checkboxRight->setPosition(ccp(winSize.width*0.8, winSize.height*0.67));
+    right->setEnabled(false);
 
     //row 4
     CCMenuItemLabel * leftUp = CCMenuItemLabel::create(
     		CCLabelTTF::create("LEFT UP RIGHT DOWN", FONT , 48 ,
     		CCSizeMake(winSize.width*0.4 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    leftUp->setColor(ccORANGE);
-    checkboxSide = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
-    checkboxSide->setTag(SIDE);
-    checkboxSide->setScale(0.25);
-    leftUp->setPosition(ccp(winSize.width * 0.35, winSize.height*0.55));
-    checkboxSide->setPosition(ccp(winSize.width*0.8, winSize.height*0.55));
+    leftUp->setDisabledColor(ccORANGE);
+    checkboxSideLeftUp = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
+    checkboxSideLeftUp->setTag(SIDE_LEFT_UP);
+    checkboxSideLeftUp->setScale(0.25);
+    leftUp->setPosition(ccp(winSize.width * 0.35, winSize.height*0.58));
+    checkboxSideLeftUp->setPosition(ccp(winSize.width*0.8, winSize.height*0.58));
+    leftUp->setEnabled(false);
+
+    CCMenuItemLabel * leftDown = CCMenuItemLabel::create(
+    		CCLabelTTF::create("LEFT DOWN RIGHT UP", FONT , 48 ,
+    		CCSizeMake(winSize.width*0.4 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
+    leftDown->setDisabledColor(ccYELLOW);
+    checkboxSideLeftDown = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
+    checkboxSideLeftDown->setTag(SIDE_LEFT_DOWN);
+    checkboxSideLeftDown->setScale(0.25);
+    leftDown->setPosition(ccp(winSize.width * 0.35, winSize.height*0.49));
+    checkboxSideLeftDown->setPosition(ccp(winSize.width*0.8, winSize.height*0.49));
+    leftDown->setEnabled(false);
 
     //row 5
     CCMenuItemLabel * sound = CCMenuItemLabel::create(
     		CCLabelTTF::create("SOUND", FONT , 64));
-    sound->setColor(ccBLUE);
-    sound->setPosition(ccp(winSize.width/2, winSize.height*0.4));
+    sound->setDisabledColor(ccBLUE);
+    sound->setPosition(ccp(winSize.width/2, winSize.height*0.39));
+    sound->setEnabled(false);
 
     //row 6
     CCMenuItemLabel * mute = CCMenuItemLabel::create(
     		CCLabelTTF::create("MUTE", FONT , 48 ,
     		CCSizeMake(winSize.width*0.4 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    mute->setColor(ccRED);
+    mute->setDisabledColor(ccRED);
     checkboxMute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxMute->setTag(MUTE);
-    mute->setPosition(ccp(winSize.width * 0.35, winSize.height*0.3));
-    checkboxMute->setPosition(winSize.width*0.8, winSize.height*0.3);
+    mute->setPosition(ccp(winSize.width * 0.35, winSize.height*0.28));
+    checkboxMute->setPosition(winSize.width*0.8, winSize.height*0.28);
     checkboxMute->setScale(0.25);
+    mute->setEnabled(false);
 
     //row 7
     CCMenuItemLabel * unMute = CCMenuItemLabel::create(
     		CCLabelTTF::create("UNMUTE", FONT , 48 ,
     		CCSizeMake(winSize.width*0.4 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    unMute->setColor(ccBLACK);
+    unMute->setDisabledColor(ccBLACK);
     checkboxUnmute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxUnmute->setTag(UNMUTE);
-    unMute->setPosition(ccp(winSize.width * 0.35, winSize.height*0.2));
-    checkboxUnmute->setPosition(winSize.width*0.8, winSize.height*0.2);
+    unMute->setPosition(ccp(winSize.width * 0.35, winSize.height*0.19));
+    checkboxUnmute->setPosition(winSize.width*0.8, winSize.height*0.19);
     checkboxUnmute->setScale(0.25);
+    unMute->setEnabled(false);
 
     //row 8
     CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.3);
-    OK->setPosition(ccp(winSize.width/2, winSize.height*0.12));
+    OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
 
-    optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight , leftUp , checkboxSide , sound , mute , checkboxMute , unMute, checkboxUnmute, OK , NULL);
+    optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight ,
+    		leftUp , checkboxSideLeftUp , leftDown , checkboxSideLeftDown ,
+    		sound , mute , checkboxMute , unMute, checkboxUnmute, OK , NULL);
 
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->ignoreAnchorPointForPosition(false);
@@ -529,19 +549,29 @@ void StartMenuScene::checkboxChooser(CheckboxType tag){
         case LEFT:
             checkboxLeft->selected();
             checkboxRight->unselected();
-            checkboxSide->unselected();
+            checkboxSideLeftUp->unselected();
+            checkboxSideLeftDown->unselected();
             break;
 
         case RIGHT:
             checkboxLeft->unselected();
             checkboxRight->selected();
-            checkboxSide->unselected();
+            checkboxSideLeftUp->unselected();
+            checkboxSideLeftDown->unselected();
             break;
 
-        case SIDE:
+        case SIDE_LEFT_UP:
             checkboxLeft->unselected();
             checkboxRight->unselected();
-            checkboxSide->selected();
+            checkboxSideLeftDown->unselected();
+            checkboxSideLeftUp->selected();
+            break;
+
+        case SIDE_LEFT_DOWN:
+            checkboxLeft->unselected();
+            checkboxRight->unselected();
+            checkboxSideLeftUp->unselected();
+            checkboxSideLeftDown->selected();
             break;
 
         case MUTE:
@@ -564,7 +594,8 @@ void StartMenuScene::saveUserData(CheckboxType tag){
     switch (tag) {
         case LEFT:
         case RIGHT:
-        case SIDE:
+        case SIDE_LEFT_DOWN:
+		case SIDE_LEFT_UP:
             if (userData->controllerPosition != tag) {
                 GameController::getGameController()->setUserData("controller_position", tag , 0);
                 userData->controllerPosition = tag;

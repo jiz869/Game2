@@ -73,7 +73,8 @@ private:
     void initScoreMenu();
     CCMenuItemImage * checkboxLeft;
     CCMenuItemImage * checkboxRight;
-    CCMenuItemImage * checkboxSide;
+    CCMenuItemImage * checkboxSideLeftUp;
+	CCMenuItemImage * checkboxSideLeftDown;
     CCMenuItemImage * checkboxMute;
     CCMenuItemImage * checkboxUnmute;
     UserData * userData;

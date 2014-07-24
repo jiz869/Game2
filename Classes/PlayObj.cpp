@@ -216,8 +216,10 @@ bool PlayerObj::processContact(cocos2d::CCSprite *contact){
 
     if (contact->getTag() == SPECIAL) {
         SpecialObj * specialObj = (SpecialObj *)contact->getUserData();
-        beginWithSpecial(specialObj);
 
+        if(specialObj->isDoomed()) return false;
+
+        beginWithSpecial(specialObj);
         return false;
     }
 

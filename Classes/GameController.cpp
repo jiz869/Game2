@@ -101,7 +101,8 @@ bool GameController::init(){
 
     userDataValue[LEFT]="left";
     userDataValue[RIGHT]="right";
-    userDataValue[SIDE]="side";
+    userDataValue[SIDE_LEFT_UP]="side_left_up";
+	userDataValue[SIDE_LEFT_DOWN]="side_left_down";
     userDataValue[MUTE]="mute";
     userDataValue[UNMUTE]="unmute";
 
@@ -161,8 +162,11 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     }else if (CCSTRING_FOR_KEY(dataDict, "controller_position")->isEqual(CCString::create("right"))){
         userData.controllerPosition = RIGHT;
     }
+	else if (CCSTRING_FOR_KEY(dataDict, "controller_position")->isEqual(CCString::create("side_left_up"))){
+        userData.controllerPosition = SIDE_LEFT_UP;
+    }
     else{
-        userData.controllerPosition = SIDE;
+        userData.controllerPosition = SIDE_LEFT_DOWN;
     }
 
     userData.justFailed = CCSTRING_FOR_KEY(dataDict, "just_failed")->intValue();

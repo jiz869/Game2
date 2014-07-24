@@ -46,7 +46,8 @@ typedef enum{
 typedef enum{
     LEFT=0,
     RIGHT,
-    SIDE,
+    SIDE_LEFT_UP,
+    SIDE_LEFT_DOWN,
     MUTE,
     UNMUTE,
     CHECKBOX_TYPE_NUM,

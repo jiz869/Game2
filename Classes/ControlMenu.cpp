@@ -379,12 +379,18 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
             downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*0.8));
             break;
 
-        case SIDE:
+        case SIDE_LEFT_UP:
             //upButton is on the left side
-            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height/2));
+            upButton->setPosition(ccp(buttonSize.width/2 , winSize.height * 0.3));
             //downButton is on the right side
-            downButton->setPosition(ccp(winSize.width - buttonSize.width/2, buttonSize.height/2));
+            downButton->setPosition(ccp(winSize.width - buttonSize.width/2, winSize.height * 0.3));
             break;
+		case SIDE_LEFT_DOWN:
+			//upButton is on the left side
+			downButton->setPosition(ccp(buttonSize.width/2 , winSize.height * 0.3));
+			//downButton is on the right side
+			upButton->setPosition(ccp(winSize.width - buttonSize.width/2, winSize.height * 0.3));
+			break;
 
         default:
             break;
