@@ -1910,7 +1910,7 @@
 		<key>score</key>
 		<dict>
 			<key>duration</key>
-			<string>8</string>
+			<string>6</string>
 			<key>life</key>
 			<string>5</string>
 			<key>image_name</key>
@@ -1918,7 +1918,7 @@
 			<key>interval</key>
 			<string>1</string>
 			<key>score_increase</key>
-			<string>3</string>
+			<string>4</string>
 		</dict>
 		<key>police</key>
 		<dict>
@@ -1970,6 +1970,19 @@
 			<string>2</string>
 			<key>score_increase</key>
 			<string>6</string>
+		</dict>
+		<key>allBad</key>
+		<dict>
+			<key>duration</key>
+			<string>10</string>
+			<key>image_name</key>
+			<string>allBad0.png</string>
+			<key>special_chance</key>
+			<string>1</string>
+			<key>time</key>
+			<string>16</string>
+			<key>percent</key>
+			<string>0.5</string>
 		</dict>
 	</dict>
 </dict>

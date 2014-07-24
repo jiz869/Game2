@@ -53,6 +53,9 @@ void static blessBegin(PlayerObj * player);
 bool static blessHitByCar(PlayerObj * player, CCSprite * car);
 void static blessEnd(PlayerObj * player);
 
+void static allBadBegin(PlayerObj * player);
+void static allBadEnd(PlayerObj * player);
+
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
@@ -173,7 +176,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.order = -1;
     userData.pvpMode = NONE;
     userData.justWon = false;
-    userData.currentLevel = 7;
+    userData.currentLevel = 6;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -493,6 +496,18 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[BLESS]->end = &blessEnd;
     specialDatas[BLESS]->hitByCar = &blessHitByCar;
 
+    dict = (CCDictionary *)dataDict->objectForKey("allBad");
+    specialDatas[ALLBAD] = new SpecialData;
+    specialDatas[ALLBAD]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[ALLBAD]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[ALLBAD]->userData1 = CCSTRING_FOR_KEY(dict, "special_chance")->floatValue();
+    specialDatas[ALLBAD]->userData2 = CCSTRING_FOR_KEY(dict, "time")->floatValue();
+    specialDatas[ALLBAD]->userData3 = CCSTRING_FOR_KEY(dict, "percent")->floatValue();
+    specialDatas[ALLBAD]->begin = &allBadBegin;
+    specialDatas[ALLBAD]->step = NULL;
+    specialDatas[ALLBAD]->end = &allBadEnd;
+    specialDatas[ALLBAD]->hitByCar = NULL;
+
     return true;
 }
 
@@ -659,6 +674,29 @@ bool static blessHitByCar(PlayerObj * player, CCSprite * car){
 //	SpecialData * specialData = GameController::getGameController()->getSpecialData(BLESS);
 //	if(toss(specialData->userData1) == true) return false;
 	return true;
+}
+
+//allBad
+void static allBadBegin(PlayerObj * player){
+    SpecialData * specialData = GameController::getGameController()->getSpecialData(ALLBAD);
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->setSpecialChance(specialData->userData1 , specialData->userData2);
+    for(int i = SPECIAL_NUM + 1 ; i < BAD_SPECIAL_NUM ; i++){
+    	if(i != ALLBAD){
+    		GameController::getGameController()->getSpecialData(i)->duration *=
+    				(1 + specialData->userData3);
+    	}
+    }
+	player->hitByCar(false);
+}
+void static allBadEnd(PlayerObj * player){
+	SpecialData * specialData = GameController::getGameController()->getSpecialData(ALLBAD);
+    for(int i = SPECIAL_NUM + 1 ; i < BAD_SPECIAL_NUM ; i++){
+    	if(i != ALLBAD){
+    		GameController::getGameController()->getSpecialData(i)->duration /=
+    				(1 + specialData->userData3);
+    	}
+    }
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

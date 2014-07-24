@@ -56,6 +56,8 @@ bool Lane::initWithDescription(LaneDescription * description){
 
 	this->description = description;
 
+	specialChance = description->specialChance;
+
 	scheduleOnce(schedule_selector(Lane::addACar1) , 0);
 
 	return true;
@@ -76,7 +78,7 @@ void Lane::addACar1(float dt){
 	speed = description->carSpeed;
 
 
-    if (toss(description->specialChance)) {
+    if (toss(specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
         speciaObj->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
     }else{
@@ -104,7 +106,7 @@ void Lane::addACar2(float dt){
 	}
 	speed = description->carSpeed;
 
-    if (toss(description->specialChance)) {
+    if (toss(specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
         speciaObj->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
     }else{
@@ -218,3 +220,13 @@ void Lane::destroyMe(CCObject * car){
     B2Sprite * carSprite = (B2Sprite *)car;
     carSprite->setPosition(ccp(-1000 , -1000));
 }
+
+void Lane::setSpecialChance(float chance){
+	specialChance = chance;
+}
+
+void Lane::resetSpecialChance(){
+	specialChance = description->specialChance;
+}
+
+

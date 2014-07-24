@@ -31,6 +31,8 @@ public:
     void step(float dt);
     void destroyLastCar();
     void destroyMe(cocos2d::CCObject *car);
+    void setSpecialChance(float chance);
+    void resetSpecialChance();
 
 private:
 	LaneDescription * description;
@@ -39,6 +41,7 @@ private:
     LaneStatus status;
     float timePassedFromLastSchedule;
     PlaySceneData * playSceneData;
+    float specialChance;
 };
 
 int getRandom(int low, int high);

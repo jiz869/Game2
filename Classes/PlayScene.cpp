@@ -127,7 +127,7 @@ void PlayScene::initMisc(){
 
     winSize = CCDirector::sharedDirector()->getWinSize();
     ptmRatio = winSize.height / 10;
-    
+
     for(b2Body *body = world->GetBodyList(); body; body=body->GetNext()){
         world->DestroyBody(body);
     }
@@ -279,6 +279,21 @@ void PlayScene::destroyRandomCar(){
 	int size = lanes.size();
     for (int i = 0; i < size; i++) {
         lanes[i]->destroyLastCar();
+    }
+}
+
+void PlayScene::setSpecialChance(float chance , float length){
+	int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+    	lanes[i]->setSpecialChance(chance);
+    }
+    unschedule(schedule_selector(PlayScene::resetSpecialChance));
+    scheduleOnce(schedule_selector(PlayScene::resetSpecialChance) , length);
+}
+void PlayScene:: resetSpecialChance(){
+	int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+    	lanes[i]->resetSpecialChance();
     }
 }
 

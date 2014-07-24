@@ -46,6 +46,9 @@ public:
 
     virtual void keyBackClicked();
 
+    void setSpecialChance(float chance , float length);
+    void resetSpecialChance();
+
 protected:
 
     b2World * world;
