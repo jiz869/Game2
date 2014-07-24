@@ -478,12 +478,14 @@ void StartMenuScene::initOptionsMenu(){
 }
 
 void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
-    if (!userData->hasPayed && userData->justFailed) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        setInfoLabel("Please click the ads to support us \nor spend 99 cents to remove the ads.\nThank you!!!" , 4);
-        return;
+	if(userData->currentLevel > FREE_LEVEL){
+		if (!userData->hasPayed && userData->justFailed%FREE_PLAY == 0 && userData->justFailed != 0) {
+			setInfoLabel("Please click the ads to support us \nor spend 99 cents to remove the ads.\nThank you!!!" , 4);
+			return;
+		}
+	}
 #endif
-    }
     SET_BANNDER_HIDDEN(true);
 	CCScene * playScene = PlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(playScene);

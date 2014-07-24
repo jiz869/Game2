@@ -29,7 +29,7 @@
 			<string>0</string>
 		</array>
 		<key>just_failed</key>
-		<string>false</string>
+		<string>0</string>
 		<key>has_payed</key>
 		<string>false</string>
 		<key>user_name</key>

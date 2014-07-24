@@ -265,8 +265,7 @@ void ControlMenu::gameOver()
     gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.8) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     GameController::getGameController()->setLastScore(score , true);
-    GameController::getGameController()->setJustFailed(true , true);
-    userData->justWon = false;
+    GameController::getGameController()->setJustFailed(true , false);
 }
 
 void ControlMenu::showOver(){
@@ -319,7 +318,6 @@ void ControlMenu::levelUp(){
     SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
     GameController::getGameController()->setLastScore(score , false);
     GameController::getGameController()->setJustFailed(false , false);
-    userData->justWon=true;
     GameController::getGameController()->levelUp();
 }
 

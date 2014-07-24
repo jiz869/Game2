@@ -156,7 +156,7 @@ typedef struct{
     int pvpInitDuration;
     int pvpMaxDuration;
     PvpMode pvpMode;
-    bool justFailed;
+    int justFailed;
     bool hasPayed;
     bool justWon;
     string userName;
@@ -185,6 +185,9 @@ typedef struct{
 #define FONT "fonts/CroissantD.ttf"
 #define INFO_FONT "fonts/Arial.ttf"
 #endif
+
+#define FREE_LEVEL (2)
+#define FREE_PLAY (3)
 
 class GameController : CCObject {
 

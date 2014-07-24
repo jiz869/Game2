@@ -162,11 +162,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
         userData.controllerPosition = SIDE;
     }
 
-    if (CCSTRING_FOR_KEY(dataDict, "just_failed")->isEqual(CCString::create("false"))) {
-        userData.justFailed = false;
-    }else{
-        userData.justFailed = true;
-    }
+    userData.justFailed = CCSTRING_FOR_KEY(dataDict, "just_failed")->intValue();
 
     if (CCSTRING_FOR_KEY(dataDict, "has_payed")->isEqual(CCString::create("false"))) {
         userData.hasPayed = false;
@@ -722,20 +718,26 @@ void GameController::setLastScore(int lastScore , bool justFailed){
     }
 }
 
-void GameController::setJustFailed(bool justFailed , bool updatePlist){
-    if (userData.justFailed == justFailed) {
-        return;
-    }
-    userData.justFailed = justFailed;
+void GameController::setJustFailed(bool justFailed , bool reset){
+	bool updatePlist = false;
 
-    if(updatePlist == false) return;
+	if(reset == true){
+		userData.justFailed = 0;
+		updatePlist = true;
+	}
+	else{
+		if(justFailed == true){
+			userData.justFailed++;
+			userData.justWon = false;
+			updatePlist = true;
+		}
+		else userData.justWon = true;
+	}
+
+	if(updatePlist == false) return;
 
     CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
-    if (justFailed == true) {
-        userDataDict->setObject(CCString::create("true"), "just_failed");
-    }else{
-        userDataDict->setObject(CCString::create("false"), "just_failed");
-    }
+    userDataDict->setObject(CCString::createWithFormat("%d", userData.justFailed), "just_failed");
     dict->setObject(userDataDict, "user_data");
     dict->writeToFile(plistWritablePath.c_str());
 }
