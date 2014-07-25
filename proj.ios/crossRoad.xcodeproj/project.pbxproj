@@ -172,8 +172,6 @@
 		169D58CA194F494600EE290E /* ok_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58A1194F494600EE290E /* ok_selected.png */; };
 		169D58CC194F494600EE290E /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58A3194F494600EE290E /* pause.png */; };
 		169D58CD194F494600EE290E /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58A4194F494600EE290E /* play.png */; };
-		169D58CE194F494600EE290E /* pvp_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58A5194F494600EE290E /* pvp_normal.png */; };
-		169D58CF194F494600EE290E /* pvp_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58A6194F494600EE290E /* pvp_selected.png */; };
 		169D58D3194F494600EE290E /* sprites.plist in Resources */ = {isa = PBXBuildFile; fileRef = 169D58AA194F494600EE290E /* sprites.plist */; };
 		169D58D4194F494600EE290E /* sprites.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58AB194F494600EE290E /* sprites.png */; };
 		169D58D5194F494600EE290E /* top_score_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 169D58AC194F494600EE290E /* top_score_normal.png */; };
@@ -709,8 +707,6 @@
 		169D58A1194F494600EE290E /* ok_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok_selected.png; sourceTree = "<group>"; };
 		169D58A3194F494600EE290E /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		169D58A4194F494600EE290E /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
-		169D58A5194F494600EE290E /* pvp_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pvp_normal.png; sourceTree = "<group>"; };
-		169D58A6194F494600EE290E /* pvp_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pvp_selected.png; sourceTree = "<group>"; };
 		169D58AA194F494600EE290E /* sprites.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sprites.plist; sourceTree = "<group>"; };
 		169D58AB194F494600EE290E /* sprites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sprites.png; sourceTree = "<group>"; };
 		169D58AC194F494600EE290E /* top_score_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top_score_normal.png; sourceTree = "<group>"; };
@@ -1674,8 +1670,6 @@
 				169D58A1194F494600EE290E /* ok_selected.png */,
 				169D58A3194F494600EE290E /* pause.png */,
 				169D58A4194F494600EE290E /* play.png */,
-				169D58A5194F494600EE290E /* pvp_normal.png */,
-				169D58A6194F494600EE290E /* pvp_selected.png */,
 				169D58AA194F494600EE290E /* sprites.plist */,
 				169D58AB194F494600EE290E /* sprites.png */,
 				169D58AC194F494600EE290E /* top_score_normal.png */,
@@ -2591,8 +2585,6 @@
 				16DBA4711978B4C20094C2CF /* penguinside0.png in Resources */,
 				169D58C0194F494600EE290E /* button_options_selected.png in Resources */,
 				169D58DA194F494600EE290E /* horn1.wav in Resources */,
-				169D58CF194F494600EE290E /* pvp_selected.png in Resources */,
-				169D58CE194F494600EE290E /* pvp_normal.png in Resources */,
 				16DBA4261969E0730094C2CF /* skull.wav in Resources */,
 				16DBA4721978B4C20094C2CF /* penguinside1.png in Resources */,
 			);
@@ -2891,8 +2883,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Min Li (FXWRKQ6EV6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Min Li (FXWRKQ6EV6)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2925,7 +2917,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
-					"\"$(SRCROOT)/../crossRoad/admob.ios\"",
+					"\"$(SRCROOT)/../../crossRoad/admob.ios\"",
 				);
 				OTHER_CFLAGS = "-O2";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
@@ -2941,8 +2933,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Min Li (FXWRKQ6EV6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Min Li (FXWRKQ6EV6)";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2973,7 +2965,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
-					"\"$(SRCROOT)/../crossRoad/admob.ios\"",
+					"\"$(SRCROOT)/../../crossRoad/admob.ios\"",
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = crossRoad;

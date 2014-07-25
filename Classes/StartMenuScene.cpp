@@ -320,9 +320,9 @@ void StartMenuScene::initMainMenu(){
     newGame->setScale(0.6);
     options->setScale(0.6);
     score->setScale(0.6);
+    CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
     pvp->setScale(0.6);
     pvp->setTag(PVP);
-    CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
 
     startMenu = CCMenu::create(background , newGame , options, score , pvp , NULL);
     startMenu->ignoreAnchorPointForPosition(false);
