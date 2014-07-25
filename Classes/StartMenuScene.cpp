@@ -307,10 +307,6 @@ void StartMenuScene::initMainMenu(){
     CCMenuItemImage * score = CCMenuItemImage::create("top_score_normal.png", "top_score_selected.png" , this , menu_selector(StartMenuScene::scoreHandler));
     score->setTag(TOP_SCORE);
 
-    newGame->setScale(0.5);
-    options->setScale(0.5);
-    score->setScale(0.5);
-
     CCMenuItemImage * background = CCMenuItemImage::create("background_main.png" , "background_main.png");
     CCSize size = background->getContentSize();
     background->setScaleY(winSize.height/size.height);
@@ -321,22 +317,28 @@ void StartMenuScene::initMainMenu(){
 #ifdef MULTIPLAY
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
-    pvp->setScale(0.5);
+    newGame->setScale(0.6);
+    options->setScale(0.6);
+    score->setScale(0.6);
+    pvp->setScale(0.6);
     pvp->setTag(PVP);
+    CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
 
     startMenu = CCMenu::create(background , newGame , options, score , pvp , NULL);
     startMenu->ignoreAnchorPointForPosition(false);
-    newGame->setPosition(ccp(winSize.width*0.25 , winSize.height*0.4));
-    options->setPosition(ccp(winSize.width*0.75 , winSize.height*0.4));
-    score->setPosition(ccp(winSize.width*0.25 , winSize.height*0.25));
-    pvp->setPosition(ccp(winSize.width*0.75 , winSize.height*0.25));
+    newGame->setPosition(ccp(winSize.width*0.3 , winSize.height*0.45));
+    options->setPosition(ccp(winSize.width*0.7 , winSize.height*0.45));
+    score->setPosition(ccp(winSize.width*0.3 , winSize.height*0.3));
+    pvp->setPosition(ccp(winSize.width*0.7 , winSize.height*0.3));
 #else
+    newGame->setScale(0.6);
+    options->setScale(0.6);
+    score->setScale(0.6);
     startMenu = CCMenu::create(background , newGame , options, score , NULL);
     startMenu->ignoreAnchorPointForPosition(false);
-    newGame->setPosition(ccp(winSize.width*0.25 , winSize.height*0.375));
+    newGame->setPosition(ccp(winSize.width*0.2 , winSize.height*0.375));
     options->setPosition(ccp(winSize.width*0.5 , winSize.height*0.375));
-    score->setPosition(ccp(winSize.width*0.75 , winSize.height*0.375));
+    score->setPosition(ccp(winSize.width*0.8 , winSize.height*0.375));
 #endif
 
     infoLabel = CCLabelTTF::create("0", INFO_FONT, 48 );
@@ -453,7 +455,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * sound = CCMenuItemLabel::create(
     		CCLabelTTF::create("SOUND", FONT , 64));
     sound->setDisabledColor(ccBLUE);
-    sound->setPosition(ccp(winSize.width/2, winSize.height*0.39));
+    sound->setPosition(ccp(winSize.width/2, winSize.height*0.37));
     sound->setEnabled(false);
 
     //row 6
