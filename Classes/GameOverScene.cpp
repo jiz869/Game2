@@ -55,7 +55,6 @@ bool GameOverScene::init(){
 
     winSize = CCDirector::sharedDirector()->getWinSize();
     userData = GameController::getGameController()->getUserData();
-    CCString * info;
 
     CCSprite * background = CCSprite::create("background.png");
     CCSize size = background->getContentSize();
@@ -64,17 +63,19 @@ bool GameOverScene::init(){
     background->setPosition(ccp(winSize.width/2 , winSize.height/2));
     addChild(background);
 
-    infoLabel = CCLabelTTF::create("" , INFO_FONT , 40);
-    infoLabel->setString("");
-    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
-    infoLabel->setVisible(false);
-    infoLabel->setColor(ccRED);
-    addChild(infoLabel);
+    initInfoMenu();
+    initMainMenu();
 
-    container = CCSprite::create();
-    container->setContentSize(winSize);
-    container->setPosition(ccp(winSize.width/2 , winSize.height/2));
-    addChild(container);
+	return true;
+}
+
+void GameOverScene::initMainMenu(){
+    mainMenu = CCSprite::create();
+    mainMenu->setContentSize(winSize);
+    mainMenu->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    addChild(mainMenu);
+
+    CCString * info;
 
     CCLabelTTF * yourNameLabel = CCLabelTTF::create("0", FONT, 50);
     yourNameLabel->setColor( ccBLUE );
@@ -82,16 +83,14 @@ bool GameOverScene::init(){
     yourNameLabel->setAnchorPoint(ccp(1 , 0.5));
     info = CCString::create("Input your name");
     yourNameLabel->setString(info->getCString());
-    container->addChild(yourNameLabel);
+    mainMenu->addChild(yourNameLabel);
 
-    nameField = CCTextFieldTTF::textFieldWithPlaceHolder(NULL , FONT, 64);
+    CCLabelTTF * nameField = CCLabelTTF::create("0", FONT, 64);
     nameField->setString(userData->userName.c_str());
-    nameField->setColorSpaceHolder( ccRED );
     nameField->setColor( ccRED );
     nameField->setPosition(ccp(winSize.width * 0.55 , winSize.height*0.8));
     nameField->setAnchorPoint(ccp(0 , 0.5));
-    nameField->runAction(CCBlink::create(3, 10));
-    container->addChild(nameField);
+    mainMenu->addChild(nameField);
 
 
     CCLabelTTF * topScoreLabel = CCLabelTTF::create("0", FONT, 64);
@@ -99,23 +98,47 @@ bool GameOverScene::init(){
     topScoreLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.6));
     info = CCString::createWithFormat("TOP score is %d", userData->topScore);
     topScoreLabel->setString(info->getCString());
-    container->addChild(topScoreLabel);
+    mainMenu->addChild(topScoreLabel);
 
     CCLabelTTF * lastScoreLabel = CCLabelTTF::create("0", FONT, 64);
     lastScoreLabel->setColor( ccBLACK );
     lastScoreLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.4));
     info = CCString::createWithFormat("Last score is %d", userData->lastScore);
     lastScoreLabel->setString(info->getCString());
-    container->addChild(lastScoreLabel);
+    mainMenu->addChild(lastScoreLabel);
 
     OK = CCSprite::create("return_normal.png");
-    OK->setPosition(ccp(winSize.width/2 , winSize.height*0.2));
+    OK->setPosition(ccp(winSize.width * 0.375 , winSize.height*0.2));
     OK->setScale(0.4);
-    container->addChild(OK);
+    mainMenu->addChild(OK);
+
+    upload = CCSprite::create("upload_score_normal.png");
+    upload->setPosition(ccp(winSize.width * 0.75 , winSize.height*0.2));
+    upload->setScale(0.4);
+    mainMenu->addChild(upload);
 
     setTouchEnabled(true);
+}
 
-	return true;
+void GameOverScene::initInfoMenu(){
+	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ));
+    infoLabel->setDisabledColor( ccRED );
+    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    infoLabel->setEnabled(false);
+
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(GameOverScene::okHandler));
+    OK->setScale(0.5);
+    OK->setPosition(ccp(winSize.width/2, winSize.height * 0.2));
+
+	infoMenu = CCMenu::create(OK , infoLabel , NULL);
+	infoMenu->ignoreAnchorPointForPosition(false);
+	infoMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    addChild(infoMenu);
+}
+
+void GameOverScene::okHandler(cocos2d::CCObject *sender){
+    infoMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+    mainMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
 }
 
 void GameOverScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
@@ -124,30 +147,15 @@ void GameOverScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 
 	CCPoint touchPoint = convertToNodeSpace(touch->getLocation());
 
-	if(nameField->boundingBox().containsPoint(touchPoint)){
-		nameField->attachWithIME();
-	}else{
-		nameField->detachWithIME();
-		const char * name = nameField->getString();
-		if(strlen(name) == 0){
-			nameField->setString(userData->userName.c_str());
-			return;
-		}
-		if(OK->boundingBox().containsPoint(touchPoint)){
-			if(checkName(name) == false){
-				nameField->setString(userData->userName.c_str());
-				setInfoLabel(NAME_RULE);
-				return;
-			}
-			GameController::getGameController()->saveUserName(name);
-			GameController::getGameController()->saveLastScore();
-			CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
-		}
-	}
-}
-
-void GameOverScene::keyboardWillShow(CCIMEKeyboardNotificationInfo& info){
-    nameField->setString("");
+    if(OK->boundingBox().containsPoint(touchPoint)){
+        CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
+    }else if(upload->boundingBox().containsPoint(touchPoint)){
+        if(userData->isLogedIn == false){
+            setInfoLabel("Please login or register first");
+            return;
+        }
+        GameController::getGameController()->uploadLastScore();
+    }
 }
 
 bool GameOverScene::checkName(const char * name){
@@ -170,15 +178,9 @@ bool GameOverScene::checkName(const char * name){
 }
 
 void GameOverScene::setInfoLabel(const char * info){
-	container->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 	infoLabel->setString(info);
-	infoLabel->setVisible(true);
-    scheduleOnce(schedule_selector(GameOverScene::hideInfoLabel), 3);
-}
-
-void GameOverScene::hideInfoLabel(){
-	container->setPosition(ccp(winSize.width/2, winSize.height/2));
-    infoLabel->setVisible(false);
+	mainMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    infoMenu->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
 }
 
 void GameOverScene::keyBackClicked(){

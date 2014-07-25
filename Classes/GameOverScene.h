@@ -10,7 +10,7 @@
 
 #include "GameController.h"
 
-class GameOverScene: public cocos2d::CCLayer , CCIMEDelegate {
+class GameOverScene: public cocos2d::CCLayer {
 public:
 	GameOverScene();
 	virtual ~GameOverScene();
@@ -18,19 +18,21 @@ public:
     CREATE_FUNC(GameOverScene);
     virtual bool init();
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    void hideInfoLabel();
     virtual void keyBackClicked();
-protected:
-    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
+    void okHandler(CCObject * sender);
 private:
     CCSize winSize;
     CCTextFieldTTF * nameField;
     CCSprite * OK;
-    CCSprite * container;
-    CCLabelTTF * infoLabel;
+    CCSprite * upload;
+    CCSprite * mainMenu;
+    CCMenuItemLabel * infoLabel;
     bool checkName(const char * name);
     void setInfoLabel(const char * info);
     UserData * userData;
+    void initInfoMenu();
+    void initMainMenu();
+    CCMenu * infoMenu;
 };
 
 #endif /* GAMEOVERSCENE_H_ */

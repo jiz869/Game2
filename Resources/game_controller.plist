@@ -34,6 +34,8 @@
 		<string>false</string>
 		<key>user_name</key>
 		<string>Penguin</string>
+		<key>password</key>
+		<string>Penguin&</string>
 	</dict>
 	<key>animation_data</key>
 	<dict>

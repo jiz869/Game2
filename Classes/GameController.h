@@ -17,6 +17,7 @@ using namespace std;
 
 class GameService;
 class ScoreBoardService;
+class UserService;
 
 typedef enum{
 	STARTUP_MENU_SCENE=0,
@@ -162,7 +163,10 @@ typedef struct{
     bool hasPayed;
     bool justWon;
     string userName;
+    string password;
     int rank;
+    bool isLogedIn;
+    int lastUploadedScore;
 }UserData;
 
 typedef struct{
@@ -208,10 +212,13 @@ public:
     void onScoreBoardSaveCompleted(CCNode * node , void * response);
     void onScoreBoardGetCompleted(CCNode * node , void * response);
     void onScoreBoardGetUserRankingCompleted(CCNode * node , void * response);
+    void onAuthenticateCompleted(CCNode * node , void * response);
     ScoreRank ranks[MAX_RANKS];
     void getTopRankings();
-    void saveLastScore();
-    void saveUserName(const char * userName);
+    void authenticate(const char * userName , const char * passwd);
+    void createUser(const char * userName , const char * passwd);
+    void uploadLastScore();
+    void saveUser(const char * userName , const char * password);
 
 private:
     GameController();
@@ -232,6 +239,7 @@ private:
     string plistWritablePath;
     void initLeaderboard();
     GameService *gameService;
+    UserService *userService;
     ScoreBoardService *scoreBoardService;
     int getLevelByScore(int score);
 };

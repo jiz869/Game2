@@ -122,6 +122,10 @@ bool StartMenuScene::init(){
 
     initScoreMenu();
 
+    initInfoMenu();
+
+    initUserMenu();
+
     AnimationData * animationData = GameController::getGameController()->getAnimationData();
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
 			animationData->backgroundSoundImage->getCString(), true);
@@ -137,6 +141,22 @@ bool StartMenuScene::init(){
     setKeypadEnabled(true);
 
     return true;
+}
+
+void StartMenuScene::initInfoMenu(){
+	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ));
+    infoLabel->setDisabledColor( ccRED );
+    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    infoLabel->setEnabled(false);
+
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    OK->setScale(0.5);
+    OK->setPosition(ccp(winSize.width/2, winSize.height * 0.2));
+
+	infoMenu = CCMenu::create(OK , infoLabel , NULL);
+	infoMenu->ignoreAnchorPointForPosition(false);
+	infoMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    addChild(infoMenu);
 }
 
 void StartMenuScene::keyBackClicked(){
@@ -159,17 +179,20 @@ void StartMenuScene::initScoreMenu(){
 	rankLabel->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE)));
 	scoreMenu->addChild(rankLabel);
 
-    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
+            this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.3);
-    OK->setPosition(ccp(winSize.width/4, winSize.height/(RANK_PERPAGE + 1)*0.85));
-    CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    OK->setPosition(ccp(winSize.width * 0.25, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" ,
+            this , menu_selector(StartMenuScene::userHandler));
     login->setScale(0.3);
-    login->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)*0.85));
-    CCMenuItemImage * create = CCMenuItemImage::create("register_normal.png", "register_selected.png" , this , menu_selector(StartMenuScene::okHandler));
-    create->setScale(0.3);
-    create->setPosition(ccp(winSize.width*0.75, winSize.height/(RANK_PERPAGE + 1)*0.85));
-    CCMenu * okMenu = CCMenu::create(OK , login, create , NULL);
-    okMenu->setPosition(ccp(0, 0.05));
+    login->setPosition(ccp(winSize.width * 0.75, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    CCMenuItemImage * upload = CCMenuItemImage::create("upload_score_normal.png", "upload_score_selected.png" ,
+            this , menu_selector(StartMenuScene::uploadHandler));
+    upload->setScale(0.4);
+    upload->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    CCMenu * okMenu = CCMenu::create(OK , login , upload , NULL);
+    okMenu->setPosition(ccp(0, 0));
     okMenu->setAnchorPoint(ccp(0,0));
     okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)));
     okMenu->ignoreAnchorPointForPosition(false);
@@ -224,6 +247,118 @@ void StartMenuScene::initScoreMenu(){
 	    scoreMenu->addChild(nameLabels[i]);
 	}
 #endif
+}
+
+void StartMenuScene::uploadHandler(CCObject * sender){
+    if(userData->isLogedIn == false){
+        setInfoLabel("Please login or register first" , 0);
+        return;
+    }
+    GameController::getGameController()->uploadLastScore();
+}
+
+void StartMenuScene::initUserMenu(){
+	userMenu = CCLayer::create();
+	userMenu->ignoreAnchorPointForPosition(false);
+	userMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+	addChild(userMenu);
+	setTouchEnabled(true);
+
+    CCLabelTTF * yourNameLabel = CCLabelTTF::create("0", FONT, 50);
+    yourNameLabel->setColor( ccBLUE );
+    yourNameLabel->setPosition(ccp(winSize.width/4 , winSize.height*0.8));
+    //yourNameLabel->setAnchorPoint(ccp(1 , 0.5));
+    yourNameLabel->setString(CCString::create("UserName")->getCString());
+    userMenu->addChild(yourNameLabel);
+
+    currentField = NULL;
+
+    nameField = CCTextFieldTTF::textFieldWithPlaceHolder(NULL , FONT, 64);
+    nameField->setString(userData->userName.c_str());
+    nameField->setColorSpaceHolder( ccRED );
+    nameField->setColor( ccRED );
+    nameField->setPosition(ccp(winSize.width * 0.4 , winSize.height*0.8));
+    nameField->setAnchorPoint(ccp(0 , 0.5));
+    userMenu->addChild(nameField);
+
+    CCLabelTTF * yourPwdLabel = CCLabelTTF::create("0", FONT, 50);
+    yourPwdLabel->setColor( ccBLUE );
+    yourPwdLabel->setPosition(ccp(winSize.width/4 , winSize.height*0.6));
+    //yourPwdLabel->setAnchorPoint(ccp(1 , 0.5));
+    yourPwdLabel->setString(CCString::create("PassWord")->getCString());
+    userMenu->addChild(yourPwdLabel);
+
+    pwdField = CCTextFieldTTF::textFieldWithPlaceHolder(NULL , FONT, 64);
+    pwdField->setString(userData->userName.c_str());
+    pwdField->setColorSpaceHolder( ccRED );
+    pwdField->setColor( ccRED );
+    pwdField->setPosition(ccp(winSize.width * 0.4 , winSize.height*0.6));
+    pwdField->setAnchorPoint(ccp(0 , 0.5));
+    userMenu->addChild(pwdField);
+
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
+            this , menu_selector(StartMenuScene::okHandler));
+    OK->setScale(0.4);
+    OK->setPosition(ccp(winSize.width * 0.25, winSize.height * 0.3));
+    CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" ,
+            this , menu_selector(StartMenuScene::loginHandler));
+    login->setScale(0.4);
+    login->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.3));
+    CCMenuItemImage * create = CCMenuItemImage::create("register_normal.png", "register_selected.png" ,
+            this , menu_selector(StartMenuScene::RegisterHandler));
+    create->setScale(0.4);
+    create->setPosition(ccp(winSize.width*0.75, winSize.height * 0.3));
+    CCMenu * okMenu = CCMenu::create(OK , login , create , NULL);
+    okMenu->setPosition(ccp(0, 0));
+    okMenu->setAnchorPoint(ccp(0,0));
+    okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height * 0.5));
+    okMenu->ignoreAnchorPointForPosition(false);
+    userMenu->addChild(okMenu);
+}
+
+void StartMenuScene::loginHandler(CCObject * sender){
+    GameController::getGameController()->authenticate(nameField->getString() , pwdField->getString());
+}
+
+void StartMenuScene::RegisterHandler(CCObject * sender){
+    GameController::getGameController()->createUser(nameField->getString() , pwdField->getString());
+}
+
+void StartMenuScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+{
+    CCTouch * touch = (CCTouch *)pTouches->anyObject();
+
+    CCPoint touchPoint = convertToNodeSpace(touch->getLocation());
+
+    if(nameField->boundingBox().containsPoint(touchPoint)){
+        currentField = nameField;
+        nameField->attachWithIME();
+    }else if(pwdField->boundingBox().containsPoint(touchPoint)){
+        currentField = pwdField;
+        pwdField->attachWithIME();
+    }
+    else{
+        nameField->detachWithIME();
+        pwdField->detachWithIME();
+        const char * name = nameField->getString();
+        if(strlen(name) == 0){
+            nameField->setString(userData->userName.c_str());
+            return;
+        }
+        name = pwdField->getString();
+        if(strlen(name) == 0){
+            pwdField->setString(userData->userName.c_str());
+            return;
+        }
+    }
+}
+
+void StartMenuScene::userHandler(CCObject * sender){
+    SET_BANNDER_HIDDEN(true);
+    nameField->runAction(CCBlink::create(2, 6));
+    pwdField->runAction(CCBlink::create(2, 6));
+    userMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
+    scoreMenu->setPosition(ccp(winSize.width/2, winSize.height * 1.5));
 }
 
 void StartMenuScene::tableCellTouched(CCTableView* table, CCTableViewCell* cell){
@@ -346,12 +481,6 @@ void StartMenuScene::initMainMenu(){
     options->setPosition(ccp(winSize.width*0.5 , winSize.height*0.375));
     score->setPosition(ccp(winSize.width*0.8 , winSize.height*0.375));
 #endif
-
-    infoLabel = CCLabelTTF::create("0", INFO_FONT, 48 );
-    infoLabel->setColor( ccRED );
-    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
-    infoLabel->setVisible(false);
-    addChild(infoLabel);
 
     addChild(startMenu);
 }
@@ -523,14 +652,9 @@ void StartMenuScene::setInfoLabel(const char *info , float delay){
     startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+    userMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     infoLabel->setString(info);
-    infoLabel->setVisible(true);
-    scheduleOnce(schedule_selector(StartMenuScene::hideInfoLabel), delay);
-}
-
-void StartMenuScene::hideInfoLabel(){
-    startMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
-    infoLabel->setVisible(false);
+    infoMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
 }
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){
@@ -543,6 +667,8 @@ void StartMenuScene::okHandler(cocos2d::CCObject *sender){
     SET_BANNDER_HIDDEN(false);
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+    infoMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+    userMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     startMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
 }
 
@@ -671,4 +797,8 @@ void StartMenuScene::enableButtonsForIap(bool enable){
     CCMenuItem * pvp = (CCMenuItem *)startMenu->getChildByTag(PVP);
     newGame->setEnabled(enable);
     pvp->setEnabled(enable);
+}
+
+void StartMenuScene::keyboardWillShow(CCIMEKeyboardNotificationInfo& info){
+    currentField->setString("");
 }

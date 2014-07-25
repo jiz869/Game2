@@ -30,7 +30,8 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 class StartMenuScene: public cocos2d::CCLayerColor , IAPManagerDelegate ,
-									CCTableViewDelegate , CCTableViewDataSource {
+									CCTableViewDelegate , CCTableViewDataSource
+									 , CCIMEDelegate{
 public:
 	StartMenuScene();
 	virtual ~StartMenuScene();
@@ -44,7 +45,10 @@ public:
     void changeSoundSetting(CheckboxType type);
     void scoreHandler(CCObject * sender);
     void pvpHandler(CCObject * sender);
-    void hideInfoLabel();
+    void userHandler(CCObject * sender);
+    void loginHandler(CCObject * sender);
+    void RegisterHandler(CCObject * sender);
+    void uploadHandler(CCObject * sender);
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
     virtual bool hasPayed();
@@ -57,10 +61,17 @@ public:
     virtual void keyBackClicked();
     void setPaymentError();
     void setPaymentSuccess();
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    void setInfoLabel(const char * info , float delay);
+
+protected:
+    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
 
 private:
+    CCMenu * infoMenu;
     CCMenu * startMenu;
     CCMenu * optionsMenu;
+    CCLayer * userMenu;
 #ifdef LISTVIEW_LEADERBOARD
     CCLayer * scoreMenu;
     CCTableView * scoreTable;
@@ -71,6 +82,8 @@ private:
     void initMainMenu();
     void initOptionsMenu();
     void initScoreMenu();
+    void initInfoMenu();
+    void initUserMenu();
     CCMenuItemImage * checkboxLeft;
     CCMenuItemImage * checkboxRight;
     CCMenuItemImage * checkboxSideLeftUp;
@@ -85,13 +98,15 @@ private:
     CCMenuItemLabel * scoreLabels[MAX_RANKS];
     CCMenuItemLabel * nameLabels[MAX_RANKS];
 
-    CCLabelTTF * infoLabel;
-
-    void setInfoLabel(const char * info , float delay);
+    CCMenuItemLabel * infoLabel;
 
     void enableButtonsForIap(bool enable);
 
     CCLabelTTF * rankLabel;
+
+    CCTextFieldTTF * nameField;
+    CCTextFieldTTF * pwdField;
+    CCTextFieldTTF * currentField;
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

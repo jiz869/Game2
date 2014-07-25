@@ -14,6 +14,7 @@
 #include "SimpleAudioEngine.h"
 #include "App42API.h"
 #include "app42base64.h"
+#include "StartMenuScene.h"
 
 using namespace CocosDenshion;
 
@@ -187,8 +188,11 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     }
 
     userData.userName = CCSTRING_FOR_KEY(dataDict, "user_name")->getCString();
+    userData.password = CCSTRING_FOR_KEY(dataDict, "password")->getCString();
 
     userData.rank = 0;
+    userData.isLogedIn = false;
+    userData.lastUploadedScore = -100000;
 
     return true;
 }
@@ -804,6 +808,7 @@ void GameController::initLeaderboard(){
 						"f87c2719986446f3d07816a58b5e89e7a7b8af1b04795e5cac8cb5e88afe0e16");
 	gameService = App42API::BuildGameService();
 	scoreBoardService = App42API::BuildScoreBoardService();
+	userService = App42API::BuildUserService();
 
 	for(int i = 0; i < MAX_RANKS ; i++){
 		ranks[i].userName = "nobody";
@@ -811,11 +816,11 @@ void GameController::initLeaderboard(){
 		ranks[i].level = 0;
 	}
 
-    scoreBoardService->GetTopRankings("crossRoad",
-    		this, callfuncND_selector(GameController::onScoreBoardGetCompleted));
-    scoreBoardService->GetUserRanking("crossRoad",
-    		base64_encode((unsigned char const*)userData.userName.c_str(), userData.userName.length()),
-    		this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
+	getTopRankings();
+
+	if(userData.password != "Penguin&"){
+	    authenticate(userData.userName.c_str() , userData.password.c_str());
+	}
 
 	//gameService->CreateGame("crossRoad","crossRoad", this, callfuncND_selector(GameController::onGameRequestCompleted));
 }
@@ -882,7 +887,7 @@ void GameController::onScoreBoardGetCompleted(CCNode * node , void * response){
 //			CCLOG("UserName=%s\n",it->getUserName().c_str());
 			ranks[i].score = (int)it->getScoreValue();
 			ranks[i].level = getLevelByScore(ranks[i].score);
-			ranks[i].userName = base64_decode(it->getUserName());
+			ranks[i].userName = it->getUserName();
 			i++;
 		}
 	}
@@ -934,27 +939,101 @@ int GameController::getLevelByScore(int score){
 }
 
 void GameController::getTopRankings(){
-    scoreBoardService->GetTopRankings("crossRoad",
+    scoreBoardService->GetTopNRankers("crossRoad", MAX_RANKS ,
     		this, callfuncND_selector(GameController::onScoreBoardGetCompleted));
 }
 
-void GameController::saveLastScore(){
+void GameController::authenticate(const char * userName , const char * passwd){
+    userData.isLogedIn = false;
+    userService->Authenticate(userName, passwd ,
+            this, callfuncND_selector(GameController::onAuthenticateCompleted));
+    saveUser(userName , passwd);
+}
+
+void GameController::onAuthenticateCompleted(CCNode * node , void * response){
+    App42UserResponse *userResponse = (App42UserResponse*)response;
+    CCLOG("code=%d...=%d",userResponse->getCode(),userResponse->isSuccess);
+    CCLOG("Response Body=%s",userResponse->getBody().c_str());
+    if (userResponse->isSuccess)
+    {
+        for(std::vector<App42User>::iterator it = userResponse->users.begin(); it != userResponse->users.end(); ++it)
+        {
+            CCLOG("UserName=%s",it->userName.c_str());
+            CCLOG("Email=%s",it->email.c_str());
+            userData.isLogedIn = true;
+            scoreBoardService->GetUserRanking("crossRoad",
+                    userData.userName,
+                    this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
+            CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+            if(currentScene->getTag() == STARTUP_MENU_SCENE){
+                StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+                CCString * info = CCString::createWithFormat("Welcome back %s", it->userName.c_str());
+                startup->setInfoLabel(info->getCString() , 0);
+            }
+        }
+    }
+    else
+    {
+        CCLOG("errordetails:%s",userResponse->errorDetails.c_str());
+        CCLOG("errorMessage:%s",userResponse->errorMessage.c_str());
+        CCLOG("appErrorCode:%d",userResponse->appErrorCode);
+        CCLOG("httpErrorCode:%d",userResponse->httpErrorCode);
+
+        size_t pos = userResponse->errorDetails.find(". ");
+
+        CCString * info;
+
+        if(pos == string::npos){
+            info = CCString::create(userResponse->errorDetails.c_str());
+        }else{
+            string part1 = userResponse->errorDetails.substr(0 , pos);
+            string part2 = userResponse->errorDetails.substr(pos+1);
+            info = CCString::createWithFormat("%s\n%s", part1.c_str(), part2.c_str());
+        }
+
+        CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+        if(currentScene->getTag() == STARTUP_MENU_SCENE){
+            StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+            startup->setInfoLabel(info->getCString() , 0);
+        }
+    }
+}
+
+void GameController::createUser(const char * userName , const char * passwd){
+    string email = userName;
+    email.append("@hotmail.com");
+    userData.isLogedIn = false;
+    userService->CreateUser(userName, passwd , email ,
+            this, callfuncND_selector(GameController::onAuthenticateCompleted));
+    saveUser(userName , passwd);
+}
+
+void GameController::uploadLastScore(){
+
+    if(userData.lastScore == userData.lastUploadedScore){
+        return;
+    }
+
+    userData.lastUploadedScore = userData.lastScore;
+
     scoreBoardService->SaveUserScore("crossRoad",
-    		base64_encode((unsigned char const*)userData.userName.c_str(), userData.userName.length())
-    		, userData.lastScore, this, callfuncND_selector(GameController::onScoreBoardSaveCompleted));
+    		userData.userName, userData.lastScore,
+    		this, callfuncND_selector(GameController::onScoreBoardSaveCompleted));
     scoreBoardService->GetUserRanking("crossRoad",
-    		base64_encode((unsigned char const*)userData.userName.c_str(), userData.userName.length()),
+    		userData.userName,
     		this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
 }
 
-void GameController::saveUserName(const char * userName){
-    if (userData.userName == userName) {
+void GameController::saveUser(const char * userName , const char * password){
+    if (userData.userName == userName && userData.password == password) {
         return;
     }
     userData.userName = userName;
+    userData.password = password;
     userData.rank = 0;
     CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
     userDataDict->setObject(CCString::create(userName), "user_name");
+    userDataDict->setObject(CCString::create(password), "password");
     dict->setObject(userDataDict, "user_data");
     dict->writeToFile(plistWritablePath.c_str());
 }
