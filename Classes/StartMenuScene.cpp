@@ -159,10 +159,16 @@ void StartMenuScene::initScoreMenu(){
 	rankLabel->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE)));
 	scoreMenu->addChild(rankLabel);
 
-    CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.3);
-    OK->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)*0.85));
-    CCMenu * okMenu = CCMenu::create(OK , NULL);
+    OK->setPosition(ccp(winSize.width/4, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    login->setScale(0.3);
+    login->setPosition(ccp(winSize.width/2, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    CCMenuItemImage * create = CCMenuItemImage::create("register_normal.png", "register_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    create->setScale(0.3);
+    create->setPosition(ccp(winSize.width*0.75, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    CCMenu * okMenu = CCMenu::create(OK , login, create , NULL);
     okMenu->setPosition(ccp(0, 0.05));
     okMenu->setAnchorPoint(ccp(0,0));
     okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)));
@@ -180,7 +186,7 @@ void StartMenuScene::initScoreMenu(){
 #else
 	ScoreRank * rank;
 
-    CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.3);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.07));
 
@@ -483,7 +489,7 @@ void StartMenuScene::initOptionsMenu(){
     unMute->setEnabled(false);
 
     //row 8
-    CCMenuItemImage * OK = CCMenuItemImage::create("ok_normal.png", "ok_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.3);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
 

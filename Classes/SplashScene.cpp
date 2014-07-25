@@ -72,6 +72,7 @@ bool SplashScene::init(){
     for(int i = 0 ; i < 2 ; i++){
     	CCString * imageName = CCString::createWithFormat("penguinside%d.png", i);
     	CCSprite * sprite = CCSprite::create(imageName->getCString());
+    	sprite->setScale(0.8);
     	CCRect rect = CCRectZero;
         rect.size = sprite->getContentSize();
     	CCSpriteFrame * frame = CCSpriteFrame::createWithTexture(sprite->getTexture() , rect);
@@ -84,11 +85,11 @@ bool SplashScene::init(){
 
     addChild(walkingPenguin);
 
-    walkingPenguin->setPosition(ccp(winSize.width*0.2 , winSize.height*0.35));
+    walkingPenguin->setPosition(ccp(winSize.width*0.2 , winSize.height*0.3));
 
     walkingPenguin->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
 
-    walkingPenguin->runAction(CCMoveTo::create(SPLASH_TIME , ccp(winSize.width*0.8 , winSize.height*0.35)));
+    walkingPenguin->runAction(CCMoveTo::create(SPLASH_TIME , ccp(winSize.width*0.8 , winSize.height*0.3)));
 
     SimpleAudioEngine::sharedEngine()->preloadEffect("splash.wav");
 

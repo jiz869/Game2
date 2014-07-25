@@ -108,7 +108,7 @@ bool GameOverScene::init(){
     lastScoreLabel->setString(info->getCString());
     container->addChild(lastScoreLabel);
 
-    OK = CCSprite::create("ok_normal.png");
+    OK = CCSprite::create("return_normal.png");
     OK->setPosition(ccp(winSize.width/2 , winSize.height*0.2));
     OK->setScale(0.4);
     container->addChild(OK);
