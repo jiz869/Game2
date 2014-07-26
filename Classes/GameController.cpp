@@ -819,7 +819,7 @@ void GameController::initLeaderboard(){
 
 	getTopRankings();
 
-	if(userData.password != "Penguin&"){
+	if(userData.password != "Penguin#"){
 	    userData.defaultAuth = true;
 	    authenticate(userData.userName.c_str() , userData.password.c_str());
 	}

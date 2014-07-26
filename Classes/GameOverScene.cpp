@@ -72,7 +72,7 @@ bool GameOverScene::init(){
 void GameOverScene::initMainMenu(){
     CCString * info;
 
-    CCMenuItemLabel * nameField = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 64));
+    CCMenuItemLabel * nameField = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 80));
     nameField->setString(userData->userName.c_str());
     nameField->setDisabledColor( ccRED );
     nameField->setPosition(ccp(winSize.width * 0.5 , winSize.height*0.8));
@@ -103,7 +103,7 @@ void GameOverScene::initMainMenu(){
     upload->setPosition(ccp(winSize.width * 0.675 , winSize.height*0.2));
     upload->setScale(0.45);
 
-    mainMenu = CCMenu::create(nameField , topScoreLabel , lastScoreLabel , OK , upload);
+    mainMenu = CCMenu::create(nameField , topScoreLabel , lastScoreLabel , OK , upload , NULL);
     mainMenu->ignoreAnchorPointForPosition(false);
 //    mainMenu->setContentSize(winSize);
 //    mainMenu->setPosition(ccp(winSize.width/2 , winSize.height/2));
