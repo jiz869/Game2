@@ -181,17 +181,17 @@ void StartMenuScene::initScoreMenu(){
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.3);
+    OK->setScale(0.4);
     OK->setPosition(ccp(winSize.width * 0.25, winSize.height/(RANK_PERPAGE + 1)*0.85));
-    CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" ,
+    CCMenuItemImage * account = CCMenuItemImage::create("account_normal.png", "account_selected.png" ,
             this , menu_selector(StartMenuScene::userHandler));
-    login->setScale(0.3);
-    login->setPosition(ccp(winSize.width * 0.75, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    account->setScale(0.4);
+    account->setPosition(ccp(winSize.width * 0.75, winSize.height/(RANK_PERPAGE + 1)*0.85));
     CCMenuItemImage * upload = CCMenuItemImage::create("upload_score_normal.png", "upload_score_selected.png" ,
             this , menu_selector(StartMenuScene::uploadHandler));
     upload->setScale(0.4);
     upload->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*0.85));
-    CCMenu * okMenu = CCMenu::create(OK , login , upload , NULL);
+    CCMenu * okMenu = CCMenu::create(OK , account , upload , NULL);
     okMenu->setPosition(ccp(0, 0));
     okMenu->setAnchorPoint(ccp(0,0));
     okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)));
@@ -298,15 +298,15 @@ void StartMenuScene::initUserMenu(){
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.4);
+    OK->setScale(0.45);
     OK->setPosition(ccp(winSize.width * 0.25, winSize.height * 0.3));
     CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" ,
             this , menu_selector(StartMenuScene::loginHandler));
-    login->setScale(0.4);
+    login->setScale(0.45);
     login->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.3));
     CCMenuItemImage * create = CCMenuItemImage::create("register_normal.png", "register_selected.png" ,
             this , menu_selector(StartMenuScene::RegisterHandler));
-    create->setScale(0.4);
+    create->setScale(0.45);
     create->setPosition(ccp(winSize.width*0.75, winSize.height * 0.3));
     CCMenu * okMenu = CCMenu::create(OK , login , create , NULL);
     okMenu->setPosition(ccp(0, 0));
@@ -619,7 +619,7 @@ void StartMenuScene::initOptionsMenu(){
 
     //row 8
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.3);
+    OK->setScale(0.45);
     OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
 
     optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight ,

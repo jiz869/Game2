@@ -17,15 +17,16 @@ public:
     static cocos2d::CCScene* scene();
     CREATE_FUNC(GameOverScene);
     virtual bool init();
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     virtual void keyBackClicked();
     void okHandler(CCObject * sender);
+    void returnHandler(CCObject * sender);
+    void uploadHandler(CCObject * sender);
 private:
     CCSize winSize;
     CCTextFieldTTF * nameField;
     CCSprite * OK;
     CCSprite * upload;
-    CCSprite * mainMenu;
+    CCMenu * mainMenu;
     CCMenuItemLabel * infoLabel;
     bool checkName(const char * name);
     void setInfoLabel(const char * info);

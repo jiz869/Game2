@@ -70,54 +70,44 @@ bool GameOverScene::init(){
 }
 
 void GameOverScene::initMainMenu(){
-    mainMenu = CCSprite::create();
-    mainMenu->setContentSize(winSize);
-    mainMenu->setPosition(ccp(winSize.width/2 , winSize.height/2));
-    addChild(mainMenu);
-
     CCString * info;
 
-    CCLabelTTF * yourNameLabel = CCLabelTTF::create("0", FONT, 50);
-    yourNameLabel->setColor( ccBLUE );
-    yourNameLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.8));
-    yourNameLabel->setAnchorPoint(ccp(1 , 0.5));
-    info = CCString::create("Input your name");
-    yourNameLabel->setString(info->getCString());
-    mainMenu->addChild(yourNameLabel);
-
-    CCLabelTTF * nameField = CCLabelTTF::create("0", FONT, 64);
+    CCMenuItemLabel * nameField = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 64));
     nameField->setString(userData->userName.c_str());
-    nameField->setColor( ccRED );
-    nameField->setPosition(ccp(winSize.width * 0.55 , winSize.height*0.8));
-    nameField->setAnchorPoint(ccp(0 , 0.5));
-    mainMenu->addChild(nameField);
+    nameField->setDisabledColor( ccRED );
+    nameField->setPosition(ccp(winSize.width * 0.5 , winSize.height*0.8));
+    nameField->setEnabled(false);
 
 
-    CCLabelTTF * topScoreLabel = CCLabelTTF::create("0", FONT, 64);
-    topScoreLabel->setColor( ccMAGENTA );
+    CCMenuItemLabel * topScoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 64));
+    topScoreLabel->setDisabledColor( ccMAGENTA );
     topScoreLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.6));
     info = CCString::createWithFormat("TOP score is %d", userData->topScore);
     topScoreLabel->setString(info->getCString());
-    mainMenu->addChild(topScoreLabel);
+    topScoreLabel->setEnabled(false);
 
-    CCLabelTTF * lastScoreLabel = CCLabelTTF::create("0", FONT, 64);
-    lastScoreLabel->setColor( ccBLACK );
+    CCMenuItemLabel * lastScoreLabel =  CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 64));
+    lastScoreLabel->setDisabledColor( ccBLACK );
     lastScoreLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.4));
     info = CCString::createWithFormat("Last score is %d", userData->lastScore);
     lastScoreLabel->setString(info->getCString());
-    mainMenu->addChild(lastScoreLabel);
+    lastScoreLabel->setEnabled(false);
 
-    OK = CCSprite::create("return_normal.png");
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png" , "return_selected.png" ,
+            this , menu_selector(GameOverScene::returnHandler));
     OK->setPosition(ccp(winSize.width * 0.375 , winSize.height*0.2));
-    OK->setScale(0.4);
-    mainMenu->addChild(OK);
+    OK->setScale(0.45);
 
-    upload = CCSprite::create("upload_score_normal.png");
-    upload->setPosition(ccp(winSize.width * 0.75 , winSize.height*0.2));
-    upload->setScale(0.4);
-    mainMenu->addChild(upload);
+    CCMenuItemImage * upload = CCMenuItemImage::create("upload_score_normal.png" , "upload_score_selected.png" ,
+            this , menu_selector(GameOverScene::uploadHandler));
+    upload->setPosition(ccp(winSize.width * 0.675 , winSize.height*0.2));
+    upload->setScale(0.45);
 
-    setTouchEnabled(true);
+    mainMenu = CCMenu::create(nameField , topScoreLabel , lastScoreLabel , OK , upload);
+    mainMenu->ignoreAnchorPointForPosition(false);
+//    mainMenu->setContentSize(winSize);
+//    mainMenu->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    addChild(mainMenu);
 }
 
 void GameOverScene::initInfoMenu(){
@@ -141,21 +131,16 @@ void GameOverScene::okHandler(cocos2d::CCObject *sender){
     mainMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
 }
 
-void GameOverScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
-{
-	CCTouch * touch = (CCTouch *)pTouches->anyObject();
+void GameOverScene::returnHandler(cocos2d::CCObject *sender){
+    CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
+}
 
-	CCPoint touchPoint = convertToNodeSpace(touch->getLocation());
-
-    if(OK->boundingBox().containsPoint(touchPoint)){
-        CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
-    }else if(upload->boundingBox().containsPoint(touchPoint)){
-        if(userData->isLogedIn == false){
-            setInfoLabel("Please login or register first");
-            return;
-        }
-        GameController::getGameController()->uploadLastScore();
+void GameOverScene::uploadHandler(cocos2d::CCObject *sender){
+    if(userData->isLogedIn == false){
+        setInfoLabel("Please login or register first");
+        return;
     }
+    GameController::getGameController()->uploadLastScore();
 }
 
 bool GameOverScene::checkName(const char * name){

@@ -943,6 +943,11 @@ int GameController::getLevelByScore(int score){
 void GameController::getTopRankings(){
     scoreBoardService->GetTopNRankers("crossRoad", MAX_RANKS ,
     		this, callfuncND_selector(GameController::onScoreBoardGetCompleted));
+    if(userData.isLogedIn == true){
+        scoreBoardService->GetUserRanking("crossRoad",
+                userData.userName,
+                this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
+    }
 }
 
 void GameController::authenticate(const char * userName , const char * passwd){
@@ -954,14 +959,14 @@ void GameController::authenticate(const char * userName , const char * passwd){
 
 void GameController::onAuthenticateCompleted(CCNode * node , void * response){
     App42UserResponse *userResponse = (App42UserResponse*)response;
-    CCLOG("code=%d...=%d",userResponse->getCode(),userResponse->isSuccess);
-    CCLOG("Response Body=%s",userResponse->getBody().c_str());
+//    CCLOG("code=%d...=%d",userResponse->getCode(),userResponse->isSuccess);
+//    CCLOG("Response Body=%s",userResponse->getBody().c_str());
     if (userResponse->isSuccess)
     {
         for(std::vector<App42User>::iterator it = userResponse->users.begin(); it != userResponse->users.end(); ++it)
         {
-            CCLOG("UserName=%s",it->userName.c_str());
-            CCLOG("Email=%s",it->email.c_str());
+//            CCLOG("UserName=%s",it->userName.c_str());
+//            CCLOG("Email=%s",it->email.c_str());
             userData.isLogedIn = true;
             scoreBoardService->GetUserRanking("crossRoad",
                     userData.userName,
@@ -1027,9 +1032,6 @@ void GameController::uploadLastScore(){
     scoreBoardService->SaveUserScore("crossRoad",
     		userData.userName, userData.lastScore,
     		this, callfuncND_selector(GameController::onScoreBoardSaveCompleted));
-    scoreBoardService->GetUserRanking("crossRoad",
-    		userData.userName,
-    		this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
 }
 
 void GameController::saveUser(const char * userName , const char * password){
