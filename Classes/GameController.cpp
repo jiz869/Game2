@@ -193,7 +193,6 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.rank = 0;
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
-    userData.defaultAuth = false;
 
     return true;
 }
@@ -820,7 +819,6 @@ void GameController::initLeaderboard(){
 	getTopRankings();
 
 	if(userData.password != "Penguin#"){
-	    userData.defaultAuth = true;
 	    authenticate(userData.userName.c_str() , userData.password.c_str());
 	}
 
@@ -986,10 +984,6 @@ void GameController::onAuthenticateCompleted(CCNode * node , void * response){
         CCLOG("appErrorCode:%d",userResponse->appErrorCode);
         CCLOG("httpErrorCode:%d",userResponse->httpErrorCode);
 
-        if(userData.defaultAuth == true){
-            return;
-        }
-
         size_t pos = userResponse->errorDetails.find(". ");
 
         CCString * info;
@@ -1008,8 +1002,6 @@ void GameController::onAuthenticateCompleted(CCNode * node , void * response){
             startup->setInfoLabel(info->getCString() , 0);
         }
     }
-
-    if(userData.defaultAuth == true) userData.defaultAuth = false;
 }
 
 void GameController::createUser(const char * userName , const char * passwd){

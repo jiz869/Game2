@@ -29,9 +29,11 @@ public:
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+class PWDField;
+
 class StartMenuScene: public cocos2d::CCLayerColor , IAPManagerDelegate ,
 									CCTableViewDelegate , CCTableViewDataSource
-									 , CCIMEDelegate{
+									 , CCTextFieldDelegate{
 public:
 	StartMenuScene();
 	virtual ~StartMenuScene();
@@ -63,9 +65,8 @@ public:
     void setPaymentSuccess();
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void setInfoLabel(const char * info , float delay);
-
-protected:
-    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info);
+                                         
+    virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender);
 
 private:
     CCMenu * infoMenu;
@@ -105,8 +106,11 @@ private:
     CCLabelTTF * rankLabel;
 
     CCTextFieldTTF * nameField;
-    CCTextFieldTTF * pwdField;
-    CCTextFieldTTF * currentField;
+    PWDField * pwdField;
+                                         
+    string password;
+                                         
+    void savePWD();
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

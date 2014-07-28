@@ -143,6 +143,7 @@
 		1613913519834FB200C2B942 /* return_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1613912B19834FB200C2B942 /* return_selected.png */; };
 		1613913619834FB200C2B942 /* upload_score_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 1613912C19834FB200C2B942 /* upload_score_normal.png */; };
 		1613913719834FB200C2B942 /* upload_score_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1613912D19834FB200C2B942 /* upload_score_selected.png */; };
+		161391401985979200C2B942 /* PWDField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1613913E1985979200C2B942 /* PWDField.cpp */; };
 		167ED39A194F446200B71E79 /* B2Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED37C194F446200B71E79 /* B2Sprite.cpp */; };
 		167ED39B194F446200B71E79 /* CarObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED37E194F446200B71E79 /* CarObj.cpp */; };
 		167ED39C194F446200B71E79 /* City.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED380194F446200B71E79 /* City.cpp */; };
@@ -658,6 +659,8 @@
 		1613912B19834FB200C2B942 /* return_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = return_selected.png; path = hd/return_selected.png; sourceTree = "<group>"; };
 		1613912C19834FB200C2B942 /* upload_score_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = upload_score_normal.png; path = hd/upload_score_normal.png; sourceTree = "<group>"; };
 		1613912D19834FB200C2B942 /* upload_score_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = upload_score_selected.png; path = hd/upload_score_selected.png; sourceTree = "<group>"; };
+		1613913E1985979200C2B942 /* PWDField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PWDField.cpp; path = ../Classes/PWDField.cpp; sourceTree = "<group>"; };
+		1613913F1985979200C2B942 /* PWDField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PWDField.h; path = ../Classes/PWDField.h; sourceTree = "<group>"; };
 		167ED37C194F446200B71E79 /* B2Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = B2Sprite.cpp; path = ../Classes/B2Sprite.cpp; sourceTree = "<group>"; };
 		167ED37D194F446200B71E79 /* B2Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = B2Sprite.h; path = ../Classes/B2Sprite.h; sourceTree = "<group>"; };
 		167ED37E194F446200B71E79 /* CarObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CarObj.cpp; path = ../Classes/CarObj.cpp; sourceTree = "<group>"; };
@@ -1629,6 +1632,8 @@
 				167ED399194F446200B71E79 /* StartMenuScene.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
+				1613913E1985979200C2B942 /* PWDField.cpp */,
+				1613913F1985979200C2B942 /* PWDField.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -2746,6 +2751,7 @@
 				15A3DA371682F826002FB0C5 /* CCBValue.cpp in Sources */,
 				15A3DA381682F826002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
 				15A3DA391682F826002FB0C5 /* CCControlLoader.cpp in Sources */,
+				161391401985979200C2B942 /* PWDField.cpp in Sources */,
 				15A3DA3A1682F826002FB0C5 /* CCData.cpp in Sources */,
 				298B29BC18D0668400C1920F /* ImageViewReader.cpp in Sources */,
 				15A3DA3B1682F826002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */,
