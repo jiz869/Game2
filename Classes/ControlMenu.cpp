@@ -111,6 +111,10 @@ void ControlMenu::initMenu(){
 }
 
 void ControlMenu::initLevelSplash(){
+
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->gameStartSoundImage->getCString());
+
     goSplash = CCLabelTTF::create("GO" , FONT , 196);
     goSplash->setColor(ccGREEN);
     goSplash->setPosition( ccp(winSize.width/2, winSize.height/2) );
@@ -262,6 +266,8 @@ void ControlMenu::updateScore(bool isGood)
 void ControlMenu::gameOver()
 {
     status=OVER;
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->gameOverSoundImage->getCString());
     gameSplash->runAction(CCSequence::create(CCScaleTo::create(0.8, 0.8) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showOver)), NULL));
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     GameController::getGameController()->setLastScore(score , true);

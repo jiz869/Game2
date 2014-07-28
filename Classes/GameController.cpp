@@ -276,6 +276,9 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.slowSoundImage = CCSTRING_FOR_KEY(dataDict, "special_slow_sound");
     animationData.curseSoundImage = CCSTRING_FOR_KEY(dataDict, "special_curse_sound");
     animationData.bombSoundImage = CCSTRING_FOR_KEY(dataDict, "special_bomb_sound");
+    animationData.allBadSoundImage = CCSTRING_FOR_KEY(dataDict, "special_allbad_sound");
+    animationData.gameOverSoundImage = CCSTRING_FOR_KEY(dataDict, "game_over_sound");
+    animationData.gameStartSoundImage = CCSTRING_FOR_KEY(dataDict, "game_start_sound");
 
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData.backgroundSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
@@ -292,6 +295,9 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.curseSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.slowSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.bombSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.allBadSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.gameOverSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.gameStartSoundImage->getCString());
 
     CCArray * hornSoundFiles = (CCArray *)dataDict->objectForKey("horn_sound_files");
     animationData.hornSoundImages.reserve(hornSoundFiles->count());
@@ -692,6 +698,8 @@ bool static blessHitByCar(PlayerObj * player, CCSprite * car){
 //allBad
 void static allBadBegin(PlayerObj * player){
     SpecialData * specialData = GameController::getGameController()->getSpecialData(ALLBAD);
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->allBadSoundImage->getCString());
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->setSpecialChance(specialData->userData1 , specialData->userData2);
     for(int i = SPECIAL_NUM + 1 ; i < BAD_SPECIAL_NUM ; i++){
@@ -874,6 +882,12 @@ void GameController::onScoreBoardSaveCompleted(CCNode * node , void * response){
 		CCLOG("errorMessage:%s",scoreResponse->errorMessage.c_str());
 		CCLOG("appErrorCode:%d",scoreResponse->appErrorCode);
 		CCLOG("httpErrorCode:%d",scoreResponse->httpErrorCode);
+
+        if(scoreResponse->errorDetails.length() == 0){
+            setInfoLabel("Upload score failed");
+            return;
+        }
+
         size_t pos = scoreResponse->errorDetails.find(". ");
 
         CCString * info;
@@ -998,6 +1012,11 @@ void GameController::onAuthenticateCompleted(CCNode * node , void * response){
         CCLOG("errorMessage:%s",userResponse->errorMessage.c_str());
         CCLOG("appErrorCode:%d",userResponse->appErrorCode);
         CCLOG("httpErrorCode:%d",userResponse->httpErrorCode);
+
+        if(userResponse->errorDetails.length() == 0){
+            setInfoLabel("Authentication failed");
+            return;
+        }
 
         size_t pos = userResponse->errorDetails.find(". ");
 

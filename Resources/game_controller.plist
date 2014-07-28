@@ -65,6 +65,12 @@
 		<string>bzzzt.wav</string>
 		<key>special_strong_sound</key>
 		<string>strong.wav</string>
+		<key>special_allbad_sound</key>
+		<string>allBad.wav</string>
+		<key>game_over_sound</key>
+		<string>gameOver.wav</string>
+		<key>game_start_sound</key>
+		<string>go.wav</string>
 		<key>background_sound_file</key>
 		<string>busy.wav</string>
 		<key>levelup_sound_file</key>

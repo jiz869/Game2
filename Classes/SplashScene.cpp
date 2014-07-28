@@ -94,7 +94,6 @@ bool SplashScene::init(){
     SimpleAudioEngine::sharedEngine()->preloadEffect("splash.wav");
 
     scheduleOnce(schedule_selector(SplashScene::splashOver) , SPLASH_TIME);
-    scheduleOnce(schedule_selector(SplashScene::initGameController) , SPLASH_TIME - 0.2);
 
     return true;
 }
