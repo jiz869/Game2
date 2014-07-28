@@ -8,14 +8,6 @@
 #include "GameOverScene.h"
 #include "StartMenuScene.h"
 
-#define NAME_RULE "Maximum 12 characters\n" \
-	              "Minimum 4 characters\n" \
-	              "Legal characters are\n" \
-                  "a-z , A-Z, 0-9 , _ , -\n" \
-	              "Must start with alphabet"
-
-#define DEFAULT_NAME "Penguin"
-
 GameOverScene::GameOverScene() : infoLabel(NULL) {
 	// TODO Auto-generated constructor stub
 

@@ -65,8 +65,9 @@ public:
     void setPaymentSuccess();
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void setInfoLabel(const char * info , float delay);
-                                         
+
     virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender);
+//    virtual bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen);
 
 private:
     CCMenu * infoMenu;
@@ -107,10 +108,12 @@ private:
 
     CCTextFieldTTF * nameField;
     PWDField * pwdField;
-                                         
+
     string password;
-                                         
+
     void savePWD();
+
+    bool checkName(const char * name);
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

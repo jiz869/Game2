@@ -21,6 +21,7 @@ public:
     void okHandler(CCObject * sender);
     void returnHandler(CCObject * sender);
     void uploadHandler(CCObject * sender);
+    void setInfoLabel(const char * info);
 private:
     CCSize winSize;
     CCTextFieldTTF * nameField;
@@ -29,7 +30,6 @@ private:
     CCMenu * mainMenu;
     CCMenuItemLabel * infoLabel;
     bool checkName(const char * name);
-    void setInfoLabel(const char * info);
     UserData * userData;
     void initInfoMenu();
     void initMainMenu();

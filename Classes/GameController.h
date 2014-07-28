@@ -195,6 +195,13 @@ typedef struct{
 #define FREE_LEVEL (2)
 #define FREE_PLAY (3)
 
+#define NAME_RULE "User name must follow:\n" \
+                  "Maximum 12 characters\n" \
+                  "Minimum 4 characters\n" \
+                  "Legal characters are\n" \
+                  "a-z , A-Z, 0-9 , _ , -\n" \
+                  "Must start with alphabet"
+
 class GameController : CCObject {
 
 public:
@@ -242,6 +249,7 @@ private:
     UserService *userService;
     ScoreBoardService *scoreBoardService;
     int getLevelByScore(int score);
+    void setInfoLabel(const char * info);
 };
 
 #endif /* defined(__crossRoad__GameController__) */

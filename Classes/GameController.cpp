@@ -15,6 +15,7 @@
 #include "App42API.h"
 #include "app42base64.h"
 #include "StartMenuScene.h"
+#include "GameOverScene.h"
 
 using namespace CocosDenshion;
 
@@ -181,7 +182,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.order = -1;
     userData.pvpMode = NONE;
     userData.justWon = false;
-    userData.currentLevel = 6;
+    userData.currentLevel = 8;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -859,6 +860,8 @@ void GameController::onScoreBoardSaveCompleted(CCNode * node , void * response){
 //			CCLOG("ScoreId=%s\n",it->getScoreId().c_str());
 //			CCLOG("ScoreValue=%f\n",it->getScoreValue());
 //			CCLOG("UserName=%s\n",it->getUserName().c_str());
+		    CCString * info = CCString::createWithFormat("Upload score %d successfully", (int)it->getScoreValue());
+		    setInfoLabel(info->getCString());
 		}
 	}
 	else
@@ -867,6 +870,18 @@ void GameController::onScoreBoardSaveCompleted(CCNode * node , void * response){
 		CCLOG("errorMessage:%s",scoreResponse->errorMessage.c_str());
 		CCLOG("appErrorCode:%d",scoreResponse->appErrorCode);
 		CCLOG("httpErrorCode:%d",scoreResponse->httpErrorCode);
+        size_t pos = scoreResponse->errorDetails.find(". ");
+
+        CCString * info;
+
+        if(pos == string::npos){
+            info = CCString::create(scoreResponse->errorDetails.c_str());
+        }else{
+            string part1 = scoreResponse->errorDetails.substr(0 , pos);
+            string part2 = scoreResponse->errorDetails.substr(pos+1);
+            info = CCString::createWithFormat("%s\n%s", part1.c_str(), part2.c_str());
+        }
+        setInfoLabel(info->getCString());
 	}
 }
 
@@ -969,12 +984,8 @@ void GameController::onAuthenticateCompleted(CCNode * node , void * response){
             scoreBoardService->GetUserRanking("crossRoad",
                     userData.userName,
                     this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
-            CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
-            if(currentScene->getTag() == STARTUP_MENU_SCENE){
-                StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
-                CCString * info = CCString::createWithFormat("Welcome back %s", it->userName.c_str());
-                startup->setInfoLabel(info->getCString() , 0);
-            }
+            CCString * info = CCString::createWithFormat("Welcome back %s", it->userName.c_str());
+            setInfoLabel(info->getCString());
         }
     }
     else
@@ -995,12 +1006,18 @@ void GameController::onAuthenticateCompleted(CCNode * node , void * response){
             string part2 = userResponse->errorDetails.substr(pos+1);
             info = CCString::createWithFormat("%s\n%s", part1.c_str(), part2.c_str());
         }
+        setInfoLabel(info->getCString());
+    }
+}
 
-        CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
-        if(currentScene->getTag() == STARTUP_MENU_SCENE){
-            StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
-            startup->setInfoLabel(info->getCString() , 0);
-        }
+void GameController::setInfoLabel(const char * info){
+    CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+    if(currentScene->getTag() == STARTUP_MENU_SCENE){
+        StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+        startup->setInfoLabel(info , 0);
+    }else if(currentScene->getTag() == GAME_OVER_SCENE){
+        GameOverScene * gameOver = (GameOverScene *)currentScene->getChildren()->objectAtIndex(0);
+        gameOver->setInfoLabel(info);
     }
 }
 
@@ -1016,6 +1033,10 @@ void GameController::createUser(const char * userName , const char * passwd){
 void GameController::uploadLastScore(){
 
     if(userData.lastScore == userData.lastUploadedScore){
+        return;
+    }
+
+    if(userData.lastScore < 100){
         return;
     }
 

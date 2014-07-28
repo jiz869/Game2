@@ -322,7 +322,30 @@ void StartMenuScene::loginHandler(CCObject * sender){
 }
 
 void StartMenuScene::RegisterHandler(CCObject * sender){
+    if(checkName(nameField->getString()) == false){
+        setInfoLabel(NAME_RULE , 0);
+        return;
+    }
     GameController::getGameController()->createUser(nameField->getString() , pwdField->getString());
+}
+
+bool StartMenuScene::checkName(const char * name){
+    int length = strlen(name);
+
+    if(length > 12 || length < 4) return false;
+
+    if((name[0] < 'a' || name[0] > 'z') && (name[0] < 'A' || name[0] > 'Z')) return false;
+
+    for(int i = 0 ; i < length ; i++){
+        if((name[i] < 'a' || name[i] > 'z')
+                && (name[i] < 'A' || name[i] > 'Z')
+                && (name[i] < '0' || name[i] > '9')
+                && (name[i] != '_') && (name[i] != '-')){
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void StartMenuScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
@@ -803,3 +826,11 @@ bool StartMenuScene::onTextFieldAttachWithIME(cocos2d::CCTextFieldTTF *sender){
     sender->setString("");
     return false;
 }
+
+//bool StartMenuScene::onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen){
+//    for(int i = 0 ; i < nLen ; i++){
+//        int c = *(text+i);
+//        CCLOG("onTextFieldInsertText %d %d", c , '\n');
+//    }
+//    return false;
+//}
