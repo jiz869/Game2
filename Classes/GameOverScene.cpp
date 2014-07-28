@@ -16,7 +16,7 @@
 
 #define DEFAULT_NAME "Penguin"
 
-GameOverScene::GameOverScene() {
+GameOverScene::GameOverScene() : infoLabel(NULL) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -163,6 +163,9 @@ bool GameOverScene::checkName(const char * name){
 }
 
 void GameOverScene::setInfoLabel(const char * info){
+    if (infoLabel == NULL) {
+        return;
+    }
 	infoLabel->setString(info);
 	mainMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     infoMenu->setPosition(ccp(winSize.width/2 , winSize.height*0.5));

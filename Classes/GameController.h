@@ -167,7 +167,6 @@ typedef struct{
     int rank;
     bool isLogedIn;
     int lastUploadedScore;
-    bool defaultAuth;
 }UserData;
 
 typedef struct{

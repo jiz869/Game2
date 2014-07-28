@@ -10,6 +10,7 @@
 #include "PlayScene.h"
 #include "SimpleAudioEngine.h"
 #include "MultiPlayScene.h"
+#include "PWDField.h"
 
 typedef enum{
     NEW_GAME = 0,
@@ -85,7 +86,7 @@ CCScene* StartMenuScene::scene()
     return scene;
 }
 
-StartMenuScene::StartMenuScene() {
+StartMenuScene::StartMenuScene() : infoLabel(NULL) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -271,14 +272,13 @@ void StartMenuScene::initUserMenu(){
     yourNameLabel->setString(CCString::create("UserName")->getCString());
     userMenu->addChild(yourNameLabel);
 
-    currentField = NULL;
-
     nameField = CCTextFieldTTF::textFieldWithPlaceHolder(NULL , FONT, 64);
     nameField->setString(userData->userName.c_str());
     nameField->setColorSpaceHolder( ccRED );
     nameField->setColor( ccRED );
     nameField->setPosition(ccp(winSize.width * 0.4 , winSize.height*0.8));
     nameField->setAnchorPoint(ccp(0 , 0.5));
+    nameField->setDelegate(this);
     userMenu->addChild(nameField);
 
     CCLabelTTF * yourPwdLabel = CCLabelTTF::create("0", FONT, 50);
@@ -288,12 +288,13 @@ void StartMenuScene::initUserMenu(){
     yourPwdLabel->setString(CCString::create("PassWord")->getCString());
     userMenu->addChild(yourPwdLabel);
 
-    pwdField = CCTextFieldTTF::textFieldWithPlaceHolder(NULL , FONT, 64);
-    pwdField->setString(userData->userName.c_str());
+    pwdField = PWDField::textFieldWithPlaceHolder(NULL , FONT, 64);
+    pwdField->setString(userData->password.c_str());
     pwdField->setColorSpaceHolder( ccRED );
     pwdField->setColor( ccRED );
     pwdField->setPosition(ccp(winSize.width * 0.4 , winSize.height*0.6));
     pwdField->setAnchorPoint(ccp(0 , 0.5));
+    pwdField->setDelegate(this);
     userMenu->addChild(pwdField);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
@@ -331,10 +332,8 @@ void StartMenuScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
     CCPoint touchPoint = convertToNodeSpace(touch->getLocation());
 
     if(nameField->boundingBox().containsPoint(touchPoint)){
-        currentField = nameField;
         nameField->attachWithIME();
     }else if(pwdField->boundingBox().containsPoint(touchPoint)){
-        currentField = pwdField;
         pwdField->attachWithIME();
     }
     else{
@@ -347,7 +346,7 @@ void StartMenuScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
         }
         name = pwdField->getString();
         if(strlen(name) == 0){
-            pwdField->setString(userData->userName.c_str());
+            pwdField->setString(userData->password.c_str());
             return;
         }
     }
@@ -547,7 +546,7 @@ void StartMenuScene::initOptionsMenu(){
     checkboxLeft = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxLeft->setTag(LEFT);
     checkboxLeft->setScale(0.25);
-    left->setPosition(ccp(winSize.width * 0.35, winSize.height*0.76));
+    left->setPosition(ccp(winSize.width * 0.4, winSize.height*0.76));
     checkboxLeft->setPosition(ccp(winSize.width*0.8, winSize.height*0.76));
     left->setEnabled(false);
 
@@ -559,7 +558,7 @@ void StartMenuScene::initOptionsMenu(){
     checkboxRight = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxRight->setTag(RIGHT);
     checkboxRight->setScale(0.25);
-    right->setPosition(ccp(winSize.width * 0.35, winSize.height*0.67));
+    right->setPosition(ccp(winSize.width * 0.4, winSize.height*0.67));
     checkboxRight->setPosition(ccp(winSize.width*0.8, winSize.height*0.67));
     right->setEnabled(false);
 
@@ -571,7 +570,7 @@ void StartMenuScene::initOptionsMenu(){
     checkboxSideLeftUp = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSideLeftUp->setTag(SIDE_LEFT_UP);
     checkboxSideLeftUp->setScale(0.25);
-    leftUp->setPosition(ccp(winSize.width * 0.35, winSize.height*0.58));
+    leftUp->setPosition(ccp(winSize.width * 0.4, winSize.height*0.58));
     checkboxSideLeftUp->setPosition(ccp(winSize.width*0.8, winSize.height*0.58));
     leftUp->setEnabled(false);
 
@@ -582,7 +581,7 @@ void StartMenuScene::initOptionsMenu(){
     checkboxSideLeftDown = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSideLeftDown->setTag(SIDE_LEFT_DOWN);
     checkboxSideLeftDown->setScale(0.25);
-    leftDown->setPosition(ccp(winSize.width * 0.35, winSize.height*0.49));
+    leftDown->setPosition(ccp(winSize.width * 0.4, winSize.height*0.49));
     checkboxSideLeftDown->setPosition(ccp(winSize.width*0.8, winSize.height*0.49));
     leftDown->setEnabled(false);
 
@@ -600,7 +599,7 @@ void StartMenuScene::initOptionsMenu(){
     mute->setDisabledColor(ccRED);
     checkboxMute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxMute->setTag(MUTE);
-    mute->setPosition(ccp(winSize.width * 0.35, winSize.height*0.28));
+    mute->setPosition(ccp(winSize.width * 0.4, winSize.height*0.28));
     checkboxMute->setPosition(winSize.width*0.8, winSize.height*0.28);
     checkboxMute->setScale(0.25);
     mute->setEnabled(false);
@@ -612,7 +611,7 @@ void StartMenuScene::initOptionsMenu(){
     unMute->setDisabledColor(ccBLACK);
     checkboxUnmute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxUnmute->setTag(UNMUTE);
-    unMute->setPosition(ccp(winSize.width * 0.35, winSize.height*0.19));
+    unMute->setPosition(ccp(winSize.width * 0.4, winSize.height*0.19));
     checkboxUnmute->setPosition(winSize.width*0.8, winSize.height*0.19);
     checkboxUnmute->setScale(0.25);
     unMute->setEnabled(false);
@@ -649,6 +648,7 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
 }
 
 void StartMenuScene::setInfoLabel(const char *info , float delay){
+    if(infoLabel == NULL) return;
     startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
@@ -799,6 +799,7 @@ void StartMenuScene::enableButtonsForIap(bool enable){
     pvp->setEnabled(enable);
 }
 
-void StartMenuScene::keyboardWillShow(CCIMEKeyboardNotificationInfo& info){
-    currentField->setString("");
+bool StartMenuScene::onTextFieldAttachWithIME(cocos2d::CCTextFieldTTF *sender){
+    sender->setString("");
+    return false;
 }
