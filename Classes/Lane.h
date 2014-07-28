@@ -25,7 +25,7 @@ public:
 
 	static Lane * creatWithDescription(LaneDescription * description);
 	virtual bool initWithDescription(LaneDescription * description);
-    virtual void stopAtPosition(float x);
+    virtual void stopAtPosition(float x , float playerSize);
     virtual void stop();
     virtual void reStart();
     void step(float dt);

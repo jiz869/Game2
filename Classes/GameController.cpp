@@ -62,6 +62,10 @@ char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
 
+static char * specialNames[BAD_SPECIAL_NUM] = {"stop" , "strong" , "life" , "time" , "skull" , "score" ,
+                                        "bless" , "haste" , "police" , "slow" , "curse",
+                                        "bomb" , "allBad"};
+
 GameController * GameController::getGameController(){
     if (controller == NULL) {
         controller = new GameController();
@@ -1059,4 +1063,12 @@ void GameController::saveUser(const char * userName , const char * password){
     userDataDict->setObject(CCString::create(password), "password");
     dict->setObject(userDataDict, "user_data");
     dict->writeToFile(plistWritablePath.c_str());
+}
+
+void GameController::recoverSpecialDurations(){
+    CCDictionary * specialDict = (CCDictionary *)dict->objectForKey("special_data");
+    for(int i = 0 ; i < BAD_SPECIAL_NUM ; i++){
+        CCDictionary * dict = (CCDictionary *)specialDict->objectForKey(specialNames[i]);
+        specialDatas[i]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    }
 }

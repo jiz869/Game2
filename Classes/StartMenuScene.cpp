@@ -110,6 +110,8 @@ bool StartMenuScene::init(){
 
     SET_BANNDER_HIDDEN(false);
 
+    GameController::getGameController()->recoverSpecialDurations();
+
 	CCSprite * background = CCSprite::create("background.png");
     CCSize size = background->getContentSize();
     background->setScaleY(winSize.height/size.height);

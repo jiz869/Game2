@@ -226,6 +226,7 @@ public:
     void createUser(const char * userName , const char * passwd);
     void uploadLastScore();
     void saveUser(const char * userName , const char * password);
+    void recoverSpecialDurations();
 
 private:
     GameController();

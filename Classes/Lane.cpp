@@ -119,7 +119,7 @@ void Lane::addACar2(float dt){
     scheduleOnce(schedule_selector(Lane::addACar1) , interval);
 }
 
-void Lane::stopAtPosition(float x){
+void Lane::stopAtPosition(float x , float playerSize){
     CCArray * children = getChildren();
 
     B2Sprite * car;
@@ -130,9 +130,11 @@ void Lane::stopAtPosition(float x){
         car = (B2Sprite *)pObject;
 
         if (car && car->getTag() != kCCNodeTagInvalid) {
-            if (description->left2right && car->getPosition().x < x - car->getContentSize().width) {
+            if (description->left2right && car->getPosition().x <
+                    x - car->getContentSize().width/2 - playerSize) {
                 car->getB2Body()->SetLinearVelocity(b2Vec2(0 , 0));
-            }else if (!description->left2right && car->getPosition().x > x + car->getContentSize().width){
+            }else if (!description->left2right && car->getPosition().x >
+                    x + car->getContentSize().width/2 + playerSize){
                 car->getB2Body()->SetLinearVelocity(b2Vec2(0 , 0));
             }
         }

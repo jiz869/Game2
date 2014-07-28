@@ -251,7 +251,7 @@ void PlayScene::update(float dt){
 void PlayScene::stopAllLanes(){
 	int size = lanes.size();
     for (int i = 0; i < size; i++) {
-        lanes[i]->stopAtPosition(winSize.width/2);
+        lanes[i]->stopAtPosition(winSize.width/2 , player->getSize().width);
     }
 }
 
