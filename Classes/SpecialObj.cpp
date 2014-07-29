@@ -21,7 +21,7 @@ B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float spe
     specialId = getRandom(SPECIAL_NUM + 1, BAD_SPECIAL_NUM - 1);
     specialData = GameController::getGameController()->getSpecialData(specialId);
     int carNumber = getRandom(0, carNumbers->size()-1);
-    CCString * carName = CCString::createWithFormat("car%d.png", carNumbers->at(carNumber));
+    CCString * carName = CCString::createWithFormat("car8%d.png", carNumbers->at(carNumber));
     CarObj::load(carName->getCString(), left2right, initPos, speed, lane , SPECIAL);
     //gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
     CCSprite * tag = CCSprite::createWithSpriteFrameName(specialData->imageName->getCString());
