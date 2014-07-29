@@ -20,7 +20,7 @@ B2Sprite * CarObj::load(bool left2right, cocos2d::CCPoint initPos, float speed ,
 
     int carNumber = getRandom(0, carNumbers->size()-1);
 
-    CCString * carName = CCString::createWithFormat("car8%d.png", carNumbers->at(carNumber));
+    CCString * carName = CCString::createWithFormat("car%d.png", carNumbers->at(carNumber));
 
     return load(carName->getCString(), left2right, initPos, speed, lane , CAR);
 }
