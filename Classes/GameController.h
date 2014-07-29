@@ -205,6 +205,10 @@ typedef struct{
                   "a-z , A-Z, 0-9 , _ , -\n" \
                   "Must start with alphabet"
 
+#define PASSWORD_RULE "Password must have:\n" \
+                  "Maximum 12 characters\n" \
+                  "Minimum 4 characters\n" \
+
 class GameController : CCObject {
 
 public:

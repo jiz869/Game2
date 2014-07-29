@@ -149,12 +149,12 @@ bool StartMenuScene::init(){
 void StartMenuScene::initInfoMenu(){
 	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ));
     infoLabel->setDisabledColor( ccRED );
-    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));
+    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.6));
     infoLabel->setEnabled(false);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.5);
-    OK->setPosition(ccp(winSize.width/2, winSize.height * 0.2));
+    OK->setScale(0.7);
+    OK->setPosition(ccp(winSize.width/2, winSize.height * 0.15));
 
 	infoMenu = CCMenu::create(OK , infoLabel , NULL);
 	infoMenu->ignoreAnchorPointForPosition(false);
@@ -174,38 +174,38 @@ void StartMenuScene::initScoreMenu(){
 	scoreMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 	addChild(scoreMenu);
 
-	rankLabel = CCLabelTTF::create("0", FONT, 64 );
+	rankLabel = CCLabelTTF::create("0", FONT, 72 );
 	rankLabel->setColor( ccRED );
 	CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
 			userData->userName.c_str(), userData->rank);
 	rankLabel->setString(rankInfo->getCString());
-	rankLabel->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE)));
+	rankLabel->setPosition(ccp(winSize.width*0.5, winSize.height*(1.0/(RANK_PERPAGE + 1)*(RANK_PERPAGE)-0.02)));
 	scoreMenu->addChild(rankLabel);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.4);
-    OK->setPosition(ccp(winSize.width * 0.25, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    OK->setScale(0.6);
+    OK->setPosition(ccp(winSize.width * 0.2, winSize.height*(1.0/(RANK_PERPAGE + 1)+0.02)));
     CCMenuItemImage * account = CCMenuItemImage::create("account_normal.png", "account_selected.png" ,
             this , menu_selector(StartMenuScene::userHandler));
-    account->setScale(0.4);
-    account->setPosition(ccp(winSize.width * 0.75, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    account->setScale(0.6);
+    account->setPosition(ccp(winSize.width * 0.8, winSize.height*(1.0/(RANK_PERPAGE + 1)+0.02)));
     CCMenuItemImage * upload = CCMenuItemImage::create("upload_score_normal.png", "upload_score_selected.png" ,
             this , menu_selector(StartMenuScene::uploadHandler));
-    upload->setScale(0.4);
-    upload->setPosition(ccp(winSize.width*0.5, winSize.height/(RANK_PERPAGE + 1)*0.85));
+    upload->setScale(0.6);
+    upload->setPosition(ccp(winSize.width*0.5, winSize.height*(1.0/(RANK_PERPAGE + 1)+0.02)));
     CCMenu * okMenu = CCMenu::create(OK , account , upload , NULL);
     okMenu->setPosition(ccp(0, 0));
     okMenu->setAnchorPoint(ccp(0,0));
-    okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)));
+    okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*2));
     okMenu->ignoreAnchorPointForPosition(false);
     scoreMenu->addChild(okMenu);
 
     scoreTable = CCTableView::create(this ,
-    		CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE-2)));
+    		CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*(RANK_PERPAGE-3)));
     scoreTable->setDirection(kCCScrollViewDirectionVertical);
     //scoreTable->setAnchorPoint(ccp(0 , 1));
-    scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) + winSize.height * 0.04));
+    scoreTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) * 2));
     scoreTable->setVerticalFillOrder(kCCTableViewFillTopDown);
     scoreMenu->addChild(scoreTable);
     scoreTable->reloadData();
@@ -301,16 +301,16 @@ void StartMenuScene::initUserMenu(){
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.45);
-    OK->setPosition(ccp(winSize.width * 0.25, winSize.height * 0.3));
+    OK->setScale(0.6);
+    OK->setPosition(ccp(winSize.width * 0.2, winSize.height * 0.3));
     CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" ,
             this , menu_selector(StartMenuScene::loginHandler));
-    login->setScale(0.45);
+    login->setScale(0.6);
     login->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.3));
     CCMenuItemImage * create = CCMenuItemImage::create("register_normal.png", "register_selected.png" ,
             this , menu_selector(StartMenuScene::RegisterHandler));
-    create->setScale(0.45);
-    create->setPosition(ccp(winSize.width*0.75, winSize.height * 0.3));
+    create->setScale(0.6);
+    create->setPosition(ccp(winSize.width*0.8, winSize.height * 0.3));
     CCMenu * okMenu = CCMenu::create(OK , login , create , NULL);
     okMenu->setPosition(ccp(0, 0));
     okMenu->setAnchorPoint(ccp(0,0));
@@ -326,6 +326,10 @@ void StartMenuScene::loginHandler(CCObject * sender){
 void StartMenuScene::RegisterHandler(CCObject * sender){
     if(checkName(nameField->getString()) == false){
         setInfoLabel(NAME_RULE , 0);
+        return;
+    }
+    if(checkPWD(pwdField->getString()) == false){
+        setInfoLabel(PASSWORD_RULE , 0);
         return;
     }
     GameController::getGameController()->createUser(nameField->getString() , pwdField->getString());
@@ -346,6 +350,14 @@ bool StartMenuScene::checkName(const char * name){
             return false;
         }
     }
+
+    return true;
+}
+
+bool StartMenuScene::checkPWD(const char * password){
+    int length = strlen(password);
+
+    if(length > 12 || length < 4) return false;
 
     return true;
 }
@@ -482,11 +494,11 @@ void StartMenuScene::initMainMenu(){
 #ifdef MULTIPLAY
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    newGame->setScale(0.6);
-    options->setScale(0.6);
-    score->setScale(0.6);
+    newGame->setScale(0.7);
+    options->setScale(0.7);
+    score->setScale(0.7);
     CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
-    pvp->setScale(0.6);
+    pvp->setScale(0.7);
     pvp->setTag(PVP);
 
     startMenu = CCMenu::create(background , newGame , options, score , pvp , NULL);
@@ -496,14 +508,14 @@ void StartMenuScene::initMainMenu(){
     score->setPosition(ccp(winSize.width*0.3 , winSize.height*0.3));
     pvp->setPosition(ccp(winSize.width*0.7 , winSize.height*0.3));
 #else
-    newGame->setScale(0.6);
-    options->setScale(0.6);
-    score->setScale(0.6);
+    newGame->setScale(0.7);
+    options->setScale(0.7);
+    score->setScale(0.7);
     startMenu = CCMenu::create(background , newGame , options, score , NULL);
     startMenu->ignoreAnchorPointForPosition(false);
-    newGame->setPosition(ccp(winSize.width*0.2 , winSize.height*0.375));
-    options->setPosition(ccp(winSize.width*0.5 , winSize.height*0.375));
-    score->setPosition(ccp(winSize.width*0.8 , winSize.height*0.375));
+    newGame->setPosition(ccp(winSize.width*0.5 , winSize.height*0.45));
+    options->setPosition(ccp(winSize.width*0.5 , winSize.height*0.3));
+    score->setPosition(ccp(winSize.width*0.5 , winSize.height*0.15));
 #endif
 
     addChild(startMenu);
@@ -570,9 +582,9 @@ void StartMenuScene::initOptionsMenu(){
     left->setDisabledColor(ccBLACK);
     checkboxLeft = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxLeft->setTag(LEFT);
-    checkboxLeft->setScale(0.25);
-    left->setPosition(ccp(winSize.width * 0.4, winSize.height*0.76));
-    checkboxLeft->setPosition(ccp(winSize.width*0.8, winSize.height*0.76));
+    checkboxLeft->setScale(0.22);
+    left->setPosition(ccp(winSize.width * 0.4, winSize.height*0.78));
+    checkboxLeft->setPosition(ccp(winSize.width*0.8, winSize.height*0.78));
     left->setEnabled(false);
 
     //row 3
@@ -582,9 +594,9 @@ void StartMenuScene::initOptionsMenu(){
     right->setDisabledColor(ccMAGENTA);
     checkboxRight = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxRight->setTag(RIGHT);
-    checkboxRight->setScale(0.25);
-    right->setPosition(ccp(winSize.width * 0.4, winSize.height*0.67));
-    checkboxRight->setPosition(ccp(winSize.width*0.8, winSize.height*0.67));
+    checkboxRight->setScale(0.22);
+    right->setPosition(ccp(winSize.width * 0.4, winSize.height*0.7));
+    checkboxRight->setPosition(ccp(winSize.width*0.8, winSize.height*0.7));
     right->setEnabled(false);
 
     //row 4
@@ -594,9 +606,9 @@ void StartMenuScene::initOptionsMenu(){
     leftUp->setDisabledColor(ccORANGE);
     checkboxSideLeftUp = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSideLeftUp->setTag(SIDE_LEFT_UP);
-    checkboxSideLeftUp->setScale(0.25);
-    leftUp->setPosition(ccp(winSize.width * 0.4, winSize.height*0.58));
-    checkboxSideLeftUp->setPosition(ccp(winSize.width*0.8, winSize.height*0.58));
+    checkboxSideLeftUp->setScale(0.22);
+    leftUp->setPosition(ccp(winSize.width * 0.4, winSize.height*0.62));
+    checkboxSideLeftUp->setPosition(ccp(winSize.width*0.8, winSize.height*0.62));
     leftUp->setEnabled(false);
 
     CCMenuItemLabel * leftDown = CCMenuItemLabel::create(
@@ -605,16 +617,16 @@ void StartMenuScene::initOptionsMenu(){
     leftDown->setDisabledColor(ccYELLOW);
     checkboxSideLeftDown = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSideLeftDown->setTag(SIDE_LEFT_DOWN);
-    checkboxSideLeftDown->setScale(0.25);
-    leftDown->setPosition(ccp(winSize.width * 0.4, winSize.height*0.49));
-    checkboxSideLeftDown->setPosition(ccp(winSize.width*0.8, winSize.height*0.49));
+    checkboxSideLeftDown->setScale(0.22);
+    leftDown->setPosition(ccp(winSize.width * 0.4, winSize.height*0.54));
+    checkboxSideLeftDown->setPosition(ccp(winSize.width*0.8, winSize.height*0.54));
     leftDown->setEnabled(false);
 
     //row 5
     CCMenuItemLabel * sound = CCMenuItemLabel::create(
     		CCLabelTTF::create("SOUND", FONT , 64));
     sound->setDisabledColor(ccBLUE);
-    sound->setPosition(ccp(winSize.width/2, winSize.height*0.37));
+    sound->setPosition(ccp(winSize.width/2, winSize.height*0.42));
     sound->setEnabled(false);
 
     //row 6
@@ -624,9 +636,9 @@ void StartMenuScene::initOptionsMenu(){
     mute->setDisabledColor(ccRED);
     checkboxMute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxMute->setTag(MUTE);
-    mute->setPosition(ccp(winSize.width * 0.4, winSize.height*0.28));
-    checkboxMute->setPosition(winSize.width*0.8, winSize.height*0.28);
-    checkboxMute->setScale(0.25);
+    mute->setPosition(ccp(winSize.width * 0.4, winSize.height*0.32));
+    checkboxMute->setPosition(winSize.width*0.8, winSize.height*0.32);
+    checkboxMute->setScale(0.22);
     mute->setEnabled(false);
 
     //row 7
@@ -636,15 +648,15 @@ void StartMenuScene::initOptionsMenu(){
     unMute->setDisabledColor(ccBLACK);
     checkboxUnmute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxUnmute->setTag(UNMUTE);
-    unMute->setPosition(ccp(winSize.width * 0.4, winSize.height*0.19));
-    checkboxUnmute->setPosition(winSize.width*0.8, winSize.height*0.19);
-    checkboxUnmute->setScale(0.25);
+    unMute->setPosition(ccp(winSize.width * 0.4, winSize.height*0.24));
+    checkboxUnmute->setPosition(winSize.width*0.8, winSize.height*0.24);
+    checkboxUnmute->setScale(0.22);
     unMute->setEnabled(false);
 
     //row 8
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.45);
-    OK->setPosition(ccp(winSize.width/2, winSize.height*0.1));
+    OK->setScale(0.6);
+    OK->setPosition(ccp(winSize.width/2, winSize.height*0.12));
 
     optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight ,
     		leftUp , checkboxSideLeftUp , leftDown , checkboxSideLeftDown ,

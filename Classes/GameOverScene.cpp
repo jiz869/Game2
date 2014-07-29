@@ -87,13 +87,13 @@ void GameOverScene::initMainMenu(){
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png" , "return_selected.png" ,
             this , menu_selector(GameOverScene::returnHandler));
-    OK->setPosition(ccp(winSize.width * 0.375 , winSize.height*0.2));
-    OK->setScale(0.45);
+    OK->setPosition(ccp(winSize.width * 0.35 , winSize.height*0.2));
+    OK->setScale(0.6);
 
     CCMenuItemImage * upload = CCMenuItemImage::create("upload_score_normal.png" , "upload_score_selected.png" ,
             this , menu_selector(GameOverScene::uploadHandler));
-    upload->setPosition(ccp(winSize.width * 0.675 , winSize.height*0.2));
-    upload->setScale(0.45);
+    upload->setPosition(ccp(winSize.width * 0.7 , winSize.height*0.2));
+    upload->setScale(0.6);
 
     mainMenu = CCMenu::create(nameField , topScoreLabel , lastScoreLabel , OK , upload , NULL);
     mainMenu->ignoreAnchorPointForPosition(false);

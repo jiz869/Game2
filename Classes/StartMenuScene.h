@@ -114,6 +114,7 @@ private:
     void savePWD();
 
     bool checkName(const char * name);
+    bool checkPWD(const char * password);
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */
