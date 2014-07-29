@@ -43,9 +43,24 @@ static AppDelegate s_sharedApplication;
     viewController.view = __glView;
 
     // Set RootViewController to window
+    
     _bannerViewController = [[BannerViewController alloc] initWithContentViewController:viewController];
     [window setRootViewController:_bannerViewController];
     bannerViewController = _bannerViewController;
+    
+    
+    // Set RootViewController to window
+    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
+    {
+        // warning: addSubView doesn't work on iOS6
+        [window addSubview: _bannerViewController.view];
+    }
+    else
+    {
+        // use this method on ios6
+        [window setRootViewController:_bannerViewController];
+    }
+
     
     [window makeKeyAndVisible];
     
