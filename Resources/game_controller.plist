@@ -1865,6 +1865,9 @@
 			<string>2.5</string>
 			<key>image_name</key>
 			<string>stop0.png</string>
+			<key>description</key>
+			<string>STOP: This is a stop sign
+			You know how it works :)</string>			
 		</dict>
 		<key>haste</key>
 		<dict>
@@ -1876,6 +1879,8 @@
 			<string>haste0.png</string>
 			<key>speed_increase</key>
 			<string>1.5</string>
+			<key>description</key>
+			<string>Not being used</string>
 		</dict>
 		<key>strong</key>
 		<dict>
@@ -1885,6 +1890,9 @@
 			<string>2.5</string>
 			<key>image_name</key>
 			<string>strong0.png</string>
+			<key>description</key>
+			<string>SUPERMAN: You are not afraid of any car, 
+			just GO</string>
 		</dict>
 		<key>life</key>
 		<dict>
@@ -1896,6 +1904,9 @@
 			<string>life0.png</string>
 			<key>time_increase</key>
 			<string>5</string>
+			<key>description</key>
+			<string>LIFE: You get one-time 5 
+			seconds bonus</string>
 		</dict>
 		<key>time</key>
 		<dict>
@@ -1905,6 +1916,9 @@
 			<string>6</string>
 			<key>image_name</key>
 			<string>time0.png</string>
+			<key>description</key>
+			<string>TIME STOP: Time doesn't count 
+			down when you wear it</string>
 		</dict>
 		<key>skull</key>
 		<dict>
@@ -1914,6 +1928,9 @@
 			<string>3.5</string>
 			<key>image_name</key>
 			<string>skull0.png</string>
+			<key>description</key>
+			<string>BOMB: The most dangerous car 
+			will be blown out from each lane</string>
 		</dict>
 		<key>score</key>
 		<dict>
@@ -1927,6 +1944,9 @@
 			<string>1</string>
 			<key>score_increase</key>
 			<string>4</string>
+			<key>description</key>
+			<string>SCORE: You will get 4 points for every 
+			second when you wear it</string>
 		</dict>
 		<key>police</key>
 		<dict>
@@ -1934,6 +1954,9 @@
 			<string>2</string>
 			<key>image_name</key>
 			<string>jail.png</string>
+			<key>description</key>
+			<string>JAIL: You will be frozen 
+			for 2 seconds</string>
 		</dict>
 		<key>slow</key>
 		<dict>
@@ -1945,6 +1968,9 @@
 			<string>0.06</string>
 			<key>down_acc_delta</key>
 			<string>0.02</string>
+			<key>description</key>
+			<string>SLOW: You will be slowed 
+			down for 4 seconds</string>
 		</dict>
 		<key>curse</key>
 		<dict>
@@ -1954,6 +1980,9 @@
 			<string>curse0.png</string>
 			<key>time_decrease</key>
 			<string>2</string>
+			<key>description</key>
+			<string>CURSE: You can not have 
+			any goot items except BLESS</string>
 		</dict>
 		<key>bomb</key>
 		<dict>
@@ -1963,6 +1992,10 @@
 			<string>bomb0.png</string>
 			<key>deadline</key>
 			<string>5.5</string>
+			<key>description</key>
+			<string>TIME BOMB: time bomb that will be 
+			disarmed after you cross street 
+			successfully before 5.5 seconds timeout</string>
 		</dict>
 		<key>bless</key>
 		<dict>
@@ -1978,6 +2011,10 @@
 			<string>2</string>
 			<key>score_increase</key>
 			<string>6</string>
+			<key>description</key>
+			<string>BLESS: bad item doesn't affect you when you wear it.
+			Plus, you get time and score increase and 
+			have 90% chance to get an extra goot item</string>
 		</dict>
 		<key>allBad</key>
 		<dict>
@@ -1991,6 +2028,11 @@
 			<string>16</string>
 			<key>percent</key>
 			<string>0.5</string>
+			<key>description</key>
+			<string>WORSE: For the next 20 seconds
+			every car will carry bad items Plus, 
+			every bad item will last 50% longer 
+			when you wear it</string>
 		</dict>
 	</dict>
 </dict>

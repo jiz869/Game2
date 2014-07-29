@@ -64,7 +64,7 @@ bool GameOverScene::init(){
 void GameOverScene::initMainMenu(){
     CCString * info;
 
-    CCMenuItemLabel * nameField = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 80));
+    CCMenuItemLabel * nameField = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 88));
     nameField->setString(userData->userName.c_str());
     nameField->setDisabledColor( ccRED );
     nameField->setPosition(ccp(winSize.width * 0.5 , winSize.height*0.8));

@@ -51,6 +51,7 @@ public:
     void loginHandler(CCObject * sender);
     void RegisterHandler(CCObject * sender);
     void uploadHandler(CCObject * sender);
+    void legendsHandler(CCObject * sender);
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
     virtual bool hasPayed();
@@ -74,18 +75,22 @@ private:
     CCMenu * startMenu;
     CCMenu * optionsMenu;
     CCLayer * userMenu;
+    CCLayer * legendsMenu;
 #ifdef LISTVIEW_LEADERBOARD
     CCLayer * scoreMenu;
     CCTableView * scoreTable;
+    CCTableView * legendsTable;
 #else
     CCMenu * scoreMenu;
 #endif
+
     CCSize winSize;
     void initMainMenu();
     void initOptionsMenu();
     void initScoreMenu();
     void initInfoMenu();
     void initUserMenu();
+    void initLegendsMenu();
     CCMenuItemImage * checkboxLeft;
     CCMenuItemImage * checkboxRight;
     CCMenuItemImage * checkboxSideLeftUp;
@@ -115,6 +120,10 @@ private:
 
     bool checkName(const char * name);
     bool checkPWD(const char * password);
+    vector<CCLayer *> menus;
+    void showMenu(CCLayer * menu);
+    CCTableViewCell * cellForScore(CCTableViewCell * cell , int idx);
+    CCTableViewCell * cellForLegends(CCTableViewCell * cell , int index);
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

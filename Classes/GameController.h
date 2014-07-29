@@ -147,6 +147,7 @@ typedef struct{
     SpectialFunc end;
     SpectialHitByCarFunc hitByCar;
     CCAnimation * animation;
+    string description;
 }SpecialData;
 
 typedef struct{
@@ -186,6 +187,7 @@ typedef struct{
 #define MAX_RANKS (10)
 #endif
 #define RANK_PERPAGE (8)
+#define LEGENDS_PERPAGE (5)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #define FONT "CroissantD"

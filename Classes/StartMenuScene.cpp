@@ -23,6 +23,8 @@ typedef enum{
     NAME_LABEL = 0,
     GEM_LABEL,
     SCORE_LABEL,
+    LEGEND_LABEL,
+    LEGEND_DESCRIPTION_LABEL,
 }SCORE_MENU_TAG;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
@@ -119,6 +121,8 @@ bool StartMenuScene::init(){
     background->setAnchorPoint(ccp(0,0));
     addChild(background);
 
+    menus.reserve(10);
+
     initMainMenu();
 
     initOptionsMenu();
@@ -128,6 +132,8 @@ bool StartMenuScene::init(){
     initInfoMenu();
 
     initUserMenu();
+
+    initLegendsMenu();
 
     AnimationData * animationData = GameController::getGameController()->getAnimationData();
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
@@ -146,6 +152,34 @@ bool StartMenuScene::init(){
     return true;
 }
 
+void StartMenuScene::initLegendsMenu(){
+    legendsMenu = CCLayer::create();
+    legendsMenu->ignoreAnchorPointForPosition(false);
+    legendsMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    addChild(legendsMenu);
+    menus.push_back(legendsMenu);
+
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
+            this , menu_selector(StartMenuScene::okHandler));
+    OK->setScale(0.6);
+    OK->setPosition(ccp(winSize.width * 0.5, winSize.height*(1.0/(LEGENDS_PERPAGE + 1))));
+
+    CCMenu * okMenu = CCMenu::create(OK , NULL);
+    okMenu->setPosition(ccp(0, 0));
+    okMenu->setAnchorPoint(ccp(0,0));
+    okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1)*2));
+    okMenu->ignoreAnchorPointForPosition(false);
+    legendsMenu->addChild(okMenu);
+
+    legendsTable = CCTableView::create(this ,
+            CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1)*(LEGENDS_PERPAGE-2)));
+    legendsTable->setDirection(kCCScrollViewDirectionVertical);
+    legendsTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) * 2));
+    legendsTable->setVerticalFillOrder(kCCTableViewFillTopDown);
+    legendsMenu->addChild(legendsTable);
+    legendsTable->reloadData();
+}
+
 void StartMenuScene::initInfoMenu(){
 	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ));
     infoLabel->setDisabledColor( ccRED );
@@ -160,6 +194,7 @@ void StartMenuScene::initInfoMenu(){
 	infoMenu->ignoreAnchorPointForPosition(false);
 	infoMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     addChild(infoMenu);
+    menus.push_back(infoMenu);
 }
 
 void StartMenuScene::keyBackClicked(){
@@ -173,6 +208,7 @@ void StartMenuScene::initScoreMenu(){
 	scoreMenu->ignoreAnchorPointForPosition(false);
 	scoreMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
 	addChild(scoreMenu);
+	menus.push_back(scoreMenu);
 
 	rankLabel = CCLabelTTF::create("0", FONT, 72 );
 	rankLabel->setColor( ccRED );
@@ -264,7 +300,9 @@ void StartMenuScene::initUserMenu(){
 	userMenu = CCLayer::create();
 	userMenu->ignoreAnchorPointForPosition(false);
 	userMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+	menus.push_back(userMenu);
 	addChild(userMenu);
+
 	setTouchEnabled(true);
 
     CCLabelTTF * yourNameLabel = CCLabelTTF::create("0", FONT, 50);
@@ -393,8 +431,7 @@ void StartMenuScene::userHandler(CCObject * sender){
     SET_BANNDER_HIDDEN(true);
     nameField->runAction(CCBlink::create(2, 6));
     pwdField->runAction(CCBlink::create(2, 6));
-    userMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
-    scoreMenu->setPosition(ccp(winSize.width/2, winSize.height * 1.5));
+    showMenu(userMenu);
 }
 
 void StartMenuScene::tableCellTouched(CCTableView* table, CCTableViewCell* cell){
@@ -402,55 +439,59 @@ void StartMenuScene::tableCellTouched(CCTableView* table, CCTableViewCell* cell)
 }
 
 CCTableViewCell * StartMenuScene::tableCellAtIndex(CCTableView *table, unsigned int idx){
-	ScoreRank * rank = &GameController::getGameController()->ranks[idx];
-
     CCTableViewCell * cell = table->dequeueCell();
 
-    if(!cell){
-    	cell = new CCTableViewCell();
-    	cell->autorelease();
+    if(table == scoreTable) return cellForScore(cell, idx);
+    if(table == legendsTable) return cellForLegends(cell, idx);
+}
 
-    	CCLabelTTF * name = CCLabelTTF::create("0", FONT, 64 ,
-    			CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
-    	name->setColor( labelColors[idx%RANK_PERPAGE] );
-    	CCString * body = CCString::createWithFormat("%d  %s", idx+1 , rank->userName.c_str());
+CCTableViewCell * StartMenuScene::cellForScore(CCTableViewCell * cell, int idx){
+    ScoreRank * rank = &GameController::getGameController()->ranks[idx];
+    if(!cell){
+        cell = new CCTableViewCell();
+        cell->autorelease();
+
+        CCLabelTTF * name = CCLabelTTF::create("0", FONT, 64 ,
+                CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
+        name->setColor( labelColors[idx%RANK_PERPAGE] );
+        CCString * body = CCString::createWithFormat("%d  %s", idx+1 , rank->userName.c_str());
         name->setString(body->getCString());
         name->setPosition(ccp(winSize.width*0.35 , winSize.height/(RANK_PERPAGE + 1)/2));
         name->setTag(NAME_LABEL);
         cell->addChild(name);
 
-    	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
-    	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
-    	gem->setPosition(ccp(winSize.width*0.65, winSize.height/(RANK_PERPAGE + 1)/2));
-    	gem->setScale(0.7);
-    	gem->setTag(GEM_LABEL);
-    	cell->addChild(gem);
+        CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
+        CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
+        gem->setPosition(ccp(winSize.width*0.65, winSize.height/(RANK_PERPAGE + 1)/2));
+        gem->setScale(0.7);
+        gem->setTag(GEM_LABEL);
+        cell->addChild(gem);
 
-    	CCLabelTTF * scoreLabel = CCLabelTTF::create("0", FONT, 64 ,
-    			CCSizeMake(winSize.width*0.25 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
-    	scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
+        CCLabelTTF * scoreLabel = CCLabelTTF::create("0", FONT, 64 ,
+                CCSizeMake(winSize.width*0.25 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
+        scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
         CCString * score = CCString::createWithFormat("%d", rank->score);
         scoreLabel->setString(score->getCString());
         scoreLabel->setPosition(ccp(winSize.width*0.85, winSize.height/(RANK_PERPAGE + 1)/2));
         scoreLabel->setTag(SCORE_LABEL);
         cell->addChild(scoreLabel);
     }else{
-    	CCLabelTTF * name = (CCLabelTTF *)cell->getChildByTag(NAME_LABEL);
-    	name->setColor( labelColors[idx%RANK_PERPAGE] );
-    	CCString * body = CCString::createWithFormat("%d  %s", idx+1 , rank->userName.c_str());
+        CCLabelTTF * name = (CCLabelTTF *)cell->getChildByTag(NAME_LABEL);
+        name->setColor( labelColors[idx%RANK_PERPAGE] );
+        CCString * body = CCString::createWithFormat("%d  %s", idx+1 , rank->userName.c_str());
         name->setString(body->getCString());
 
-    	cell->removeChildByTag(GEM_LABEL);
-    	CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
-    	CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
-    	gem->setPosition(ccp(winSize.width*0.65, winSize.height/(RANK_PERPAGE + 1)/2));
-    	gem->setScale(0.7);
-    	gem->setTag(GEM_LABEL);
-    	cell->addChild(gem);
+        cell->removeChildByTag(GEM_LABEL);
+        CCString * gemName = CCString::createWithFormat("gem%d.png", rank->level);
+        CCSprite * gem = CCSprite::createWithSpriteFrameName(gemName->getCString());
+        gem->setPosition(ccp(winSize.width*0.65, winSize.height/(RANK_PERPAGE + 1)/2));
+        gem->setScale(0.7);
+        gem->setTag(GEM_LABEL);
+        cell->addChild(gem);
 
 
-    	CCLabelTTF * scoreLabel = (CCLabelTTF *)cell->getChildByTag(SCORE_LABEL);
-    	CCString * score = CCString::createWithFormat("%d", rank->score);
+        CCLabelTTF * scoreLabel = (CCLabelTTF *)cell->getChildByTag(SCORE_LABEL);
+        CCString * score = CCString::createWithFormat("%d", rank->score);
         scoreLabel->setColor( labelColors[idx%RANK_PERPAGE] );
         scoreLabel->setString(score->getCString());
     }
@@ -458,12 +499,52 @@ CCTableViewCell * StartMenuScene::tableCellAtIndex(CCTableView *table, unsigned 
     return cell;
 }
 
+CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int index){
+
+    if (index > BAD_SPECIAL_NUM - 1) return NULL;
+
+    if(index > SPECIAL_NUM - 1) index+=1;
+
+    SpecialData * data = GameController::getGameController()->getSpecialData(index);
+
+    if(!cell){
+        cell = new CCTableViewCell();
+        cell->autorelease();
+
+        CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
+        legend->setPosition(ccp(winSize.width*0.1, winSize.height/(LEGENDS_PERPAGE + 1)/2));
+        legend->setTag(LEGEND_LABEL);
+        cell->addChild(legend);
+
+        CCLabelTTF * description = CCLabelTTF::create("0", INFO_FONT, 36 ,
+                CCSizeMake(winSize.width*0.8 , winSize.height/(LEGENDS_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
+        description->setColor( ccRED );
+        description->setString(data->description.c_str());
+        description->setPosition(ccp(winSize.width*0.6, winSize.height/(RANK_PERPAGE + 1)/2));
+        description->setTag(LEGEND_DESCRIPTION_LABEL);
+        cell->addChild(description);
+    }else{
+        CCLabelTTF * description = (CCLabelTTF *)cell->getChildByTag(LEGEND_DESCRIPTION_LABEL);
+        description->setString(data->description.c_str());
+
+        cell->removeChildByTag(LEGEND_LABEL);
+        CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
+        legend->setPosition(ccp(winSize.width*0.1, winSize.height/(LEGENDS_PERPAGE + 1)/2));
+        legend->setTag(LEGEND_LABEL);
+        cell->addChild(legend);
+    }
+
+    return cell;
+}
+
 unsigned int StartMenuScene::numberOfCellsInTableView(CCTableView *table){
-	return MAX_RANKS;
+    if(table == scoreTable) return MAX_RANKS;
+    if(table == legendsTable) return BAD_SPECIAL_NUM - 2;
 }
 
 CCSize StartMenuScene::cellSizeForTable(CCTableView *table){
-	return CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1));
+    if(table == scoreTable) return CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1));
+    if(table == legendsTable) return CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1));
 }
 
 void StartMenuScene::scrollViewDidScroll(CCScrollView* view){
@@ -519,6 +600,7 @@ void StartMenuScene::initMainMenu(){
 #endif
 
     addChild(startMenu);
+    menus.push_back(startMenu);
 }
 
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
@@ -562,8 +644,7 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 #endif
 
     SET_BANNDER_HIDDEN(true);
-    startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    scoreMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
+    showMenu(scoreMenu);
 }
 
 void StartMenuScene::initOptionsMenu(){
@@ -654,17 +735,29 @@ void StartMenuScene::initOptionsMenu(){
     unMute->setEnabled(false);
 
     //row 8
-    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
+            this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.6);
-    OK->setPosition(ccp(winSize.width/2, winSize.height*0.12));
+    OK->setPosition(ccp(winSize.width*0.2, winSize.height*0.12));
+
+    CCMenuItemImage * legends = CCMenuItemImage::create("legends_normal.png", "legends_selected.png" ,
+            this , menu_selector(StartMenuScene::legendsHandler));
+    legends->setScale(0.6);
+    legends->setPosition(ccp(winSize.width*0.5, winSize.height*0.12));
+
+    CCMenuItemImage * credits = CCMenuItemImage::create("credits_normal.png", "credits_selected.png" ,
+            this , menu_selector(StartMenuScene::okHandler));
+    credits->setScale(0.6);
+    credits->setPosition(ccp(winSize.width*0.8, winSize.height*0.12));
 
     optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight ,
     		leftUp , checkboxSideLeftUp , leftDown , checkboxSideLeftDown ,
-    		sound , mute , checkboxMute , unMute, checkboxUnmute, OK , NULL);
+    		sound , mute , checkboxMute , unMute, checkboxUnmute, OK , legends , credits , NULL);
 
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->ignoreAnchorPointForPosition(false);
     addChild(optionsMenu);
+    menus.push_back(optionsMenu);
 
     checkboxChooser(userData->sound);
     checkboxChooser(userData->controllerPosition);
@@ -686,27 +779,18 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
 
 void StartMenuScene::setInfoLabel(const char *info , float delay){
     if(infoLabel == NULL) return;
-    startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    userMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     infoLabel->setString(info);
-    infoMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
+    showMenu(infoMenu);
 }
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){
     SET_BANNDER_HIDDEN(true);
-    startMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    optionsMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
+    showMenu(optionsMenu);
 }
 
 void StartMenuScene::okHandler(cocos2d::CCObject *sender){
     SET_BANNDER_HIDDEN(false);
-    optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    scoreMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    infoMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    userMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
-    startMenu->setPosition(ccp(winSize.width/2, winSize.height/2));
+    showMenu(startMenu);
 }
 
 void StartMenuScene::checkboxHandler(cocos2d::CCObject *sender){
@@ -848,3 +932,17 @@ bool StartMenuScene::onTextFieldAttachWithIME(cocos2d::CCTextFieldTTF *sender){
 //    }
 //    return false;
 //}
+
+void StartMenuScene::showMenu(CCLayer * menu){
+    for(int i = 0 ; i < menus.size() ; i++){
+        if(menu == menus[i]){
+            menus[i]->setPosition(ccp(winSize.width/2, winSize.height/2));
+        }else{
+            menus[i]->setPosition(ccp(winSize.width/2, winSize.height*1.5));
+        }
+    }
+}
+
+void StartMenuScene::legendsHandler(CCObject * sender){
+    showMenu(legendsMenu);
+}
