@@ -174,7 +174,7 @@ void StartMenuScene::initLegendsMenu(){
     legendsTable = CCTableView::create(this ,
             CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1)*(LEGENDS_PERPAGE-2)));
     legendsTable->setDirection(kCCScrollViewDirectionVertical);
-    legendsTable->setPosition(ccp(0, winSize.height/(RANK_PERPAGE + 1) * 2));
+    legendsTable->setPosition(ccp(0, winSize.height/(LEGENDS_PERPAGE + 1) * 2));
     legendsTable->setVerticalFillOrder(kCCTableViewFillTopDown);
     legendsMenu->addChild(legendsTable);
     legendsTable->reloadData();
@@ -520,7 +520,7 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
                 CCSizeMake(winSize.width*0.8 , winSize.height/(LEGENDS_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
         description->setColor( ccRED );
         description->setString(data->description.c_str());
-        description->setPosition(ccp(winSize.width*0.6, winSize.height/(RANK_PERPAGE + 1)/2));
+        description->setPosition(ccp(winSize.width*0.6, winSize.height/(LEGENDS_PERPAGE + 1)/2));
         description->setTag(LEGEND_DESCRIPTION_LABEL);
         cell->addChild(description);
     }else{
@@ -544,7 +544,7 @@ unsigned int StartMenuScene::numberOfCellsInTableView(CCTableView *table){
 
 CCSize StartMenuScene::cellSizeForTable(CCTableView *table){
     if(table == scoreTable) return CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1));
-    if(table == legendsTable) return CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1));
+    if(table == legendsTable) return CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1)*2);
 }
 
 void StartMenuScene::scrollViewDidScroll(CCScrollView* view){
