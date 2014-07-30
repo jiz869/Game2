@@ -1450,7 +1450,7 @@
             <key>road2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{420,2},{1300,40}}</string>
+                <string>{{462,2},{1300,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1463,7 +1463,7 @@
             <key>road3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{420,2},{1300,40}}</string>
+                <string>{{462,2},{1300,40}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1951,7 +1951,7 @@
             <key>size</key>
             <string>{512,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c286cd8518f4562e1399e3b98fea6b57:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:955aaf1c758b640dd69c63e3dfe695de$</string>
             <key>textureFileName</key>
             <string>sprites.png</string>
         </dict>

@@ -24,6 +24,7 @@ typedef enum{
     GEM_LABEL,
     SCORE_LABEL,
     LEGEND_LABEL,
+    LEGEND_NAME_LABEL,
     LEGEND_DESCRIPTION_LABEL,
 }SCORE_MENU_TAG;
 
@@ -512,24 +513,37 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
         cell->autorelease();
 
         CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
-        legend->setPosition(ccp(winSize.width*0.1, winSize.height/(LEGENDS_PERPAGE + 1)));
+        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*1.7));
         legend->setTag(LEGEND_LABEL);
         cell->addChild(legend);
 
+        CCLabelTTF * name = CCLabelTTF::create("0", INFO_FONT, 36 ,
+                CCSizeMake(winSize.width*0.2 , winSize.height/(LEGENDS_PERPAGE + 1)*2) ,
+                kCCTextAlignmentCenter);
+        name->setColor( ccRED );
+        name->setString(data->name->getCString());
+        name->setPosition(ccp(winSize.width*0.2, winSize.height/(LEGENDS_PERPAGE + 1)));
+        name->setTag(LEGEND_NAME_LABEL);
+        cell->addChild(name);
+
         CCLabelTTF * description = CCLabelTTF::create("0", INFO_FONT, 36 ,
-                CCSizeMake(winSize.width*0.8 , winSize.height/(LEGENDS_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
+                CCSizeMake(winSize.width*0.7 , winSize.height/(LEGENDS_PERPAGE + 1)*2.0) ,
+                kCCTextAlignmentLeft);
         description->setColor( ccRED );
-        description->setString(data->description.c_str());
-        description->setPosition(ccp(winSize.width*0.6, winSize.height/(LEGENDS_PERPAGE + 1)));
+        description->setString(data->description->getCString());
+        description->setPosition(ccp(winSize.width*0.675, winSize.height/(LEGENDS_PERPAGE + 1)));
         description->setTag(LEGEND_DESCRIPTION_LABEL);
         cell->addChild(description);
     }else{
         CCLabelTTF * description = (CCLabelTTF *)cell->getChildByTag(LEGEND_DESCRIPTION_LABEL);
-        description->setString(data->description.c_str());
+        description->setString(data->description->getCString());
+
+        CCLabelTTF * name = (CCLabelTTF *)cell->getChildByTag(LEGEND_NAME_LABEL);
+        name->setString(data->name->getCString());
 
         cell->removeChildByTag(LEGEND_LABEL);
         CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
-        legend->setPosition(ccp(winSize.width*0.1, winSize.height/(LEGENDS_PERPAGE + 1)));
+        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*1.7));
         legend->setTag(LEGEND_LABEL);
         cell->addChild(legend);
     }

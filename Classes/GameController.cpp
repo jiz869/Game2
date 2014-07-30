@@ -141,11 +141,11 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     }
 
     userData.topScore = CCSTRING_FOR_KEY(dataDict , "top_score")->intValue();
-    userData.topLevel = CCSTRING_FOR_KEY(dataDict , "top_level")->intValue();
+    userData.lastLevel = CCSTRING_FOR_KEY(dataDict , "last_level")->intValue();
     userData.pvpInitDuration = CCSTRING_FOR_KEY(dataDict , "pvp_init_duration")->intValue();
     userData.pvpMaxDuration = CCSTRING_FOR_KEY(dataDict , "pvp_max_duration")->intValue();
     userData.lastScore = 0;
-    userData.currentLevel = 0;
+    userData.currentLevel = userData.lastLevel;
 
     CCArray * levels = (CCArray *)dataDict->objectForKey("levels");
 
@@ -186,7 +186,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.order = -1;
     userData.pvpMode = NONE;
     userData.justWon = false;
-    userData.currentLevel = 8;
+    //userData.currentLevel = 8;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -385,7 +385,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[STOP]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[STOP]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
     specialDatas[STOP]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
-    specialDatas[STOP]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[STOP]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[STOP]->name = CCSTRING_FOR_KEY(dict, "name");
     specialDatas[STOP]->begin = &stopBegin;
     specialDatas[STOP]->step = NULL;
     specialDatas[STOP]->end = &stopEnd;
@@ -403,7 +404,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[HASTE]->end = &hasteEnd;
     specialDatas[HASTE]->hitByCar = NULL;
     specialDatas[HASTE]->animation = animationData.specialHasteAnim;
-    specialDatas[HASTE]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[HASTE]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[HASTE]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("strong");
     specialDatas[STRONG] = new SpecialData;
@@ -415,7 +417,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[STRONG]->end = NULL;
     specialDatas[STRONG]->hitByCar = &strongHitByCar;
     specialDatas[STRONG]->animation = animationData.specialStrongAnim;
-    specialDatas[STRONG]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[STRONG]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[STRONG]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("life");
     specialDatas[LIFE] = new SpecialData;
@@ -428,7 +431,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[LIFE]->end = NULL;
     specialDatas[LIFE]->hitByCar = NULL;
     specialDatas[LIFE]->animation = animationData.specialLifeAnim;
-    specialDatas[LIFE]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[LIFE]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[LIFE]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("time");
     specialDatas[TIME] = new SpecialData;
@@ -440,7 +444,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[TIME]->end = &timeEnd;
     specialDatas[TIME]->hitByCar = NULL;
     specialDatas[TIME]->animation = animationData.specialTimeAnim;
-    specialDatas[TIME]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[TIME]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[TIME]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("skull");
     specialDatas[SKULL] = new SpecialData;
@@ -452,7 +457,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SKULL]->end = NULL;
     specialDatas[SKULL]->hitByCar = NULL;
     specialDatas[SKULL]->animation = animationData.specialSkullAnim;
-    specialDatas[SKULL]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[SKULL]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[SKULL]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("score");
     specialDatas[SCORE] = new SpecialData;
@@ -466,7 +472,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SCORE]->end = NULL;
     specialDatas[SCORE]->hitByCar = NULL;
     specialDatas[SCORE]->animation = animationData.specialScoreAnim;
-    specialDatas[SCORE]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[SCORE]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[SCORE]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("police");
     specialDatas[POLICE] = new SpecialData;
@@ -477,7 +484,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[POLICE]->end = &policeEnd;
     specialDatas[POLICE]->hitByCar = NULL;
     specialDatas[POLICE]->animation = animationData.specialPoliceAnim;
-    specialDatas[POLICE]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[POLICE]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[POLICE]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("slow");
     specialDatas[SLOW] = new SpecialData;
@@ -489,7 +497,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SLOW]->step = NULL;
     specialDatas[SLOW]->end = &slowEnd;
     specialDatas[SLOW]->hitByCar = NULL;
-    specialDatas[SLOW]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[SLOW]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[SLOW]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("curse");
     specialDatas[CURSE] = new SpecialData;
@@ -500,7 +509,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[CURSE]->step = NULL;
     specialDatas[CURSE]->end = &curseEnd;
     specialDatas[CURSE]->hitByCar = NULL;
-    specialDatas[CURSE]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[CURSE]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[CURSE]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("bomb");
     specialDatas[BOMB] = new SpecialData;
@@ -511,7 +521,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[BOMB]->step = &bombStep;
     specialDatas[BOMB]->end = &bombEnd;
     specialDatas[BOMB]->hitByCar = NULL;
-    specialDatas[BOMB]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[BOMB]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[BOMB]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("bless");
     specialDatas[BLESS] = new SpecialData;
@@ -525,7 +536,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[BLESS]->step = NULL;
     specialDatas[BLESS]->end = &blessEnd;
     specialDatas[BLESS]->hitByCar = &blessHitByCar;
-    specialDatas[BLESS]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[BLESS]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[BLESS]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("allBad");
     specialDatas[ALLBAD] = new SpecialData;
@@ -538,7 +550,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[ALLBAD]->step = NULL;
     specialDatas[ALLBAD]->end = &allBadEnd;
     specialDatas[ALLBAD]->hitByCar = NULL;
-    specialDatas[ALLBAD]->description = CCSTRING_FOR_KEY(dict, "description")->getCString();
+    specialDatas[ALLBAD]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[ALLBAD]->name = CCSTRING_FOR_KEY(dict, "name");
 
     return true;
 }
@@ -764,13 +777,11 @@ void GameController::setUserData(const char * key, CheckboxType type , int value
 
 void GameController::levelUp(){
     userData.currentLevel++;
-    if (userData.currentLevel > userData.topLevel) {
-        userData.topLevel = userData.currentLevel;
-        CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
-        userDataDict->setObject(CCString::createWithFormat("%d", userData.topLevel), "top_level");
-        dict->setObject(userDataDict, "user_data");
-        dict->writeToFile(plistWritablePath.c_str());
-    }
+    userData.lastLevel = userData.currentLevel;
+    CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
+    userDataDict->setObject(CCString::createWithFormat("%d", userData.lastLevel), "last_level");
+    dict->setObject(userDataDict, "user_data");
+    dict->writeToFile(plistWritablePath.c_str());
 }
 
 void GameController::setLastScore(int lastScore , bool justFailed){

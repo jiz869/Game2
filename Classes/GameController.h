@@ -147,14 +147,15 @@ typedef struct{
     SpectialFunc end;
     SpectialHitByCarFunc hitByCar;
     CCAnimation * animation;
-    string description;
+    CCString * description;
+    CCString * name;
 }SpecialData;
 
 typedef struct{
     CheckboxType sound;
     CheckboxType controllerPosition;
 	int topScore;
-    int topLevel;
+    int lastLevel;
 	int lastScore;
     int currentLevel;
     vector<int> levels;
