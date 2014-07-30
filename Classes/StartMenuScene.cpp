@@ -162,7 +162,7 @@ void StartMenuScene::initLegendsMenu(){
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.6);
-    OK->setPosition(ccp(winSize.width * 0.5, winSize.height*(1.0/(LEGENDS_PERPAGE + 1))));
+    OK->setPosition(ccp(winSize.width * 0.5, winSize.height*(1.0/(LEGENDS_PERPAGE + 1) + 0.02)));
 
     CCMenu * okMenu = CCMenu::create(OK , NULL);
     okMenu->setPosition(ccp(0, 0));
@@ -512,7 +512,7 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
         cell->autorelease();
 
         CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
-        legend->setPosition(ccp(winSize.width*0.1, winSize.height/(LEGENDS_PERPAGE + 1)/2));
+        legend->setPosition(ccp(winSize.width*0.1, winSize.height/(LEGENDS_PERPAGE + 1)));
         legend->setTag(LEGEND_LABEL);
         cell->addChild(legend);
 
@@ -520,7 +520,7 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
                 CCSizeMake(winSize.width*0.8 , winSize.height/(LEGENDS_PERPAGE + 1)) ,  kCCTextAlignmentLeft);
         description->setColor( ccRED );
         description->setString(data->description.c_str());
-        description->setPosition(ccp(winSize.width*0.6, winSize.height/(LEGENDS_PERPAGE + 1)/2));
+        description->setPosition(ccp(winSize.width*0.6, winSize.height/(LEGENDS_PERPAGE + 1)));
         description->setTag(LEGEND_DESCRIPTION_LABEL);
         cell->addChild(description);
     }else{
@@ -529,7 +529,7 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
 
         cell->removeChildByTag(LEGEND_LABEL);
         CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
-        legend->setPosition(ccp(winSize.width*0.1, winSize.height/(LEGENDS_PERPAGE + 1)/2));
+        legend->setPosition(ccp(winSize.width*0.1, winSize.height/(LEGENDS_PERPAGE + 1)));
         legend->setTag(LEGEND_LABEL);
         cell->addChild(legend);
     }
@@ -539,12 +539,14 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
 
 unsigned int StartMenuScene::numberOfCellsInTableView(CCTableView *table){
     if(table == scoreTable) return MAX_RANKS;
-    if(table == legendsTable) return BAD_SPECIAL_NUM - 2;
+    if(table == legendsTable) return BAD_SPECIAL_NUM - 1;
 }
 
-CCSize StartMenuScene::cellSizeForTable(CCTableView *table){
+CCSize StartMenuScene::tableCellSizeForIndex(CCTableView *table, unsigned int idx){
     if(table == scoreTable) return CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1));
-    if(table == legendsTable) return CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1)*2);
+    if(table == legendsTable){
+        return CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1)*2);
+    }
 }
 
 void StartMenuScene::scrollViewDidScroll(CCScrollView* view){

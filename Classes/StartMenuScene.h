@@ -58,7 +58,7 @@ public:
     virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell);
     virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx);
     virtual unsigned int numberOfCellsInTableView(CCTableView *table);
-    virtual CCSize cellSizeForTable(CCTableView *table);
+    virtual CCSize tableCellSizeForIndex(CCTableView *table, unsigned int idx);
     virtual void scrollViewDidScroll(CCScrollView* view);
     virtual void scrollViewDidZoom(CCScrollView* view);
     virtual void keyBackClicked();

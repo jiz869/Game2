@@ -1866,8 +1866,8 @@
 			<key>image_name</key>
 			<string>stop0.png</string>
 			<key>description</key>
-			<string>STOP: This is a stop sign
-You know how it works :)</string>
+			<string>STOP: This is a stop sign and 
+you know how it works :)</string>
 		</dict>
 		<key>haste</key>
 		<dict>
@@ -1891,7 +1891,7 @@ You know how it works :)</string>
 			<key>image_name</key>
 			<string>strong0.png</string>
 			<key>description</key>
-			<string>SUPERMAN: You are not afraid of any car
+			<string>SUPERMAN: You are not afraid of anything, 
 so just GO</string>
 		</dict>
 		<key>life</key>
@@ -1916,7 +1916,7 @@ so just GO</string>
 			<key>image_name</key>
 			<string>time0.png</string>
 			<key>description</key>
-			<string>TIME STOP: Time doesn&apos;t count
+			<string>TIME STOP: Time does not count
 down when you wear it</string>
 		</dict>
 		<key>skull</key>
@@ -1945,7 +1945,7 @@ will be blown out from each lane</string>
 			<string>4</string>
 			<key>description</key>
 			<string>SCORE: You will get 4 points for every
-second when you wear it</string>
+second when you have it</string>
 		</dict>
 		<key>police</key>
 		<dict>
@@ -1992,9 +1992,9 @@ good items except BLESS</string>
 			<key>deadline</key>
 			<string>5.5</string>
 			<key>description</key>
-			<string>TIME BOMB: time bomb that will be 
-			disarmed after you cross street 
-			successfully before 5.5 seconds timeout</string>
+			<string>TIME BOMB: A time bomb that will be 
+disarmed after you cross street successfully 
+before 5.5 seconds timeout</string>
 		</dict>
 		<key>bless</key>
 		<dict>
@@ -2011,9 +2011,9 @@ good items except BLESS</string>
 			<key>score_increase</key>
 			<string>6</string>
 			<key>description</key>
-			<string>BLESS: bad item doesn&apos;t affect you.
-you get time and score increase
-For 90% chance you get an extra good item</string>
+			<string>BLESS: Bad items do not affect you.
+Plus, you get time and score increase and
+have 90% chance to get an extra good item</string>
 		</dict>
 		<key>allBad</key>
 		<dict>
@@ -2028,10 +2028,9 @@ For 90% chance you get an extra good item</string>
 			<key>percent</key>
 			<string>0.5</string>
 			<key>description</key>
-			<string>WORSE: For the next 20 seconds
-every car will carry bad items
-every bad item will last 50% longer 
-			when you wear it</string>
+			<string>WORSE: For the next 20 seconds 
+every car will carry a bad item 
+and every bad item will last 50% longer</string>
 		</dict>
 	</dict>
 </dict>
