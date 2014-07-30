@@ -195,6 +195,9 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.userName = CCSTRING_FOR_KEY(dataDict, "user_name")->getCString();
     userData.password = CCSTRING_FOR_KEY(dataDict, "password")->getCString();
 
+    if(userData.userName.length() == 0) userData.userName = DEFAULT_NAME;
+    if(userData.password.length() == 0) userData.userName = DEFAULT_PASSWORD;
+
     userData.rank = 0;
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
@@ -1059,10 +1062,10 @@ void GameController::onAuthenticateCompleted(CCNode * node , void * response){
 
 void GameController::setInfoLabel(const char * info){
     CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
-    if(currentScene->getTag() == STARTUP_MENU_SCENE){
+    if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
         StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
         startup->setInfoLabel(info , 0);
-    }else if(currentScene->getTag() == GAME_OVER_SCENE){
+    }else if(currentScene && currentScene->getTag() == GAME_OVER_SCENE){
         GameOverScene * gameOver = (GameOverScene *)currentScene->getChildren()->objectAtIndex(0);
         gameOver->setInfoLabel(info);
     }

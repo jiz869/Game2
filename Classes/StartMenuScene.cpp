@@ -136,6 +136,8 @@ bool StartMenuScene::init(){
 
     initLegendsMenu();
 
+    initPurchaseMenu();
+
     AnimationData * animationData = GameController::getGameController()->getAnimationData();
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
 			animationData->backgroundSoundImage->getCString(), true);
@@ -182,9 +184,10 @@ void StartMenuScene::initLegendsMenu(){
 }
 
 void StartMenuScene::initInfoMenu(){
-	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ));
+	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ,
+			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
     infoLabel->setDisabledColor( ccRED );
-    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.6));
+    infoLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
     infoLabel->setEnabled(false);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" , this , menu_selector(StartMenuScene::okHandler));
@@ -196,6 +199,31 @@ void StartMenuScene::initInfoMenu(){
 	infoMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     addChild(infoMenu);
     menus.push_back(infoMenu);
+}
+
+void StartMenuScene::initPurchaseMenu(){
+	CCMenuItemLabel * benefits = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ,
+			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
+	benefits->setDisabledColor( ccRED );
+	benefits->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
+	benefits->setString(PURCHASE_BENEFIT);
+	benefits->setEnabled(false);
+
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
+    		this , menu_selector(StartMenuScene::okHandler));
+    OK->setScale(0.7);
+    OK->setPosition(ccp(winSize.width*0.3, winSize.height * 0.15));
+
+    CCMenuItemImage * purchase = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" ,
+    		this , menu_selector(StartMenuScene::purchaseHandler));
+    purchase->setScale(0.7);
+    purchase->setPosition(ccp(winSize.width*0.7, winSize.height * 0.15));
+
+	purchaseMenu = CCMenu::create(OK , purchase , benefits , NULL);
+	purchaseMenu->ignoreAnchorPointForPosition(false);
+	purchaseMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    addChild(purchaseMenu);
+    menus.push_back(purchaseMenu);
 }
 
 void StartMenuScene::keyBackClicked(){
@@ -430,6 +458,8 @@ void StartMenuScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 
 void StartMenuScene::userHandler(CCObject * sender){
     SET_BANNDER_HIDDEN(true);
+    if(userData->userName.length() == 0) nameField->setString(DEFAULT_NAME);
+    if(userData->password.length() == 0) pwdField->setString(DEFAULT_PASSWORD);
     nameField->runAction(CCBlink::create(2, 6));
     pwdField->runAction(CCBlink::create(2, 6));
     showMenu(userMenu);
@@ -589,12 +619,14 @@ void StartMenuScene::initMainMenu(){
     background->setEnabled(false);
 
 #ifdef MULTIPLAY
-    CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
+    CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" ,
+    		this , menu_selector(StartMenuScene::pvpHandler));
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     newGame->setScale(0.7);
     options->setScale(0.7);
     score->setScale(0.7);
-    CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" , this , menu_selector(StartMenuScene::pvpHandler));
+    CCMenuItemImage * pvp = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" ,
+    		this , menu_selector(StartMenuScene::pvpHandler));
     pvp->setScale(0.7);
     pvp->setTag(PVP);
 
@@ -620,6 +652,11 @@ void StartMenuScene::initMainMenu(){
 }
 
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
+	SET_BANNDER_HIDDEN(true);
+	showMenu(purchaseMenu);
+}
+
+void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
 #ifdef MULTIPLAY
     SET_BANNDER_HIDDEN(true);
     CCScene * pvpScene = MultiPlayScene::scene();

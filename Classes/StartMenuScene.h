@@ -52,6 +52,7 @@ public:
     void RegisterHandler(CCObject * sender);
     void uploadHandler(CCObject * sender);
     void legendsHandler(CCObject * sender);
+    void purchaseHandler(CCObject * sender);
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
     virtual bool hasPayed();
@@ -76,6 +77,7 @@ private:
     CCMenu * optionsMenu;
     CCLayer * userMenu;
     CCLayer * legendsMenu;
+    CCLayer * purchaseMenu;
 #ifdef LISTVIEW_LEADERBOARD
     CCLayer * scoreMenu;
     CCTableView * scoreTable;
@@ -91,6 +93,7 @@ private:
     void initInfoMenu();
     void initUserMenu();
     void initLegendsMenu();
+    void initPurchaseMenu();
     CCMenuItemImage * checkboxLeft;
     CCMenuItemImage * checkboxRight;
     CCMenuItemImage * checkboxSideLeftUp;

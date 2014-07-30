@@ -210,7 +210,15 @@ typedef struct{
 
 #define PASSWORD_RULE "Password must have:\n" \
                   "Maximum 12 characters\n" \
-                  "Minimum 4 characters\n" \
+                  "Minimum 4 characters\n"
+
+#define PURCHASE_BENEFIT "One time 99 cents purchase to:\n" \
+                  "Get rid of the ads click every 3 fails\n" \
+                  "Continue playing based on the last \n" \
+                  "finished level\n"
+
+#define DEFAULT_NAME "Penguin"
+#define DEFAULT_PASSWORD "Penguin#"
 
 class GameController : CCObject {
 
