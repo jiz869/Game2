@@ -207,10 +207,16 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
         userData.hasPayed = true;
     }
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    if(userData.hasPayed == false){
+        userData.currentLevel = 0;
+    }
+#endif
+
     userData.order = -1;
     userData.pvpMode = NONE;
     userData.justWon = false;
-    userData.currentLevel = 8;
+    userData.currentLevel = 7;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -840,6 +846,11 @@ void GameController::setJustFailed(bool justFailed , bool reset){
 			userData.justFailed++;
 			userData.justWon = false;
 			updatePlist = true;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+			if(userData.hasPayed == false){
+			    userData.currentLevel = 0;
+			}
+#endif
 		}
 		else userData.justWon = true;
 	}
