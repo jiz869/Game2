@@ -66,6 +66,30 @@ static char * specialNames[BAD_SPECIAL_NUM] = {"stop" , "strong" , "life" , "tim
                                         "bless" , "haste" , "police" , "slow" , "curse",
                                         "bomb" , "allBad"};
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+void onAdClicked(){
+    GameController::getGameController()->setJustFailed(false , true);
+}
+
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+extern "C"
+{
+    void Java_ca_welcomelm_crossRoad_crossRoad_onAdClicked( JNIEnv* env, jobject thiz ){
+        GameController::getGameController()->setJustFailed(false , true);
+    }
+
+    void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentError( JNIEnv* env, jobject thiz ){
+        GameController::getGameController()->onPaymentError();
+    }
+
+    void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentSuccess( JNIEnv* env, jobject thiz ){
+        GameController::getGameController()->onPaymentSuccess();
+    }
+}
+#endif
+
 GameController * GameController::getGameController(){
     if (controller == NULL) {
         controller = new GameController();
@@ -186,7 +210,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.order = -1;
     userData.pvpMode = NONE;
     userData.justWon = false;
-    //userData.currentLevel = 8;
+    userData.currentLevel = 8;
 
     if(userData.currentLevel > 0){
     	userData.lastScore = userData.levels[userData.currentLevel - 1];
@@ -196,7 +220,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.password = CCSTRING_FOR_KEY(dataDict, "password")->getCString();
 
     if(userData.userName.length() == 0) userData.userName = DEFAULT_NAME;
-    if(userData.password.length() == 0) userData.userName = DEFAULT_PASSWORD;
+    if(userData.password.length() == 0) userData.password = DEFAULT_PASSWORD;
 
     userData.rank = 0;
     userData.isLogedIn = false;
@@ -1117,4 +1141,28 @@ void GameController::recoverSpecialDurations(){
         CCDictionary * dict = (CCDictionary *)specialDict->objectForKey(specialNames[i]);
         specialDatas[i]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     }
+}
+
+void GameController::onPaymentError(){
+    setInfoLabel("Payment Error");
+    CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+    if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
+        StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+        startup->enableButtonsForIap(true);
+    }
+}
+
+void GameController::onPaymentSuccess(){
+    setInfoLabel("Payment Success");
+    setHasPayed(true);
+    SET_BANNDER_HIDDEN(true);
+    CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+    if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
+        StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+        startup->enableButtonsForIap(true);
+    }
+}
+
+bool GameController::hasPayed(){
+    return userData.hasPayed;
 }

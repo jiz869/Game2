@@ -28,45 +28,6 @@ typedef enum{
     LEGEND_DESCRIPTION_LABEL,
 }SCORE_MENU_TAG;
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-extern void setBannerViewHidden(bool);
-#define SET_BANNDER_HIDDEN(_hidden) \
-if(userData->hasPayed) setBannerViewHidden(true); \
-else setBannerViewHidden(_hidden)
-
-void onAdClicked(){
-    GameController::getGameController()->setJustFailed(false , true);
-}
-
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "../admob.android/AdmobHelper.h"
-#include <jni.h>
-
-#define SET_BANNDER_HIDDEN(_hidden) \
-if(userData->hasPayed) setBannerViewHidden(true); \
-else setBannerViewHidden(_hidden)
-
-extern "C"
-{
-	void Java_ca_welcomelm_crossRoad_crossRoad_onAdClicked( JNIEnv* env, jobject thiz ){
-		GameController::getGameController()->setJustFailed(false , true);
-	}
-
-	void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentError( JNIEnv* env, jobject thiz ){
-		StartMenuScene * currentScene = (StartMenuScene *)CCDirector::sharedDirector()->getRunningScene()->getChildren()->objectAtIndex(0);
-		currentScene->onPaymentError();
-	}
-
-	void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentSuccess( JNIEnv* env, jobject thiz ){
-		StartMenuScene * currentScene = (StartMenuScene *)CCDirector::sharedDirector()->getRunningScene()->getChildren()->objectAtIndex(0);
-		currentScene->onPaymentSuccess();
-	}
-}
-
-#else
-#define SET_BANNDER_HIDDEN(_hidden)
-#endif
-
 ccColor3B labelColors[MAX_RANKS] = {ccBLUE , ccRED , ccMAGENTA , ccBLACK , ccWHITE ,
 		ccORANGE , ccRED , ccBLUE , ccMAGENTA , ccBLACK};
 
@@ -184,7 +145,7 @@ void StartMenuScene::initLegendsMenu(){
 }
 
 void StartMenuScene::initInfoMenu(){
-	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ,
+	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
 			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
     infoLabel->setDisabledColor( ccRED );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
@@ -202,7 +163,7 @@ void StartMenuScene::initInfoMenu(){
 }
 
 void StartMenuScene::initPurchaseMenu(){
-	CCMenuItemLabel * benefits = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ,
+	CCMenuItemLabel * benefits = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
 			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
 	benefits->setDisabledColor( ccRED );
 	benefits->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
@@ -538,30 +499,32 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
 
     SpecialData * data = GameController::getGameController()->getSpecialData(index);
 
+    float patch = 1.5/2;
+
     if(!cell){
         cell = new CCTableViewCell();
         cell->autorelease();
 
         CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
-        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*1.7));
+        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*patch*1.7));
         legend->setTag(LEGEND_LABEL);
         cell->addChild(legend);
 
         CCLabelTTF * name = CCLabelTTF::create("0", INFO_FONT, 36 ,
-                CCSizeMake(winSize.width*0.2 , winSize.height/(LEGENDS_PERPAGE + 1)*2) ,
-                kCCTextAlignmentCenter);
+                CCSizeMake(winSize.width*0.2 , winSize.height/(LEGENDS_PERPAGE + 1)*patch*2) ,
+                kCCTextAlignmentLeft);
         name->setColor( ccRED );
         name->setString(data->name->getCString());
-        name->setPosition(ccp(winSize.width*0.2, winSize.height/(LEGENDS_PERPAGE + 1)));
+        name->setPosition(ccp(winSize.width*0.2, winSize.height/(LEGENDS_PERPAGE + 1)*patch));
         name->setTag(LEGEND_NAME_LABEL);
         cell->addChild(name);
 
-        CCLabelTTF * description = CCLabelTTF::create("0", INFO_FONT, 36 ,
-                CCSizeMake(winSize.width*0.7 , winSize.height/(LEGENDS_PERPAGE + 1)*2.0) ,
+        CCLabelTTF * description = CCLabelTTF::create("0", INFO_FONT, 30 ,
+                CCSizeMake(winSize.width*0.7 , winSize.height/(LEGENDS_PERPAGE + 1)*patch*2) ,
                 kCCTextAlignmentLeft);
         description->setColor( ccRED );
         description->setString(data->description->getCString());
-        description->setPosition(ccp(winSize.width*0.675, winSize.height/(LEGENDS_PERPAGE + 1)));
+        description->setPosition(ccp(winSize.width*0.675, winSize.height/(LEGENDS_PERPAGE + 1)*patch));
         description->setTag(LEGEND_DESCRIPTION_LABEL);
         cell->addChild(description);
     }else{
@@ -573,7 +536,7 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
 
         cell->removeChildByTag(LEGEND_LABEL);
         CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
-        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*1.7));
+        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*1.7*patch));
         legend->setTag(LEGEND_LABEL);
         cell->addChild(legend);
     }
@@ -589,7 +552,7 @@ unsigned int StartMenuScene::numberOfCellsInTableView(CCTableView *table){
 CCSize StartMenuScene::tableCellSizeForIndex(CCTableView *table, unsigned int idx){
     if(table == scoreTable) return CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1));
     if(table == legendsTable){
-        return CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1)*2);
+        return CCSizeMake(winSize.width , winSize.height/(LEGENDS_PERPAGE + 1)*1.5);
     }
 }
 
@@ -664,7 +627,7 @@ void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
 #else
     enableButtonsForIap(false);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    purchase(this);
+    purchase(GameController::getGameController());
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     purchase();
 #endif
@@ -940,37 +903,9 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
     }
 }
 
-void StartMenuScene::onPaymentError(){
-	CCLOG("onPaymentError");
-	scheduleOnce(schedule_selector(StartMenuScene::setPaymentError),0);
-    enableButtonsForIap(true);
-}
-
-void StartMenuScene::onPaymentSuccess(){
-	CCLOG("onPaymentSuccess");
-	scheduleOnce(schedule_selector(StartMenuScene::setPaymentSuccess),0);
-    GameController::getGameController()->setHasPayed(true);
-    SET_BANNDER_HIDDEN(true);
-    enableButtonsForIap(true);
-}
-
-void StartMenuScene::setPaymentError(){
-	setInfoLabel("Payment Error" , 2);
-}
-
-void StartMenuScene::setPaymentSuccess(){
-	setInfoLabel("Payment Success" , 2);
-}
-
-bool StartMenuScene::hasPayed(){
-    return userData->hasPayed;
-}
-
 void StartMenuScene::enableButtonsForIap(bool enable){
-    CCMenuItem * newGame = (CCMenuItem *)startMenu->getChildByTag(NEW_GAME);
     CCMenuItem * pvp = (CCMenuItem *)startMenu->getChildByTag(PVP);
-    newGame->setEnabled(enable);
-    pvp->setEnabled(enable);
+    if(pvp) pvp->setEnabled(enable);
 }
 
 bool StartMenuScene::onTextFieldAttachWithIME(cocos2d::CCTextFieldTTF *sender){
@@ -999,3 +934,5 @@ void StartMenuScene::showMenu(CCLayer * menu){
 void StartMenuScene::legendsHandler(CCObject * sender){
     showMenu(legendsMenu);
 }
+
+

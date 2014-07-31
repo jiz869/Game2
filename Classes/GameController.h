@@ -220,7 +220,41 @@ typedef struct{
 #define DEFAULT_NAME "Penguin"
 #define DEFAULT_PASSWORD "Penguin#"
 
-class GameController : CCObject {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "../proj.ios/P2PCPPHelper.h"
+
+extern void setBannerViewHidden(bool);
+
+#define SET_BANNDER_HIDDEN(_hidden) \
+if(GameController::getGameController()->getUserData()->hasPayed == true) setBannerViewHidden(true); \
+else setBannerViewHidden(_hidden)
+
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "../admob.android/AdmobHelper.h"
+#include <jni.h>
+
+#define SET_BANNDER_HIDDEN(_hidden) \
+if(GameController::getGameController()->getUserData()->hasPayed == true) setBannerViewHidden(true); \
+else setBannerViewHidden(_hidden)
+
+class IAPManagerDelegate {
+public:
+    virtual void onPaymentError() = 0;
+    virtual bool hasPayed() = 0;
+    virtual void onPaymentSuccess() = 0;
+};
+
+#else
+#define SET_BANNDER_HIDDEN(_hidden)
+class IAPManagerDelegate {
+public:
+    virtual void onPaymentError() = 0;
+    virtual bool hasPayed() = 0;
+    virtual void onPaymentSuccess() = 0;
+};
+#endif
+
+class GameController : CCObject , IAPManagerDelegate {
 
 public:
     static GameController * getGameController();
@@ -245,6 +279,9 @@ public:
     void uploadLastScore();
     void saveUser(const char * userName , const char * password);
     void recoverSpecialDurations();
+    virtual void onPaymentError();
+    virtual void onPaymentSuccess();
+    virtual bool hasPayed();
 
 private:
     GameController();

@@ -103,7 +103,7 @@ void GameOverScene::initMainMenu(){
 }
 
 void GameOverScene::initInfoMenu(){
-	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ,
+	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
 			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
     infoLabel->setDisabledColor( ccRED );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height/2));

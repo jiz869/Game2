@@ -23,7 +23,7 @@ extern "C"
 {
 	void Java_ca_welcomelm_crossRoad_crossRoad_up( JNIEnv* env, jobject thiz ){
 		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
-		if(scene->getTag() != PLAY_SCENE) return;
+		if(scene && scene->getTag() != PLAY_SCENE) return;
 
 		PlayScene * playScene = (PlayScene *)scene->getChildren()->objectAtIndex(0);
 		playScene->upHandler(0);
@@ -31,7 +31,7 @@ extern "C"
 
 	void Java_ca_welcomelm_crossRoad_crossRoad_down( JNIEnv* env, jobject thiz ){
 		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
-		if(scene->getTag() != PLAY_SCENE) return;
+		if(scene && scene->getTag() != PLAY_SCENE) return;
 
 		PlayScene * playScene = (PlayScene *)scene->getChildren()->objectAtIndex(0);
 		playScene->downHandler(0);
@@ -39,7 +39,7 @@ extern "C"
 
 	void Java_ca_welcomelm_crossRoad_crossRoad_end( JNIEnv* env, jobject thiz ){
 		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
-		if(scene->getTag() != PLAY_SCENE) return;
+		if(scene && scene->getTag() != PLAY_SCENE) return;
 
 		PlayScene * playScene = (PlayScene *)scene->getChildren()->objectAtIndex(0);
 		playScene->touchendHandler(0);

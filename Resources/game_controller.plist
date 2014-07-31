@@ -359,7 +359,7 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
+						<string>6</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -613,10 +613,9 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
+						<string>1</string>
 						<string>2</string>
 						<string>3</string>
-						<string>4</string>
-						<string>5</string>
 						<string>6</string>
 					</array>
 				</dict>
@@ -633,10 +632,11 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>1</string>
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
+						<string>5</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -793,7 +793,7 @@
 						<string>0</string>
 						<string>1</string>
 						<string>2</string>
-						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -829,7 +829,7 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
+						<string>6</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -875,6 +875,7 @@
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -891,8 +892,8 @@
 					<key>car_numbers</key>
 					<array>
 						<string>6</string>
+						<string>1</string>
 						<string>2</string>
-						<string>3</string>
 						<string>4</string>
 					</array>
 				</dict>
@@ -967,8 +968,7 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>1</string>
+						<string>6</string>
 						<string>2</string>
 						<string>3</string>
 					</array>
@@ -990,6 +990,7 @@
 						<string>3</string>
 						<string>4</string>
 						<string>5</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1005,9 +1006,10 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
+						<string>1</string>
 						<string>2</string>
 						<string>3</string>
-						<string>4</string>
+						<string>6</string>
 					</array>
 				</dict>
 			</array>
@@ -1049,7 +1051,7 @@
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
-						<string>4</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1084,7 +1086,7 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>4</string>
+						<string>6</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -1144,7 +1146,7 @@
 					<array>
 						<string>2</string>
 						<string>3</string>
-						<string>4</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1160,10 +1162,10 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>6</string>
-						<string>1</string>
-						<string>4</string>
+						<string>2</string>
 						<string>3</string>
+						<string>4</string>
+						<string>5</string>
 					</array>
 				</dict>
 				<dict>
@@ -1220,7 +1222,7 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
+						<string>6</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -1258,10 +1260,9 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
 						<string>1</string>
 						<string>2</string>
-						<string>4</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1281,7 +1282,6 @@
 						<string>3</string>
 						<string>4</string>
 						<string>5</string>
-						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1297,7 +1297,7 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>4</string>
+						<string>6</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -1318,7 +1318,7 @@
 					<array>
 						<string>2</string>
 						<string>3</string>
-						<string>4</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1378,7 +1378,7 @@
 			<key>duration_increase</key>
 			<string>5</string>
 			<key>special_interval</key>
-			<string>10</string>
+			<string>8</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1394,7 +1394,7 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>4</string>
+						<string>6</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -1454,7 +1454,6 @@
 						<string>3</string>
 						<string>4</string>
 						<string>5</string>
-						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1470,7 +1469,7 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>4</string>
+						<string>6</string>
 						<string>2</string>
 						<string>3</string>
 					</array>
@@ -1488,6 +1487,7 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
+						<string>0</string>
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
@@ -1526,7 +1526,6 @@
 					<key>car_numbers</key>
 					<array>
 						<string>2</string>
-						<string>3</string>
 						<string>6</string>
 					</array>
 				</dict>
@@ -1621,7 +1620,6 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>3</string>
 						<string>4</string>
 						<string>5</string>
 						<string>6</string>
@@ -1893,7 +1891,8 @@ will stop for 2.5 seconds</string>
 			<key>image_name</key>
 			<string>strong0.png</string>
 			<key>name</key>
-			<string>SUPERMAN</string>
+			<string>SUPER
+MAN</string>
 			<key>description</key>
 			<string>You are not afraid of anything
 for 2.5 seconds, so just HURRY !!!</string>
@@ -1922,7 +1921,8 @@ for 2.5 seconds, so just HURRY !!!</string>
 			<key>image_name</key>
 			<string>time0.png</string>
 			<key>name</key>
-			<string>TIME STOP</string>
+			<string>TIME
+STOP</string>
 			<key>description</key>
 			<string>Time does not count down 
 when you have it</string>
@@ -2010,7 +2010,8 @@ items except BLESS</string>
 			<key>deadline</key>
 			<string>5.5</string>
 			<key>name</key>
-			<string>TIME BOMB</string>
+			<string>TIME
+BOMB</string>
 			<key>description</key>
 			<string>A time bomb that will be disarmed 
 after you cross street successfully 

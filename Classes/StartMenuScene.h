@@ -15,25 +15,13 @@
 #include "GameController.h"
 #include "cocos-ext.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-#include "../proj.ios/P2PCPPHelper.h"
-#else
-class IAPManagerDelegate {
-public:
-    virtual void onPaymentError() = 0;
-    virtual bool hasPayed() = 0;
-    virtual void onPaymentSuccess() = 0;
-};
-#endif
-
 USING_NS_CC;
 USING_NS_CC_EXT;
 
 class PWDField;
 
-class StartMenuScene: public cocos2d::CCLayerColor , IAPManagerDelegate ,
-									CCTableViewDelegate , CCTableViewDataSource
-									 , CCTextFieldDelegate{
+class StartMenuScene: public cocos2d::CCLayerColor , CCTableViewDelegate ,
+                                    CCTableViewDataSource , CCTextFieldDelegate{
 public:
 	StartMenuScene();
 	virtual ~StartMenuScene();
@@ -53,9 +41,6 @@ public:
     void uploadHandler(CCObject * sender);
     void legendsHandler(CCObject * sender);
     void purchaseHandler(CCObject * sender);
-    virtual void onPaymentError();
-    virtual void onPaymentSuccess();
-    virtual bool hasPayed();
     virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell);
     virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx);
     virtual unsigned int numberOfCellsInTableView(CCTableView *table);
@@ -63,13 +48,12 @@ public:
     virtual void scrollViewDidScroll(CCScrollView* view);
     virtual void scrollViewDidZoom(CCScrollView* view);
     virtual void keyBackClicked();
-    void setPaymentError();
-    void setPaymentSuccess();
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void setInfoLabel(const char * info , float delay);
 
     virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender);
 //    virtual bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen);
+    void enableButtonsForIap(bool enable);
 
 private:
     CCMenu * infoMenu;
@@ -109,8 +93,6 @@ private:
     CCMenuItemLabel * nameLabels[MAX_RANKS];
 
     CCMenuItemLabel * infoLabel;
-
-    void enableButtonsForIap(bool enable);
 
     CCLabelTTF * rankLabel;
 
