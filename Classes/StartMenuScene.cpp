@@ -567,13 +567,16 @@ void StartMenuScene::scrollViewDidZoom(CCScrollView* view){
 }
 
 void StartMenuScene::initMainMenu(){
-    CCMenuItemImage * newGame = CCMenuItemImage::create("button_new_game_normal.png", "button_new_game_selected.png", this, menu_selector(StartMenuScene::newGameHandler));
+    CCMenuItemImage * newGame = CCMenuItemImage::create("button_new_game_normal.png",
+            "button_new_game_selected.png", this, menu_selector(StartMenuScene::newGameHandler));
     newGame->setTag(NEW_GAME);
 
-    CCMenuItemImage * options = CCMenuItemImage::create("button_options_normal.png", "button_options_selected.png" , this , menu_selector(StartMenuScene::optionsHandler));
+    CCMenuItemImage * options = CCMenuItemImage::create("button_options_normal.png",
+            "button_options_selected.png" , this , menu_selector(StartMenuScene::optionsHandler));
     options->setTag(OPTIONS);
 
-    CCMenuItemImage * score = CCMenuItemImage::create("top_score_normal.png", "top_score_selected.png" , this , menu_selector(StartMenuScene::scoreHandler));
+    CCMenuItemImage * score = CCMenuItemImage::create("top_score_normal.png",
+            "top_score_selected.png" , this , menu_selector(StartMenuScene::scoreHandler));
     score->setTag(TOP_SCORE);
 
     CCMenuItemImage * background = CCMenuItemImage::create("background_main.png" , "background_main.png");
