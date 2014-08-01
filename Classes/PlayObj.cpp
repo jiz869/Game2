@@ -270,15 +270,15 @@ void PlayerObj::removeAllBadSpecials(){
 
 void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
 
+    if (hasSpecial(STRONG) != NULL && specialObj->getSpecialId() > SPECIAL_NUM) {
+        specialObj->runAction(CCBlink::create(2, 10));
+        return;
+    }
+
     if (hasSpecial(specialObj->getSpecialId()) != NULL || enoughSpecials(specialObj->getSpecialId())) {
     	if(specialObj->getSpecialId() > SPECIAL_NUM){
     		hitByCar();
     	}
-        return;
-    }
-
-    if (hasSpecial(STRONG) != NULL && specialObj->getSpecialId() > SPECIAL_NUM) {
-        specialObj->runAction(CCBlink::create(2, 10));
         return;
     }
 
@@ -311,7 +311,9 @@ void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
 void PlayerObj::tagPlayer(SpecialObj *specialObj){
     CCSprite * tag = CCSprite::createWithSpriteFrameName(specialObj->getSpecialData()->imageName->getCString());
 
+    tag->setScale(0.5);
     CCSize tagSize = tag->getContentSize();
+    tagSize = CCSizeMake(tagSize.width*0.5 , tagSize.height*0.5);
     CCSize playerSize = gameObj->getContentSize();
 
     gameObj->addChild(tag);
@@ -323,7 +325,7 @@ void PlayerObj::tagPlayer(SpecialObj *specialObj){
     	tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
     }
 
-    tag->runAction(CCSequence::createWithTwoActions(CCScaleTo::create(0.2, 1.5), CCScaleTo::create(0.2, 0.8)));
+    tag->runAction(CCSequence::createWithTwoActions(CCScaleTo::create(0.2, 0.75), CCScaleTo::create(0.2, 0.4)));
     tag->setTag(specialObj->getSpecialId());
 }
 
@@ -381,6 +383,7 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
 			CCSprite * tag = (CCSprite *)gameObj->getChildByTag(badSpecials[i]->getSpecialId());
 
 			tagSize = tag->getContentSize();
+			tagSize = CCSizeMake(tagSize.width*0.5 , tagSize.height*0.5);
 
 			tag->setPosition(ccp(-(size-0.5)*tagSize.width , playerSize.height/2));
 		}
@@ -401,6 +404,7 @@ void PlayerObj::removeSpecial(SpecialObj *specialObj){
 			CCSprite * tag = (CCSprite *)gameObj->getChildByTag(specials[i]->getSpecialId());
 
 			tagSize = tag->getContentSize();
+			tagSize = CCSizeMake(tagSize.width*0.5 , tagSize.height*0.5);
 
 			tag->setPosition(ccp(playerSize.width+(size-0.5)*tagSize.width , playerSize.height/2));
 		}

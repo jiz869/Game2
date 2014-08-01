@@ -147,7 +147,7 @@
 			<key>duration_increase</key>
 			<string>8</string>
 			<key>special_interval</key>
-			<string>0</string>
+			<string>14</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -855,7 +855,7 @@
 			<key>duration_increase</key>
 			<string>6</string>
 			<key>special_interval</key>
-			<string>12</string>
+			<string>10</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1206,7 +1206,7 @@
 			<key>duration_increase</key>
 			<string>6</string>
 			<key>special_interval</key>
-			<string>10</string>
+			<string>9</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1378,7 +1378,7 @@
 			<key>duration_increase</key>
 			<string>5</string>
 			<key>special_interval</key>
-			<string>8</string>
+			<string>9</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1856,7 +1856,7 @@
 		<key>stop</key>
 		<dict>
 			<key>duration</key>
-			<string>2</string>
+			<string>2.5</string>
 			<key>life</key>
 			<string>2.5</string>
 			<key>image_name</key>
@@ -1885,7 +1885,7 @@ will stop for 2.5 seconds</string>
 		<key>strong</key>
 		<dict>
 			<key>duration</key>
-			<string>2</string>
+			<string>2.5</string>
 			<key>life</key>
 			<string>2.5</string>
 			<key>image_name</key>

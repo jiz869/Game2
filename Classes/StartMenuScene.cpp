@@ -506,8 +506,9 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
         cell->autorelease();
 
         CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
-        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*patch*1.65));
+        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*patch*2));
         legend->setTag(LEGEND_LABEL);
+        legend->setAnchorPoint(ccp(0.5 , 1.05));
         cell->addChild(legend);
 
         CCLabelTTF * name = CCLabelTTF::create("0", INFO_FONT, 32 ,
@@ -515,7 +516,7 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
                 kCCTextAlignmentLeft);
         name->setColor( ccRED );
         name->setString(data->name->getCString());
-        name->setPosition(ccp(winSize.width*0.2, winSize.height/(LEGENDS_PERPAGE + 1)*patch));
+        name->setPosition(ccp(winSize.width*0.25, winSize.height/(LEGENDS_PERPAGE + 1)*patch));
         name->setTag(LEGEND_NAME_LABEL);
         cell->addChild(name);
 
@@ -536,8 +537,9 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
 
         cell->removeChildByTag(LEGEND_LABEL);
         CCSprite * legend = CCSprite::createWithSpriteFrameName(data->imageName->getCString());
-        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*1.65*patch));
+        legend->setPosition(ccp(winSize.width*0.075, winSize.height/(LEGENDS_PERPAGE + 1)*patch*2));
         legend->setTag(LEGEND_LABEL);
+        legend->setAnchorPoint(ccp(0.5 , 1.05));
         cell->addChild(legend);
     }
 
