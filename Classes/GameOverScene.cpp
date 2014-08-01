@@ -74,7 +74,7 @@ void GameOverScene::initMainMenu(){
     CCMenuItemLabel * topScoreLabel = CCMenuItemLabel::create(CCLabelTTF::create("0", FONT, 64));
     topScoreLabel->setDisabledColor( ccMAGENTA );
     topScoreLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.6));
-    info = CCString::createWithFormat("TOP score is %d", userData->topScore);
+    info = CCString::createWithFormat("Top score is %d", userData->topScore);
     topScoreLabel->setString(info->getCString());
     topScoreLabel->setEnabled(false);
 

@@ -61,6 +61,7 @@ bool SplashScene::init(){
 
     background = CCSprite::create("background_main.png");
 
+    size = background->getContentSize();
     background->setScaleY(winSize.height/size.height);
     background->setScaleX(winSize.width/size.width);
     background->setAnchorPoint(ccp(0,0));
