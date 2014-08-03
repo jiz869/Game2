@@ -3,17 +3,17 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
-#import "BannerViewController.h"
 
-static BannerViewController * bannerViewController;
+static RootViewController * controller;
+static GADInterstitial * interstitial_;
 
-void setBannerViewHidden(bool isHidden){
-    bannerViewController->_bannerView.hidden = isHidden;
+void showAds(){
+    if(interstitial_.isReady == TRUE){
+        [interstitial_ presentFromRootViewController:controller];
+    }
 }
 
-@implementation AppController {
-    BannerViewController *_bannerViewController;
-}
+@implementation AppController
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -41,26 +41,24 @@ static AppDelegate s_sharedApplication;
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
     viewController.wantsFullScreenLayout = YES;
     viewController.view = __glView;
+    controller = viewController;
+    
+    interstitial_ = [[GADInterstitial alloc] init];
+    interstitial_.adUnitID = @"ca-app-pub-6252824057221692/6252132962";
+    interstitial_.delegate = self;
+    [interstitial_ loadRequest:[GADRequest request]];
 
-    // Set RootViewController to window
-    
-    _bannerViewController = [[BannerViewController alloc] initWithContentViewController:viewController];
-    [window setRootViewController:_bannerViewController];
-    bannerViewController = _bannerViewController;
-    
-    
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
         // warning: addSubView doesn't work on iOS6
-        [window addSubview: _bannerViewController.view];
+        [window addSubview: viewController.view];
     }
     else
     {
         // use this method on ios6
-        [window setRootViewController:_bannerViewController];
+        [window setRootViewController:viewController];
     }
-
     
     [window makeKeyAndVisible];
     
@@ -123,6 +121,27 @@ static AppDelegate s_sharedApplication;
 - (void)dealloc {
     [window release];
     [super dealloc];
+}
+
+- (void)interstitialDidReceiveAd:(GADInterstitial *)ad{
+    CCLOG("interstitialDidReceiveAd");
+}
+
+- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error{
+    CCLOG("interstitial error");
+}
+
+- (void) interstitialWillLeaveApplication:(GADInterstitial *)ad{
+    CCLOG("interstitialWillLeaveApplication");
+}
+
+- (void) interstitialDidDismissScreen:(GADInterstitial *)ad{
+    CCLOG("interstitialDidDismissScreen");
+    [ad release];
+    interstitial_ = [[GADInterstitial alloc] init];
+    interstitial_.adUnitID = @"ca-app-pub-6252824057221692/6252132962";
+    interstitial_.delegate = self;
+    [interstitial_ loadRequest:[GADRequest request]];
 }
 
 

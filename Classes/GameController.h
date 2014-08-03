@@ -198,7 +198,6 @@ typedef struct{
 #define INFO_FONT "fonts/Arial.ttf"
 #endif
 
-#define FREE_LEVEL (2)
 #define FREE_PLAY (3)
 
 #define NAME_RULE "User name must follow:\n" \
@@ -223,11 +222,7 @@ typedef struct{
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "../proj.ios/P2PCPPHelper.h"
 
-extern void setBannerViewHidden(bool);
-
-#define SET_BANNDER_HIDDEN(_hidden) \
-if(GameController::getGameController()->getUserData()->hasPayed == true) setBannerViewHidden(true); \
-else setBannerViewHidden(_hidden)
+extern void showAds();
 
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "../admob.android/AdmobHelper.h"
@@ -254,7 +249,7 @@ public:
 };
 #endif
 
-class GameController : CCObject , IAPManagerDelegate {
+class GameController : public CCObject , public IAPManagerDelegate {
 
 public:
     static GameController * getGameController();

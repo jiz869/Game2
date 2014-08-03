@@ -10,7 +10,7 @@
 
 NSString * const BannerViewIsClicked = @"BannerViewIsClicked";
 
-@interface BannerViewController () <GADBannerViewDelegate>
+@interface BannerViewController () <GADInterstitialDelegate>
 
 @end
 
@@ -23,7 +23,7 @@ NSString * const BannerViewIsClicked = @"BannerViewIsClicked";
 {
     self = [super init];
     if (self != nil) {
-        _bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+        _bannerView = [[GADInterstitial alloc] init];
         // Mediation ID or Publisher ID
         _bannerView.adUnitID = @"ca-app-pub-6252824057221692/6453306960";
         _bannerView.delegate = self;

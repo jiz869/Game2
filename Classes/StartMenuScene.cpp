@@ -17,6 +17,7 @@ typedef enum{
     OPTIONS,
     TOP_SCORE,
     PVP,
+    PURCHASE,
 }BUTTON_TAG;
 
 typedef enum{
@@ -71,8 +72,6 @@ bool StartMenuScene::init(){
     userData = GameController::getGameController()->getUserData();
 
     userData->pvpMode = NONE;
-
-    SET_BANNDER_HIDDEN(false);
 
     GameController::getGameController()->recoverSpecialDurations();
 
@@ -178,6 +177,7 @@ void StartMenuScene::initPurchaseMenu(){
     CCMenuItemImage * purchase = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" ,
     		this , menu_selector(StartMenuScene::purchaseHandler));
     purchase->setScale(0.7);
+    purchase->setTag(PURCHASE);
     purchase->setPosition(ccp(winSize.width*0.7, winSize.height * 0.15));
 
 	purchaseMenu = CCMenu::create(OK , purchase , benefits , NULL);
@@ -211,16 +211,12 @@ void StartMenuScene::initScoreMenu(){
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.6);
-    OK->setPosition(ccp(winSize.width * 0.2, winSize.height*(1.0/(RANK_PERPAGE + 1)+0.02)));
-    CCMenuItemImage * account = CCMenuItemImage::create("account_normal.png", "account_selected.png" ,
-            this , menu_selector(StartMenuScene::userHandler));
-    account->setScale(0.6);
-    account->setPosition(ccp(winSize.width * 0.8, winSize.height*(1.0/(RANK_PERPAGE + 1)+0.02)));
+    OK->setPosition(ccp(winSize.width * 0.3, winSize.height*(1.0/(RANK_PERPAGE + 1)+0.02)));
     CCMenuItemImage * upload = CCMenuItemImage::create("upload_score_normal.png", "upload_score_selected.png" ,
             this , menu_selector(StartMenuScene::uploadHandler));
     upload->setScale(0.6);
-    upload->setPosition(ccp(winSize.width*0.5, winSize.height*(1.0/(RANK_PERPAGE + 1)+0.02)));
-    CCMenu * okMenu = CCMenu::create(OK , account , upload , NULL);
+    upload->setPosition(ccp(winSize.width*0.7, winSize.height*(1.0/(RANK_PERPAGE + 1)+0.02)));
+    CCMenu * okMenu = CCMenu::create(OK , upload , NULL);
     okMenu->setPosition(ccp(0, 0));
     okMenu->setAnchorPoint(ccp(0,0));
     okMenu->setContentSize(CCSizeMake(winSize.width , winSize.height/(RANK_PERPAGE + 1)*2));
@@ -330,7 +326,7 @@ void StartMenuScene::initUserMenu(){
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.6);
-    OK->setPosition(ccp(winSize.width * 0.2, winSize.height * 0.3));
+    OK->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.45));
     CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" ,
             this , menu_selector(StartMenuScene::loginHandler));
     login->setScale(0.6);
@@ -338,7 +334,7 @@ void StartMenuScene::initUserMenu(){
     CCMenuItemImage * create = CCMenuItemImage::create("register_normal.png", "register_selected.png" ,
             this , menu_selector(StartMenuScene::RegisterHandler));
     create->setScale(0.6);
-    create->setPosition(ccp(winSize.width*0.8, winSize.height * 0.3));
+    create->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
     CCMenu * okMenu = CCMenu::create(OK , login , create , NULL);
     okMenu->setPosition(ccp(0, 0));
     okMenu->setAnchorPoint(ccp(0,0));
@@ -418,7 +414,6 @@ void StartMenuScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 }
 
 void StartMenuScene::userHandler(CCObject * sender){
-    SET_BANNDER_HIDDEN(true);
     if(userData->userName.length() == 0) nameField->setString(DEFAULT_NAME);
     if(userData->password.length() == 0) pwdField->setString(DEFAULT_PASSWORD);
     nameField->runAction(CCBlink::create(2, 6));
@@ -578,6 +573,10 @@ void StartMenuScene::initMainMenu(){
     CCMenuItemImage * score = CCMenuItemImage::create("top_score_normal.png",
             "top_score_selected.png" , this , menu_selector(StartMenuScene::scoreHandler));
     score->setTag(TOP_SCORE);
+    
+    CCMenuItemImage * account = CCMenuItemImage::create("account_normal.png", "account_selected.png" , this , menu_selector(StartMenuScene::userHandler));
+    
+    CCMenuItemImage * legends = CCMenuItemImage::create("legends_normal.png", "legends_selected.png" , this , menu_selector(StartMenuScene::legendsHandler));
 
     CCMenuItemImage * background = CCMenuItemImage::create("background_main.png" , "background_main.png");
     CCSize size = background->getContentSize();
@@ -597,22 +596,33 @@ void StartMenuScene::initMainMenu(){
     		this , menu_selector(StartMenuScene::pvpHandler));
     pvp->setScale(0.7);
     pvp->setTag(PVP);
+    account->setScale(0.7);
+    legends->setScale(0.7);
 
-    startMenu = CCMenu::create(background , newGame , options, score , pvp , NULL);
+    startMenu = CCMenu::create(background , newGame , options, score , pvp , legends,account,NULL);
     startMenu->ignoreAnchorPointForPosition(false);
     newGame->setPosition(ccp(winSize.width*0.3 , winSize.height*0.45));
     options->setPosition(ccp(winSize.width*0.7 , winSize.height*0.45));
     score->setPosition(ccp(winSize.width*0.3 , winSize.height*0.3));
     pvp->setPosition(ccp(winSize.width*0.7 , winSize.height*0.3));
+    account->setPosition(ccp(winSize.width*0.3, winSize.height*0.15));
+    legends->setPosition(ccp(winSize.width*0.7, winSize.height*0.15));
 #else
+    CCMenuItemImage * credits = CCMenuItemImage::create("credits_normal.png", "credits_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    credits->setScale(0.7);
     newGame->setScale(0.7);
     options->setScale(0.7);
     score->setScale(0.7);
-    startMenu = CCMenu::create(background , newGame , options, score , NULL);
+    account->setScale(0.7);
+    legends->setScale(0.7);
+    startMenu = CCMenu::create(background, newGame, options, score, legends, account, NULL);
     startMenu->ignoreAnchorPointForPosition(false);
-    newGame->setPosition(ccp(winSize.width*0.5 , winSize.height*0.45));
-    options->setPosition(ccp(winSize.width*0.5 , winSize.height*0.3));
-    score->setPosition(ccp(winSize.width*0.5 , winSize.height*0.15));
+    newGame->setPosition(ccp(winSize.width*0.3 , winSize.height*0.45));
+    options->setPosition(ccp(winSize.width*0.7 , winSize.height*0.45));
+    score->setPosition(ccp(winSize.width*0.3 , winSize.height*0.3));
+    credits->setPosition(ccp(winSize.width*0.7, winSize.height*0.3));
+    account->setPosition(ccp(winSize.width*0.3, winSize.height*0.15));
+    legends->setPosition(ccp(winSize.width*0.7, winSize.height*0.15));
 #endif
 
     addChild(startMenu);
@@ -620,13 +630,11 @@ void StartMenuScene::initMainMenu(){
 }
 
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
-	SET_BANNDER_HIDDEN(true);
 	showMenu(purchaseMenu);
 }
 
 void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
 #ifdef MULTIPLAY
-    SET_BANNDER_HIDDEN(true);
     CCScene * pvpScene = MultiPlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(pvpScene);
 #else
@@ -663,8 +671,6 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 	    scoreLabels[i]->setString(score->getCString());
 	}
 #endif
-
-    SET_BANNDER_HIDDEN(true);
     showMenu(scoreMenu);
 }
 
@@ -759,21 +765,16 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.6);
-    OK->setPosition(ccp(winSize.width*0.2, winSize.height*0.12));
-
-    CCMenuItemImage * legends = CCMenuItemImage::create("legends_normal.png", "legends_selected.png" ,
-            this , menu_selector(StartMenuScene::legendsHandler));
-    legends->setScale(0.6);
-    legends->setPosition(ccp(winSize.width*0.5, winSize.height*0.12));
+    OK->setPosition(ccp(winSize.width*0.3, winSize.height*0.12));
 
     CCMenuItemImage * credits = CCMenuItemImage::create("credits_normal.png", "credits_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
     credits->setScale(0.6);
-    credits->setPosition(ccp(winSize.width*0.8, winSize.height*0.12));
+    credits->setPosition(ccp(winSize.width*0.7, winSize.height*0.12));
 
     optionsMenu = CCMenu::create(controllerPositions , left , checkboxLeft , right , checkboxRight ,
     		leftUp , checkboxSideLeftUp , leftDown , checkboxSideLeftDown ,
-    		sound , mute , checkboxMute , unMute, checkboxUnmute, OK , legends , credits , NULL);
+    		sound , mute , checkboxMute , unMute, checkboxUnmute, OK , credits , NULL);
 
     optionsMenu->setPosition(ccp(winSize.width/2, winSize.height*1.5));
     optionsMenu->ignoreAnchorPointForPosition(false);
@@ -786,14 +787,13 @@ void StartMenuScene::initOptionsMenu(){
 
 void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-	if(userData->currentLevel > FREE_LEVEL){
-		if (!userData->hasPayed && userData->justFailed%FREE_PLAY == 0 && userData->justFailed != 0) {
-			setInfoLabel("Please click the ads to support us \nor spend 99 cents to remove the ads.\nThank you!!!" , 4);
+    if (!userData->hasPayed && userData->justFailed%FREE_PLAY == 0 && userData->justFailed != 0)
+    {
+            showAds();
+            userData->justFailed = 0;
 			return;
-		}
-	}
+    }
 #endif
-    SET_BANNDER_HIDDEN(true);
 	CCScene * playScene = PlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(playScene);
 }
@@ -805,12 +805,10 @@ void StartMenuScene::setInfoLabel(const char *info , float delay){
 }
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){
-    SET_BANNDER_HIDDEN(true);
     showMenu(optionsMenu);
 }
 
 void StartMenuScene::okHandler(cocos2d::CCObject *sender){
-    SET_BANNDER_HIDDEN(false);
     showMenu(startMenu);
 }
 
@@ -909,8 +907,8 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
 }
 
 void StartMenuScene::enableButtonsForIap(bool enable){
-    CCMenuItem * pvp = (CCMenuItem *)startMenu->getChildByTag(PVP);
-    if(pvp) pvp->setEnabled(enable);
+    CCMenuItem * purchase = (CCMenuItem *)purchaseMenu->getChildByTag(PURCHASE);
+    if(purchase) purchase->setEnabled(enable);
 }
 
 bool StartMenuScene::onTextFieldAttachWithIME(cocos2d::CCTextFieldTTF *sender){

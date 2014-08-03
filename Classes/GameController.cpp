@@ -1165,7 +1165,6 @@ void GameController::onPaymentError(){
 void GameController::onPaymentSuccess(){
     setInfoLabel("Payment Success");
     setHasPayed(true);
-    SET_BANNDER_HIDDEN(true);
     CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
     if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
         StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);

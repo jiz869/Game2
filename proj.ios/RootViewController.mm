@@ -1,21 +1,7 @@
 #import "RootViewController.h"
-#import "BannerViewController.h"
 
-
-extern void onAdClicked();
 
 @implementation RootViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBannerViewIsClicked) name:BannerViewIsClicked object:nil];
-    }
-    return self;
-}
-
-- (void) onBannerViewIsClicked{
-    onAdClicked();
-}
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.

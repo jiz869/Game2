@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GADBannerView.h"
+#import "GADInterstitial.h"
 
 extern NSString * const BannerViewIsClicked;
 
 @interface BannerViewController : UIViewController
 {
 @public
-    GADBannerView *_bannerView;
+    GADInterstitial *_bannerView;
 }
 
 - (instancetype)initWithContentViewController:(UIViewController *)contentController;
