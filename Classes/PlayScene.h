@@ -14,6 +14,7 @@
 #include "Lane.h"
 
 class ControlMenu;
+class City;
 
 class PlayScene : public cocos2d::CCLayerColor , public b2ContactListener
 {
@@ -43,6 +44,7 @@ public:
     virtual void destroyRandomCar();
 
     ControlMenu * controlMenu;
+    City * city;
 
     virtual void keyBackClicked();
 

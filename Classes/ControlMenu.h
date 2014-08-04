@@ -28,9 +28,8 @@ public:
     void startNewGame();
     virtual bool doScore();
     virtual void step(float dt);
-    void increaseDuration(int delta , int max_delta);
+    void increaseDuration(int delta);
     void resumeDuration();
-    void changeGameTime(int delta);
     void changeScore(int delta , bool isGood);
     void changeControllerPosition(CheckboxType type);
     void pauseAndPlayHandler(CCObject * sender);

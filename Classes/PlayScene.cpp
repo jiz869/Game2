@@ -112,7 +112,7 @@ bool PlayScene::init(){
 }
 
 void PlayScene::initCityObj(){
-	City * city = City::create();
+	city = City::create();
 	addChild(city);
 }
 

@@ -16,6 +16,7 @@
 #include "app42base64.h"
 #include "StartMenuScene.h"
 #include "GameOverScene.h"
+#include "city.h"
 
 using namespace CocosDenshion;
 
@@ -57,6 +58,8 @@ void static blessEnd(PlayerObj * player);
 
 void static allBadBegin(PlayerObj * player);
 void static allBadEnd(PlayerObj * player);
+
+void static doubleBegin(PlayerObj * player);
 
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
@@ -457,6 +460,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[LIFE]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
     specialDatas[LIFE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
     specialDatas[LIFE]->userData1 = CCSTRING_FOR_KEY(dict, "time_increase")->floatValue();
+    specialDatas[LIFE]->userData2 = CCSTRING_FOR_KEY(dict, "resume_max_duration")->floatValue();
     specialDatas[LIFE]->begin = &lifeBegin;
     specialDatas[LIFE]->step = NULL;
     specialDatas[LIFE]->end = NULL;
@@ -584,6 +588,18 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[ALLBAD]->description = CCSTRING_FOR_KEY(dict, "description");
     specialDatas[ALLBAD]->name = CCSTRING_FOR_KEY(dict, "name");
 
+    dict = (CCDictionary *)dataDict->objectForKey("time");
+    specialDatas[TIME] = new SpecialData;
+    specialDatas[TIME]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[TIME]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
+    specialDatas[TIME]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[TIME]->begin = &doubleBegin;
+    specialDatas[TIME]->step = NULL;
+    specialDatas[TIME]->end = NULL;
+    specialDatas[TIME]->hitByCar = NULL;
+    specialDatas[TIME]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[TIME]->name = CCSTRING_FOR_KEY(dict, "name");
+
     return true;
 }
 
@@ -628,7 +644,7 @@ void static lifeBegin(PlayerObj * player){
     SimpleAudioEngine::sharedEngine()->playEffect(animData->lifeSoundImage->getCString());
 	SpecialData * data = GameController::getGameController()->getSpecialData(LIFE);
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->increaseDuration((int)data->userData1 , 0);
+    playScene->controlMenu->increaseDuration((int)data->userData1);
 }
 
 //time
@@ -736,7 +752,7 @@ void static blessBegin(PlayerObj * player){
     SpecialData * specialData = GameController::getGameController()->getSpecialData(BLESS);
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->changeScore(specialData->userData3, false);
-    playScene->controlMenu->increaseDuration(specialData->userData2 , 0);
+    playScene->controlMenu->increaseDuration(specialData->userData2);
 
     if(toss(specialData->userData1) == false) return;
     SpecialObj * specialObj = new SpecialObj();
@@ -775,6 +791,15 @@ void static allBadEnd(PlayerObj * player){
     				(1 + specialData->userData3);
     	}
     }
+}
+
+//double
+void static doubleBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->lifeSoundImage->getCString());
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->city->addSpecial();
+    playScene->city->addSpecial();
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

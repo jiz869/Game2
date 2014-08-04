@@ -332,11 +332,6 @@ void ControlMenu::showUp(){
     gemLevelup->runAction(CCFadeIn::create(0.8));
 }
 
-void ControlMenu::changeGameTime(int delta){
-	seconds += delta;
-	updateGameTime();
-}
-
 void ControlMenu::changeScore(int delta , bool isGood){
     if (status != PLAY) {
         return;
@@ -349,9 +344,12 @@ void ControlMenu::changeScore(int delta , bool isGood){
     }
 }
 
-void ControlMenu::increaseDuration(int delta , int max_delta){
-    maxDuration+=max_delta;
+void ControlMenu::increaseDuration(int delta){
     seconds+=delta;
+    if(seconds > maxDuration){
+        maxDuration = seconds;
+    }
+    scheduleOnce(schedule_selector(ControlMenu::resumeDuration) , 15);
     updateGameTime();
 }
 
