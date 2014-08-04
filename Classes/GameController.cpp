@@ -588,17 +588,17 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[ALLBAD]->description = CCSTRING_FOR_KEY(dict, "description");
     specialDatas[ALLBAD]->name = CCSTRING_FOR_KEY(dict, "name");
 
-    dict = (CCDictionary *)dataDict->objectForKey("two");
-    specialDatas[TWO] = new SpecialData;
-    specialDatas[TWO]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
-    specialDatas[TWO]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
-    specialDatas[TWO]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-    specialDatas[TWO]->begin = &doubleBegin;
-    specialDatas[TWO]->step = NULL;
-    specialDatas[TWO]->end = NULL;
-    specialDatas[TWO]->hitByCar = NULL;
-    specialDatas[TWO]->description = CCSTRING_FOR_KEY(dict, "description");
-    specialDatas[TWO]->name = CCSTRING_FOR_KEY(dict, "name");
+//    dict = (CCDictionary *)dataDict->objectForKey("two");
+//    specialDatas[TWO] = new SpecialData;
+//    specialDatas[TWO]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+//    specialDatas[TWO]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
+//    specialDatas[TWO]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+//    specialDatas[TWO]->begin = &doubleBegin;
+//    specialDatas[TWO]->step = NULL;
+//    specialDatas[TWO]->end = NULL;
+//    specialDatas[TWO]->hitByCar = NULL;
+//    specialDatas[TWO]->description = CCSTRING_FOR_KEY(dict, "description");
+//    specialDatas[TWO]->name = CCSTRING_FOR_KEY(dict, "name");
 
     return true;
 }

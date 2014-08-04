@@ -573,9 +573,9 @@ void StartMenuScene::initMainMenu(){
     CCMenuItemImage * score = CCMenuItemImage::create("top_score_normal.png",
             "top_score_selected.png" , this , menu_selector(StartMenuScene::scoreHandler));
     score->setTag(TOP_SCORE);
-    
+
     CCMenuItemImage * account = CCMenuItemImage::create("account_normal.png", "account_selected.png" , this , menu_selector(StartMenuScene::userHandler));
-    
+
     CCMenuItemImage * legends = CCMenuItemImage::create("legends_normal.png", "legends_selected.png" , this , menu_selector(StartMenuScene::legendsHandler));
 
     CCMenuItemImage * background = CCMenuItemImage::create("background_main.png" , "background_main.png");
@@ -615,7 +615,7 @@ void StartMenuScene::initMainMenu(){
     score->setScale(0.7);
     account->setScale(0.7);
     legends->setScale(0.7);
-    startMenu = CCMenu::create(background, newGame, options, score, legends, account, NULL);
+    startMenu = CCMenu::create(background, newGame, options, score, legends, account, credits, NULL);
     startMenu->ignoreAnchorPointForPosition(false);
     newGame->setPosition(ccp(winSize.width*0.3 , winSize.height*0.45));
     options->setPosition(ccp(winSize.width*0.7 , winSize.height*0.45));
