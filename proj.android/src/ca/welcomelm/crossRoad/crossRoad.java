@@ -63,7 +63,7 @@ public class crossRoad extends Cocos2dxActivity implements OnIabSetupFinishedLis
 QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 	
 	private static crossRoad _appActiviy;
-	private AdView adView;
+	private InterstitialAd interstitial;
 	private IabHelper iabHelper;
 	private static final String SKU_PRODUCT = "ca.welcomelm.crossroad.ugp";
 	private static final int requestBuy = 8;
@@ -73,32 +73,48 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 		super.onCreate(savedInstanceState);
 		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-
-		LinearLayout.LayoutParams adParams = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-		LinearLayout.LayoutParams.FILL_PARENT);
+		
+//		LinearLayout.LayoutParams adParams = new LinearLayout.LayoutParams(
+//				LinearLayout.LayoutParams.FILL_PARENT,
+//		LinearLayout.LayoutParams.FILL_PARENT);
 
 //		adView = new AdView(this);
 		
-		LinearLayout main = (LinearLayout) LinearLayout.inflate(this, R.layout.adview, null);
-		
-		adView = (AdView) main.findViewById(R.id.adView);
+//		LinearLayout main = (LinearLayout) LinearLayout.inflate(this, R.layout.adview, null);
+//		
+//		adView = (AdView) main.findViewById(R.id.adView);
 		
 //		adView.setAdSize(AdSize.BANNER);
 //		adView.setAdUnitId(AD_UNIT_ID);
 
-		AdRequest adRequest = new AdRequest.Builder()
-		.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-		.build();
-
-		adView.loadAd(adRequest);
-		adView.setAdListener(new AdListener(){
-			public void onAdLeftApplication(){
-				onAdClicked();
+//		AdRequest adRequest = new AdRequest.Builder()
+//		.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//		.build();
+//
+//		adView.loadAd(adRequest);
+//		adView.setAdListener(new AdListener(){
+//			public void onAdLeftApplication(){
+//				onAdClicked();
+//			}
+//		});
+		
+	    // Create the interstitial.
+	    interstitial = new InterstitialAd(this);
+	    interstitial.setAdUnitId("ca-app-pub-6252824057221692/3687116163");
+	    interstitial.setAdListener(new AdListener(){	
+			public void onAdClosed(){
+			    AdRequest adRequest = new AdRequest.Builder().build();
+			    interstitial.loadAd(adRequest);
 			}
-		});
-        addContentView(main,adParams);
+	    });
+
+	    // Create ad request.
+	    AdRequest adRequest = new AdRequest.Builder().build();
+
+	    // Begin loading your interstitial.
+	    interstitial.loadAd(adRequest);
+		
+//        addContentView(main,adParams);
 
 		_appActiviy = this;
 		
@@ -119,61 +135,20 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
         System.loadLibrary("cocos2dcpp");
     }
     
-    public static void hideAd()
-    {
-    	_appActiviy.runOnUiThread(new Runnable(){
-
-    		@Override
-    		public void run(){
-				if (_appActiviy.adView.isEnabled())
-				_appActiviy.adView.setEnabled(false);
-				if (_appActiviy.adView.getVisibility() != 4 )
-				_appActiviy.adView.setVisibility(View.INVISIBLE);
-    		}
-    	});
-
-    }
-
-
-    public static void showAd()
+    public static void showAds()
     {
     	_appActiviy.runOnUiThread(new Runnable(){
 
     		@Override
     		public void run()
     		{  
-				if (!_appActiviy.adView.isEnabled())
-				_appActiviy.adView.setEnabled(true);
-				if (_appActiviy.adView.getVisibility() == 4 )
-				_appActiviy.adView.setVisibility(View.VISIBLE); 
+				if (_appActiviy.interstitial.isLoaded()){
+					_appActiviy.interstitial.show();
+				}
     		}
     	});
 
     }
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (adView != null) {
-			adView.resume();
-		}
-	}
-
-	@Override
-	protected void onPause() {
-		if (adView != null) {
-			adView.pause();
-		}
-		super.onPause();
-	}
-
-	@Override
-	protected void onDestroy() {
-		adView.destroy();
-		super.onDestroy();
-	}
-	
-	public native void onAdClicked();
 	
 	public static void purchase(){
 		_appActiviy.runOnUiThread(new Runnable(){

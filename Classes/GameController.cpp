@@ -67,13 +67,12 @@ static char * specialNames[BAD_SPECIAL_NUM] = {"stop" , "strong" , "life" , "tim
                                         "bomb" , "allBad"};
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-
 void onAdClicked(){
     GameController::getGameController()->setJustFailed(false , true);
 }
 
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
+#include <jni.h>
 extern "C"
 {
     void Java_ca_welcomelm_crossRoad_crossRoad_onAdClicked( JNIEnv* env, jobject thiz ){
@@ -1154,7 +1153,8 @@ void GameController::recoverSpecialDurations(){
 }
 
 void GameController::onPaymentError(){
-    setInfoLabel("Payment Error");
+    CCLOG("onPaymentError");
+    //setInfoLabel("Payment Error");
     CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
     if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
         StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
@@ -1163,6 +1163,7 @@ void GameController::onPaymentError(){
 }
 
 void GameController::onPaymentSuccess(){
+    CCLOG("onPaymentSuccess");
     setInfoLabel("Payment Success");
     setHasPayed(true);
     CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
