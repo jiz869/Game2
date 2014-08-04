@@ -33,6 +33,7 @@ typedef enum{
     TIME,
     SKULL,
     //SCORE,
+    TWO,
     BLESS,
     SPECIAL_NUM,
     HASTE = SPECIAL_NUM,

@@ -1906,7 +1906,7 @@ for 2.5 seconds, so just HURRY !!!</string>
 			<key>image_name</key>
 			<string>life0.png</string>
 			<key>time_increase</key>
-			<string>5</string>		
+			<string>5</string>
 			<key>name</key>
 			<string>LIFE</string>
 			<key>description</key>
@@ -2057,7 +2057,7 @@ get time and score increase and have
 will carry a bad item and every bad 
 item will last 50% longer</string>
 		</dict>
-		<key>double</key>
+		<key>two</key>
 		<dict>
 			<key>duration</key>
 			<string>1</string>
@@ -2066,9 +2066,7 @@ item will last 50% longer</string>
 			<key>image_name</key>
 			<string>double0.png</string>
 			<key>name</key>
-			<string>ONE
-FOR
-TWO</string>
+			<string>DOUBLE</string>
 			<key>description</key>
 			<string>This good item will randomly
 generate 2 other good items</string>

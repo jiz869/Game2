@@ -232,6 +232,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.rank = 0;
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
+    userData.currentLevel = 4;
 
     return true;
 }
@@ -460,7 +461,6 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[LIFE]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
     specialDatas[LIFE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
     specialDatas[LIFE]->userData1 = CCSTRING_FOR_KEY(dict, "time_increase")->floatValue();
-    specialDatas[LIFE]->userData2 = CCSTRING_FOR_KEY(dict, "resume_max_duration")->floatValue();
     specialDatas[LIFE]->begin = &lifeBegin;
     specialDatas[LIFE]->step = NULL;
     specialDatas[LIFE]->end = NULL;
@@ -588,17 +588,17 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[ALLBAD]->description = CCSTRING_FOR_KEY(dict, "description");
     specialDatas[ALLBAD]->name = CCSTRING_FOR_KEY(dict, "name");
 
-    dict = (CCDictionary *)dataDict->objectForKey("time");
-    specialDatas[TIME] = new SpecialData;
-    specialDatas[TIME]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
-    specialDatas[TIME]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
-    specialDatas[TIME]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-    specialDatas[TIME]->begin = &doubleBegin;
-    specialDatas[TIME]->step = NULL;
-    specialDatas[TIME]->end = NULL;
-    specialDatas[TIME]->hitByCar = NULL;
-    specialDatas[TIME]->description = CCSTRING_FOR_KEY(dict, "description");
-    specialDatas[TIME]->name = CCSTRING_FOR_KEY(dict, "name");
+    dict = (CCDictionary *)dataDict->objectForKey("two");
+    specialDatas[TWO] = new SpecialData;
+    specialDatas[TWO]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[TWO]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
+    specialDatas[TWO]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[TWO]->begin = &doubleBegin;
+    specialDatas[TWO]->step = NULL;
+    specialDatas[TWO]->end = NULL;
+    specialDatas[TWO]->hitByCar = NULL;
+    specialDatas[TWO]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[TWO]->name = CCSTRING_FOR_KEY(dict, "name");
 
     return true;
 }
