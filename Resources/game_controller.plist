@@ -1941,23 +1941,19 @@ when you have it</string>
 			<string>The most dangerous car will 
 be blown out from each lane</string>
 		</dict>
-		<key>score</key>
+		<key>double</key>
 		<dict>
 			<key>duration</key>
-			<string>6</string>
-			<key>life</key>
-			<string>5</string>
-			<key>image_name</key>
-			<string>score0.png</string>
-			<key>interval</key>
 			<string>1</string>
-			<key>score_increase</key>
+			<key>life</key>
 			<string>4</string>
+			<key>image_name</key>
+			<string>double0.png</string>
 			<key>name</key>
-			<string>SCORE</string>
+			<string>DOUBLE</string>
 			<key>description</key>
-			<string>You will get 4 points for every
-second when you have it</string>
+			<string>This good item will randomly
+generate 2 other good items</string>
 		</dict>
 		<key>police</key>
 		<dict>
@@ -2056,20 +2052,6 @@ get time and score increase and have
 			<string>For the next 16 seconds every car 
 will carry a bad item and every bad 
 item will last 50% longer</string>
-		</dict>
-		<key>two</key>
-		<dict>
-			<key>duration</key>
-			<string>1</string>
-			<key>life</key>
-			<string>4</string>
-			<key>image_name</key>
-			<string>double0.png</string>
-			<key>name</key>
-			<string>DOUBLE</string>
-			<key>description</key>
-			<string>This good item will randomly
-generate 2 other good items</string>
 		</dict>
 	</dict>
 </dict>

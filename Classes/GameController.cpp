@@ -36,9 +36,6 @@ void static timeEnd(PlayerObj * player);
 
 void static skullBegin(PlayerObj * player);
 
-//void static scoreBegin(PlayerObj * player);
-//void static scoreStep(PlayerObj * player , float timer_count);
-
 void static policeBegin(PlayerObj * player);
 void static policeEnd(PlayerObj * player);
 
@@ -66,7 +63,7 @@ char * userDataValue[CHECKBOX_TYPE_NUM];
 static GameController * controller;
 
 static char * specialNames[BAD_SPECIAL_NUM] = {"stop" , "strong" , "life" , "time" , "skull" ,
-                                        "bless" , "haste" , "police" , "slow" , "curse",
+                                        "double" , "bless" , "haste" , "police" , "slow" , "curse",
                                         "bomb" , "allBad"};
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
@@ -232,7 +229,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.rank = 0;
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
-    userData.currentLevel = 4;
+    //userData.currentLevel = 4;
 
     return true;
 }
@@ -495,20 +492,17 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SKULL]->description = CCSTRING_FOR_KEY(dict, "description");
     specialDatas[SKULL]->name = CCSTRING_FOR_KEY(dict, "name");
 
-//    dict = (CCDictionary *)dataDict->objectForKey("score");
-//    specialDatas[SCORE] = new SpecialData;
-//    specialDatas[SCORE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
-//    specialDatas[SCORE]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
-//    specialDatas[SCORE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-//    specialDatas[SCORE]->userData1 = CCSTRING_FOR_KEY(dict, "interval")->floatValue();
-//    specialDatas[SCORE]->userData2 = CCSTRING_FOR_KEY(dict, "score_increase")->floatValue();
-//    specialDatas[SCORE]->begin = &scoreBegin;
-//    specialDatas[SCORE]->step = &scoreStep;
-//    specialDatas[SCORE]->end = NULL;
-//    specialDatas[SCORE]->hitByCar = NULL;
-//    specialDatas[SCORE]->animation = animationData.specialScoreAnim;
-//    specialDatas[SCORE]->description = CCSTRING_FOR_KEY(dict, "description");
-//    specialDatas[SCORE]->name = CCSTRING_FOR_KEY(dict, "name");
+    dict = (CCDictionary *)dataDict->objectForKey("double");
+    specialDatas[DOUBLE] = new SpecialData;
+    specialDatas[DOUBLE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[DOUBLE]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
+    specialDatas[DOUBLE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[DOUBLE]->begin = &doubleBegin;
+    specialDatas[DOUBLE]->step = NULL;
+    specialDatas[DOUBLE]->end = NULL;
+    specialDatas[DOUBLE]->hitByCar = NULL;
+    specialDatas[DOUBLE]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[DOUBLE]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("police");
     specialDatas[POLICE] = new SpecialData;
@@ -588,18 +582,6 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[ALLBAD]->description = CCSTRING_FOR_KEY(dict, "description");
     specialDatas[ALLBAD]->name = CCSTRING_FOR_KEY(dict, "name");
 
-//    dict = (CCDictionary *)dataDict->objectForKey("two");
-//    specialDatas[TWO] = new SpecialData;
-//    specialDatas[TWO]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
-//    specialDatas[TWO]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
-//    specialDatas[TWO]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-//    specialDatas[TWO]->begin = &doubleBegin;
-//    specialDatas[TWO]->step = NULL;
-//    specialDatas[TWO]->end = NULL;
-//    specialDatas[TWO]->hitByCar = NULL;
-//    specialDatas[TWO]->description = CCSTRING_FOR_KEY(dict, "description");
-//    specialDatas[TWO]->name = CCSTRING_FOR_KEY(dict, "name");
-
     return true;
 }
 
@@ -667,23 +649,14 @@ void static skullBegin(PlayerObj * player){
 	playScene->destroyRandomCar();
 }
 
-////score
-//void static scoreBegin(PlayerObj * player){
-//    AnimationData * animData = GameController::getGameController()->getAnimationData();
-//    SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSpecialSoundImage->getCString());
-//    SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
-//    PlayScene * playScene = (PlayScene *)player->getParent();
-//    playScene->controlMenu->changeScore(specialData->userData2, false);
-//}
-//void static scoreStep(PlayerObj * player , float timer_count){
-//    SpecialData * specialData = GameController::getGameController()->getSpecialData(SCORE);
-//    int interval = (int)(specialData->userData1 * 60);
-//    int count = (int)(timer_count * 60);
-//    if(count % interval == 0){
-//        PlayScene * playScene = (PlayScene *)player->getParent();
-//        playScene->controlMenu->changeScore(specialData->userData2, false);
-//    }
-//}
+//double
+void static doubleBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSpecialSoundImage->getCString());
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->city->addSpecial();
+    playScene->city->addSpecial();
+}
 
 //police
 void static policeBegin(PlayerObj * player){
@@ -791,15 +764,6 @@ void static allBadEnd(PlayerObj * player){
     				(1 + specialData->userData3);
     	}
     }
-}
-
-//double
-void static doubleBegin(PlayerObj * player){
-    AnimationData * animData = GameController::getGameController()->getAnimationData();
-    SimpleAudioEngine::sharedEngine()->playEffect(animData->lifeSoundImage->getCString());
-    PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->city->addSpecial();
-    playScene->city->addSpecial();
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){
