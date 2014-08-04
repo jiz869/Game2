@@ -1906,7 +1906,7 @@ for 2.5 seconds, so just HURRY !!!</string>
 			<key>image_name</key>
 			<string>life0.png</string>
 			<key>time_increase</key>
-			<string>5</string>
+			<string>5</string>		
 			<key>name</key>
 			<string>LIFE</string>
 			<key>description</key>
@@ -2026,7 +2026,7 @@ before 5.5 seconds timeout</string>
 			<key>image_name</key>
 			<string>bless0.png</string>
 			<key>chance</key>
-			<string>0.9</string>
+			<string>1.0</string>
 			<key>time_increase</key>
 			<string>2</string>
 			<key>score_increase</key>
@@ -2056,6 +2056,22 @@ get time and score increase and have
 			<string>For the next 16 seconds every car 
 will carry a bad item and every bad 
 item will last 50% longer</string>
+		</dict>
+		<key>double</key>
+		<dict>
+			<key>duration</key>
+			<string>1</string>
+			<key>life</key>
+			<string>4</string>
+			<key>image_name</key>
+			<string>double0.png</string>
+			<key>name</key>
+			<string>ONE
+FOR
+TWO</string>
+			<key>description</key>
+			<string>This good item will randomly
+generate 2 other good items</string>
 		</dict>
 	</dict>
 </dict>
