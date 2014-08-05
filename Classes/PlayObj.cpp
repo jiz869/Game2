@@ -290,7 +290,7 @@ void PlayerObj::beginWithSpecial(SpecialObj * specialObj){
         return;
     }
 
-    if (hasSpecial(CURSE) != NULL && specialObj->getSpecialId() < SPECIAL_NUM
+    if (hasSpecial(CURSE) != NULL && specialObj->getSpecialId() <= SPECIAL_NUM
     		&& specialObj->getSpecialId() != BLESS) {
         return;
     }
@@ -338,7 +338,7 @@ bool PlayerObj::enoughSpecials(int specialId){
 }
 
 SpecialObj * PlayerObj::hasSpecial(int specialId){
-	if(specialId < SPECIAL_NUM){
+	if(specialId <= SPECIAL_NUM){
 		int size = specials.size();
 	    for (int i = 0; i < size; i++) {
 	        if (specials[i]->getSpecialId() == specialId) {

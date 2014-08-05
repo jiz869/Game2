@@ -18,6 +18,7 @@ typedef enum{
     TOP_SCORE,
     PVP,
     PURCHASE,
+    RESTORE,
 }BUTTON_TAG;
 
 typedef enum{
@@ -172,15 +173,21 @@ void StartMenuScene::initPurchaseMenu(){
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
     		this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.7);
-    OK->setPosition(ccp(winSize.width*0.3, winSize.height * 0.15));
+    OK->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
 
     CCMenuItemImage * purchase = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" ,
     		this , menu_selector(StartMenuScene::purchaseHandler));
     purchase->setScale(0.7);
     purchase->setTag(PURCHASE);
-    purchase->setPosition(ccp(winSize.width*0.7, winSize.height * 0.15));
+    purchase->setPosition(ccp(winSize.width*0.5, winSize.height * 0.45));
 
-	purchaseMenu = CCMenu::create(OK , purchase , benefits , NULL);
+    CCMenuItemImage * restore = CCMenuItemImage::create("restore_normal.png", "restore_selected.png" ,
+            this , menu_selector(StartMenuScene::purchaseHandler));
+    restore->setScale(0.7);
+    restore->setTag(RESTORE);
+    restore->setPosition(ccp(winSize.width*0.5, winSize.height * 0.3));
+
+	purchaseMenu = CCMenu::create(OK , purchase , benefits , restore , NULL);
 	purchaseMenu->ignoreAnchorPointForPosition(false);
 	purchaseMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     addChild(purchaseMenu);
@@ -487,10 +494,13 @@ CCTableViewCell * StartMenuScene::cellForScore(CCTableViewCell * cell, int idx){
 }
 
 CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int index){
-
     if (index > BAD_SPECIAL_NUM - 1) return NULL;
 
-    if(index > SPECIAL_NUM - 1) index+=1;
+    PlaySceneData * playSceneData = GameController::getGameController()->getPlaySceneData(userData->topLevel);
+
+    if(index > playSceneData->goodMax){
+        index = index - playSceneData->goodMax + SPECIAL_NUM;
+    }
 
     SpecialData * data = GameController::getGameController()->getSpecialData(index);
 
@@ -543,7 +553,10 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
 
 unsigned int StartMenuScene::numberOfCellsInTableView(CCTableView *table){
     if(table == scoreTable) return MAX_RANKS;
-    if(table == legendsTable) return BAD_SPECIAL_NUM - 1;
+    if(table == legendsTable){
+        PlaySceneData * playSceneData = GameController::getGameController()->getPlaySceneData(userData->topLevel);
+        return playSceneData->goodMax + 1 + playSceneData->badMax - SPECIAL_NUM;
+    }
 }
 
 CCSize StartMenuScene::tableCellSizeForIndex(CCTableView *table, unsigned int idx){
@@ -908,7 +921,9 @@ void StartMenuScene::changeSoundSetting(CheckboxType type){
 
 void StartMenuScene::enableButtonsForIap(bool enable){
     CCMenuItem * purchase = (CCMenuItem *)purchaseMenu->getChildByTag(PURCHASE);
+    CCMenuItem * restore = (CCMenuItem *)purchaseMenu->getChildByTag(RESTORE);
     if(purchase) purchase->setEnabled(enable);
+    if(restore) restore->setEnabled(enable);
 }
 
 bool StartMenuScene::onTextFieldAttachWithIME(cocos2d::CCTextFieldTTF *sender){

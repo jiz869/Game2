@@ -26,16 +26,16 @@ typedef enum{
 	GAME_OVER_SCENE,
 }SceneTag;
 
+//must be in the same order with game_controller.plist
 typedef enum{
     STOP = 0,
+    TIME,
     STRONG,
     LIFE,
-    TIME,
     SKULL,
     DOUBLE,
     BLESS,
-    SPECIAL_NUM,
-    HASTE = SPECIAL_NUM,
+    SPECIAL_NUM = BLESS,
     POLICE = SPECIAL_NUM + 1,
     SLOW,
     CURSE,
@@ -100,6 +100,8 @@ typedef struct{
     int maxDuration;
     int durationIncrease;
     float specialInterval;
+    int goodMax;
+    int badMax;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 
@@ -155,6 +157,7 @@ typedef struct{
     CheckboxType sound;
     CheckboxType controllerPosition;
 	int topScore;
+	int topLevel;
     int lastLevel;
 	int lastScore;
     int currentLevel;
@@ -290,6 +293,7 @@ private:
     ScoreBoardService *scoreBoardService;
     int getLevelByScore(int score);
     void setInfoLabel(const char * info);
+    int getSpecialIdForKey(CCString * key);
 };
 
 #endif /* defined(__crossRoad__GameController__) */

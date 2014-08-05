@@ -23,9 +23,6 @@ using namespace CocosDenshion;
 void static stopBegin(PlayerObj * player);
 void static stopEnd(PlayerObj * player);
 
-void static hasteBegin(PlayerObj * player);
-void static hasteEnd(PlayerObj * player);
-
 void static strongBegin(PlayerObj * player);
 bool static strongHitByCar(PlayerObj * player, CCSprite * car);
 
@@ -61,10 +58,6 @@ void static doubleBegin(PlayerObj * player);
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
-
-static char * specialNames[BAD_SPECIAL_NUM] = {"stop" , "strong" , "life" , "time" , "skull" ,
-                                        "double" , "bless" , "haste" , "police" , "slow" , "curse",
-                                        "bomb" , "allBad"};
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 void onAdClicked(){
@@ -173,7 +166,6 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     CCArray * levels = (CCArray *)dataDict->objectForKey("levels");
 
     userData.maxLevel = levels->count();
-
     userData.levels.reserve(userData.maxLevel);
 
     for (int i = 0; i < userData.maxLevel; i++) {
@@ -229,6 +221,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.rank = 0;
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
+    userData.topLevel = getLevelByScore(userData.topScore);
     //userData.currentLevel = 4;
 
     return true;
@@ -255,6 +248,9 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
         data->playerAccSpeed = CCSTRING_FOR_KEY(dict , "player_start_acc_speed")->floatValue();
         data->playerStopAccSpeed = CCSTRING_FOR_KEY(dict , "player_stop_acc_speed")->floatValue();
         data->specialInterval = CCSTRING_FOR_KEY(dict , "special_interval")->floatValue();
+        data->goodMax = getSpecialIdForKey(CCSTRING_FOR_KEY(dict , "good_max"));
+        data->badMax = getSpecialIdForKey(CCSTRING_FOR_KEY(dict , "bad_max"));
+        //CCLOG("good %d, bad %d", data->goodMax , data->badMax);
 
         CCArray * ldArray = (CCArray *)dict->objectForKey("lane_descriptions");
         for (int j = 0; j < ldArray->count(); j++) {
@@ -284,6 +280,18 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
     }
 
     return true;
+}
+
+int GameController::getSpecialIdForKey(CCString * key){
+    CCDictionary * specialDict = (CCDictionary *)dict->objectForKey("special_data");
+    CCArray * keys = specialDict->allKeys();
+    for(int i = 0 ; i < keys->count() ; i++){
+        CCString * temp = (CCString *)keys->objectAtIndex(i);
+        if(temp->isEqual(key)){
+            return i;
+        }
+    }
+    return 0;
 }
 
 bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
@@ -424,20 +432,6 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[STOP]->end = &stopEnd;
     specialDatas[STOP]->hitByCar = NULL;
     specialDatas[STOP]->animation = animationData.specialStopAnim;
-
-    dict = (CCDictionary *)dataDict->objectForKey("haste");
-    specialDatas[HASTE] = new SpecialData;
-    specialDatas[HASTE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
-    specialDatas[HASTE]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
-    specialDatas[HASTE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-    specialDatas[HASTE]->userData1 = CCSTRING_FOR_KEY(dict, "speed_increase")->floatValue();
-    specialDatas[HASTE]->begin = &hasteBegin;
-    specialDatas[HASTE]->step = NULL;
-    specialDatas[HASTE]->end = &hasteEnd;
-    specialDatas[HASTE]->hitByCar = NULL;
-    specialDatas[HASTE]->animation = animationData.specialHasteAnim;
-    specialDatas[HASTE]->description = CCSTRING_FOR_KEY(dict, "description");
-    specialDatas[HASTE]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("strong");
     specialDatas[STRONG] = new SpecialData;
@@ -598,17 +592,6 @@ void static stopEnd(PlayerObj * player){
     playScene->restartAllLanes();
 }
 
-//haste
-void static hasteBegin(PlayerObj * player){
-	SpecialData * data = GameController::getGameController()->getSpecialData(HASTE);
-    player->speedUp(data->userData1);
-}
-
-void static hasteEnd(PlayerObj * player){
-	SpecialData * data = GameController::getGameController()->getSpecialData(HASTE);
-    player->slowDown(data->userData1);
-}
-
 //strong
 void static strongBegin(PlayerObj * player){
     AnimationData * animData = GameController::getGameController()->getAnimationData();
@@ -729,7 +712,7 @@ void static blessBegin(PlayerObj * player){
 
     if(toss(specialData->userData1) == false) return;
     SpecialObj * specialObj = new SpecialObj();
-    playScene->addChild(specialObj->load(getRandom(0 , BLESS - 1)));
+    playScene->addChild(specialObj->load(BLESS));
     player->beginWithSpecial(specialObj);
 }
 void static blessEnd(PlayerObj * player){
@@ -797,7 +780,9 @@ void GameController::setUserData(const char * key, CheckboxType type , int value
 
 void GameController::levelUp(){
     userData.currentLevel++;
+
     userData.lastLevel = userData.currentLevel;
+    userData.topLevel = getLevelByScore(userData.topScore);
     CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
     userDataDict->setObject(CCString::createWithFormat("%d", userData.lastLevel), "last_level");
     dict->setObject(userDataDict, "user_data");
@@ -1135,15 +1120,18 @@ void GameController::saveUser(const char * userName , const char * password){
 
 void GameController::recoverSpecialDurations(){
     CCDictionary * specialDict = (CCDictionary *)dict->objectForKey("special_data");
-    for(int i = 0 ; i < BAD_SPECIAL_NUM ; i++){
-        CCDictionary * dict = (CCDictionary *)specialDict->objectForKey(specialNames[i]);
+    CCArray * keys = specialDict->allKeys();
+    for(int i = 0 ; i < keys->count() ; i++){
+        //CCLOG("%s", ((CCString *)keys->objectAtIndex(i))->getCString());
+        CCDictionary * dict = (CCDictionary *)specialDict->objectForKey(
+                ((CCString *)keys->objectAtIndex(i))->getCString());
         specialDatas[i]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     }
 }
 
 void GameController::onPaymentError(){
     CCLOG("onPaymentError");
-    //setInfoLabel("Payment Error");
+    setInfoLabel("Payment Error");
     CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
     if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
         StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);

@@ -322,7 +322,7 @@ void ControlMenu::levelUp(){
     menu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->levelupSoundImage->getCString());
-    GameController::getGameController()->setLastScore(score , false);
+    GameController::getGameController()->setLastScore(score , true);
     GameController::getGameController()->setJustFailed(false , false);
     GameController::getGameController()->levelUp();
 }
@@ -349,6 +349,7 @@ void ControlMenu::increaseDuration(int delta){
     if(seconds > maxDuration){
         maxDuration = seconds;
     }
+    unschedule(schedule_selector(ControlMenu::resumeDuration));
     scheduleOnce(schedule_selector(ControlMenu::resumeDuration) , 15);
     updateGameTime();
 }

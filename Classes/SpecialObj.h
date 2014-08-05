@@ -16,7 +16,7 @@ public:
 	virtual ~SpecialObj();
     virtual B2Sprite * load(bool left2right , CCPoint initPos , float speed , Lane * lane , vector<int> * carNumbers);
     virtual B2Sprite * load(CCPoint initPos);
-    virtual B2Sprite * load(int specialId);
+    virtual B2Sprite * load(int exceptId);
     virtual void begin(PlayerObj * player);
     virtual void step(PlayerObj * player);
     virtual void end(PlayerObj * player);
@@ -35,6 +35,8 @@ protected:
     float timer_count;
     bool taken;
     bool expired;
+    int goodMax;
+    int badMax;
 };
 
 #endif /* SPECIALOBJ_H_ */

@@ -10,7 +10,10 @@
 
 SpecialObj::SpecialObj() : timer_count(0) , taken(false) , expired(false) {
 	// TODO Auto-generated constructor stub
-
+    UserData * userData = GameController::getGameController()->getUserData();
+    PlaySceneData * playSceneData = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
+    goodMax = playSceneData->goodMax;
+    badMax = playSceneData->badMax;
 }
 
 SpecialObj::~SpecialObj() {
@@ -18,7 +21,7 @@ SpecialObj::~SpecialObj() {
 }
 
 B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float speed, Lane *lane , vector<int> * carNumbers){
-    specialId = getRandom(SPECIAL_NUM + 1, BAD_SPECIAL_NUM - 1);
+    specialId = getRandom(SPECIAL_NUM + 1, badMax);
     specialData = GameController::getGameController()->getSpecialData(specialId);
     int carNumber = getRandom(0, carNumbers->size()-1);
     CCString * carName = CCString::createWithFormat("car%d.png", carNumbers->at(carNumber));
@@ -34,7 +37,7 @@ B2Sprite * SpecialObj::load(bool left2right, cocos2d::CCPoint initPos, float spe
 }
 
 B2Sprite * SpecialObj::load(cocos2d::CCPoint initPos){
-    specialId = getRandom(0, SPECIAL_NUM - 1);
+    specialId = getRandom(0, goodMax);
     specialData = GameController::getGameController()->getSpecialData(specialId);
     GameObj::load(specialData->imageName->getCString() , b2_kinematicBody , SPECIAL);
     //gameObj->runAction(CCRepeatForever::create(CCAnimate::create(specialData->animation)));
@@ -43,7 +46,9 @@ B2Sprite * SpecialObj::load(cocos2d::CCPoint initPos){
     return gameObj;
 }
 
-B2Sprite * SpecialObj::load(int specialId){
+B2Sprite * SpecialObj::load(int exceptId){
+    int specialId = 0;
+    if(goodMax <= exceptId) specialId = getRandom(0 , goodMax - 1);
     this->specialId = specialId;
     specialData = GameController::getGameController()->getSpecialData(specialId);
     GameObj::load(specialData->imageName->getCString() , b2_kinematicBody , SPECIAL);
@@ -54,7 +59,7 @@ B2Sprite * SpecialObj::load(int specialId){
 }
 
 void SpecialObj::begin(PlayerObj *player){
-	if(specialId < SPECIAL_NUM){
+	if(specialId <= SPECIAL_NUM){
 		gameObj->setVisible(false);
 		gameObj->setPosition(ccp(-1000 , -1000));
 	}else{
