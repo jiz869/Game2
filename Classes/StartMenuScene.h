@@ -29,6 +29,7 @@ public:
     CREATE_FUNC(StartMenuScene);
     virtual bool init();
     void newGameHandler(CCObject * sender);
+    void newGameMenuHandler(CCObject * sender);
     void optionsHandler(CCObject * sender);
     void okHandler(CCObject * sender);
     void checkboxHandler(CCObject * sender);
@@ -62,6 +63,7 @@ private:
     CCLayer * userMenu;
     CCLayer * legendsMenu;
     CCLayer * purchaseMenu;
+    CCLayer * newGameMenu;
 #ifdef LISTVIEW_LEADERBOARD
     CCLayer * scoreMenu;
     CCTableView * scoreTable;
@@ -78,6 +80,7 @@ private:
     void initUserMenu();
     void initLegendsMenu();
     void initPurchaseMenu();
+    void initNewGameMenu();
     CCMenuItemImage * checkboxLeft;
     CCMenuItemImage * checkboxRight;
     CCMenuItemImage * checkboxSideLeftUp;

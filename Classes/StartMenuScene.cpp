@@ -87,6 +87,8 @@ bool StartMenuScene::init(){
 
     initMainMenu();
 
+    initNewGameMenu();
+
     initOptionsMenu();
 
     initScoreMenu();
@@ -114,6 +116,52 @@ bool StartMenuScene::init(){
     setKeypadEnabled(true);
 
     return true;
+}
+
+void StartMenuScene::initNewGameMenu(){
+    CCMenuItemLabel * currentLevel = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 72 ,
+            CCSizeMake(winSize.width * 0.5 , winSize.height * 0.2) ,  kCCTextAlignmentCenter));
+    currentLevel->setDisabledColor( ccRED );
+    currentLevel->setPosition(ccp(winSize.width * 0.45 , winSize.height*0.7));
+    currentLevel->setString("Current Level");
+    currentLevel->setEnabled(false);
+
+    CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
+    CCMenuItemImage * gem = CCMenuItemImage::create();
+    gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
+    gem->setPosition(ccp(winSize.width*0.6, winSize.height*0.75));
+    gem->setEnabled(false);
+
+    CCMenuItemLabel * yourSkills = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 56,
+            CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
+    yourSkills->setDisabledColor( ccBLUE );
+    yourSkills->setPosition(ccp(winSize.width * 0.2 , winSize.height*0.5));
+    yourSkills->setString("Your skills");
+    yourSkills->setEnabled(false);
+
+    CCMenuItemLabel * enemySkills = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 56,
+            CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
+    enemySkills->setDisabledColor( ccBLACK );
+    enemySkills->setPosition(ccp(winSize.width * 0.2 , winSize.height*0.3));
+    enemySkills->setString("Enemy skills");
+    enemySkills->setEnabled(false);
+
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
+            this , menu_selector(StartMenuScene::okHandler));
+    OK->setScale(0.6);
+    OK->setPosition(ccp(winSize.width*0.3, winSize.height * 0.15));
+
+    CCMenuItemImage * game = CCMenuItemImage::create("continue_normal.png", "continue_selected.png" ,
+            this , menu_selector(StartMenuScene::newGameHandler));
+    game->setScale(0.6);
+    game->setTag(PURCHASE);
+    game->setPosition(ccp(winSize.width*0.7, winSize.height * 0.15));
+
+    newGameMenu = CCMenu::create(OK , game , currentLevel, yourSkills , enemySkills , gem , NULL);
+    newGameMenu->ignoreAnchorPointForPosition(false);
+    newGameMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    addChild(newGameMenu);
+    menus.push_back(newGameMenu);
 }
 
 void StartMenuScene::initLegendsMenu(){
@@ -576,7 +624,7 @@ void StartMenuScene::scrollViewDidZoom(CCScrollView* view){
 
 void StartMenuScene::initMainMenu(){
     CCMenuItemImage * newGame = CCMenuItemImage::create("button_new_game_normal.png",
-            "button_new_game_selected.png", this, menu_selector(StartMenuScene::newGameHandler));
+            "button_new_game_selected.png", this, menu_selector(StartMenuScene::newGameMenuHandler));
     newGame->setTag(NEW_GAME);
 
     CCMenuItemImage * options = CCMenuItemImage::create("button_options_normal.png",
@@ -819,6 +867,10 @@ void StartMenuScene::setInfoLabel(const char *info , float delay){
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){
     showMenu(optionsMenu);
+}
+
+void StartMenuScene::newGameMenuHandler(cocos2d::CCObject *sender){
+    showMenu(newGameMenu);
 }
 
 void StartMenuScene::okHandler(cocos2d::CCObject *sender){
