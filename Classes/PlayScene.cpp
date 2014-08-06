@@ -297,3 +297,30 @@ void PlayScene:: resetSpecialChance(){
     }
 }
 
+void PlayScene::allSmallCars(){
+    int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+        lanes[i]->allSmallCars();
+    }
+}
+
+void PlayScene::resumeCarNumbers(){
+    int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+        lanes[i]->resumeCarNumbers();
+    }
+}
+
+void PlayScene::speedUp(float percent){
+    int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+        lanes[i]->speedUp(percent);
+    }
+}
+void PlayScene::resumeSpeed(){
+    int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+        lanes[i]->resumeSpeed();
+    }
+}
+

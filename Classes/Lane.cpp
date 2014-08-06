@@ -56,6 +56,10 @@ bool Lane::initWithDescription(LaneDescription * description){
 
 	this->description = description;
 
+	carNumbers = description->carNumbers;
+	speed = description->carSpeed;
+	period = description->period;
+
 	specialChance = description->specialChance;
 
 	scheduleOnce(schedule_selector(Lane::addACar1) , 0);
@@ -66,26 +70,24 @@ bool Lane::initWithDescription(LaneDescription * description){
 void Lane::addACar1(float dt){
 
 	timePassedFromLastSchedule = 0;
-	float speed , interval;
+	float interval;
 
 	UserData * userData = GameController::getGameController()->getUserData();
 
 	if(userData->pvpMode == PREPARE_PLAY){
-		interval = description->period;
+		interval = period;
 	}else{
-		interval = description->period - 0.1*getRandom(0,2);
+		interval = period - 0.1*getRandom(0,2);
 	}
-	speed = description->carSpeed;
-
 
     if (toss(specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
-        speciaObj->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+        speciaObj->load(description->left2right, description->initPos, speed, this , &carNumbers);
     }else{
 
 		CarObj * car = new CarObj();
 
-		car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+		car->load(description->left2right, description->initPos, speed, this , &carNumbers);
     }
 
     scheduleOnce(schedule_selector(Lane::addACar2) , interval);
@@ -95,25 +97,24 @@ void Lane::addACar2(float dt){
 
     timePassedFromLastSchedule = 0;
 
-	float speed , interval;
+	float interval;
 
 	UserData * userData = GameController::getGameController()->getUserData();
 
 	if(userData->pvpMode == PREPARE_PLAY){
-		interval = description->period;
+		interval = period;
 	}else{
-		interval = description->period - 0.1*getRandom(0,2);
+		interval = period - 0.1*getRandom(0,2);
 	}
-	speed = description->carSpeed;
 
     if (toss(specialChance)) {
         SpecialObj * speciaObj = new SpecialObj();
-        speciaObj->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+        speciaObj->load(description->left2right, description->initPos, speed, this , &carNumbers);
     }else{
 
 		CarObj * car = new CarObj();
 
-		car->load(description->left2right, description->initPos, speed, this , &description->carNumbers);
+		car->load(description->left2right, description->initPos, speed, this , &carNumbers);
     }
 
     scheduleOnce(schedule_selector(Lane::addACar1) , interval);
@@ -176,14 +177,14 @@ void Lane::reStart(){
         car = (B2Sprite *)pObject;
 
         if (car && car->getTag() != kCCNodeTagInvalid) {
-        	car->getB2Body()->SetLinearVelocity(b2Vec2(description->carSpeed , 0));
+        	car->getB2Body()->SetLinearVelocity(b2Vec2(speed , 0));
         }
     }
 
     float delay;
 
-    if(timePassedFromLastSchedule > description->period) delay = 0;
-    else delay = description->period - timePassedFromLastSchedule;
+    if(timePassedFromLastSchedule > period) delay = 0;
+    else delay = period - timePassedFromLastSchedule;
 
     scheduleOnce(schedule_selector(Lane::addACar1) , delay);
 
@@ -231,4 +232,21 @@ void Lane::resetSpecialChance(){
 	specialChance = description->specialChance;
 }
 
+void Lane::allSmallCars(){
+    int array[] = {0,1,2,3};
+    vector<int> temp(array , array+sizeof(array)/sizeof(array[0]));
+    carNumbers = temp;
+}
+
+void Lane::resumeCarNumbers(){
+    carNumbers = description->carNumbers;
+}
+
+void Lane::speedUp(float percent){
+    period = period / (1+percent);
+}
+
+void Lane::resumeSpeed(){
+    period = description->period;
+}
 

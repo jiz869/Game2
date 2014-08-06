@@ -33,6 +33,10 @@ public:
     void destroyMe(cocos2d::CCObject *car);
     void setSpecialChance(float chance);
     void resetSpecialChance();
+    void allSmallCars();
+    void resumeCarNumbers();
+    void speedUp(float percent);
+    void resumeSpeed();
 
 private:
 	LaneDescription * description;
@@ -42,6 +46,9 @@ private:
     float timePassedFromLastSchedule;
     PlaySceneData * playSceneData;
     float specialChance;
+    vector<int> carNumbers;
+    float speed;
+    float period;
 };
 
 int getRandom(int low, int high);

@@ -150,11 +150,11 @@ void StartMenuScene::initNewGameMenu(){
             this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.55);
     OK->setPosition(ccp(winSize.width*0.2, winSize.height * 0.15));
-    
+
     CCMenuItemImage * legends = CCMenuItemImage::create("legends_normal.png", "legends_selected.png" , this , menu_selector(StartMenuScene::legendsHandler));
     legends->setScale(0.55);
     legends->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
-    
+
 
     CCMenuItemImage * game = CCMenuItemImage::create("continue_normal.png", "continue_selected.png" ,
             this , menu_selector(StartMenuScene::newGameHandler));
@@ -167,23 +167,25 @@ void StartMenuScene::initNewGameMenu(){
     newGameMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     addChild(newGameMenu);
     menus.push_back(newGameMenu);
-    
+
     CCMenuItemImage * special;
     PlaySceneData * playSceneData = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
     for (int i=0; i<=playSceneData->goodMax; i++) {
         SpecialData * specialData = GameController::getGameController()->getSpecialData(i);
         special = CCMenuItemImage::create();
         special->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(specialData->imageName->getCString()));
-        special->setPosition(ccp(winSize.width*(0.35+0.1*i) , winSize.height*0.55));
+        special->setPosition(ccp(winSize.width*(0.35+0.08*i) , winSize.height*0.55));
         special->setEnabled(false);
+        special->setScale(0.8);
         newGameMenu->addChild(special);
     }
     for (int i=SPECIAL_NUM+1; i<=playSceneData->badMax; i++) {
         SpecialData * specialData = GameController::getGameController()->getSpecialData(i);
         special = CCMenuItemImage::create();
         special->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(specialData->imageName->getCString()));
-        special->setPosition(ccp(winSize.width*(0.4+0.1*(i-SPECIAL_NUM-1)) , winSize.height*0.35));
+        special->setPosition(ccp(winSize.width*(0.4+0.08*(i-SPECIAL_NUM-1)) , winSize.height*0.35));
         special->setEnabled(false);
+        special->setScale(0.8);
         newGameMenu->addChild(special);
     }
 }

@@ -50,6 +50,10 @@ public:
 
     void setSpecialChance(float chance , float length);
     void resetSpecialChance();
+    void allSmallCars();
+    void resumeCarNumbers();
+    void speedUp(float percent);
+    void resumeSpeed();
 
 protected:
 

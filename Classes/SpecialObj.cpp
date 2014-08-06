@@ -47,8 +47,7 @@ B2Sprite * SpecialObj::load(cocos2d::CCPoint initPos){
 }
 
 B2Sprite * SpecialObj::load(int exceptId){
-    int specialId = 0;
-    if(goodMax <= exceptId) specialId = getRandom(0 , goodMax - 1);
+    int specialId = getRandom(0 , exceptId - 1);
     this->specialId = specialId;
     specialData = GameController::getGameController()->getSpecialData(specialId);
     GameObj::load(specialData->imageName->getCString() , b2_kinematicBody , SPECIAL);

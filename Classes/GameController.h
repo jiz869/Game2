@@ -34,12 +34,14 @@ typedef enum{
     LIFE,
     SKULL,
     DOUBLE,
+    SMALL,
     BLESS,
     SPECIAL_NUM = BLESS,
     POLICE = SPECIAL_NUM + 1,
     SLOW,
     CURSE,
     BOMB,
+    FAST,
     ALLBAD,
     BAD_SPECIAL_NUM,
 }SpecialID;
@@ -121,6 +123,8 @@ typedef struct{
     CCString * curseSoundImage;
     CCString * bombSoundImage;
     CCString * allBadSoundImage;
+    CCString * smallSoundImage;
+    CCString * fastSoundImage;
     CCString * gameOverSoundImage;
     CCString * gameStartSoundImage;
     CCString * scoreSpecialSoundImage;
