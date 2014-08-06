@@ -44,7 +44,7 @@ static AppDelegate s_sharedApplication;
     controller = viewController;
     
     interstitial_ = [[GADInterstitial alloc] init];
-    interstitial_.adUnitID = @"ca-app-pub-6252824057221692/6252132962";
+    interstitial_.adUnitID = @"ca-app-pub-3247169613448867/4636750034";
     interstitial_.delegate = self;
     [interstitial_ loadRequest:[GADRequest request]];
 

@@ -100,7 +100,7 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 		
 	    // Create the interstitial.
 	    interstitial = new InterstitialAd(this);
-	    interstitial.setAdUnitId("ca-app-pub-6252824057221692/3687116163");
+	    interstitial.setAdUnitId("ca-app-pub-3247169613448867/7590216439");
 	    interstitial.setAdListener(new AdListener(){	
 			public void onAdClosed(){
 			    AdRequest adRequest = new AdRequest.Builder().build();

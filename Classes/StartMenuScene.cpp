@@ -119,17 +119,17 @@ bool StartMenuScene::init(){
 }
 
 void StartMenuScene::initNewGameMenu(){
-    CCMenuItemLabel * currentLevel = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 72 ,
-            CCSizeMake(winSize.width * 0.5 , winSize.height * 0.2) ,  kCCTextAlignmentCenter));
+    CCMenuItemLabel * currentLevel = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96 ,
+            CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
     currentLevel->setDisabledColor( ccRED );
-    currentLevel->setPosition(ccp(winSize.width * 0.45 , winSize.height*0.7));
-    currentLevel->setString("Current Level");
+    currentLevel->setPosition(ccp(winSize.width * 0.4 , winSize.height*0.75));
+    currentLevel->setString("LEVEL");
     currentLevel->setEnabled(false);
 
     CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
     CCMenuItemImage * gem = CCMenuItemImage::create();
     gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
-    gem->setPosition(ccp(winSize.width*0.6, winSize.height*0.75));
+    gem->setPosition(ccp(winSize.width*0.6, winSize.height*0.77));
     gem->setEnabled(false);
 
     CCMenuItemLabel * yourSkills = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 56,
@@ -148,20 +148,44 @@ void StartMenuScene::initNewGameMenu(){
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.6);
-    OK->setPosition(ccp(winSize.width*0.3, winSize.height * 0.15));
+    OK->setScale(0.55);
+    OK->setPosition(ccp(winSize.width*0.2, winSize.height * 0.15));
+    
+    CCMenuItemImage * legends = CCMenuItemImage::create("legends_normal.png", "legends_selected.png" , this , menu_selector(StartMenuScene::legendsHandler));
+    legends->setScale(0.55);
+    legends->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
+    
 
     CCMenuItemImage * game = CCMenuItemImage::create("continue_normal.png", "continue_selected.png" ,
             this , menu_selector(StartMenuScene::newGameHandler));
-    game->setScale(0.6);
+    game->setScale(0.55);
     game->setTag(PURCHASE);
-    game->setPosition(ccp(winSize.width*0.7, winSize.height * 0.15));
+    game->setPosition(ccp(winSize.width*0.8, winSize.height * 0.15));
 
-    newGameMenu = CCMenu::create(OK , game , currentLevel, yourSkills , enemySkills , gem , NULL);
+    newGameMenu = CCMenu::create(OK , game , currentLevel, yourSkills , enemySkills , gem , legends , NULL);
     newGameMenu->ignoreAnchorPointForPosition(false);
     newGameMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     addChild(newGameMenu);
     menus.push_back(newGameMenu);
+    
+    CCMenuItemImage * special;
+    PlaySceneData * playSceneData = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
+    for (int i=0; i<=playSceneData->goodMax; i++) {
+        SpecialData * specialData = GameController::getGameController()->getSpecialData(i);
+        special = CCMenuItemImage::create();
+        special->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(specialData->imageName->getCString()));
+        special->setPosition(ccp(winSize.width*(0.35+0.1*i) , winSize.height*0.55));
+        special->setEnabled(false);
+        newGameMenu->addChild(special);
+    }
+    for (int i=SPECIAL_NUM+1; i<=playSceneData->badMax; i++) {
+        SpecialData * specialData = GameController::getGameController()->getSpecialData(i);
+        special = CCMenuItemImage::create();
+        special->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(specialData->imageName->getCString()));
+        special->setPosition(ccp(winSize.width*(0.4+0.1*(i-SPECIAL_NUM-1)) , winSize.height*0.35));
+        special->setEnabled(false);
+        newGameMenu->addChild(special);
+    }
 }
 
 void StartMenuScene::initLegendsMenu(){
@@ -220,20 +244,20 @@ void StartMenuScene::initPurchaseMenu(){
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
     		this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.7);
-    OK->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
+    OK->setScale(0.55);
+    OK->setPosition(ccp(winSize.width*0.2, winSize.height * 0.25));
 
     CCMenuItemImage * purchase = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" ,
     		this , menu_selector(StartMenuScene::purchaseHandler));
-    purchase->setScale(0.7);
+    purchase->setScale(0.55);
     purchase->setTag(PURCHASE);
-    purchase->setPosition(ccp(winSize.width*0.5, winSize.height * 0.45));
+    purchase->setPosition(ccp(winSize.width*0.5, winSize.height * 0.25));
 
     CCMenuItemImage * restore = CCMenuItemImage::create("restore_normal.png", "restore_selected.png" ,
             this , menu_selector(StartMenuScene::purchaseHandler));
-    restore->setScale(0.7);
+    restore->setScale(0.55);
     restore->setTag(RESTORE);
-    restore->setPosition(ccp(winSize.width*0.5, winSize.height * 0.3));
+    restore->setPosition(ccp(winSize.width*0.8, winSize.height * 0.25));
 
 	purchaseMenu = CCMenu::create(OK , purchase , benefits , restore , NULL);
 	purchaseMenu->ignoreAnchorPointForPosition(false);
@@ -380,16 +404,16 @@ void StartMenuScene::initUserMenu(){
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
-    OK->setScale(0.6);
-    OK->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.45));
+    OK->setScale(0.55);
+    OK->setPosition(ccp(winSize.width * 0.2, winSize.height * 0.25));
     CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" ,
             this , menu_selector(StartMenuScene::loginHandler));
-    login->setScale(0.6);
-    login->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.3));
+    login->setScale(0.55);
+    login->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.25));
     CCMenuItemImage * create = CCMenuItemImage::create("register_normal.png", "register_selected.png" ,
             this , menu_selector(StartMenuScene::RegisterHandler));
-    create->setScale(0.6);
-    create->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
+    create->setScale(0.55);
+    create->setPosition(ccp(winSize.width*0.8, winSize.height * 0.25));
     CCMenu * okMenu = CCMenu::create(OK , login , create , NULL);
     okMenu->setPosition(ccp(0, 0));
     okMenu->setAnchorPoint(ccp(0,0));

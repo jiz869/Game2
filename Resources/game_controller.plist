@@ -1751,6 +1751,8 @@
 			<key>description</key>
 			<string>Every car in front it
 will stop for 2.5 seconds</string>
+			<key>order</key>
+			<string>0</string>
 		</dict>
 		<key>time</key>
 		<dict>
@@ -1766,6 +1768,8 @@ STOP</string>
 			<key>description</key>
 			<string>Time does not count down 
 when you have it</string>
+			<key>order</key>
+			<string>1</string>
 		</dict>
 		<key>strong</key>
 		<dict>
@@ -1781,6 +1785,8 @@ MAN</string>
 			<key>description</key>
 			<string>You are not afraid of anything
 for 2.5 seconds, so just HURRY !!!</string>
+			<key>order</key>
+			<string>2</string>
 		</dict>
 		<key>life</key>
 		<dict>
@@ -1796,6 +1802,8 @@ for 2.5 seconds, so just HURRY !!!</string>
 			<string>LIFE</string>
 			<key>description</key>
 			<string>You get 5 more seconds to spare</string>
+			<key>order</key>
+			<string>3</string>
 		</dict>
 		<key>skull</key>
 		<dict>
@@ -1810,6 +1818,8 @@ for 2.5 seconds, so just HURRY !!!</string>
 			<key>description</key>
 			<string>The most dangerous car will 
 be blown out from each lane</string>
+			<key>order</key>
+			<string>4</string>
 		</dict>
 		<key>double</key>
 		<dict>
@@ -1824,6 +1834,8 @@ be blown out from each lane</string>
 			<key>description</key>
 			<string>This good item will randomly
 generate 2 other good items</string>
+			<key>order</key>
+			<string>5</string>
 		</dict>
 		<key>bless</key>
 		<dict>
@@ -1845,6 +1857,8 @@ generate 2 other good items</string>
 			<string>Bad items do not affect you. You 
 get time and score increase and have 
 90% chance to get an extra good item</string>
+			<key>order</key>
+			<string>6</string>
 		</dict>
 		<key>police</key>
 		<dict>
@@ -1857,6 +1871,8 @@ get time and score increase and have
 			<key>description</key>
 			<string>You will be frozen 
 for 2 seconds</string>
+			<key>order</key>
+			<string>7</string>
 		</dict>
 		<key>slow</key>
 		<dict>
@@ -1873,6 +1889,8 @@ for 2 seconds</string>
 			<key>description</key>
 			<string>You will be slowed down 
 for 4 seconds</string>
+			<key>order</key>
+			<string>8</string>
 		</dict>
 		<key>curse</key>
 		<dict>
@@ -1887,6 +1905,8 @@ for 4 seconds</string>
 			<key>description</key>
 			<string>You can not have any good 
 items except BLESS</string>
+			<key>order</key>
+			<string>9</string>
 		</dict>
 		<key>bomb</key>
 		<dict>
@@ -1903,6 +1923,8 @@ BOMB</string>
 			<string>A time bomb that will be disarmed 
 after you cross street successfully 
 before 5.5 seconds timeout</string>
+			<key>order</key>
+			<string>10</string>
 		</dict>
 		<key>allBad</key>
 		<dict>
@@ -1922,6 +1944,8 @@ before 5.5 seconds timeout</string>
 			<string>For the next 16 seconds every car 
 will carry a bad item and every bad 
 item will last 50% longer</string>
+			<key>order</key>
+			<string>11</string>
 		</dict>
 	</dict>
 </dict>

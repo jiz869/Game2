@@ -284,14 +284,8 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
 
 int GameController::getSpecialIdForKey(CCString * key){
     CCDictionary * specialDict = (CCDictionary *)dict->objectForKey("special_data");
-    CCArray * keys = specialDict->allKeys();
-    for(int i = 0 ; i < keys->count() ; i++){
-        CCString * temp = (CCString *)keys->objectAtIndex(i);
-        if(temp->isEqual(key)){
-            return i;
-        }
-    }
-    return 0;
+    CCDictionary * special = (CCDictionary *)specialDict->objectForKey(key->getCString());
+    return CCSTRING_FOR_KEY(special, "order")->intValue();
 }
 
 bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
@@ -1125,7 +1119,8 @@ void GameController::recoverSpecialDurations(){
         //CCLOG("%s", ((CCString *)keys->objectAtIndex(i))->getCString());
         CCDictionary * dict = (CCDictionary *)specialDict->objectForKey(
                 ((CCString *)keys->objectAtIndex(i))->getCString());
-        specialDatas[i]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+        specialDatas[CCSTRING_FOR_KEY(dict, "order")->intValue()]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+        //CCLOG("%s , %f", ((CCString *)keys->objectAtIndex(i))->getCString() , CCSTRING_FOR_KEY(dict, "duration")->floatValue());
     }
 }
 
