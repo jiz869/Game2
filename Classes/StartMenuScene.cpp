@@ -82,6 +82,8 @@ bool StartMenuScene::init(){
     background->setScaleX(winSize.width/size.width);
     background->setAnchorPoint(ccp(0,0));
     addChild(background);
+    
+    menuStack.reserve(3);
 
     menus.reserve(10);
 
@@ -499,6 +501,7 @@ void StartMenuScene::userHandler(CCObject * sender){
     if(userData->password.length() == 0) pwdField->setString(DEFAULT_PASSWORD);
     nameField->runAction(CCBlink::create(2, 6));
     pwdField->runAction(CCBlink::create(2, 6));
+    menuStack.push_back(currentMenu);
     showMenu(userMenu);
 }
 
@@ -714,9 +717,11 @@ void StartMenuScene::initMainMenu(){
 
     addChild(startMenu);
     menus.push_back(startMenu);
+    currentMenu = startMenu;
 }
 
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
+    menuStack.push_back(currentMenu);
 	showMenu(purchaseMenu);
 }
 
@@ -758,6 +763,7 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 	    scoreLabels[i]->setString(score->getCString());
 	}
 #endif
+    menuStack.push_back(currentMenu);
     showMenu(scoreMenu);
 }
 
@@ -877,7 +883,7 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
     if (!userData->hasPayed && userData->justFailed%FREE_PLAY == 0 && userData->justFailed != 0)
     {
             showAds();
-            userData->justFailed = 0;
+            GameController::getGameController()->setJustFailed(false , true);
 			return;
     }
 #endif
@@ -888,19 +894,23 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
 void StartMenuScene::setInfoLabel(const char *info , float delay){
     if(infoLabel == NULL) return;
     infoLabel->setString(info);
+    menuStack.push_back(currentMenu);
     showMenu(infoMenu);
 }
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){
+    menuStack.push_back(currentMenu);
     showMenu(optionsMenu);
 }
 
 void StartMenuScene::newGameMenuHandler(cocos2d::CCObject *sender){
+    menuStack.push_back(currentMenu);
     showMenu(newGameMenu);
 }
 
 void StartMenuScene::okHandler(cocos2d::CCObject *sender){
-    showMenu(startMenu);
+    showMenu(menuStack.back());
+    menuStack.pop_back();
 }
 
 void StartMenuScene::checkboxHandler(cocos2d::CCObject *sender){
@@ -1018,6 +1028,7 @@ bool StartMenuScene::onTextFieldAttachWithIME(cocos2d::CCTextFieldTTF *sender){
 //}
 
 void StartMenuScene::showMenu(CCLayer * menu){
+    currentMenu = menu;
     for(int i = 0 ; i < menus.size() ; i++){
         if(menu == menus[i]){
             menus[i]->setPosition(ccp(winSize.width/2, winSize.height/2));
@@ -1028,6 +1039,7 @@ void StartMenuScene::showMenu(CCLayer * menu){
 }
 
 void StartMenuScene::legendsHandler(CCObject * sender){
+    menuStack.push_back(currentMenu);
     showMenu(legendsMenu);
 }
 

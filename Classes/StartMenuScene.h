@@ -105,6 +105,9 @@ private:
     string password;
 
     void savePWD();
+                                        
+    vector<CCLayer *> menuStack;
+    CCLayer * currentMenu;
 
     bool checkName(const char * name);
     bool checkPWD(const char * password);
