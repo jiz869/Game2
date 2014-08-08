@@ -23,6 +23,7 @@ public:
 
 protected:
     bool doomed;
+    int currentLevel;
 };
 
 #endif /* CAROBJ_H_ */

@@ -879,7 +879,7 @@
 			<key>good_max</key>
 			<string>double</string>
 			<key>bad_max</key>
-			<string>fast</string>
+			<string>allBad</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1060,7 +1060,7 @@
 			<key>good_max</key>
 			<string>small</string>
 			<key>bad_max</key>
-			<string>fast</string>
+			<string>allBad</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1238,7 +1238,7 @@
 			<key>good_max</key>
 			<string>small</string>
 			<key>bad_max</key>
-			<string>allBad</string>
+			<string>fast</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1414,7 +1414,7 @@
 			<key>good_max</key>
 			<string>bless</string>
 			<key>bad_max</key>
-			<string>allBad</string>
+			<string>fast</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1589,7 +1589,7 @@
 			<key>good_max</key>
 			<string>bless</string>
 			<key>bad_max</key>
-			<string>allBad</string>
+			<string>fast</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1844,9 +1844,9 @@ generate 2 other good items</string>
 		<key>small</key>
 		<dict>
 			<key>duration</key>
-			<string>10</string>
+			<string>12</string>
 			<key>life</key>
-			<string>4</string>
+			<string>5</string>
 			<key>image_name</key>
 			<string>small.png</string>
 			<key>name</key>
@@ -1919,7 +1919,7 @@ for 4 seconds</string>
 			<key>image_name</key>
 			<string>curse0.png</string>
 			<key>time_decrease</key>
-			<string>2</string>
+			<string>1</string>
 			<key>name</key>
 			<string>CURSE</string>
 			<key>description</key>
@@ -1946,22 +1946,6 @@ before 5.5 seconds timeout</string>
 			<key>order</key>
 			<string>11</string>
 		</dict>
-		<key>fast</key>
-		<dict>
-			<key>duration</key>
-			<string>10</string>
-			<key>image_name</key>
-			<string>fast.png</string>
-			<key>speed_increase</key>
-			<string>0.2</string>
-			<key>name</key>
-			<string>MORE</string>
-			<key>description</key>
-			<string>20% more cars will show up when
-you are affected by this skill</string>
-			<key>order</key>
-			<string>12</string>
-		</dict>
 		<key>allBad</key>
 		<dict>
 			<key>duration</key>
@@ -1980,6 +1964,22 @@ you are affected by this skill</string>
 			<string>For the next 16 seconds every car 
 will carry a bad item and every bad 
 item will last 50% longer</string>
+			<key>order</key>
+			<string>12</string>
+		</dict>
+		<key>fast</key>
+		<dict>
+			<key>duration</key>
+			<string>10</string>
+			<key>image_name</key>
+			<string>fast.png</string>
+			<key>speed_increase</key>
+			<string>0.2</string>
+			<key>name</key>
+			<string>MORE</string>
+			<key>description</key>
+			<string>20% more cars will show up when
+you are affected by this skill</string>
 			<key>order</key>
 			<string>13</string>
 		</dict>

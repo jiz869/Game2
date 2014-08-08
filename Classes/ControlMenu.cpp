@@ -350,7 +350,7 @@ void ControlMenu::increaseDuration(int delta){
         maxDuration = seconds;
     }
     unschedule(schedule_selector(ControlMenu::resumeDuration));
-    scheduleOnce(schedule_selector(ControlMenu::resumeDuration) , 15);
+    scheduleOnce(schedule_selector(ControlMenu::resumeDuration) , 20);
     updateGameTime();
 }
 
@@ -372,29 +372,37 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
     switch (type) {
         case LEFT:
             //upButton is on the left side
-            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height*1.5*0.8));
+            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height*1.5*0.8 + winSize.height * 0.05));
+            upButton->setScale(0.8);
             //downButton is on the right side
-            downButton->setPosition(ccp(buttonSize.width/2 + 15, buttonSize.height/2*0.8));
+            downButton->setPosition(ccp(buttonSize.width/2 + 15, buttonSize.height/2*0.8 + winSize.height * 0.05));
+            downButton->setScale(0.8);
             break;
 
         case RIGHT:
             //upButton is on the left side
-            upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*0.8));
+            upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*0.8 + winSize.height * 0.05));
+            upButton->setScale(0.8);
             //downButton is on the right side
-            downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*0.8));
+            downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*0.8 + winSize.height * 0.05));
+            downButton->setScale(0.8);
             break;
 
         case SIDE_LEFT_UP:
             //upButton is on the left side
             upButton->setPosition(ccp(buttonSize.width/2 , winSize.height * 0.3));
+            upButton->setScale(1);
             //downButton is on the right side
             downButton->setPosition(ccp(winSize.width - buttonSize.width/2, winSize.height * 0.3));
+            downButton->setScale(1);
             break;
 		case SIDE_LEFT_DOWN:
 			//upButton is on the left side
 			downButton->setPosition(ccp(buttonSize.width/2 , winSize.height * 0.3));
+			upButton->setScale(1);
 			//downButton is on the right side
 			upButton->setPosition(ccp(winSize.width - buttonSize.width/2, winSize.height * 0.3));
+			downButton->setScale(1);
 			break;
 
         default:

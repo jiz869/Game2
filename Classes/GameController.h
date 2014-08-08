@@ -41,8 +41,8 @@ typedef enum{
     SLOW,
     CURSE,
     BOMB,
-    FAST,
     ALLBAD,
+    FAST,
     BAD_SPECIAL_NUM,
 }SpecialID;
 

@@ -82,7 +82,7 @@ bool StartMenuScene::init(){
     background->setScaleX(winSize.width/size.width);
     background->setAnchorPoint(ccp(0,0));
     addChild(background);
-    
+
     menuStack.reserve(3);
 
     menus.reserve(10);
@@ -151,7 +151,7 @@ void StartMenuScene::initNewGameMenu(){
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.55);
-    OK->setPosition(ccp(winSize.width*0.2, winSize.height * 0.15));
+    OK->setPosition(ccp(winSize.width*0.8, winSize.height * 0.15));
 
     CCMenuItemImage * legends = CCMenuItemImage::create("legends_normal.png", "legends_selected.png" , this , menu_selector(StartMenuScene::legendsHandler));
     legends->setScale(0.55);
@@ -162,7 +162,7 @@ void StartMenuScene::initNewGameMenu(){
             this , menu_selector(StartMenuScene::newGameHandler));
     game->setScale(0.55);
     game->setTag(PURCHASE);
-    game->setPosition(ccp(winSize.width*0.8, winSize.height * 0.15));
+    game->setPosition(ccp(winSize.width*0.2, winSize.height * 0.15));
 
     newGameMenu = CCMenu::create(OK , game , currentLevel, yourSkills , enemySkills , gem , legends , NULL);
     newGameMenu->ignoreAnchorPointForPosition(false);
@@ -780,7 +780,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * left = CCMenuItemLabel::create(
     		CCLabelTTF::create("ON THE LEFT", FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    left->setDisabledColor(ccBLACK);
+    left->setDisabledColor(ccRED);
     checkboxLeft = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxLeft->setTag(LEFT);
     checkboxLeft->setScale(0.22);
@@ -792,7 +792,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * right = CCMenuItemLabel::create(
     		CCLabelTTF::create("ON THE RIGHT", FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    right->setDisabledColor(ccMAGENTA);
+    right->setDisabledColor(ccRED);
     checkboxRight = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxRight->setTag(RIGHT);
     checkboxRight->setScale(0.22);
@@ -804,7 +804,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * leftUp = CCMenuItemLabel::create(
     		CCLabelTTF::create("LEFT UP RIGHT DOWN", FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    leftUp->setDisabledColor(ccORANGE);
+    leftUp->setDisabledColor(ccBLACK);
     checkboxSideLeftUp = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSideLeftUp->setTag(SIDE_LEFT_UP);
     checkboxSideLeftUp->setScale(0.22);
@@ -815,7 +815,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * leftDown = CCMenuItemLabel::create(
     		CCLabelTTF::create("LEFT DOWN RIGHT UP", FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    leftDown->setDisabledColor(ccYELLOW);
+    leftDown->setDisabledColor(ccBLACK);
     checkboxSideLeftDown = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSideLeftDown->setTag(SIDE_LEFT_DOWN);
     checkboxSideLeftDown->setScale(0.22);
