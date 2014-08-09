@@ -55,6 +55,7 @@ public:
     virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender);
 //    virtual bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen);
     void enableButtonsForIap(bool enable);
+    void showInfoLabel();
 
 private:
     CCMenu * infoMenu;
@@ -115,6 +116,8 @@ private:
     void showMenu(CCLayer * menu);
     CCTableViewCell * cellForScore(CCTableViewCell * cell , int idx);
     CCTableViewCell * cellForLegends(CCTableViewCell * cell , int index);
+
+    string info;
 };
 
 #endif /* defined(__crossRoad__StartMenuScene__) */

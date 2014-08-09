@@ -893,7 +893,18 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
 
 void StartMenuScene::setInfoLabel(const char *info , float delay){
     if(infoLabel == NULL) return;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    this->info = info;
+    scheduleOnce(schedule_selector(StartMenuScene::showInfoLabel), 0);
+#else
     infoLabel->setString(info);
+    menuStack.push_back(currentMenu);
+    showMenu(infoMenu);
+#endif
+}
+
+void StartMenuScene::showInfoLabel(){
+    infoLabel->setString(info.c_str());
     menuStack.push_back(currentMenu);
     showMenu(infoMenu);
 }
