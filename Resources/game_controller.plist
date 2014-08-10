@@ -156,6 +156,8 @@
 			<string>time</string>
 			<key>bad_max</key>
 			<string>slow</string>
+			<key>music</key>
+			<string>01.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -337,6 +339,8 @@
 			<string>life</string>
 			<key>bad_max</key>
 			<string>curse</string>
+			<key>music</key>
+			<string>01.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -518,6 +522,8 @@
 			<string>skull</string>
 			<key>bad_max</key>
 			<string>bomb</string>
+			<key>music</key>
+			<string>23.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -699,6 +705,8 @@
 			<string>double</string>
 			<key>bad_max</key>
 			<string>bomb</string>
+			<key>music</key>
+			<string>23.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -880,6 +888,8 @@
 			<string>double</string>
 			<key>bad_max</key>
 			<string>allBad</string>
+			<key>music</key>
+			<string>456.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1061,6 +1071,8 @@
 			<string>small</string>
 			<key>bad_max</key>
 			<string>allBad</string>
+			<key>music</key>
+			<string>456.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1239,6 +1251,8 @@
 			<string>small</string>
 			<key>bad_max</key>
 			<string>fast</string>
+			<key>music</key>
+			<string>456.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1415,6 +1429,8 @@
 			<string>bless</string>
 			<key>bad_max</key>
 			<string>fast</string>
+			<key>music</key>
+			<string>78.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1590,6 +1606,8 @@
 			<string>bless</string>
 			<key>bad_max</key>
 			<string>fast</string>
+			<key>music</key>
+			<string>78.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>

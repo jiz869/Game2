@@ -104,6 +104,7 @@ typedef struct{
     float specialInterval;
     int goodMax;
     int badMax;
+    CCString * music;
     vector<LaneDescription *> laneDescriptions;
 }PlaySceneData;
 

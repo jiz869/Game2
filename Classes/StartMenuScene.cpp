@@ -104,6 +104,7 @@ bool StartMenuScene::init(){
     initPurchaseMenu();
 
     AnimationData * animationData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData->backgroundSoundImage->getCString());
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
 			animationData->backgroundSoundImage->getCString(), true);
 

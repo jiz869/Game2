@@ -125,6 +125,9 @@ void PlayScene::initMisc(){
     userData = GameController::getGameController()->getUserData();
     data = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
 
+    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(data->music->getCString());
+    SimpleAudioEngine::sharedEngine()->playBackgroundMusic(data->music->getCString() , true);
+
     winSize = CCDirector::sharedDirector()->getWinSize();
     ptmRatio = winSize.height / 10;
 

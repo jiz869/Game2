@@ -256,6 +256,7 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
         data->specialInterval = CCSTRING_FOR_KEY(dict , "special_interval")->floatValue();
         data->goodMax = getSpecialIdForKey(CCSTRING_FOR_KEY(dict , "good_max"));
         data->badMax = getSpecialIdForKey(CCSTRING_FOR_KEY(dict , "bad_max"));
+        data->music = CCSTRING_FOR_KEY(dict , "music");
         //CCLOG("good %d, bad %d", data->goodMax , data->badMax);
 
         CCArray * ldArray = (CCArray *)dict->objectForKey("lane_descriptions");
@@ -322,7 +323,6 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.smallSoundImage = CCSTRING_FOR_KEY(dataDict, "special_small_sound");
     animationData.fastSoundImage = CCSTRING_FOR_KEY(dataDict, "special_fast_sound");
 
-    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData.backgroundSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.scoreSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.levelupSoundImage->getCString());
