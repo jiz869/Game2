@@ -1988,7 +1988,7 @@ item will last 50% longer</string>
 		<key>fast</key>
 		<dict>
 			<key>duration</key>
-			<string>10</string>
+			<string>6</string>
 			<key>image_name</key>
 			<string>fast.png</string>
 			<key>speed_increase</key>

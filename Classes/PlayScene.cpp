@@ -70,13 +70,21 @@ PlayScene::PlayScene() : player(NULL) , contact(NULL) {
 PlayScene::~PlayScene(){
     if (player) player->removeAllSpecials();
 
-    for (b2Body * body = world->GetBodyList(); body; body = body->GetNext()) {
+    b2Body *node = world->GetBodyList();
+
+    while(node){
+
+        b2Body *body = node;
+        node = node->GetNext();
     	CCSprite *sprite = (CCSprite *)body->GetUserData();
     	if(sprite) delete (GameObj *)(sprite->getUserData());
+    	body->SetUserData(NULL);
     	world->DestroyBody(body);
     }
 
     delete world;
+
+    CCLOG("~PlayScene");
 }
 
 bool PlayScene::init(){
@@ -86,7 +94,7 @@ bool PlayScene::init(){
 
     initMisc();
 
-    CCLog("initMisc");
+    CCLog("initMisc %d", userData->currentLevel);
 
     initBoundary();
 
@@ -130,10 +138,6 @@ void PlayScene::initMisc(){
 
     winSize = CCDirector::sharedDirector()->getWinSize();
     ptmRatio = winSize.height / 10;
-
-    for(b2Body *body = world->GetBodyList(); body; body=body->GetNext()){
-        world->DestroyBody(body);
-    }
 
     GameObj::setB2world(world , ptmRatio);
 
@@ -222,7 +226,13 @@ void PlayScene::update(float dt){
 		lanes[i]->step(dt);
 	}
 
-	for(b2Body *body = world->GetBodyList(); body; body=body->GetNext()){
+	b2Body *node = world->GetBodyList();
+
+	while(node){
+
+	    b2Body *body = node;
+	    node = node->GetNext();
+
 		CCSprite *sprite = (CCSprite *)body->GetUserData();
 
 		if (sprite != NULL && (sprite->getTag() == CAR)) {
