@@ -68,7 +68,10 @@ PlayScene::PlayScene() : player(NULL) , contact(NULL) {
 }
 
 PlayScene::~PlayScene(){
-    if (player) player->removeAllSpecials();
+    if (player){
+        player->removeAllSpecials();
+        player->removeAllBadSpecials();
+    }
 
     b2Body *node = world->GetBodyList();
 
@@ -78,8 +81,6 @@ PlayScene::~PlayScene(){
         node = node->GetNext();
     	CCSprite *sprite = (CCSprite *)body->GetUserData();
     	if(sprite) delete (GameObj *)(sprite->getUserData());
-    	body->SetUserData(NULL);
-    	world->DestroyBody(body);
     }
 
     delete world;
@@ -273,6 +274,7 @@ void PlayScene::freezeAllLanes(){
     for (int i = 0; i < size; i++) {
         lanes[i]->stop();
     }
+    city->unscheduleAllSelectors();
 }
 
 void PlayScene::restartAllLanes(){

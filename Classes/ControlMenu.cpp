@@ -279,6 +279,7 @@ void ControlMenu::showOver(){
 }
 
 void ControlMenu::nextScene(){
+    ((PlayScene *)getParent())->freezeAllLanes();
     if (status == OVER) {
         CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
     }else if (status == LEVEL_UP){
