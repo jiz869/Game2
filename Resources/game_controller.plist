@@ -889,7 +889,7 @@
 			<key>bad_max</key>
 			<string>allBad</string>
 			<key>music</key>
-			<string>456.wav</string>
+			<string>45.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1072,7 +1072,7 @@
 			<key>bad_max</key>
 			<string>allBad</string>
 			<key>music</key>
-			<string>456.wav</string>
+			<string>45.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>
@@ -1252,7 +1252,7 @@
 			<key>bad_max</key>
 			<string>fast</string>
 			<key>music</key>
-			<string>456.wav</string>
+			<string>6.wav</string>
 			<key>lane_descriptions</key>
 			<array>
 				<dict>

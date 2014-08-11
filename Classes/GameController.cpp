@@ -228,7 +228,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    //userData.currentLevel = 7;
+    //userData.currentLevel = 6;
 
     return true;
 }
