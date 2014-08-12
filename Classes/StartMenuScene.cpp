@@ -102,6 +102,8 @@ bool StartMenuScene::init(){
     initLegendsMenu();
 
     initPurchaseMenu();
+    
+    initCreditsMenu();
 
     AnimationData * animationData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData->backgroundSoundImage->getCString());
@@ -269,6 +271,26 @@ void StartMenuScene::initPurchaseMenu(){
 	purchaseMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     addChild(purchaseMenu);
     menus.push_back(purchaseMenu);
+}
+
+void StartMenuScene::initCreditsMenu(){
+	CCMenuItemLabel * credits = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96 ,
+                                                                            CCSizeMake(winSize.width * 0.8 , winSize.height * 0.2) ,  kCCTextAlignmentCenter));
+	credits->setDisabledColor( ccRED );
+	credits->setPosition(ccp(winSize.width/2 , winSize.height*0.85));
+	credits->setString("CREDITS");
+	credits->setEnabled(false);
+    
+    CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
+                                                   this , menu_selector(StartMenuScene::okHandler));
+    OK->setScale(0.6);
+    OK->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
+    
+	creditsMenu = CCMenu::create(OK , credits , NULL);
+	creditsMenu->ignoreAnchorPointForPosition(false);
+	creditsMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
+    addChild(creditsMenu);
+    menus.push_back(creditsMenu);
 }
 
 void StartMenuScene::keyBackClicked(){
@@ -699,7 +721,7 @@ void StartMenuScene::initMainMenu(){
     account->setPosition(ccp(winSize.width*0.3, winSize.height*0.15));
     legends->setPosition(ccp(winSize.width*0.7, winSize.height*0.15));
 #else
-    CCMenuItemImage * credits = CCMenuItemImage::create("credits_normal.png", "credits_selected.png" , this , menu_selector(StartMenuScene::okHandler));
+    CCMenuItemImage * credits = CCMenuItemImage::create("credits_normal.png", "credits_selected.png" , this , menu_selector(StartMenuScene::creditsHandler));
     credits->setScale(0.7);
     newGame->setScale(0.7);
     options->setScale(0.7);
@@ -724,6 +746,11 @@ void StartMenuScene::initMainMenu(){
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
     menuStack.push_back(currentMenu);
 	showMenu(purchaseMenu);
+}
+
+void StartMenuScene::creditsHandler(cocos2d::CCObject *sender){
+    menuStack.push_back(currentMenu);
+	showMenu(creditsMenu);
 }
 
 void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
@@ -862,7 +889,7 @@ void StartMenuScene::initOptionsMenu(){
     OK->setPosition(ccp(winSize.width*0.3, winSize.height*0.12));
 
     CCMenuItemImage * credits = CCMenuItemImage::create("credits_normal.png", "credits_selected.png" ,
-            this , menu_selector(StartMenuScene::okHandler));
+            this , menu_selector(StartMenuScene::creditsHandler));
     credits->setScale(0.6);
     credits->setPosition(ccp(winSize.width*0.7, winSize.height*0.12));
 

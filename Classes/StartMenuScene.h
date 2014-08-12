@@ -42,6 +42,7 @@ public:
     void uploadHandler(CCObject * sender);
     void legendsHandler(CCObject * sender);
     void purchaseHandler(CCObject * sender);
+    void creditsHandler(CCObject * sender);
     virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell);
     virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx);
     virtual unsigned int numberOfCellsInTableView(CCTableView *table);
@@ -65,6 +66,7 @@ private:
     CCLayer * legendsMenu;
     CCLayer * purchaseMenu;
     CCLayer * newGameMenu;
+    CCMenu * creditsMenu;
 #ifdef LISTVIEW_LEADERBOARD
     CCLayer * scoreMenu;
     CCTableView * scoreTable;
@@ -82,6 +84,7 @@ private:
     void initLegendsMenu();
     void initPurchaseMenu();
     void initNewGameMenu();
+    void initCreditsMenu();
     CCMenuItemImage * checkboxLeft;
     CCMenuItemImage * checkboxRight;
     CCMenuItemImage * checkboxSideLeftUp;

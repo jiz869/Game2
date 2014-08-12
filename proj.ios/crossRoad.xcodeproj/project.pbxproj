@@ -166,6 +166,11 @@
 		1613918C1991BB0300C2B942 /* restore_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 161391881991BB0300C2B942 /* restore_selected.png */; };
 		1613918F19930C5500C2B942 /* fast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1613918D19930C5500C2B942 /* fast.wav */; };
 		1613919019930C5500C2B942 /* small.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1613918E19930C5500C2B942 /* small.wav */; };
+		161391B11999A4F100C2B942 /* 01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 161391AC1999A4F100C2B942 /* 01.wav */; };
+		161391B21999A4F100C2B942 /* 6.wav in Resources */ = {isa = PBXBuildFile; fileRef = 161391AD1999A4F100C2B942 /* 6.wav */; };
+		161391B31999A4F100C2B942 /* 23.wav in Resources */ = {isa = PBXBuildFile; fileRef = 161391AE1999A4F100C2B942 /* 23.wav */; };
+		161391B41999A4F100C2B942 /* 45.wav in Resources */ = {isa = PBXBuildFile; fileRef = 161391AF1999A4F100C2B942 /* 45.wav */; };
+		161391B51999A4F100C2B942 /* 78.wav in Resources */ = {isa = PBXBuildFile; fileRef = 161391B01999A4F100C2B942 /* 78.wav */; };
 		167ED39A194F446200B71E79 /* B2Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED37C194F446200B71E79 /* B2Sprite.cpp */; };
 		167ED39B194F446200B71E79 /* CarObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED37E194F446200B71E79 /* CarObj.cpp */; };
 		167ED39C194F446200B71E79 /* City.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED380194F446200B71E79 /* City.cpp */; };
@@ -718,6 +723,11 @@
 		161391881991BB0300C2B942 /* restore_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restore_selected.png; sourceTree = "<group>"; };
 		1613918D19930C5500C2B942 /* fast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fast.wav; sourceTree = "<group>"; };
 		1613918E19930C5500C2B942 /* small.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = small.wav; sourceTree = "<group>"; };
+		161391AC1999A4F100C2B942 /* 01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 01.wav; sourceTree = "<group>"; };
+		161391AD1999A4F100C2B942 /* 6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 6.wav; sourceTree = "<group>"; };
+		161391AE1999A4F100C2B942 /* 23.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 23.wav; sourceTree = "<group>"; };
+		161391AF1999A4F100C2B942 /* 45.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 45.wav; sourceTree = "<group>"; };
+		161391B01999A4F100C2B942 /* 78.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 78.wav; sourceTree = "<group>"; };
 		167ED37C194F446200B71E79 /* B2Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = B2Sprite.cpp; path = ../Classes/B2Sprite.cpp; sourceTree = "<group>"; };
 		167ED37D194F446200B71E79 /* B2Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = B2Sprite.h; path = ../Classes/B2Sprite.h; sourceTree = "<group>"; };
 		167ED37E194F446200B71E79 /* CarObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CarObj.cpp; path = ../Classes/CarObj.cpp; sourceTree = "<group>"; };
@@ -2550,6 +2560,11 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				161391AC1999A4F100C2B942 /* 01.wav */,
+				161391AD1999A4F100C2B942 /* 6.wav */,
+				161391AE1999A4F100C2B942 /* 23.wav */,
+				161391AF1999A4F100C2B942 /* 45.wav */,
+				161391B01999A4F100C2B942 /* 78.wav */,
 				1613918D19930C5500C2B942 /* fast.wav */,
 				1613918E19930C5500C2B942 /* small.wav */,
 				16139148198886D400C2B942 /* allBad.wav */,
@@ -2686,12 +2701,14 @@
 				169D58CA194F494600EE290E /* ok_selected.png in Resources */,
 				169D58DC194F494600EE290E /* level_up.wav in Resources */,
 				1613914C198886D400C2B942 /* gameOver.wav in Resources */,
+				161391B11999A4F100C2B942 /* 01.wav in Resources */,
 				1613917D198C863800C2B942 /* Default-568h@2x.png in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
 				1613918C1991BB0300C2B942 /* restore_selected.png in Resources */,
 				16DBA4831979FC3C0094C2CF /* Sweetie Love.ttf in Resources */,
 				169D58CC194F494600EE290E /* pause.png in Resources */,
 				169D58BB194F494600EE290E /* button_arrow_normal.png in Resources */,
+				161391B31999A4F100C2B942 /* 23.wav in Resources */,
 				169D58B6194F494600EE290E /* bzzzt.wav in Resources */,
 				16139180198C863800C2B942 /* Icon-76.png in Resources */,
 				16DBA42A1969E7BA0094C2CF /* strong.wav in Resources */,
@@ -2709,11 +2726,13 @@
 				16DBA4A01979FC5F0094C2CF /* background5.png in Resources */,
 				169D58EC19511DFA00EE290E /* busy.wav in Resources */,
 				16DBA4CC197F46A10094C2CF /* slow.wav in Resources */,
+				161391B51999A4F100C2B942 /* 78.wav in Resources */,
 				1613912E19834FB200C2B942 /* account_normal.png in Resources */,
 				16DBA49C1979FC5F0094C2CF /* background1.png in Resources */,
 				1613918F19930C5500C2B942 /* fast.wav in Resources */,
 				16DBA41C196879DD0094C2CF /* background.png in Resources */,
 				16DBA4A21979FC5F0094C2CF /* background7.png in Resources */,
+				161391B41999A4F100C2B942 /* 45.wav in Resources */,
 				16DBA49D1979FC5F0094C2CF /* background2.png in Resources */,
 				169D58C2194F494600EE290E /* check_box_selected.png in Resources */,
 				16139182198C863800C2B942 /* Icon-152.png in Resources */,
@@ -2721,6 +2740,7 @@
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
 				1613919019930C5500C2B942 /* small.wav in Resources */,
 				16DBA4271969E0730094C2CF /* success.wav in Resources */,
+				161391B21999A4F100C2B942 /* 6.wav in Resources */,
 				1613913519834FB200C2B942 /* return_selected.png in Resources */,
 				16DBA4251969E0730094C2CF /* life.wav in Resources */,
 				169D58BC194F494600EE290E /* button_arrow_selected.png in Resources */,
