@@ -102,7 +102,7 @@ bool StartMenuScene::init(){
     initLegendsMenu();
 
     initPurchaseMenu();
-    
+
     initCreditsMenu();
 
     AnimationData * animationData = GameController::getGameController()->getAnimationData();
@@ -274,18 +274,17 @@ void StartMenuScene::initPurchaseMenu(){
 }
 
 void StartMenuScene::initCreditsMenu(){
-	CCMenuItemLabel * credits = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96 ,
-                                                                            CCSizeMake(winSize.width * 0.8 , winSize.height * 0.2) ,  kCCTextAlignmentCenter));
+	CCMenuItemLabel * credits = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96));
 	credits->setDisabledColor( ccRED );
 	credits->setPosition(ccp(winSize.width/2 , winSize.height*0.85));
 	credits->setString("CREDITS");
 	credits->setEnabled(false);
-    
+
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
                                                    this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.6);
     OK->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
-    
+
 	creditsMenu = CCMenu::create(OK , credits , NULL);
 	creditsMenu->ignoreAnchorPointForPosition(false);
 	creditsMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));

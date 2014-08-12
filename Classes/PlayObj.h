@@ -18,7 +18,7 @@ enum PlayerState {
     JMP_DOWN
 };
 
-#define MAX_SPECIAL_NUM 3
+#define MAX_SPECIAL_NUM 5
 #define MAX_BAD_SPECIAL_NUM 3
 
 class PlayerObj : public GameObj {

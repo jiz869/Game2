@@ -1813,7 +1813,7 @@ for 2.5 seconds, so just HURRY !!!</string>
 		<key>life</key>
 		<dict>
 			<key>duration</key>
-			<string>1</string>
+			<string>0.4</string>
 			<key>life</key>
 			<string>4.5</string>
 			<key>image_name</key>
@@ -1830,7 +1830,7 @@ for 2.5 seconds, so just HURRY !!!</string>
 		<key>skull</key>
 		<dict>
 			<key>duration</key>
-			<string>1</string>
+			<string>0.4</string>
 			<key>life</key>
 			<string>3.5</string>
 			<key>image_name</key>
@@ -1846,7 +1846,7 @@ be blown out from each lane</string>
 		<key>double</key>
 		<dict>
 			<key>duration</key>
-			<string>1</string>
+			<string>0.4</string>
 			<key>life</key>
 			<string>4</string>
 			<key>image_name</key>
@@ -1933,7 +1933,7 @@ for 4 seconds</string>
 		<key>curse</key>
 		<dict>
 			<key>duration</key>
-			<string>10</string>
+			<string>8</string>
 			<key>image_name</key>
 			<string>curse0.png</string>
 			<key>time_decrease</key>
@@ -1967,19 +1967,19 @@ before 5.5 seconds timeout</string>
 		<key>allBad</key>
 		<dict>
 			<key>duration</key>
-			<string>10</string>
+			<string>12</string>
 			<key>image_name</key>
 			<string>allBad0.png</string>
 			<key>special_chance</key>
 			<string>1</string>
 			<key>time</key>
-			<string>16</string>
+			<string>18</string>
 			<key>percent</key>
 			<string>0.5</string>
 			<key>name</key>
 			<string>WORSE</string>
 			<key>description</key>
-			<string>For the next 16 seconds every car 
+			<string>For the next 18 seconds every car 
 will carry a bad item and every bad 
 item will last 50% longer</string>
 			<key>order</key>
