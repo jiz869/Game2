@@ -224,6 +224,15 @@ typedef struct{
                   "Continue playing based on the last \n" \
                   "finished level\n"
 
+#define CREDITS "Particulary thanks to www.opengameart.org\n" \
+                "for all background musics in this game\n\n" \
+                "\"Jump And Run\" by bart\n" \
+                "\"Trance Menu\" by rezoner\n" \
+                "\"After Burner\" by copyc4t\n" \
+                "\"Happy Arcade Tune\" by rezoner\n" \
+                "\"Arabesque\" by brainiac256\n" \
+                "\"Tactical Pursuit\" by Matthew Pablo\n"
+
 #define DEFAULT_NAME "Penguin"
 #define DEFAULT_PASSWORD "Penguin#"
 

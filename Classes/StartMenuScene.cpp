@@ -275,17 +275,23 @@ void StartMenuScene::initPurchaseMenu(){
 
 void StartMenuScene::initCreditsMenu(){
 	CCMenuItemLabel * credits = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96));
-	credits->setDisabledColor( ccRED );
-	credits->setPosition(ccp(winSize.width/2 , winSize.height*0.85));
+	credits->setDisabledColor( ccBLUE );
+	credits->setPosition(ccp(winSize.width/2 , winSize.height*0.875));
 	credits->setString("CREDITS");
 	credits->setEnabled(false);
+    
+    CCMenuItemLabel * content = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 36, CCSizeMake(winSize.width , winSize.height*0.6) ,  kCCTextAlignmentCenter));
+	content->setDisabledColor( ccRED );
+	content->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
+	content->setString(CREDITS);
+	content->setEnabled(false);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
                                                    this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.6);
-    OK->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
+    OK->setPosition(ccp(winSize.width*0.5, winSize.height * 0.125));
 
-	creditsMenu = CCMenu::create(OK , credits , NULL);
+	creditsMenu = CCMenu::create(OK , credits , content, NULL);
 	creditsMenu->ignoreAnchorPointForPosition(false);
 	creditsMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
     addChild(creditsMenu);
