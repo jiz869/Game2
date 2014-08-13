@@ -46,11 +46,15 @@
     </initialWindow>
     
     <!--  The category where the application appears. Either core.games or core.media. -->
+    <splashScreens>
+       <image>splash.png</image>
+    </splashScreens>
     <category>core.games</category>
     <description>Freeway Penguin</description>
     <author>Min Li &amp; Jian Zhang</author>
     <asset path="icon.png">icon.png</asset>
     <asset path="../Resources">Resources</asset>
+    <asset path="splash.png">splash.png</asset>
     
     <!-- the variable 'worksparce_loc' is not supported in bbndk2.0, so we create an empty folder to make the relative path work. -->
     
