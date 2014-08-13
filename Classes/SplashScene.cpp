@@ -99,10 +99,6 @@ bool SplashScene::init(){
     return true;
 }
 
-void SplashScene::initGameController(){
-    data = GameController::getGameController()->getUserData();
-}
-
 void SplashScene::splashOver(){
     SimpleAudioEngine::sharedEngine()->playEffect("splash.wav");
     CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());

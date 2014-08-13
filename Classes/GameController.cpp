@@ -228,7 +228,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    userData.currentLevel = 6;
+    //userData.currentLevel = 7;
 
     return true;
 }
@@ -300,7 +300,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
         return false;
     }
 
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
+    //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
 
     animationData.backgroundSoundImage = CCSTRING_FOR_KEY(dataDict, "background_sound_file");
     animationData.resetSoundImage = CCSTRING_FOR_KEY(dataDict, "reset_sound_file");

@@ -279,9 +279,13 @@ void StartMenuScene::initCreditsMenu(){
 	credits->setPosition(ccp(winSize.width/2 , winSize.height*0.875));
 	credits->setString("CREDITS");
 	credits->setEnabled(false);
-    
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+	CCMenuItemLabel * content = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 36, CCSizeMake(winSize.width * 0.8 , winSize.height*0.6) ,  kCCTextAlignmentCenter));
+#else
     CCMenuItemLabel * content = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 36, CCSizeMake(winSize.width , winSize.height*0.6) ,  kCCTextAlignmentCenter));
-	content->setDisabledColor( ccRED );
+#endif
+    content->setDisabledColor( ccRED );
 	content->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
 	content->setString(CREDITS);
 	content->setEnabled(false);

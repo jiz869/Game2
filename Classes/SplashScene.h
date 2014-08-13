@@ -21,11 +21,7 @@ public:
     CREATE_FUNC(SplashScene);
     virtual bool init();
 
-    void initGameController();
     void splashOver();
-
-private:
-    UserData * data;
 };
 
 #endif /* SPLASHSCENE_H_ */

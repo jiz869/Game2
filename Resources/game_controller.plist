@@ -1796,9 +1796,9 @@ when you have this skill</string>
 		<key>strong</key>
 		<dict>
 			<key>duration</key>
-			<string>2.5</string>
+			<string>3</string>
 			<key>life</key>
-			<string>2.5</string>
+			<string>3</string>
 			<key>image_name</key>
 			<string>strong0.png</string>
 			<key>name</key>
