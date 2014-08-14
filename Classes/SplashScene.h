@@ -22,6 +22,19 @@ public:
     virtual bool init();
 
     void splashOver();
+
+    virtual void update(float dt);
+
+private:
+    void initProgressBar();
+    CCSize winSize;
+    CCProgressTimer * bloodBar;
+    float progress;
+
+    CCSprite * bar25;
+    CCSprite * bar50;
+    CCSprite * bar75;
+    CCSprite * bar100;
 };
 
 #endif /* SPLASHSCENE_H_ */

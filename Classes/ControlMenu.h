@@ -83,6 +83,11 @@ protected:
     void resumeGame();
     CCProgressTimer * bloodBar;
 
+    CCSprite * bar25;
+    CCSprite * bar50;
+    CCSprite * bar75;
+    CCSprite * bar100;
+
     CCLabelTTF *  goSplash;
     CCLabelTTF *  gameSplash;
     CCLabelTTF *  overSplash;

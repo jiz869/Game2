@@ -196,11 +196,26 @@ void ControlMenu::touchendHandler(CCObject * sender){
 }
 
 void ControlMenu::initBloodBar(){
-	CCSprite * emptyBar = CCSprite::createWithSpriteFrameName("empty_bar.png");
+	CCSprite * emptyBar = CCSprite::create("progress_empty.png");
 	emptyBar->setPosition(ccp(winSize.width/4, winSize.height * 0.9));
 	addChild(emptyBar);
 
-	bloodBar = CCProgressTimer::create(CCSprite::createWithSpriteFrameName("blood_bar.png"));
+	bar100 = CCSprite::create("progress.png");
+	bar75 = CCSprite::create("progress_75.png");
+	bar50 = CCSprite::create("progress_50.png");
+	bar25 = CCSprite::create("progress_25.png");
+
+	addChild(bar100);
+	addChild(bar75);
+	addChild(bar50);
+	addChild(bar25);
+
+	bar100->setVisible(false);
+	bar75->setVisible(false);
+	bar50->setVisible(false);
+	bar25->setVisible(false);
+
+	bloodBar = CCProgressTimer::create(bar100);
 	bloodBar->setType(kCCProgressTimerTypeBar);
 	bloodBar->setPosition(ccp(winSize.width/4, winSize.height * 0.9));
 	bloodBar->setBarChangeRate(ccp(1,0));
@@ -249,7 +264,15 @@ void ControlMenu::updateGameTime()
 	if(seconds > maxDuration){
 		seconds = maxDuration;
 	}
-    bloodBar->setPercentage((float)seconds/maxDuration * 100);
+
+	float percent = (float)seconds/maxDuration;
+
+    if(percent < 0.75 && percent > 0.5) bloodBar->setSprite(bar75);
+    else if(percent < 0.5 && percent > 0.25) bloodBar->setSprite(bar50);
+    else if(percent < 0.25 && percent > 0) bloodBar->setSprite(bar25);
+    else if(percent > 0.75) bloodBar->setSprite(bar100);
+
+    bloodBar->setPercentage(percent * 100);
 }
 
 void ControlMenu::updateScore(bool isGood)

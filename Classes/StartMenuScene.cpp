@@ -841,7 +841,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * leftUp = CCMenuItemLabel::create(
     		CCLabelTTF::create("LEFT UP RIGHT DOWN", FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    leftUp->setDisabledColor(ccBLACK);
+    leftUp->setDisabledColor(ccBLUE);
     checkboxSideLeftUp = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSideLeftUp->setTag(SIDE_LEFT_UP);
     checkboxSideLeftUp->setScale(0.22);
@@ -852,7 +852,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * leftDown = CCMenuItemLabel::create(
     		CCLabelTTF::create("LEFT DOWN RIGHT UP", FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    leftDown->setDisabledColor(ccBLACK);
+    leftDown->setDisabledColor(ccBLUE);
     checkboxSideLeftDown = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxSideLeftDown->setTag(SIDE_LEFT_DOWN);
     checkboxSideLeftDown->setScale(0.22);
@@ -883,7 +883,7 @@ void StartMenuScene::initOptionsMenu(){
     CCMenuItemLabel * unMute = CCMenuItemLabel::create(
     		CCLabelTTF::create("UNMUTE", FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
-    unMute->setDisabledColor(ccBLACK);
+    unMute->setDisabledColor(ccBLUE);
     checkboxUnmute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
     checkboxUnmute->setTag(UNMUTE);
     unMute->setPosition(ccp(winSize.width * 0.4, winSize.height*0.24));
