@@ -197,7 +197,8 @@ void ControlMenu::touchendHandler(CCObject * sender){
 
 void ControlMenu::initBloodBar(){
 	CCSprite * emptyBar = CCSprite::create("progress_empty.png");
-	emptyBar->setPosition(ccp(winSize.width/4, winSize.height * 0.9));
+	emptyBar->setPosition(ccp(winSize.width*0.22, winSize.height * 0.9));
+    emptyBar->setScale(0.8);
 	addChild(emptyBar);
 
 	bar100 = CCSprite::create("progress.png");
@@ -217,9 +218,10 @@ void ControlMenu::initBloodBar(){
 
 	bloodBar = CCProgressTimer::create(bar100);
 	bloodBar->setType(kCCProgressTimerTypeBar);
-	bloodBar->setPosition(ccp(winSize.width/4, winSize.height * 0.9));
+	bloodBar->setPosition(ccp(winSize.width*0.22, winSize.height * 0.9));
 	bloodBar->setBarChangeRate(ccp(1,0));
 	bloodBar->setMidpoint(ccp(0 , 1));
+    bloodBar->setScale(0.8);
 	updateGameTime();
 	addChild(bloodBar);
 }
