@@ -219,10 +219,9 @@ typedef struct{
                   "Maximum 12 characters\n" \
                   "Minimum 4 characters\n"
 
-#define PURCHASE_BENEFIT "One time 99 cents purchase to:\n" \
-                  "Get rid of the ads click every 3 fails\n" \
-                  "Continue playing based on the last \n" \
-                  "finished level\n"
+#define PURCHASE_BENEFIT "Spend 99 cents to:\n\n" \
+                  "1) Remove the ads\n\n" \
+                  "2) Continue game from the last level\n"
 
 #define CREDITS "Particulary thanks to www.opengameart.org\n" \
                 "for all background musics in this game\n\n" \

@@ -39,8 +39,8 @@
     <!-- <authorId>ABC1234YjsnUk235h</authorId> -->
    
     <initialWindow>
-        <aspectRatio>landscape</aspectRatio>
         <autoOrients>false</autoOrients>
+        <aspectRatio>landscape</aspectRatio>
         <systemChrome>none</systemChrome>
         <transparent>false</transparent>
     </initialWindow>
@@ -104,31 +104,12 @@
 
     <!-- Request permission to execute native code.  Required for native applications. -->
     <action system="true">run_native</action>
-    <permission>bbm_connect</permission>
-    <permission>access_pimdomain_calendars</permission>
-    <permission>use_camera</permission>
-    <permission>use_camera_desktop</permission>
-    <permission>access_pimdomain_contacts</permission>
-    <permission>read_device_identifying_information</permission>
-    <permission>access_pimdomain_messages</permission>
-    <permission>use_gamepad</permission>
-    <permission>access_internet</permission>
-    <permission>access_location_services</permission>
-    <permission>record_audio</permission>
-    <permission>read_personally_identifiable_information</permission>
-    <permission>access_pimdomain_notebooks</permission>
     <permission>access_notify_settings_control</permission>
-    <permission>access_phone</permission>
     <permission system="true">_sys_inject_voice</permission>
-    <permission>control_phone</permission>
-    <permission>post_notification</permission>
-    <permission system="true">_sys_use_consumer_push</permission>
     <permission system="true">_sys_run_headless</permission>
     <permission system="true">_sys_run_headless_nostop</permission>
-    <permission>run_when_backgrounded</permission>
-    <permission>access_shared</permission>
-    <permission>access_sms_mms</permission>
     <permission>access_wifi_public</permission>
+    <permission>access_internet</permission>
     
     <!--  The permissions requested by your application. -->
     <!--  <action>access_shared</action> -->

@@ -1771,8 +1771,8 @@
 			<key>name</key>
 			<string>STOP</string>
 			<key>description</key>
-			<string>Every car in front you
-will stop for 2.5 seconds</string>
+			<string>This skill will stop cars in front
+you for a very short time</string>
 			<key>order</key>
 			<string>0</string>
 		</dict>
@@ -1805,8 +1805,8 @@ when you have this skill</string>
 			<string>SUPER
 MAN</string>
 			<key>description</key>
-			<string>You are not afraid of anything
-for 2.5 seconds, so just HURRY !!!</string>
+			<string>You are not afraid of anything for
+a few seconds, so just HURRY !!!</string>
 			<key>order</key>
 			<string>2</string>
 		</dict>
@@ -1823,7 +1823,9 @@ for 2.5 seconds, so just HURRY !!!</string>
 			<key>name</key>
 			<string>LIFE</string>
 			<key>description</key>
-			<string>You get 5 more seconds to spare</string>
+			<string>This skill will give you a few more
+seconds to spare and possibly increase
+your time limit</string>
 			<key>order</key>
 			<string>3</string>
 		</dict>
@@ -1838,8 +1840,8 @@ for 2.5 seconds, so just HURRY !!!</string>
 			<key>name</key>
 			<string>BOMB</string>
 			<key>description</key>
-			<string>The most dangerous car will 
-be blown out from each lane</string>
+			<string>This skill will blow out the most 
+dangerous car from each lane</string>
 			<key>order</key>
 			<string>4</string>
 		</dict>
@@ -1854,8 +1856,8 @@ be blown out from each lane</string>
 			<key>name</key>
 			<string>DOUBLE</string>
 			<key>description</key>
-			<string>This good item will randomly
-generate 2 other good items</string>
+			<string>This skill will randomly generate 
+2 other good skills on your way</string>
 			<key>order</key>
 			<string>5</string>
 		</dict>
@@ -1870,8 +1872,8 @@ generate 2 other good items</string>
 			<key>name</key>
 			<string>SMALL</string>
 			<key>description</key>
-			<string>Only small cars would be on the 
-road when you have this skill</string>
+			<string>This skill will replace large cars
+with small ones</string>
 			<key>order</key>
 			<string>6</string>
 		</dict>
@@ -1892,9 +1894,9 @@ road when you have this skill</string>
 			<key>name</key>
 			<string>BLESS</string>
 			<key>description</key>
-			<string>Bad items do not affect you. You 
-get time and score increase and have 
-90% chance to get an extra good item</string>
+			<string>With this skill, bad skills do not 
+affect you. Plus, you get time and score 
+increase and get an extra good skill</string>
 			<key>order</key>
 			<string>7</string>
 		</dict>
@@ -1907,8 +1909,8 @@ get time and score increase and have
 			<key>name</key>
 			<string>JAIL</string>
 			<key>description</key>
-			<string>You will be frozen 
-for 2 seconds</string>
+			<string>This bad skill will freeze you 
+for a very short time</string>
 			<key>order</key>
 			<string>8</string>
 		</dict>
@@ -1925,8 +1927,8 @@ for 2 seconds</string>
 			<key>name</key>
 			<string>SLOW</string>
 			<key>description</key>
-			<string>You will be slowed down 
-for 4 seconds</string>
+			<string>This bad skill will slow you 
+down for a few seconds</string>
 			<key>order</key>
 			<string>9</string>
 		</dict>
@@ -1941,8 +1943,8 @@ for 4 seconds</string>
 			<key>name</key>
 			<string>CURSE</string>
 			<key>description</key>
-			<string>You can not have any good 
-items except BLESS</string>
+			<string>With this bad skill, you will fail
+to acquire good skills except BLESS</string>
 			<key>order</key>
 			<string>10</string>
 		</dict>
@@ -1958,9 +1960,9 @@ items except BLESS</string>
 			<string>TIME
 BOMB</string>
 			<key>description</key>
-			<string>A time bomb that will be disarmed 
-after you cross street successfully 
-before 5.5 seconds timeout</string>
+			<string>This is a time bomb and it will be 
+disarmed after you cross street
+before timeout</string>
 			<key>order</key>
 			<string>11</string>
 		</dict>
@@ -1979,9 +1981,9 @@ before 5.5 seconds timeout</string>
 			<key>name</key>
 			<string>WORSE</string>
 			<key>description</key>
-			<string>For the next 18 seconds every car 
-will carry a bad item and every bad 
-item will last 50% longer</string>
+			<string>This bad skill will make every
+car carry a bad skill and every
+bad skill will last 50% longer</string>
 			<key>order</key>
 			<string>12</string>
 		</dict>
@@ -1996,8 +1998,8 @@ item will last 50% longer</string>
 			<key>name</key>
 			<string>MORE</string>
 			<key>description</key>
-			<string>20% more cars will show up when
-you are affected by this skill</string>
+			<string>More cars will show up when
+you are affected by this bad skill</string>
 			<key>order</key>
 			<string>13</string>
 		</dict>
