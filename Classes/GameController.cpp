@@ -228,7 +228,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    //userData.currentLevel = 7;
+    //userData.currentLevel = 1;
 
     return true;
 }
@@ -265,15 +265,16 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
             CCDictionary * ldDict = (CCDictionary *)ldArray->objectAtIndex(j);
 
             CCPoint pos = CCPointFromString(CCSTRING_FOR_KEY(ldDict, "init_position")->getCString());
-            ld->initPos = ccp(pos.x * designSize.width , pos.y * designSize.height);
             ld->period = CCSTRING_FOR_KEY(ldDict, "period")->floatValue();
             ld->specialChance = CCSTRING_FOR_KEY(ldDict, "special_chance")->floatValue();
             if (CCSTRING_FOR_KEY(ldDict, "direction")->isEqual(CCString::create("left2right"))) {
                 ld->left2right = true;
                 ld->carSpeed = CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();
+                ld->initPos = ccp(0 , pos.y * designSize.height);
             }else{
                 ld->left2right = false;
                 ld->carSpeed = -CCSTRING_FOR_KEY(ldDict, "speed")->floatValue();
+                ld->initPos = ccp(designSize.width , pos.y * designSize.height);
             }
 
             CCArray * carNumbers = (CCArray *)ldDict->objectForKey("car_numbers");
