@@ -6,10 +6,19 @@
 
 static RootViewController * controller;
 static GADInterstitial * interstitial_;
+static NSMutableString * admobId = [NSMutableString stringWithString:@"ca-app-pub-3247169613448867/4636750034"];
+static AppController * appController;
 
 void showAds(){
     if(interstitial_.isReady == TRUE){
         [interstitial_ presentFromRootViewController:controller];
+    }
+}
+
+void changeAdmobId(const char * adsId){
+    [admobId setString:[NSString stringWithCString:adsId]];
+    if (appController) {
+        [appController interstitialDidDismissScreen:interstitial_];
     }
 }
 
@@ -44,9 +53,10 @@ static AppDelegate s_sharedApplication;
     controller = viewController;
     
     interstitial_ = [[GADInterstitial alloc] init];
-    interstitial_.adUnitID = @"ca-app-pub-3247169613448867/4636750034";
+    interstitial_.adUnitID = admobId;
     interstitial_.delegate = self;
     [interstitial_ loadRequest:[GADRequest request]];
+    appController = self;
 
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
@@ -139,7 +149,7 @@ static AppDelegate s_sharedApplication;
     CCLOG("interstitialDidDismissScreen");
     [ad release];
     interstitial_ = [[GADInterstitial alloc] init];
-    interstitial_.adUnitID = @"ca-app-pub-6252824057221692/6252132962";
+    interstitial_.adUnitID = admobId;
     interstitial_.delegate = self;
     [interstitial_ loadRequest:[GADRequest request]];
 }

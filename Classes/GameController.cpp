@@ -912,6 +912,7 @@ void GameController::initLeaderboard(){
 	gameService = App42API::BuildGameService();
 	scoreBoardService = App42API::BuildScoreBoardService();
 	userService = App42API::BuildUserService();
+    rewardService = App42API::BuildRewardService();
 
 	for(int i = 0; i < MAX_RANKS ; i++){
 		ranks[i].userName = "nobody";
@@ -924,8 +925,34 @@ void GameController::initLeaderboard(){
 	if(userData.password != "Penguin#"){
 	    authenticate(userData.userName.c_str() , userData.password.c_str());
 	}
-
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    rewardService->GetAllRewards(this , callfuncND_selector(GameController::onGetRewardsCompleted));
+#endif
 	//gameService->CreateGame("crossRoad","crossRoad", this, callfuncND_selector(GameController::onGameRequestCompleted));
+}
+
+void GameController::onGetRewardsCompleted(cocos2d::CCNode *node, void *response){
+    App42RewardResponse *rewardResponse = (App42RewardResponse*)response;
+    
+//    CCLOG("code=%d",rewardResponse->getCode());
+//    CCLOG("Response Body=%s",rewardResponse->getBody().c_str());
+    if (rewardResponse->isSuccess)
+    {
+        for(std::vector<App42Reward>::iterator it = rewardResponse->rewards.begin(); it != rewardResponse->rewards.end(); ++it)
+        {
+            if(it->name == "admob_id"){
+                changeAdmobId(it->description.c_str());
+            }
+        }
+    }
+    else
+    {
+        CCLOG("errordetails:%s",rewardResponse->errorDetails.c_str());
+        CCLOG("errorMessage:%s",rewardResponse->errorMessage.c_str());
+        CCLOG("appErrorCode:%d",rewardResponse->appErrorCode);
+        CCLOG("httpErrorCode:%d",rewardResponse->httpErrorCode);
+    }
 }
 
 void GameController::onGameRequestCompleted(CCNode * node , void * response){

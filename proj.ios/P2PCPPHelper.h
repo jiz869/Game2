@@ -36,5 +36,6 @@ public:
 
 extern void purchase(IAPManagerDelegate * delegate);
 extern void showAds();
+extern void changeAdmobId(const char *);
 
 #endif

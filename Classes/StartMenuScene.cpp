@@ -154,7 +154,7 @@ void StartMenuScene::initNewGameMenu(){
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.55);
-    OK->setPosition(ccp(winSize.width*0.8, winSize.height * 0.15));
+    OK->setPosition(ccp(winSize.width*0.2, winSize.height * 0.15));
 
     CCMenuItemImage * legends = CCMenuItemImage::create("legends_normal.png", "legends_selected.png" , this , menu_selector(StartMenuScene::legendsHandler));
     legends->setScale(0.55);
@@ -165,7 +165,7 @@ void StartMenuScene::initNewGameMenu(){
             this , menu_selector(StartMenuScene::newGameHandler));
     game->setScale(0.55);
     game->setTag(PURCHASE);
-    game->setPosition(ccp(winSize.width*0.2, winSize.height * 0.15));
+    game->setPosition(ccp(winSize.width*0.8, winSize.height * 0.15));
 
     newGameMenu = CCMenu::create(OK , game , currentLevel, yourSkills , enemySkills , gem , legends , NULL);
     newGameMenu->ignoreAnchorPointForPosition(false);
@@ -243,7 +243,7 @@ void StartMenuScene::initInfoMenu(){
 
 void StartMenuScene::initPurchaseMenu(){
 	CCMenuItemLabel * benefits = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
-			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
+			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentLeft));
 	benefits->setDisabledColor( ccRED );
 	benefits->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
 	benefits->setString(PURCHASE_BENEFIT);

@@ -18,6 +18,7 @@ using namespace std;
 class GameService;
 class ScoreBoardService;
 class UserService;
+class RewardService;
 
 typedef enum{
 	STARTUP_MENU_SCENE=0,
@@ -224,7 +225,7 @@ typedef struct{
                   "2) Continue game from the last level\n"
 
 #define CREDITS "Particulary thanks to www.opengameart.org\n" \
-                "for all background musics in this game\n\n" \
+                "for all the background musics in this game\n\n" \
                 "\"Jump And Run\" by bart\n" \
                 "\"Trance Menu\" by rezoner\n" \
                 "\"After Burner\" by copyc4t\n" \
@@ -272,6 +273,7 @@ public:
     void onScoreBoardGetCompleted(CCNode * node , void * response);
     void onScoreBoardGetUserRankingCompleted(CCNode * node , void * response);
     void onAuthenticateCompleted(CCNode * node , void * response);
+    void onGetRewardsCompleted(CCNode * node , void * response);
     ScoreRank ranks[MAX_RANKS];
     void getTopRankings();
     void authenticate(const char * userName , const char * passwd);
@@ -303,6 +305,7 @@ private:
     void initLeaderboard();
     GameService *gameService;
     UserService *userService;
+    RewardService * rewardService;
     ScoreBoardService *scoreBoardService;
     int getLevelByScore(int score);
     void setInfoLabel(const char * info);
