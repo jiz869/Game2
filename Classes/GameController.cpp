@@ -353,7 +353,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
 
     CCArray * array = (CCArray *)dataDict->objectForKey("player_move_animation");
     animationData.playerMoveAnim = initAnimation(array);
-    animationData.playerMoveAnim->setDelayPerUnit(0.1);
+    animationData.playerMoveAnim->setDelayPerUnit(0.15);
 
     array = (CCArray *)dataDict->objectForKey("special_stop_animation");
     animationData.specialStopAnim = initAnimation(array);
@@ -925,7 +925,7 @@ void GameController::initLeaderboard(){
 	if(userData.password != "Penguin#"){
 	    authenticate(userData.userName.c_str() , userData.password.c_str());
 	}
-    
+
 	//gameService->CreateGame("crossRoad","crossRoad", this, callfuncND_selector(GameController::onGameRequestCompleted));
 }
 
@@ -935,7 +935,7 @@ void GameController::getAdmobId(){
 
 void GameController::onGetRewardsCompleted(cocos2d::CCNode *node, void *response){
     App42RewardResponse *rewardResponse = (App42RewardResponse*)response;
-    
+
 //    CCLOG("code=%d",rewardResponse->getCode());
 //    CCLOG("Response Body=%s",rewardResponse->getBody().c_str());
     if (rewardResponse->isSuccess)
@@ -944,13 +944,13 @@ void GameController::onGetRewardsCompleted(cocos2d::CCNode *node, void *response
         {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
             if(it->name == "admob_id_ios"){
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-            if(it->name == "admob_id_android"){
-#else
-            if(0){
-#endif
                 changeAdmobId(it->description.c_str());
             }
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+            if(it->name == "admob_id_android"){
+                changeAdmobId(it->description.c_str());
+            }
+#endif
         }
     }
     else
