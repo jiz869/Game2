@@ -926,10 +926,11 @@ void GameController::initLeaderboard(){
 	    authenticate(userData.userName.c_str() , userData.password.c_str());
 	}
     
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    rewardService->GetAllRewards(this , callfuncND_selector(GameController::onGetRewardsCompleted));
-#endif
 	//gameService->CreateGame("crossRoad","crossRoad", this, callfuncND_selector(GameController::onGameRequestCompleted));
+}
+
+void GameController::getAdmobId(){
+    rewardService->GetAllRewards(this , callfuncND_selector(GameController::onGetRewardsCompleted));
 }
 
 void GameController::onGetRewardsCompleted(cocos2d::CCNode *node, void *response){
@@ -941,7 +942,13 @@ void GameController::onGetRewardsCompleted(cocos2d::CCNode *node, void *response
     {
         for(std::vector<App42Reward>::iterator it = rewardResponse->rewards.begin(); it != rewardResponse->rewards.end(); ++it)
         {
-            if(it->name == "admob_id"){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+            if(it->name == "admob_id_ios"){
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+            if(it->name == "admob_id_android"){
+#else
+            if(0){
+#endif
                 changeAdmobId(it->description.c_str());
             }
         }

@@ -6,17 +6,21 @@
 
 static RootViewController * controller;
 static GADInterstitial * interstitial_;
-static NSMutableString * admobId = [NSMutableString stringWithString:@"ca-app-pub-3247169613448867/4636750034"];
+static NSMutableString * admobId = [NSMutableString string];
 static AppController * appController;
 
 void showAds(){
     if(interstitial_.isReady == TRUE){
         [interstitial_ presentFromRootViewController:controller];
+    }else{
+        if(appController) [appController interstitialDidDismissScreen:interstitial_];
     }
 }
 
 void changeAdmobId(const char * adsId){
-    [admobId setString:[NSString stringWithCString:adsId]];
+    NSString * id = [NSString stringWithUTF8String:adsId];
+    if([admobId isEqualToString:id]) return;
+    [admobId setString:id];
     if (appController) {
         [appController interstitialDidDismissScreen:interstitial_];
     }
@@ -51,11 +55,8 @@ static AppDelegate s_sharedApplication;
     viewController.wantsFullScreenLayout = YES;
     viewController.view = __glView;
     controller = viewController;
-    
+
     interstitial_ = [[GADInterstitial alloc] init];
-    interstitial_.adUnitID = admobId;
-    interstitial_.delegate = self;
-    [interstitial_ loadRequest:[GADRequest request]];
     appController = self;
 
     // Set RootViewController to window
@@ -151,7 +152,9 @@ static AppDelegate s_sharedApplication;
     interstitial_ = [[GADInterstitial alloc] init];
     interstitial_.adUnitID = admobId;
     interstitial_.delegate = self;
-    [interstitial_ loadRequest:[GADRequest request]];
+    GADRequest * request = [GADRequest request];
+    request.testDevices = @[ @"f04d96578c221889a383798544d6f853" ];
+    [interstitial_ loadRequest:request];
 }
 
 

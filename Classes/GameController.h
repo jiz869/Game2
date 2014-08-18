@@ -284,6 +284,7 @@ public:
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
     virtual bool hasPayed();
+    void getAdmobId();
 
 private:
     GameController();

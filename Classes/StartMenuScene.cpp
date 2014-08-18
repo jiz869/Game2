@@ -917,11 +917,17 @@ void StartMenuScene::initOptionsMenu(){
 
 void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    if (!userData->hasPayed && userData->justFailed%FREE_PLAY == 0 && userData->justFailed != 0)
+    if (!userData->hasPayed && userData->justFailed != 0)
     {
+        if (userData->justFailed%FREE_PLAY == 0) {
             showAds();
             GameController::getGameController()->setJustFailed(false , true);
-			return;
+            return;
+        }
+        
+        if (userData->justFailed%FREE_PLAY == FREE_PLAY - 1){
+            GameController::getGameController()->getAdmobId();
+        }
     }
 #endif
 	CCScene * playScene = PlayScene::scene();
