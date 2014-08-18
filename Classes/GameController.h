@@ -44,6 +44,7 @@ typedef enum{
     BOMB,
     ALLBAD,
     FAST,
+    NOSCORE,
     BAD_SPECIAL_NUM,
 }SpecialID;
 
@@ -102,6 +103,7 @@ typedef struct{
 	int initDuration;
     int maxDuration;
     int durationIncrease;
+    int scoreIncrease;
     float specialInterval;
     int goodMax;
     int badMax;
@@ -127,6 +129,7 @@ typedef struct{
     CCString * allBadSoundImage;
     CCString * smallSoundImage;
     CCString * fastSoundImage;
+    CCString * noscoreSoundImage;
     CCString * gameOverSoundImage;
     CCString * gameStartSoundImage;
     CCString * scoreSpecialSoundImage;

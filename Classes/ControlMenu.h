@@ -43,6 +43,8 @@ public:
     void resumeTime();
     void changeDurationIncrease(int delta);
     void resumeDurationIncrease();
+    void stopScore();
+    void resumeScore();
 
 protected:
     CCSize winSize;
@@ -95,6 +97,7 @@ protected:
     CCLabelTTF *  upSplash;
 
     void levelUp();
+    int scoreIncrease;
 };
 
 #endif /* CONTROLMENU_H_ */

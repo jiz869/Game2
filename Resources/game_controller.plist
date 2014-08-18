@@ -71,6 +71,8 @@
 		<string>allBad.wav</string>
 		<key>special_small_sound</key>
 		<string>small.wav</string>
+		<key>special_noscore_sound</key>
+		<string>noscore.wav</string>
 		<key>game_over_sound</key>
 		<string>gameOver.wav</string>
 		<key>game_start_sound</key>
@@ -150,6 +152,8 @@
 			<string>15</string>
 			<key>duration_increase</key>
 			<string>8</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>16</string>
 			<key>good_max</key>
@@ -333,6 +337,8 @@
 			<string>15</string>
 			<key>duration_increase</key>
 			<string>7</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>14</string>
 			<key>good_max</key>
@@ -516,6 +522,8 @@
 			<string>14</string>
 			<key>duration_increase</key>
 			<string>7</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>12</string>
 			<key>good_max</key>
@@ -699,6 +707,8 @@
 			<string>13</string>
 			<key>duration_increase</key>
 			<string>7</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>12</string>
 			<key>good_max</key>
@@ -882,6 +892,8 @@
 			<string>13</string>
 			<key>duration_increase</key>
 			<string>6</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>10</string>
 			<key>good_max</key>
@@ -1065,6 +1077,8 @@
 			<string>12</string>
 			<key>duration_increase</key>
 			<string>6</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>10</string>
 			<key>good_max</key>
@@ -1245,6 +1259,8 @@
 			<string>11</string>
 			<key>duration_increase</key>
 			<string>6</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>9</string>
 			<key>good_max</key>
@@ -1423,6 +1439,8 @@
 			<string>11</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>9</string>
 			<key>good_max</key>
@@ -1600,12 +1618,14 @@
 			<string>10</string>
 			<key>duration_increase</key>
 			<string>5</string>
+			<key>score_increase</key>
+			<string>10</string>
 			<key>special_interval</key>
 			<string>8</string>
 			<key>good_max</key>
 			<string>bless</string>
 			<key>bad_max</key>
-			<string>fast</string>
+			<string>noscore</string>
 			<key>music</key>
 			<string>78.wav</string>
 			<key>lane_descriptions</key>
@@ -2002,6 +2022,20 @@ bad skill will last 50% longer</string>
 you are affected by this bad skill</string>
 			<key>order</key>
 			<string>13</string>
+		</dict>
+		<key>noscore</key>
+		<dict>
+			<key>duration</key>
+			<string>16</string>
+			<key>image_name</key>
+			<string>noscore.png</string>
+			<key>name</key>
+			<string>NO SCORE</string>
+			<key>description</key>
+			<string>With this bad skill, you will not
+be able to score for a long time</string>
+			<key>order</key>
+			<string>14</string>
 		</dict>
 	</dict>
 </dict>

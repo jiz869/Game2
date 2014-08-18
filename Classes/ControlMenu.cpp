@@ -12,7 +12,7 @@
 
 using namespace CocosDenshion;
 
-ControlMenu::ControlMenu() : status(PLAY) {
+ControlMenu::ControlMenu() : status(PLAY) , scoreIncrease(0) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -59,6 +59,7 @@ void ControlMenu::initMisc(){
     initDuration = playSceneData->initDuration;
     maxDuration = playSceneData->maxDuration;
     durationIncrease = playSceneData->durationIncrease;
+    scoreIncrease = playSceneData->scoreIncrease;
     seconds = initDuration;
 
     startUpdateTime = false;
@@ -339,8 +340,9 @@ bool ControlMenu::doScore(){
     if (status != PLAY) {
         return false;
     }
-	score+=10;
-	updateScore(true);
+	score+=scoreIncrease;
+	if(scoreIncrease) updateScore(true);
+	else updateScore(false);
     if (userData->levels[userData->currentLevel] != 0 &&
         score >= userData->levels[userData->currentLevel]) {
         levelUp();
@@ -348,6 +350,14 @@ bool ControlMenu::doScore(){
 	seconds += durationIncrease;
 	updateGameTime();
     return true;
+}
+
+void ControlMenu::stopScore(){
+    scoreIncrease = 0;
+}
+
+void ControlMenu::resumeScore(){
+    scoreIncrease = playSceneData->scoreIncrease;
 }
 
 void ControlMenu::levelUp(){

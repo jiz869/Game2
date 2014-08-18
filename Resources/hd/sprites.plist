@@ -7,7 +7,7 @@
             <key>allBad0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{407,912},{72,72}}</string>
+                <string>{{328,986},{72,72}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,7 +20,7 @@
             <key>bless0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{254,916},{72,72}}</string>
+                <string>{{407,912},{72,72}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,7 +33,7 @@
             <key>bomb0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{333,912},{72,72}}</string>
+                <string>{{254,916},{72,72}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -891,7 +891,7 @@
             <key>curse0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{380,838},{72,72}}</string>
+                <string>{{333,912},{72,72}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -904,7 +904,7 @@
             <key>double0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{259,842},{72,72}}</string>
+                <string>{{380,838},{72,72}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1125,7 +1125,7 @@
             <key>fast.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{385,764},{72,72}}</string>
+                <string>{{259,842},{72,72}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1255,7 +1255,7 @@
             <key>jail.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{259,768},{72,72}}</string>
+                <string>{{385,764},{72,72}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1266,6 +1266,19 @@
                 <string>{72,72}</string>
             </dict>
             <key>life0.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{259,768},{72,72}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{72,72}}</string>
+                <key>sourceSize</key>
+                <string>{72,72}</string>
+            </dict>
+            <key>noscore.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{260,694},{72,72}}</string>
@@ -1522,7 +1535,7 @@
             <key>size</key>
             <string>{512,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:cc5fb740d38700c343254b2b0a7890d2$</string>
+            <string>$TexturePacker:SmartUpdate:2d75ffd38175b0164f19fd5a015d7113$</string>
             <key>textureFileName</key>
             <string>sprites.png</string>
         </dict>

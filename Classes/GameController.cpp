@@ -61,6 +61,9 @@ void static smallEnd(PlayerObj * player);
 void static fastBegin(PlayerObj * player);
 void static fastEnd(PlayerObj * player);
 
+void static noscoreBegin(PlayerObj * player);
+void static noscoreEnd(PlayerObj * player);
+
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
@@ -228,7 +231,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    //userData.currentLevel = 1;
+    userData.currentLevel = 8;
 
     return true;
 }
@@ -257,6 +260,7 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
         data->goodMax = getSpecialIdForKey(CCSTRING_FOR_KEY(dict , "good_max"));
         data->badMax = getSpecialIdForKey(CCSTRING_FOR_KEY(dict , "bad_max"));
         data->music = CCSTRING_FOR_KEY(dict , "music");
+        data->scoreIncrease = CCSTRING_FOR_KEY(dict , "score_increase")->intValue();
         //CCLOG("good %d, bad %d", data->goodMax , data->badMax);
 
         CCArray * ldArray = (CCArray *)dict->objectForKey("lane_descriptions");
@@ -323,6 +327,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     animationData.gameStartSoundImage = CCSTRING_FOR_KEY(dataDict, "game_start_sound");
     animationData.smallSoundImage = CCSTRING_FOR_KEY(dataDict, "special_small_sound");
     animationData.fastSoundImage = CCSTRING_FOR_KEY(dataDict, "special_fast_sound");
+    animationData.noscoreSoundImage = CCSTRING_FOR_KEY(dataDict, "special_noscore_sound");
 
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.resetSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.scoreSoundImage->getCString());
@@ -343,6 +348,7 @@ bool GameController::initAnimationData(cocos2d::CCDictionary *dataDict){
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.gameStartSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.smallSoundImage->getCString());
     SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.fastSoundImage->getCString());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(animationData.noscoreSoundImage->getCString());
 
     CCArray * hornSoundFiles = (CCArray *)dataDict->objectForKey("horn_sound_files");
     animationData.hornSoundImages.reserve(hornSoundFiles->count());
@@ -605,6 +611,17 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[FAST]->description = CCSTRING_FOR_KEY(dict, "description");
     specialDatas[FAST]->name = CCSTRING_FOR_KEY(dict, "name");
 
+    dict = (CCDictionary *)dataDict->objectForKey("noscore");
+    specialDatas[NOSCORE] = new SpecialData;
+    specialDatas[NOSCORE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[NOSCORE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[NOSCORE]->begin = &noscoreBegin;
+    specialDatas[NOSCORE]->step = NULL;
+    specialDatas[NOSCORE]->end = &noscoreEnd;
+    specialDatas[NOSCORE]->hitByCar = NULL;
+    specialDatas[NOSCORE]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[NOSCORE]->name = CCSTRING_FOR_KEY(dict, "name");
+
     return true;
 }
 
@@ -803,6 +820,19 @@ void static fastBegin(PlayerObj * player){
 void static fastEnd(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->resumeSpeed();
+}
+
+//noscore
+void static noscoreBegin(PlayerObj * player){
+    AnimationData * animData = GameController::getGameController()->getAnimationData();
+    SimpleAudioEngine::sharedEngine()->playEffect(animData->noscoreSoundImage->getCString());
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->controlMenu->stopScore();
+    player->hitByCar(false);
+}
+void static noscoreEnd(PlayerObj * player){
+    PlayScene * playScene = (PlayScene *)player->getParent();
+    playScene->controlMenu->resumeScore();
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){
