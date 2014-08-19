@@ -275,13 +275,23 @@ void PlayScene::freezeAllLanes(){
         lanes[i]->stop();
     }
     city->unscheduleAllSelectors();
+    unscheduleUpdate();
 }
 
 void PlayScene::restartAllLanes(){
+    int size = lanes.size();
+    for (int i = 0; i < size; i++) {
+            lanes[i]->reStart();
+    }
+}
+
+void PlayScene::resumeAllLanes(){
 	int size = lanes.size();
     for (int i = 0; i < size; i++) {
             lanes[i]->reStart();
     }
+    city->scheduleSpecial();
+    scheduleUpdate();
 }
 
 unsigned long PlayScene::getCurrentTime(){

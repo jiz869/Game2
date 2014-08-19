@@ -33,7 +33,7 @@ bool City::init(){
 
     addRoad();
 
-    scheduleSpecial();
+    //scheduleSpecial();
 
 	return true;
 }
@@ -71,8 +71,6 @@ void City::addCityObj(){
     background->setOpacity(180);
 
     addChild(background);
-
-	schedule(schedule_selector(City::addHornSounds), 8, kCCRepeatForever, 0.1);
 }
 
 void City::addHornSounds(){
@@ -108,5 +106,7 @@ void City::scheduleSpecial(){
 			GameController::getGameController()->getUserData()->currentLevel);
 
 	if(playSceneData->specialInterval > 0.5)
-		schedule(schedule_selector(City::addSpecial) , playSceneData->specialInterval , kCCRepeatForever , 1.5);
+		schedule(schedule_selector(City::addSpecial) , playSceneData->specialInterval , kCCRepeatForever , 0.01);
+
+	schedule(schedule_selector(City::addHornSounds), 8, kCCRepeatForever, 0.01);
 }

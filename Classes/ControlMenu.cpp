@@ -9,6 +9,7 @@
 #include "PlayScene.h"
 #include "SimpleAudioEngine.h"
 #include "GameOverScene.h"
+#include "city.h"
 
 using namespace CocosDenshion;
 
@@ -168,7 +169,7 @@ void ControlMenu::pauseAndPlayHandler(CCObject * sender){
 }
 
 void ControlMenu::pauseGame(){
-	((PlayScene *)getParent())->freezeAllLanes();
+    ((PlayScene *)getParent())->freezeAllLanes();
 	upButton->setEnabled(false);
 	downButton->setEnabled(false);
 	startUpdateTime = false;
@@ -178,7 +179,7 @@ void ControlMenu::pauseGame(){
 }
 
 void ControlMenu::resumeGame(){
-	((PlayScene *)getParent())->restartAllLanes();
+	((PlayScene *)getParent())->resumeAllLanes();
 	upButton->setEnabled(true);
 	downButton->setEnabled(true);
 	startUpdateTime = true;
@@ -266,6 +267,7 @@ bool ControlMenu::isUpButtonSelected(){
 }
 
 void ControlMenu::startNewGame(){
+    ((PlayScene *)getParent())->city->scheduleSpecial();
     goSplash->setVisible(false);
 	menu->setPosition(ccp(winSize.width/2 , winSize.height/2));
 	startUpdateTime=true;
@@ -300,6 +302,7 @@ void ControlMenu::updateScore(bool isGood)
 
 void ControlMenu::gameOver()
 {
+    ((PlayScene *)getParent())->freezeAllLanes();
     status=OVER;
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->gameOverSoundImage->getCString());
@@ -314,7 +317,6 @@ void ControlMenu::showOver(){
 }
 
 void ControlMenu::nextScene(){
-    ((PlayScene *)getParent())->freezeAllLanes();
     if (status == OVER) {
         CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
     }else if (status == LEVEL_UP){
@@ -361,6 +363,7 @@ void ControlMenu::resumeScore(){
 }
 
 void ControlMenu::levelUp(){
+    ((PlayScene *)getParent())->freezeAllLanes();
     status=LEVEL_UP;
     levelSplash->runAction(CCSequence::create(CCMoveTo::create(0.8, ccp(winSize.width*0.3, winSize.height*0.5)) ,CCCallFunc::create(this, callfunc_selector(ControlMenu::showUp)), NULL));
     gem->runAction(CCFadeOut::create(0.8));

@@ -19,11 +19,11 @@ public:
     void addHornSounds();
     void addSpecial();
     void expireSpecial(CCObject * special);
+    void scheduleSpecial();
 private:
     CCSize winSize;
     void addRoad();
     void addCityObj();
-    void scheduleSpecial();
     PlaySceneData * playSceneData;
     UserData * userData;
 };

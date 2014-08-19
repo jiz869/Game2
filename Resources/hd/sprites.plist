@@ -1535,7 +1535,7 @@
             <key>size</key>
             <string>{512,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:2d75ffd38175b0164f19fd5a015d7113$</string>
+            <string>$TexturePacker:SmartUpdate:e261c411d9b6863217be5dd6189fd8ff$</string>
             <key>textureFileName</key>
             <string>sprites.png</string>
         </dict>

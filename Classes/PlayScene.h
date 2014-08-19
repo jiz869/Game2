@@ -36,6 +36,7 @@ public:
     virtual void freezeAllLanes();
 
     virtual void restartAllLanes();
+    virtual void resumeAllLanes();
 
     virtual void upHandler(int tag);
     virtual void downHandler(int tag);
