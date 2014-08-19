@@ -742,9 +742,9 @@
 					<key>special_chance</key>
 					<string>0.5</string>
 					<key>period</key>
-					<string>1.8</string>
+					<string>2.1</string>
 					<key>speed</key>
-					<string>5.8</string>
+					<string>5.1</string>
 					<key>init_position</key>
 					<string>{0,0.2}</string>
 					<key>direction</key>
@@ -754,7 +754,6 @@
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
-						<string>5</string>
 						<string>6</string>
 					</array>
 				</dict>
@@ -800,9 +799,9 @@
 					<key>special_chance</key>
 					<string>0.5</string>
 					<key>period</key>
-					<string>2.1</string>
+					<string>1.8</string>
 					<key>speed</key>
-					<string>5.1</string>
+					<string>5.8</string>
 					<key>init_position</key>
 					<string>{0,0.5}</string>
 					<key>direction</key>
@@ -812,6 +811,7 @@
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
+						<string>5</string>
 						<string>6</string>
 					</array>
 				</dict>
