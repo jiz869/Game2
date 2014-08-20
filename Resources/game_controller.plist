@@ -196,10 +196,10 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -273,7 +273,7 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
+						<string>6</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -353,11 +353,49 @@
 					<key>special_chance</key>
 					<string>0.4</string>
 					<key>period</key>
+					<string>2.2</string>
+					<key>speed</key>
+					<string>3.3</string>
+					<key>init_position</key>
+					<string>{0,0.1}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.4</string>
+					<key>period</key>
+					<string>2.5</string>
+					<key>speed</key>
+					<string>4.8</string>
+					<key>init_position</key>
+					<string>{0,0.2}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>6</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.4</string>
+					<key>period</key>
 					<string>2.6</string>
 					<key>speed</key>
 					<string>2.6</string>
 					<key>init_position</key>
-					<string>{1,0.1}</string>
+					<string>{1,0.3}</string>
 					<key>direction</key>
 					<string>right2left</string>
 					<key>car_numbers</key>
@@ -376,67 +414,9 @@
 					<key>speed</key>
 					<string>5.7</string>
 					<key>init_position</key>
-					<string>{1,0.2}</string>
-					<key>direction</key>
-					<string>right2left</string>
-					<key>car_numbers</key>
-					<array>
-						<string>2</string>
-						<string>3</string>
-						<string>4</string>
-						<string>5</string>
-						<string>6</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.4</string>
-					<key>period</key>
-					<string>2.1</string>
-					<key>speed</key>
-					<string>2.2</string>
-					<key>init_position</key>
-					<string>{1,0.3}</string>
-					<key>direction</key>
-					<string>right2left</string>
-					<key>car_numbers</key>
-					<array>
-						<string>0</string>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.4</string>
-					<key>period</key>
-					<string>2.9</string>
-					<key>speed</key>
-					<string>3.3</string>
-					<key>init_position</key>
 					<string>{1,0.4}</string>
 					<key>direction</key>
 					<string>right2left</string>
-					<key>car_numbers</key>
-					<array>
-						<string>0</string>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.4</string>
-					<key>period</key>
-					<string>2.2</string>
-					<key>speed</key>
-					<string>5.8</string>
-					<key>init_position</key>
-					<string>{0,0.5}</string>
-					<key>direction</key>
-					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
 						<string>2</string>
@@ -454,7 +434,7 @@
 					<key>speed</key>
 					<string>2.6</string>
 					<key>init_position</key>
-					<string>{0,0.6}</string>
+					<string>{0,0.5}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
@@ -469,11 +449,11 @@
 					<key>special_chance</key>
 					<string>0.4</string>
 					<key>period</key>
-					<string>2.5</string>
+					<string>2.9</string>
 					<key>speed</key>
-					<string>4.8</string>
+					<string>3.3</string>
 					<key>init_position</key>
-					<string>{0,0.7}</string>
+					<string>{1,0.6}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
@@ -490,9 +470,29 @@
 					<key>period</key>
 					<string>2.2</string>
 					<key>speed</key>
-					<string>3.3</string>
+					<string>5.8</string>
 					<key>init_position</key>
-					<string>{0,0.8}</string>
+					<string>{0,0.7}</string>
+					<key>direction</key>
+					<string>left2right</string>
+					<key>car_numbers</key>
+					<array>
+						<string>2</string>
+						<string>3</string>
+						<string>4</string>
+						<string>5</string>
+						<string>6</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.4</string>
+					<key>period</key>
+					<string>2.1</string>
+					<key>speed</key>
+					<string>2.2</string>
+					<key>init_position</key>
+					<string>{1,0.8}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
@@ -538,127 +538,11 @@
 					<key>special_chance</key>
 					<string>0.45</string>
 					<key>period</key>
-					<string>2.7</string>
-					<key>speed</key>
-					<string>2.8</string>
-					<key>init_position</key>
-					<string>{0,0.1}</string>
-					<key>direction</key>
-					<string>left2right</string>
-					<key>car_numbers</key>
-					<array>
-						<string>0</string>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.45</string>
-					<key>period</key>
-					<string>2</string>
-					<key>speed</key>
-					<string>3.5</string>
-					<key>init_position</key>
-					<string>{0,0.2}</string>
-					<key>direction</key>
-					<string>left2right</string>
-					<key>car_numbers</key>
-					<array>
-						<string>0</string>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.45</string>
-					<key>period</key>
-					<string>2</string>
-					<key>speed</key>
-					<string>6</string>
-					<key>init_position</key>
-					<string>{0,0.3}</string>
-					<key>direction</key>
-					<string>left2right</string>
-					<key>car_numbers</key>
-					<array>
-						<string>2</string>
-						<string>3</string>
-						<string>4</string>
-						<string>5</string>
-						<string>6</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.45</string>
-					<key>period</key>
-					<string>2.4</string>
-					<key>speed</key>
-					<string>2.8</string>
-					<key>init_position</key>
-					<string>{1,0.4}</string>
-					<key>direction</key>
-					<string>right2left</string>
-					<key>car_numbers</key>
-					<array>
-						<string>0</string>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.45</string>
-					<key>period</key>
-					<string>2.8</string>
-					<key>speed</key>
-					<string>3.5</string>
-					<key>init_position</key>
-					<string>{1,0.5}</string>
-					<key>direction</key>
-					<string>right2left</string>
-					<key>car_numbers</key>
-					<array>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-						<string>6</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.45</string>
-					<key>period</key>
-					<string>2</string>
-					<key>speed</key>
-					<string>5.8</string>
-					<key>init_position</key>
-					<string>{1,0.6}</string>
-					<key>direction</key>
-					<string>right2left</string>
-					<key>car_numbers</key>
-					<array>
-						<string>2</string>
-						<string>3</string>
-						<string>4</string>
-						<string>5</string>
-						<string>6</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.45</string>
-					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
 					<string>2.4</string>
 					<key>init_position</key>
-					<string>{1,0.7}</string>
+					<string>{1,0.1}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
@@ -677,7 +561,7 @@
 					<key>speed</key>
 					<string>5</string>
 					<key>init_position</key>
-					<string>{0,0.8}</string>
+					<string>{0,0.2}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
@@ -686,6 +570,121 @@
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.45</string>
+					<key>period</key>
+					<string>2.7</string>
+					<key>speed</key>
+					<string>2.8</string>
+					<key>init_position</key>
+					<string>{0,0.3}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.45</string>
+					<key>period</key>
+					<string>2</string>
+					<key>speed</key>
+					<string>6</string>
+					<key>init_position</key>
+					<string>{0,0.4}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>2</string>
+						<string>3</string>
+						<string>4</string>
+						<string>6</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.45</string>
+					<key>period</key>
+					<string>2.4</string>
+					<key>speed</key>
+					<string>2.8</string>
+					<key>init_position</key>
+					<string>{1,0.5}</string>
+					<key>direction</key>
+					<string>left2right</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.45</string>
+					<key>period</key>
+					<string>2</string>
+					<key>speed</key>
+					<string>3.5</string>
+					<key>init_position</key>
+					<string>{0,0.6}</string>
+					<key>direction</key>
+					<string>left2right</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+						<string>6</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.45</string>
+					<key>period</key>
+					<string>2.8</string>
+					<key>speed</key>
+					<string>3.5</string>
+					<key>init_position</key>
+					<string>{1,0.7}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+						<string>6</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.45</string>
+					<key>period</key>
+					<string>2</string>
+					<key>speed</key>
+					<string>5.8</string>
+					<key>init_position</key>
+					<string>{1,0.8}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>2</string>
+						<string>3</string>
+						<string>4</string>
+						<string>6</string>
 					</array>
 				</dict>
 			</array>
@@ -710,7 +709,7 @@
 			<key>score_increase</key>
 			<string>10</string>
 			<key>special_interval</key>
-			<string>12</string>
+			<string>10</string>
 			<key>good_max</key>
 			<string>double</string>
 			<key>bad_max</key>
@@ -751,6 +750,7 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
+						<string>1</string>
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
@@ -761,35 +761,16 @@
 					<key>special_chance</key>
 					<string>0.5</string>
 					<key>period</key>
-					<string>2.2</string>
-					<key>speed</key>
-					<string>2.8</string>
-					<key>init_position</key>
-					<string>{1,0.3}</string>
-					<key>direction</key>
-					<string>left2right</string>
-					<key>car_numbers</key>
-					<array>
-						<string>0</string>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.5</string>
-					<key>period</key>
 					<string>2</string>
 					<key>speed</key>
 					<string>3.5</string>
 					<key>init_position</key>
-					<string>{0,0.4}</string>
+					<string>{0,0.3}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
+						<string>6</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -803,7 +784,7 @@
 					<key>speed</key>
 					<string>5.8</string>
 					<key>init_position</key>
-					<string>{0,0.5}</string>
+					<string>{0,0.4}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
@@ -811,7 +792,6 @@
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
-						<string>5</string>
 						<string>6</string>
 					</array>
 				</dict>
@@ -823,12 +803,12 @@
 					<key>speed</key>
 					<string>2.4</string>
 					<key>init_position</key>
-					<string>{1,0.6}</string>
+					<string>{1,0.5}</string>
 					<key>direction</key>
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>6</string>
+						<string>0</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
@@ -842,7 +822,7 @@
 					<key>speed</key>
 					<string>3.5</string>
 					<key>init_position</key>
-					<string>{1,0.7}</string>
+					<string>{1,0.6}</string>
 					<key>direction</key>
 					<string>right2left</string>
 					<key>car_numbers</key>
@@ -857,13 +837,32 @@
 					<key>special_chance</key>
 					<string>0.5</string>
 					<key>period</key>
+					<string>2.2</string>
+					<key>speed</key>
+					<string>2.8</string>
+					<key>init_position</key>
+					<string>{1,0.7}</string>
+					<key>direction</key>
+					<string>left2right</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.5</string>
+					<key>period</key>
 					<string>1.8</string>
 					<key>speed</key>
 					<string>6</string>
 					<key>init_position</key>
 					<string>{1,0.8}</string>
 					<key>direction</key>
-					<string>right2left</string>
+					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
 						<string>2</string>
@@ -891,7 +890,7 @@
 			<key>max_duration</key>
 			<string>13</string>
 			<key>duration_increase</key>
-			<string>6</string>
+			<string>7</string>
 			<key>score_increase</key>
 			<string>10</string>
 			<key>special_interval</key>
@@ -908,58 +907,39 @@
 					<key>special_chance</key>
 					<string>0.55</string>
 					<key>period</key>
-					<string>2</string>
-					<key>speed</key>
-					<string>3.5</string>
-					<key>init_position</key>
-					<string>{0,0.1}</string>
-					<key>direction</key>
-					<string>left2right</string>
-					<key>car_numbers</key>
-					<array>
-						<string>0</string>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-						<string>6</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.55</string>
-					<key>period</key>
-					<string>2</string>
-					<key>speed</key>
-					<string>5</string>
-					<key>init_position</key>
-					<string>{0,0.2}</string>
-					<key>direction</key>
-					<string>left2right</string>
-					<key>car_numbers</key>
-					<array>
-						<string>6</string>
-						<string>1</string>
-						<string>2</string>
-						<string>4</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.55</string>
-					<key>period</key>
 					<string>2.7</string>
 					<key>speed</key>
 					<string>2.8</string>
 					<key>init_position</key>
-					<string>{0,0.3}</string>
+					<string>{0,0.1}</string>
 					<key>direction</key>
-					<string>left2right</string>
+					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
 						<string>0</string>
 						<string>1</string>
 						<string>2</string>
 						<string>3</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.55</string>
+					<key>period</key>
+					<string>2</string>
+					<key>speed</key>
+					<string>3.5</string>
+					<key>init_position</key>
+					<string>{0,0.2}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
+						<string>1</string>
+						<string>2</string>
+						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -968,11 +948,11 @@
 					<key>period</key>
 					<string>1.8</string>
 					<key>speed</key>
-					<string>5.8</string>
+					<string>5.6</string>
 					<key>init_position</key>
-					<string>{0,0.4}</string>
+					<string>{1,0.3}</string>
 					<key>direction</key>
-					<string>left2right</string>
+					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
 						<string>2</string>
@@ -990,9 +970,9 @@
 					<key>speed</key>
 					<string>2.8</string>
 					<key>init_position</key>
-					<string>{1,0.5}</string>
+					<string>{1,0.4}</string>
 					<key>direction</key>
-					<string>right2left</string>
+					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
 						<string>0</string>
@@ -1009,9 +989,9 @@
 					<key>speed</key>
 					<string>3.5</string>
 					<key>init_position</key>
-					<string>{1,0.6}</string>
+					<string>{1,0.5}</string>
 					<key>direction</key>
-					<string>right2left</string>
+					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
 						<string>6</string>
@@ -1025,11 +1005,11 @@
 					<key>period</key>
 					<string>1.8</string>
 					<key>speed</key>
-					<string>5.6</string>
+					<string>5.8</string>
 					<key>init_position</key>
-					<string>{1,0.7}</string>
+					<string>{0,0.6}</string>
 					<key>direction</key>
-					<string>right2left</string>
+					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
 						<string>2</string>
@@ -1047,7 +1027,7 @@
 					<key>speed</key>
 					<string>2.4</string>
 					<key>init_position</key>
-					<string>{1,0.8}</string>
+					<string>{1,0.7}</string>
 					<key>direction</key>
 					<string>right2left</string>
 					<key>car_numbers</key>
@@ -1056,6 +1036,25 @@
 						<string>2</string>
 						<string>3</string>
 						<string>6</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.55</string>
+					<key>period</key>
+					<string>2</string>
+					<key>speed</key>
+					<string>5</string>
+					<key>init_position</key>
+					<string>{0,0.8}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>6</string>
+						<string>1</string>
+						<string>2</string>
+						<string>4</string>
 					</array>
 				</dict>
 			</array>
@@ -1080,7 +1079,7 @@
 			<key>score_increase</key>
 			<string>10</string>
 			<key>special_interval</key>
-			<string>10</string>
+			<string>9</string>
 			<key>good_max</key>
 			<string>small</string>
 			<key>bad_max</key>
@@ -1442,7 +1441,7 @@
 			<key>score_increase</key>
 			<string>10</string>
 			<key>special_interval</key>
-			<string>9</string>
+			<string>8</string>
 			<key>good_max</key>
 			<string>bless</string>
 			<key>bad_max</key>
@@ -1833,7 +1832,7 @@ a few seconds, so just HURRY !!!</string>
 		<key>life</key>
 		<dict>
 			<key>duration</key>
-			<string>0.4</string>
+			<string>0.0</string>
 			<key>life</key>
 			<string>5</string>
 			<key>image_name</key>
@@ -1852,7 +1851,7 @@ your time limit</string>
 		<key>skull</key>
 		<dict>
 			<key>duration</key>
-			<string>0.4</string>
+			<string>0.0</string>
 			<key>life</key>
 			<string>4</string>
 			<key>image_name</key>
@@ -1868,7 +1867,7 @@ dangerous car from each lane</string>
 		<key>double</key>
 		<dict>
 			<key>duration</key>
-			<string>0.4</string>
+			<string>0.0</string>
 			<key>life</key>
 			<string>4.5</string>
 			<key>image_name</key>
