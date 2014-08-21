@@ -1700,9 +1700,10 @@
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
+						<string>6</string>
+						<string>3</string>
 						<string>4</string>
 						<string>5</string>
-						<string>6</string>
 					</array>
 				</dict>
 				<dict>
