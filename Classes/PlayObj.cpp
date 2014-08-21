@@ -325,7 +325,12 @@ void PlayerObj::tagPlayer(SpecialObj *specialObj){
     	tag->setPosition(ccp(playerSize.width+(specials.size()-0.5)*tagSize.width , playerSize.height/2));
     }
 
-    tag->runAction(CCSequence::createWithTwoActions(CCScaleTo::create(0.2, 0.75), CCScaleTo::create(0.2, 0.4)));
+    if(specialObj->getSpecialData()->duration > 0.1){
+        tag->runAction(CCSequence::create(CCScaleTo::create(0.2, 0.75) , CCScaleTo::create(0.2, 0.4) , NULL));
+    }else{
+        tag->runAction(CCSequence::create(CCScaleTo::create(0.2, 0.75) , CCScaleTo::create(0.2, 0.4) ,
+            CCCallFunc::create(tag, callfunc_selector(CCSprite::removeFromParent)) , NULL));
+    }
     tag->setTag(specialObj->getSpecialId());
 }
 
@@ -360,7 +365,9 @@ SpecialObj * PlayerObj::hasSpecial(int specialId){
 }
 
 void PlayerObj::endWithSpecial(SpecialObj *specialObj){
-    gameObj->removeChildByTag(specialObj->getSpecialId());
+    if(specialObj->getSpecialData()->duration > 0.1){
+        gameObj->removeChildByTag(specialObj->getSpecialId());
+    }
     removeSpecial(specialObj);
     specialObj->unTake();
 }
