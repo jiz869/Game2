@@ -1455,19 +1455,18 @@
 					<key>special_chance</key>
 					<string>0.7</string>
 					<key>period</key>
-					<string>2.6</string>
+					<string>2</string>
 					<key>speed</key>
-					<string>2.8</string>
+					<string>3.4</string>
 					<key>init_position</key>
 					<string>{0,0.1}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>1</string>
 						<string>2</string>
-						<string>4</string>
+						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1486,44 +1485,25 @@
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
-						<string>6</string>
+						<string>5</string>
 					</array>
 				</dict>
 				<dict>
 					<key>special_chance</key>
 					<string>0.7</string>
 					<key>period</key>
-					<string>2</string>
-					<key>speed</key>
-					<string>3.4</string>
-					<key>init_position</key>
-					<string>{0,0.3}</string>
-					<key>direction</key>
-					<string>right2left</string>
-					<key>car_numbers</key>
-					<array>
-						<string>6</string>
-						<string>1</string>
-						<string>2</string>
-						<string>3</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.7</string>
-					<key>period</key>
-					<string>2.5</string>
+					<string>2.6</string>
 					<key>speed</key>
 					<string>2.8</string>
 					<key>init_position</key>
-					<string>{1,0.4}</string>
+					<string>{0,0.3}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
-						<string>6</string>
 						<string>2</string>
 						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1534,14 +1514,32 @@
 					<key>speed</key>
 					<string>6</string>
 					<key>init_position</key>
-					<string>{0,0.5}</string>
+					<string>{0,0.4}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
+						<string>6</string>
 						<string>3</string>
 						<string>4</string>
+						<string>5</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.7</string>
+					<key>period</key>
+					<string>2.5</string>
+					<key>speed</key>
+					<string>2.8</string>
+					<key>init_position</key>
+					<string>{1,0.5}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
 						<string>6</string>
+						<string>3</string>
 					</array>
 				</dict>
 				<dict>
@@ -1557,28 +1555,9 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
 						<string>2</string>
-						<string>3</string>
+						<string>1</string>
 						<string>4</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.7</string>
-					<key>period</key>
-					<string>2.0</string>
-					<key>speed</key>
-					<string>2.2</string>
-					<key>init_position</key>
-					<string>{1,0.7}</string>
-					<key>direction</key>
-					<string>left2right</string>
-					<key>car_numbers</key>
-					<array>
-						<string>0</string>
-						<string>2</string>
-						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1589,16 +1568,33 @@
 					<key>speed</key>
 					<string>6</string>
 					<key>init_position</key>
-					<string>{1,0.8}</string>
+					<string>{1,0.7}</string>
 					<key>direction</key>
-					<string>left2right</string>
+					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
-						<string>0</string>
-						<string>2</string>
+						<string>6</string>
 						<string>3</string>
 						<string>4</string>
 						<string>5</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.7</string>
+					<key>period</key>
+					<string>2.0</string>
+					<key>speed</key>
+					<string>2.2</string>
+					<key>init_position</key>
+					<string>{1,0.8}</string>
+					<key>direction</key>
+					<string>right2left</string>
+					<key>car_numbers</key>
+					<array>
+						<string>2</string>
+						<string>3</string>
+						<string>6</string>
 					</array>
 				</dict>
 			</array>
@@ -1636,18 +1632,19 @@
 					<key>special_chance</key>
 					<string>0.75</string>
 					<key>period</key>
-					<string>2</string>
+					<string>2.6</string>
 					<key>speed</key>
-					<string>3.4</string>
+					<string>2.8</string>
 					<key>init_position</key>
 					<string>{0,0.1}</string>
 					<key>direction</key>
 					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
+						<string>0</string>
+						<string>1</string>
 						<string>2</string>
-						<string>3</string>
-						<string>6</string>
+						<string>4</string>
 					</array>
 				</dict>
 				<dict>
@@ -1666,44 +1663,26 @@
 						<string>2</string>
 						<string>3</string>
 						<string>4</string>
-						<string>5</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
 					<key>special_chance</key>
 					<string>0.75</string>
 					<key>period</key>
-					<string>2.6</string>
+					<string>2</string>
 					<key>speed</key>
-					<string>2.8</string>
+					<string>3.4</string>
 					<key>init_position</key>
 					<string>{0,0.3}</string>
 					<key>direction</key>
-					<string>left2right</string>
+					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
+						<string>6</string>
+						<string>1</string>
 						<string>2</string>
 						<string>3</string>
-						<string>6</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.75</string>
-					<key>period</key>
-					<string>1.8</string>
-					<key>speed</key>
-					<string>6</string>
-					<key>init_position</key>
-					<string>{0,0.4}</string>
-					<key>direction</key>
-					<string>left2right</string>
-					<key>car_numbers</key>
-					<array>
-						<string>6</string>
-						<string>3</string>
-						<string>4</string>
-						<string>5</string>
 					</array>
 				</dict>
 				<dict>
@@ -1714,13 +1693,32 @@
 					<key>speed</key>
 					<string>2.8</string>
 					<key>init_position</key>
-					<string>{1,0.5}</string>
+					<string>{1,0.4}</string>
 					<key>direction</key>
-					<string>right2left</string>
+					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
 						<string>6</string>
+						<string>2</string>
 						<string>3</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.75</string>
+					<key>period</key>
+					<string>1.8</string>
+					<key>speed</key>
+					<string>6</string>
+					<key>init_position</key>
+					<string>{0,0.5}</string>
+					<key>direction</key>
+					<string>left2right</string>
+					<key>car_numbers</key>
+					<array>
+						<string>3</string>
+						<string>4</string>
+						<string>6</string>
 					</array>
 				</dict>
 				<dict>
@@ -1736,28 +1734,10 @@
 					<string>right2left</string>
 					<key>car_numbers</key>
 					<array>
+						<string>0</string>
 						<string>2</string>
-						<string>1</string>
-						<string>4</string>
-					</array>
-				</dict>
-				<dict>
-					<key>special_chance</key>
-					<string>0.75</string>
-					<key>period</key>
-					<string>2</string>
-					<key>speed</key>
-					<string>6</string>
-					<key>init_position</key>
-					<string>{1,0.7}</string>
-					<key>direction</key>
-					<string>right2left</string>
-					<key>car_numbers</key>
-					<array>
-						<string>6</string>
 						<string>3</string>
 						<string>4</string>
-						<string>5</string>
 					</array>
 				</dict>
 				<dict>
@@ -1768,14 +1748,34 @@
 					<key>speed</key>
 					<string>2.2</string>
 					<key>init_position</key>
-					<string>{1,0.8}</string>
+					<string>{1,0.7}</string>
 					<key>direction</key>
-					<string>right2left</string>
+					<string>left2right</string>
 					<key>car_numbers</key>
 					<array>
+						<string>0</string>
+						<string>2</string>
+						<string>6</string>
+					</array>
+				</dict>
+				<dict>
+					<key>special_chance</key>
+					<string>0.75</string>
+					<key>period</key>
+					<string>2</string>
+					<key>speed</key>
+					<string>6</string>
+					<key>init_position</key>
+					<string>{1,0.8}</string>
+					<key>direction</key>
+					<string>left2right</string>
+					<key>car_numbers</key>
+					<array>
+						<string>0</string>
 						<string>2</string>
 						<string>3</string>
-						<string>6</string>
+						<string>4</string>
+						<string>5</string>
 					</array>
 				</dict>
 			</array>
@@ -1794,8 +1794,8 @@
 			<key>name</key>
 			<string>STOP</string>
 			<key>description</key>
-			<string>This skill will stop cars in front
-you for a very short time</string>
+			<string>This penguin skill will stop cars in 
+front you for a very short time</string>
 			<key>order</key>
 			<string>0</string>
 		</dict>
@@ -1812,7 +1812,7 @@ you for a very short time</string>
 STOP</string>
 			<key>description</key>
 			<string>Time does not count down 
-when you have this skill</string>
+when you have this penguin skill</string>
 			<key>order</key>
 			<string>1</string>
 		</dict>
@@ -1846,9 +1846,9 @@ a few seconds, so just HURRY !!!</string>
 			<key>name</key>
 			<string>LIFE</string>
 			<key>description</key>
-			<string>This skill will give you a few more
-seconds to spare and possibly increase
-your time limit</string>
+			<string>This penguin skill will give you a few 
+more seconds to spare and possibly 
+increase your time limit</string>
 			<key>order</key>
 			<string>3</string>
 		</dict>
@@ -1863,8 +1863,8 @@ your time limit</string>
 			<key>name</key>
 			<string>BOMB</string>
 			<key>description</key>
-			<string>This skill will blow out the most 
-dangerous car from each lane</string>
+			<string>This penguin skill will blow out the 
+most dangerous car from each lane</string>
 			<key>order</key>
 			<string>4</string>
 		</dict>
@@ -1879,8 +1879,8 @@ dangerous car from each lane</string>
 			<key>name</key>
 			<string>DOUBLE</string>
 			<key>description</key>
-			<string>This skill will randomly generate 
-2 other good skills on your way</string>
+			<string>This penguin skill will randomly 
+generate 2 penguin skills on your way</string>
 			<key>order</key>
 			<string>5</string>
 		</dict>
@@ -1895,8 +1895,8 @@ dangerous car from each lane</string>
 			<key>name</key>
 			<string>SMALL</string>
 			<key>description</key>
-			<string>This skill will replace large cars
-with small ones</string>
+			<string>This penguin skill will replace large 
+cars with small ones</string>
 			<key>order</key>
 			<string>6</string>
 		</dict>
@@ -1917,9 +1917,9 @@ with small ones</string>
 			<key>name</key>
 			<string>BLESS</string>
 			<key>description</key>
-			<string>With this skill, bad skills do not 
-affect you. Plus, you get time and score 
-increase and get an extra good skill</string>
+			<string>This penguin skill make you immune to
+Enemy skills. You also get time and score
+increase and get an extra penguin skill</string>
 			<key>order</key>
 			<string>7</string>
 		</dict>
@@ -1932,7 +1932,7 @@ increase and get an extra good skill</string>
 			<key>name</key>
 			<string>JAIL</string>
 			<key>description</key>
-			<string>This bad skill will freeze you 
+			<string>This enemy skill will freeze you 
 for a very short time</string>
 			<key>order</key>
 			<string>8</string>
@@ -1950,7 +1950,7 @@ for a very short time</string>
 			<key>name</key>
 			<string>SLOW</string>
 			<key>description</key>
-			<string>This bad skill will slow you 
+			<string>This enemy skill will slow you 
 down for a few seconds</string>
 			<key>order</key>
 			<string>9</string>
@@ -1966,8 +1966,8 @@ down for a few seconds</string>
 			<key>name</key>
 			<string>CURSE</string>
 			<key>description</key>
-			<string>With this bad skill, you will fail
-to acquire good skills except BLESS</string>
+			<string>This enemy skill will make you fail
+to acquire penguin skills except BLESS</string>
 			<key>order</key>
 			<string>10</string>
 		</dict>
@@ -2004,9 +2004,9 @@ before timeout</string>
 			<key>name</key>
 			<string>WORSE</string>
 			<key>description</key>
-			<string>This bad skill will make every
-car carry a bad skill and every
-bad skill will last 50% longer</string>
+			<string>This enemy skill will make every
+car carry a enemy skill and every
+enemy skill will last 50% longer</string>
 			<key>order</key>
 			<string>12</string>
 		</dict>
@@ -2022,7 +2022,7 @@ bad skill will last 50% longer</string>
 			<string>MORE</string>
 			<key>description</key>
 			<string>More cars will show up when
-you are affected by this bad skill</string>
+you are affected by this enemy skill</string>
 			<key>order</key>
 			<string>13</string>
 		</dict>
@@ -2033,9 +2033,10 @@ you are affected by this bad skill</string>
 			<key>image_name</key>
 			<string>noscore.png</string>
 			<key>name</key>
-			<string>NO SCORE</string>
+			<string>NO
+SCORE</string>
 			<key>description</key>
-			<string>With this bad skill, you will not
+			<string>With this enemy skill, you will not
 be able to score for a long time</string>
 			<key>order</key>
 			<string>14</string>

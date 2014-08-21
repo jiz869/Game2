@@ -139,16 +139,16 @@ void StartMenuScene::initNewGameMenu(){
 
     CCMenuItemLabel * yourSkills = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 56,
             CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
-    yourSkills->setDisabledColor( ccBLUE );
-    yourSkills->setPosition(ccp(winSize.width * 0.2 , winSize.height*0.5));
-    yourSkills->setString("Your skills");
+    yourSkills->setDisabledColor( ccRED );
+    yourSkills->setPosition(ccp(winSize.width * 0.2 , winSize.height*0.55));
+    yourSkills->setString("Penguin\nSkills");
     yourSkills->setEnabled(false);
 
     CCMenuItemLabel * enemySkills = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 56,
             CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
     enemySkills->setDisabledColor( ccBLACK );
-    enemySkills->setPosition(ccp(winSize.width * 0.2 , winSize.height*0.3));
-    enemySkills->setString("Enemy skills");
+    enemySkills->setPosition(ccp(winSize.width * 0.2 , winSize.height*0.35));
+    enemySkills->setString("Enemy\nSkills");
     enemySkills->setEnabled(false);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
@@ -179,7 +179,7 @@ void StartMenuScene::initNewGameMenu(){
         SpecialData * specialData = GameController::getGameController()->getSpecialData(i);
         special = CCMenuItemImage::create();
         special->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(specialData->imageName->getCString()));
-        special->setPosition(ccp(winSize.width*(0.35+0.08*i) , winSize.height*0.55));
+        special->setPosition(ccp(winSize.width*(0.3+0.08*i) , winSize.height*0.55));
         special->setEnabled(false);
         special->setScale(0.8);
         newGameMenu->addChild(special);
@@ -188,7 +188,7 @@ void StartMenuScene::initNewGameMenu(){
         SpecialData * specialData = GameController::getGameController()->getSpecialData(i);
         special = CCMenuItemImage::create();
         special->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(specialData->imageName->getCString()));
-        special->setPosition(ccp(winSize.width*(0.4+0.08*(i-SPECIAL_NUM-1)) , winSize.height*0.35));
+        special->setPosition(ccp(winSize.width*(0.35+0.08*(i-SPECIAL_NUM-1)) , winSize.height*0.35));
         special->setEnabled(false);
         special->setScale(0.8);
         newGameMenu->addChild(special);
@@ -438,18 +438,25 @@ void StartMenuScene::initUserMenu(){
     pwdField->setDelegate(this);
     userMenu->addChild(pwdField);
 
+    CCLabelTTF * info = CCLabelTTF::create("0", INFO_FONT, 48);
+    info->setColor( ccBLUE );
+    info->setPosition(ccp(winSize.width/2 , winSize.height*0.4));
+    //yourNameLabel->setAnchorPoint(ccp(1 , 0.5));
+    info->setString("Please register/login to upload\nyour latest score to leaderboard");
+    userMenu->addChild(info);
+
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
             this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.55);
-    OK->setPosition(ccp(winSize.width * 0.2, winSize.height * 0.25));
+    OK->setPosition(ccp(winSize.width * 0.2, winSize.height * 0.15));
     CCMenuItemImage * login = CCMenuItemImage::create("login_normal.png", "login_selected.png" ,
             this , menu_selector(StartMenuScene::loginHandler));
     login->setScale(0.55);
-    login->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.25));
+    login->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.15));
     CCMenuItemImage * create = CCMenuItemImage::create("register_normal.png", "register_selected.png" ,
             this , menu_selector(StartMenuScene::RegisterHandler));
     create->setScale(0.55);
-    create->setPosition(ccp(winSize.width*0.8, winSize.height * 0.25));
+    create->setPosition(ccp(winSize.width*0.8, winSize.height * 0.15));
     CCMenu * okMenu = CCMenu::create(OK , login , create , NULL);
     okMenu->setPosition(ccp(0, 0));
     okMenu->setAnchorPoint(ccp(0,0));
@@ -924,7 +931,7 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
             GameController::getGameController()->setJustFailed(false , true);
             return;
         }
-        
+
         if (userData->justFailed%FREE_PLAY == FREE_PLAY - 1){
             GameController::getGameController()->getAdmobId();
         }

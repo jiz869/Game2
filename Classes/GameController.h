@@ -212,12 +212,12 @@ typedef struct{
 
 #define FREE_PLAY (3)
 
-#define NAME_RULE "User name must follow:\n" \
-                  "Maximum 12 characters\n" \
-                  "Minimum 4 characters\n" \
-                  "Legal characters are\n" \
-                  "a-z , A-Z, 0-9 , _ , -\n" \
-                  "Must start with alphabet"
+#define NAME_RULE "Username must:\n" \
+                  "has maximum 12 characters\n" \
+                  "has minimum 4 characters\n" \
+                  "start with an alphabet" \
+                  "has following legal characters:\n" \
+                  "a-z , A-Z, 0-9 , _ , -\n"
 
 #define PASSWORD_RULE "Password must have:\n" \
                   "Maximum 12 characters\n" \
