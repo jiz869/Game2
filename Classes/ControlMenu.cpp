@@ -294,10 +294,12 @@ void ControlMenu::updateScore(bool isGood)
     char ss[10];
     sprintf(ss, "%d", score);
     scoreLabel->setString(ss);
-    if(!isGood) return;
+    if(!isGood) {
+        scoreLabel->runAction(CCSequence::create(CCTintTo::create(0.5 , ccRED.r , ccRED.g, ccRED.b) ,
+                CCTintTo::create(0.5 , ccGREEN.r , ccGREEN.g , ccGREEN.b), NULL));
+        return;
+    }
     scoreLabel->runAction(CCSequence::create(CCScaleTo::create(0.5 , 2) , CCScaleTo::create(0.5 , 1.0), NULL));
-	AnimationData * animData = GameController::getGameController()->getAnimationData();
-    SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSoundImage->getCString());
 }
 
 void ControlMenu::gameOver()
@@ -343,8 +345,15 @@ bool ControlMenu::doScore(){
         return false;
     }
 	score+=scoreIncrease;
-	if(scoreIncrease) updateScore(true);
-	else updateScore(false);
+	if(scoreIncrease > 0){
+        AnimationData * animData = GameController::getGameController()->getAnimationData();
+        SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSoundImage->getCString());
+	    updateScore(true);
+	}else{
+        AnimationData * animData = GameController::getGameController()->getAnimationData();
+        SimpleAudioEngine::sharedEngine()->playEffect(animData->noscoreSoundImage->getCString());
+	    updateScore(false);
+	}
     if (userData->levels[userData->currentLevel] != 0 &&
         score >= userData->levels[userData->currentLevel]) {
         levelUp();
@@ -354,8 +363,8 @@ bool ControlMenu::doScore(){
     return true;
 }
 
-void ControlMenu::stopScore(){
-    scoreIncrease = 0;
+void ControlMenu::changeScoreIncrease(int scoreIncrease){
+    this->scoreIncrease = scoreIncrease;
 }
 
 void ControlMenu::resumeScore(){

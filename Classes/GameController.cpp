@@ -231,7 +231,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    userData.currentLevel = 8;
+    userData.currentLevel = 1;
 
     return true;
 }
@@ -615,6 +615,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[NOSCORE] = new SpecialData;
     specialDatas[NOSCORE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[NOSCORE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[NOSCORE]->userData1 = CCSTRING_FOR_KEY(dict, "score_decrease")->intValue();
     specialDatas[NOSCORE]->begin = &noscoreBegin;
     specialDatas[NOSCORE]->step = NULL;
     specialDatas[NOSCORE]->end = &noscoreEnd;
@@ -753,7 +754,7 @@ void static blessBegin(PlayerObj * player){
     player->removeAllBadSpecials();
     SpecialData * specialData = GameController::getGameController()->getSpecialData(BLESS);
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->changeScore(specialData->userData3, false);
+    playScene->controlMenu->changeScore(specialData->userData3, true);
     playScene->controlMenu->increaseDuration(specialData->userData2);
 
     if(toss(specialData->userData1) == false) return;
@@ -827,7 +828,8 @@ void static noscoreBegin(PlayerObj * player){
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->noscoreSoundImage->getCString());
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->stopScore();
+    SpecialData * specialData = GameController::getGameController()->getSpecialData(NOSCORE);
+    playScene->controlMenu->changeScoreIncrease(specialData->userData1);
     player->hitByCar(false);
 }
 void static noscoreEnd(PlayerObj * player){

@@ -43,7 +43,7 @@ public:
     void resumeTime();
     void changeDurationIncrease(int delta);
     void resumeDurationIncrease();
-    void stopScore();
+    void changeScoreIncrease(int scoreIncrease);
     void resumeScore();
 
 protected:

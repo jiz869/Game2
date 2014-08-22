@@ -344,7 +344,7 @@
 			<key>good_max</key>
 			<string>life</string>
 			<key>bad_max</key>
-			<string>curse</string>
+			<string>noscore</string>
 			<key>music</key>
 			<string>01.wav</string>
 			<key>lane_descriptions</key>
@@ -529,7 +529,7 @@
 			<key>good_max</key>
 			<string>skull</string>
 			<key>bad_max</key>
-			<string>bomb</string>
+			<string>curse</string>
 			<key>music</key>
 			<string>23.wav</string>
 			<key>lane_descriptions</key>
@@ -713,7 +713,7 @@
 			<key>good_max</key>
 			<string>double</string>
 			<key>bad_max</key>
-			<string>bomb</string>
+			<string>curse</string>
 			<key>music</key>
 			<string>23.wav</string>
 			<key>lane_descriptions</key>
@@ -898,7 +898,7 @@
 			<key>good_max</key>
 			<string>double</string>
 			<key>bad_max</key>
-			<string>allBad</string>
+			<string>bomb</string>
 			<key>music</key>
 			<string>45.wav</string>
 			<key>lane_descriptions</key>
@@ -1265,7 +1265,7 @@
 			<key>good_max</key>
 			<string>small</string>
 			<key>bad_max</key>
-			<string>fast</string>
+			<string>allBad</string>
 			<key>music</key>
 			<string>6.wav</string>
 			<key>lane_descriptions</key>
@@ -1623,7 +1623,7 @@
 			<key>good_max</key>
 			<string>bless</string>
 			<key>bad_max</key>
-			<string>noscore</string>
+			<string>fast</string>
 			<key>music</key>
 			<string>78.wav</string>
 			<key>lane_descriptions</key>
@@ -1879,8 +1879,8 @@ most dangerous car from each lane</string>
 			<key>name</key>
 			<string>DOUBLE</string>
 			<key>description</key>
-			<string>This penguin skill will randomly 
-generate 2 penguin skills on your way</string>
+			<string>This penguin skill will generate 2 other
+random penguin skills on your way</string>
 			<key>order</key>
 			<string>5</string>
 		</dict>
@@ -1917,9 +1917,9 @@ cars with small ones</string>
 			<key>name</key>
 			<string>BLESS</string>
 			<key>description</key>
-			<string>This penguin skill make you immune to
-Enemy skills. You also get time and score
-increase and get an extra penguin skill</string>
+			<string>With this penguin skill, you are not
+affected by all enemy skills. Plus, you
+will get an extra random penguin skill</string>
 			<key>order</key>
 			<string>7</string>
 		</dict>
@@ -1955,6 +1955,23 @@ down for a few seconds</string>
 			<key>order</key>
 			<string>9</string>
 		</dict>
+		<key>noscore</key>
+		<dict>
+			<key>duration</key>
+			<string>16</string>
+			<key>image_name</key>
+			<string>noscore.png</string>
+			<key>score_decrease</key>
+			<string>-6</string>
+			<key>name</key>
+			<string>SCORE
+EATER</string>
+			<key>description</key>
+			<string>This enemy skill will eat your score
+every time you successfully cross street</string>
+			<key>order</key>
+			<string>10</string>
+		</dict>
 		<key>curse</key>
 		<dict>
 			<key>duration</key>
@@ -1962,14 +1979,15 @@ down for a few seconds</string>
 			<key>image_name</key>
 			<string>curse0.png</string>
 			<key>time_decrease</key>
-			<string>1</string>
+			<string>0</string>
 			<key>name</key>
 			<string>CURSE</string>
 			<key>description</key>
-			<string>This enemy skill will make you fail
-to acquire penguin skills except BLESS</string>
+			<string>This enemy skill will make you
+fail to acquire all penguin
+skills except BLESS</string>
 			<key>order</key>
-			<string>10</string>
+			<string>11</string>
 		</dict>
 		<key>bomb</key>
 		<dict>
@@ -1987,7 +2005,7 @@ BOMB</string>
 disarmed after you cross street
 before timeout</string>
 			<key>order</key>
-			<string>11</string>
+			<string>12</string>
 		</dict>
 		<key>allBad</key>
 		<dict>
@@ -2005,10 +2023,10 @@ before timeout</string>
 			<string>WORSE</string>
 			<key>description</key>
 			<string>This enemy skill will make every
-car carry a enemy skill and every
+car carry an enemy skill and every
 enemy skill will last 50% longer</string>
 			<key>order</key>
-			<string>12</string>
+			<string>13</string>
 		</dict>
 		<key>fast</key>
 		<dict>
@@ -2023,21 +2041,6 @@ enemy skill will last 50% longer</string>
 			<key>description</key>
 			<string>More cars will show up when
 you are affected by this enemy skill</string>
-			<key>order</key>
-			<string>13</string>
-		</dict>
-		<key>noscore</key>
-		<dict>
-			<key>duration</key>
-			<string>16</string>
-			<key>image_name</key>
-			<string>noscore.png</string>
-			<key>name</key>
-			<string>NO
-SCORE</string>
-			<key>description</key>
-			<string>With this enemy skill, you will not
-be able to score for a long time</string>
 			<key>order</key>
 			<string>14</string>
 		</dict>
