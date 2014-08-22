@@ -1520,7 +1520,6 @@
 					<key>car_numbers</key>
 					<array>
 						<string>6</string>
-						<string>3</string>
 						<string>4</string>
 						<string>5</string>
 					</array>
@@ -1944,9 +1943,9 @@ for a very short time</string>
 			<key>image_name</key>
 			<string>slow0.png</string>
 			<key>up_acc_delta</key>
-			<string>0.06</string>
+			<string>-0.06</string>
 			<key>down_acc_delta</key>
-			<string>0.02</string>
+			<string>-0.02</string>
 			<key>name</key>
 			<string>SLOW</string>
 			<key>description</key>
@@ -1962,13 +1961,14 @@ down for a few seconds</string>
 			<key>image_name</key>
 			<string>noscore.png</string>
 			<key>score_decrease</key>
-			<string>-6</string>
+			<string>-8</string>
+			<key>time_decrease</key>
+			<string>-1.5</string>
 			<key>name</key>
-			<string>SCORE
-EATER</string>
+			<string>LESS</string>
 			<key>description</key>
 			<string>This enemy skill will eat your score
-every time you successfully cross street</string>
+and time when you successfully cross street</string>
 			<key>order</key>
 			<string>10</string>
 		</dict>

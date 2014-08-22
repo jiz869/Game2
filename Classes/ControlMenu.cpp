@@ -331,12 +331,12 @@ void ControlMenu::step(float dt){
         return;
     }
 
-    if(++numFrame % 60 == 0) {
-        seconds--;
+    if(++numFrame % 30 == 0) {
+        seconds-=0.5;
         updateGameTime();
     }
 
-    if(seconds <= 0 && status != OVER)
+    if(seconds < 0 && status != OVER)
     	gameOver();
 }
 
@@ -401,7 +401,7 @@ void ControlMenu::changeScore(int delta , bool isGood){
     }
 }
 
-void ControlMenu::increaseDuration(int delta){
+void ControlMenu::increaseDuration(float delta){
     seconds+=delta;
     if(seconds > maxDuration){
         maxDuration = seconds;
@@ -416,7 +416,7 @@ void ControlMenu::resumeDuration(){
     updateGameTime();
 }
 
-void ControlMenu::changeDurationIncrease(int delta){
+void ControlMenu::changeDurationIncrease(float delta){
     durationIncrease += delta;
 }
 

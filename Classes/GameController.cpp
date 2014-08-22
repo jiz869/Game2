@@ -231,7 +231,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    userData.currentLevel = 1;
+    userData.currentLevel = 7;
 
     return true;
 }
@@ -246,9 +246,9 @@ bool GameController::initPlaySceneData(cocos2d::CCArray *dataArray){
     for (int i = 0; i < dataArray->count(); i++) {
         PlaySceneData * data = new PlaySceneData();
         CCDictionary * dict = (CCDictionary *)dataArray->objectAtIndex(i);
-        data->initDuration = CCSTRING_FOR_KEY(dict , "init_duration")->intValue();
-        data->durationIncrease = CCSTRING_FOR_KEY(dict , "duration_increase")->intValue();
-        data->maxDuration = CCSTRING_FOR_KEY(dict , "max_duration")->intValue();
+        data->initDuration = CCSTRING_FOR_KEY(dict , "init_duration")->floatValue();
+        data->durationIncrease = CCSTRING_FOR_KEY(dict , "duration_increase")->floatValue();
+        data->maxDuration = CCSTRING_FOR_KEY(dict , "max_duration")->floatValue();
         data->laneNumber = CCSTRING_FOR_KEY(dict , "lane_number")->intValue();
         data->playerSpeed = CCSTRING_FOR_KEY(dict , "player_init_speed")->floatValue();
         data->playerWaitImageName = CCSTRING_FOR_KEY(dict, "player_wait_image");
@@ -615,7 +615,8 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[NOSCORE] = new SpecialData;
     specialDatas[NOSCORE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
     specialDatas[NOSCORE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-    specialDatas[NOSCORE]->userData1 = CCSTRING_FOR_KEY(dict, "score_decrease")->intValue();
+    specialDatas[NOSCORE]->userData1 = CCSTRING_FOR_KEY(dict, "score_decrease")->floatValue();
+    specialDatas[NOSCORE]->userData2 = CCSTRING_FOR_KEY(dict, "time_decrease")->floatValue();
     specialDatas[NOSCORE]->begin = &noscoreBegin;
     specialDatas[NOSCORE]->step = NULL;
     specialDatas[NOSCORE]->end = &noscoreEnd;
@@ -656,7 +657,7 @@ void static lifeBegin(PlayerObj * player){
     SimpleAudioEngine::sharedEngine()->playEffect(animData->lifeSoundImage->getCString());
 	SpecialData * data = GameController::getGameController()->getSpecialData(LIFE);
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->increaseDuration((int)data->userData1);
+    playScene->controlMenu->increaseDuration(data->userData1);
 }
 
 //time
@@ -704,7 +705,7 @@ void static slowBegin(PlayerObj * player){
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->slowSoundImage->getCString());
     SpecialData * specialData = GameController::getGameController()->getSpecialData(SLOW);
-	player->changeAcc(-specialData->userData1, -specialData->userData2);
+	player->changeAcc(specialData->userData1, specialData->userData2);
 	player->hitByCar(false);
 }
 void static slowEnd(PlayerObj * player){
@@ -717,7 +718,7 @@ void static curseBegin(PlayerObj * player){
     SimpleAudioEngine::sharedEngine()->playEffect(animData->curseSoundImage->getCString());
     SpecialData * specialData = GameController::getGameController()->getSpecialData(CURSE);
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->controlMenu->changeDurationIncrease(-specialData->userData1);
+    playScene->controlMenu->changeDurationIncrease(specialData->userData1);
 	player->hitByCar(false);
 }
 void static curseEnd(PlayerObj * player){
@@ -830,11 +831,13 @@ void static noscoreBegin(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     SpecialData * specialData = GameController::getGameController()->getSpecialData(NOSCORE);
     playScene->controlMenu->changeScoreIncrease(specialData->userData1);
+    playScene->controlMenu->changeDurationIncrease(specialData->userData2);
     player->hitByCar(false);
 }
 void static noscoreEnd(PlayerObj * player){
     PlayScene * playScene = (PlayScene *)player->getParent();
     playScene->controlMenu->resumeScore();
+    playScene->controlMenu->resumeDurationIncrease();
 }
 
 PlaySceneData * GameController::getPlaySceneData(int level){

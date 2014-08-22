@@ -28,7 +28,7 @@ public:
     void startNewGame();
     virtual bool doScore();
     virtual void step(float dt);
-    void increaseDuration(int delta);
+    void increaseDuration(float delta);
     void resumeDuration();
     void changeScore(int delta , bool isGood);
     void changeControllerPosition(CheckboxType type);
@@ -41,7 +41,7 @@ public:
     void hideMenu();
     void stopTime();
     void resumeTime();
-    void changeDurationIncrease(int delta);
+    void changeDurationIncrease(float delta);
     void resumeDurationIncrease();
     void changeScoreIncrease(int scoreIncrease);
     void resumeScore();
@@ -67,10 +67,10 @@ protected:
 
     long numFrame;
     int score;
-    int initDuration;
-    int durationIncrease;
-    int maxDuration;
-    int seconds;
+    float initDuration;
+    float durationIncrease;
+    float maxDuration;
+    float seconds;
     bool startUpdateTime;
 
     UserData * userData;
