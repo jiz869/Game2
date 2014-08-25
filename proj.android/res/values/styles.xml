@@ -1,0 +1,10 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<style name="Theme.Start" parent="android:Theme">  
+    	<!-- <item name="android:windowBackground">@drawable/splash</item> -->
+    	<item name="android:windowIsTranslucent">true</item>
+    	<item name="android:windowNoTitle">true</item>
+    	<item name="android:windowFullscreen">true</item>
+	</style>
+
+</resources>

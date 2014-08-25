@@ -156,6 +156,7 @@ static InAppPurchaseManager * manager;
     if (delegate->hasPayed() == false) {
         if ([SKPaymentQueue canMakePayments] == FALSE) {
             delegate->onPaymentError();
+            return;
         }
         [self purchase];
     }

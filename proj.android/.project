@@ -113,11 +113,6 @@
 			<location>/Users/welcomelm/cocos2d-x-2.2.3/projects/crossRoad/App42</location>
 		</link>
 		<link>
-			<name>AppWarpX</name>
-			<type>2</type>
-			<location>/Users/welcomelm/cocos2d-x-2.2.3/projects/crossRoad/AppWarpX</location>
-		</link>
-		<link>
 			<name>Classes</name>
 			<type>2</type>
 			<locationURI>COCOS2DX/projects/crossRoad/Classes</locationURI>
