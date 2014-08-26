@@ -4,13 +4,15 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
+extern void onAdClicked();
 static STAStartAppAd* startAppAd;
 static NSMutableString * devId = [NSMutableString stringWithCString:"1" encoding:NSUTF8StringEncoding];
 static NSMutableString * appId = [NSMutableString stringWithCString:"1" encoding:NSUTF8StringEncoding];
 static AppController * controller;
 
 void showAds(){
-    if (startAppAd) [startAppAd showAd];
+    if (startAppAd && [startAppAd isReady]) [startAppAd showAd];
+    else if (controller) [controller didCloseAd:startAppAd];
 }
 
 void changeAdsId(const char * dev_id , const char * app_id){
@@ -146,16 +148,16 @@ static AppDelegate s_sharedApplication;
 }
 - (void) didShowAd:(STAAbstractAd*)ad{
     CCLOG("didShowAd");
+    //onAdClicked();
 }
 - (void) failedShowAd:(STAAbstractAd*)ad withError:(NSError *)error{
     CCLOG("failedShowAd");
-    [self didCloseAd:ad];
 }
 - (void) didCloseAd:(STAAbstractAd*)ad{
     CCLOG("didCloseAd");
     [ad release];
     startAppAd = [[STAStartAppAd alloc] init];
-    [startAppAd loadAd:STAAdType_FullScreen withDelegate:self];
+    [startAppAd loadAd:STAAdType_Automatic withDelegate:self];
 }
 
 @end

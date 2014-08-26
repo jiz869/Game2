@@ -184,6 +184,7 @@ typedef struct{
     int rank;
     bool isLogedIn;
     int lastUploadedScore;
+    bool adsClicked;
 }UserData;
 
 typedef struct{
@@ -225,7 +226,7 @@ typedef struct{
 
 #define PURCHASE_BENEFIT "Spend 99 cents to:\n\n" \
                   "1) Remove the ads\n\n" \
-                  "2) Continue game from the last level\n"
+                  "2) Continue game from where you left off\n"
 
 #define CREDITS "Special thanks to www.opengameart.org\n" \
                 "for all the background music in this game\n\n" \
@@ -235,6 +236,9 @@ typedef struct{
                 "\"Happy Arcade Tune\" by rezoner\n" \
                 "\"Arabesque\" by brainiac256\n" \
                 "\"Tactical Pursuit\" by Matthew Pablo\n"
+
+#define ADS_CLICK_RULE "If you click the ads, you can continue\n" \
+                        "game from where you left off\n"
 
 #define DEFAULT_NAME "Penguin"
 #define DEFAULT_PASSWORD "Penguin#"
@@ -287,7 +291,9 @@ public:
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
     virtual bool hasPayed();
-    void getAdmobId();
+    void getAdsId();
+    void onAdsClicked();
+    void setAdsClicked(bool);
 
 private:
     GameController();

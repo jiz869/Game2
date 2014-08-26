@@ -12,7 +12,7 @@
 int getRandom(int low, int high)
 {
 	if ( low - high < 0x10000L )
-        return low + ( ( rand() >> 8 ) % ( high + 1 - low ) );
+        return low + ( ( random() >> 8 ) % ( high + 1 - low ) );
 
 	return low + ( random() % ( high + 1 - low ) );
 }

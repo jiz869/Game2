@@ -70,7 +70,7 @@ static GameController * controller;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 void onAdClicked(){
-    GameController::getGameController()->setJustFailed(false , true);
+    GameController::getGameController()->onAdsClicked();
 }
 
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -78,7 +78,7 @@ void onAdClicked(){
 extern "C"
 {
     void Java_ca_welcomelm_crossRoad_crossRoad_onAdClicked( JNIEnv* env, jobject thiz ){
-        GameController::getGameController()->setJustFailed(false , true);
+        GameController::getGameController()->onAdsClicked();
     }
 
     void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentError( JNIEnv* env, jobject thiz ){
@@ -138,6 +138,8 @@ bool GameController::init(){
     userDataValue[UNMUTE]="unmute";
 
     designSize = CCDirector::sharedDirector()->getWinSize();
+    
+    srandom((unsigned long)time(NULL));
 
     if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
         return false;
@@ -206,9 +208,15 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     }else{
         userData.hasPayed = true;
     }
+    
+    if (CCSTRING_FOR_KEY(dataDict, "ads_clicked")->isEqual(CCString::create("false"))) {
+        userData.adsClicked = false;
+    }else{
+        userData.adsClicked = true;
+    }
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    if(userData.hasPayed == false){
+    if(userData.hasPayed == false && userData.adsClicked == false){
         userData.currentLevel = 0;
     }
 #endif
@@ -231,7 +239,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    userData.currentLevel = 7;
+    //userData.currentLevel = 3;
 
     return true;
 }
@@ -910,7 +918,7 @@ void GameController::setJustFailed(bool justFailed , bool reset){
 			userData.justWon = false;
 			updatePlist = true;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-			if(userData.hasPayed == false){
+			if(userData.hasPayed == false && userData.adsClicked == false){
 			    userData.currentLevel = 0;
 			}
 #endif
@@ -954,6 +962,8 @@ void GameController::initLeaderboard(){
 		ranks[i].score = 0;
 		ranks[i].level = 0;
 	}
+    
+    getAdsId();
 
 	getTopRankings();
 
@@ -964,7 +974,7 @@ void GameController::initLeaderboard(){
 	//gameService->CreateGame("crossRoad","crossRoad", this, callfuncND_selector(GameController::onGameRequestCompleted));
 }
 
-void GameController::getAdmobId(){
+void GameController::getAdsId(){
     rewardService->GetAllRewards(this , callfuncND_selector(GameController::onGetRewardsCompleted));
 }
 
@@ -1293,3 +1303,25 @@ void GameController::onPaymentSuccess(){
 bool GameController::hasPayed(){
     return userData.hasPayed;
 }
+
+void GameController::onAdsClicked(){
+    setAdsClicked(true);
+    userData.currentLevel = userData.lastLevel;
+}
+
+void GameController::setAdsClicked(bool clicked){
+    if (userData.adsClicked == clicked) {
+        return;
+    }
+    userData.adsClicked = clicked;
+    CCDictionary * userDataDict = (CCDictionary *)dict->objectForKey("user_data");
+    if (clicked == true) {
+        userDataDict->setObject(CCString::create("true"), "ads_clicked");
+    }else{
+        userDataDict->setObject(CCString::create("false"), "ads_clicked");
+    }
+    dict->setObject(userDataDict, "user_data");
+    dict->writeToFile(plistWritablePath.c_str());
+}
+
+

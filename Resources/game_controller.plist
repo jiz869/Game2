@@ -36,6 +36,8 @@
 		<string>Penguin</string>
 		<key>password</key>
 		<string>Penguin#</string>
+		<key>ads_clicked</key>
+		<string>false</string>
 	</dict>
 	<key>animation_data</key>
 	<dict>

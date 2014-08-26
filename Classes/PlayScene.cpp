@@ -126,8 +126,6 @@ void PlayScene::initCityObj(){
 }
 
 void PlayScene::initMisc(){
-	srandom(getCurrentTime());
-
     world = new b2World(b2Vec2(0 , 0));
     world->SetContactListener(this);
 

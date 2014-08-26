@@ -111,6 +111,7 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 			public void adClicked(Ad arg0) {
 				// TODO Auto-generated method stub
 				System.out.println("adClicked");
+				onAdClicked();
 			}
 			@Override
 			public void adDisplayed(Ad arg0) {
@@ -149,6 +150,8 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
                 "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAldFi+yJsiLACy9pyMk+s9SOS2uAREtJuwAewFogOXdNp++5Ry5m2PJ1ThGL0fDmgq/yt4+3vVk9Nv0+ov0WrxlEoJKjU+Vrjgd/160ABTnbnp2K/KLfzB/Mx9kXh9qZHv1lshkB7cqOXFACzTP/xbPukpcuoNd0QA60qkZ9lAr1iotbgqloZSpZz/XwFKiSPjCCBtk7/2nbbdP4yfz/l8PnDP2SdkgE6fL8+s4ftNVYAiAXqFS+ODCm4xDeVUblFhigPfFmghgqi79DhyBeL0Dh/7bK15H5Ew2MrW0dpcrQh74HdEn4De75wbVdmsBo8bNEn9I+XPae58vvdPHPFqQIDAQAB";
 		iabHelper = new IabHelper(this, base64EncodedPublicKey);
 	}
+    
+    public native void onAdClicked();
 
     public Cocos2dxGLSurfaceView onCreateView() {
     	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
@@ -168,8 +171,11 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 
     		@Override
     		public void run()
-    		{  
-				_appActiviy.startAppAd.showAd(adDisplayListener);
+    		{
+    			if(_appActiviy.startAppAd.isReady())
+    				_appActiviy.startAppAd.showAd(adDisplayListener);
+    			else
+    				_appActiviy.startAppAd.loadAd(adEventListener);
     		}
     	});
 

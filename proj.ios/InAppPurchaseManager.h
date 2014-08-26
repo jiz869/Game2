@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #include "P2PCPPHelper.h"
 
-#define PRODUCT_ID "lmini2170"
+#define PRODUCT_ID "ca.welcomelm.continue.ads"
 
 @interface InAppPurchaseManager : NSObject <SKProductsRequestDelegate , SKPaymentTransactionObserver>
 {

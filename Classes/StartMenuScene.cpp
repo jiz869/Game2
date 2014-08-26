@@ -928,12 +928,16 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
     {
         if (userData->justFailed%FREE_PLAY == 0) {
             showAds();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+            setInfoLabel(ADS_CLICK_RULE, 0);
+#endif
             GameController::getGameController()->setJustFailed(false , true);
             return;
         }
 
         if (userData->justFailed%FREE_PLAY == FREE_PLAY - 1){
-            GameController::getGameController()->getAdmobId();
+            GameController::getGameController()->getAdsId();
+            GameController::getGameController()->setAdsClicked(false);
         }
     }
 #endif
