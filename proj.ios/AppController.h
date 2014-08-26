@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
-#import "../admob.ios/GADInterstitial.h"
+#import <StartApp/StartApp.h>
 
 @class RootViewController;
 
-@interface AppController : NSObject <UIApplicationDelegate , GADInterstitialDelegate> {
+@interface AppController : NSObject <UIApplicationDelegate , STADelegateProtocol> {
     UIWindow *window;
     RootViewController    *viewController;
 }

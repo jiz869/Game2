@@ -118,9 +118,9 @@
 			<locationURI>COCOS2DX/projects/crossRoad/Classes</locationURI>
 		</link>
 		<link>
-			<name>admob.android</name>
+			<name>StartApp.android</name>
 			<type>2</type>
-			<location>/Users/welcomelm/cocos2d-x-2.2.3/projects/crossRoad/admob.android</location>
+			<locationURI>COCOS2DX/projects/crossRoad/StartApp.android</locationURI>
 		</link>
 		<link>
 			<name>assets</name>

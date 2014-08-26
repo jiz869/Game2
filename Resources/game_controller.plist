@@ -1793,8 +1793,8 @@
 			<key>name</key>
 			<string>STOP</string>
 			<key>description</key>
-			<string>This penguin skill will stop cars in 
-front you for a very short time</string>
+			<string>This penguin skill will stop all 
+traffic for a short time</string>
 			<key>order</key>
 			<string>0</string>
 		</dict>
@@ -1810,8 +1810,8 @@ front you for a very short time</string>
 			<string>TIME
 STOP</string>
 			<key>description</key>
-			<string>Time does not count down 
-when you have this penguin skill</string>
+			<string>Time count down is paused when
+you have this penguin skill</string>
 			<key>order</key>
 			<string>1</string>
 		</dict>
@@ -1827,8 +1827,8 @@ when you have this penguin skill</string>
 			<string>SUPER
 MAN</string>
 			<key>description</key>
-			<string>You are not afraid of anything for
-a few seconds, so just HURRY !!!</string>
+			<string>You are invulnerable for a few
+seconds, so just HURRY !!!</string>
 			<key>order</key>
 			<string>2</string>
 		</dict>
@@ -1845,9 +1845,8 @@ a few seconds, so just HURRY !!!</string>
 			<key>name</key>
 			<string>LIFE</string>
 			<key>description</key>
-			<string>This penguin skill will give you a few 
-more seconds to spare and possibly 
-increase your time limit</string>
+			<string>This penguin skill will increase your time
+by a few seconds</string>
 			<key>order</key>
 			<string>3</string>
 		</dict>
@@ -1862,8 +1861,8 @@ increase your time limit</string>
 			<key>name</key>
 			<string>BOMB</string>
 			<key>description</key>
-			<string>This penguin skill will blow out the 
-most dangerous car from each lane</string>
+			<string>This penguin skill will destroy the most
+threatening cars in your way</string>
 			<key>order</key>
 			<string>4</string>
 		</dict>
@@ -1878,8 +1877,8 @@ most dangerous car from each lane</string>
 			<key>name</key>
 			<string>DOUBLE</string>
 			<key>description</key>
-			<string>This penguin skill will generate 2 other
-random penguin skills on your way</string>
+			<string>This penguin skill will randomly generate
+2 penguin skills in your way</string>
 			<key>order</key>
 			<string>5</string>
 		</dict>
@@ -2001,9 +2000,9 @@ skills except BLESS</string>
 			<string>TIME
 BOMB</string>
 			<key>description</key>
-			<string>This is a time bomb and it will be 
-disarmed after you cross street
-before timeout</string>
+			<string>This time bomb will knock you back
+to the starting point after timeout; it
+will be disarmed after you cross street</string>
 			<key>order</key>
 			<string>12</string>
 		</dict>

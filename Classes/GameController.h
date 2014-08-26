@@ -227,8 +227,8 @@ typedef struct{
                   "1) Remove the ads\n\n" \
                   "2) Continue game from the last level\n"
 
-#define CREDITS "Particulary thanks to www.opengameart.org\n" \
-                "for all the background musics in this game\n\n" \
+#define CREDITS "Special thanks to www.opengameart.org\n" \
+                "for all the background music in this game\n\n" \
                 "\"Jump And Run\" by bart\n" \
                 "\"Trance Menu\" by rezoner\n" \
                 "\"After Burner\" by copyc4t\n" \
@@ -242,7 +242,7 @@ typedef struct{
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "../proj.ios/P2PCPPHelper.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "../admob.android/AdmobHelper.h"
+#include "../StartApp.android/AdsHelper.h"
 class IAPManagerDelegate {
 public:
     virtual void onPaymentError() = 0;

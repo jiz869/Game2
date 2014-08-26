@@ -4,25 +4,30 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
-static RootViewController * controller;
-static GADInterstitial * interstitial_;
-static NSMutableString * admobId = [NSMutableString string];
-static AppController * appController;
+static STAStartAppAd* startAppAd;
+static NSMutableString * devId = [NSMutableString stringWithCString:"1" encoding:NSUTF8StringEncoding];
+static NSMutableString * appId = [NSMutableString stringWithCString:"1" encoding:NSUTF8StringEncoding];
+static AppController * controller;
 
 void showAds(){
-    if(interstitial_.isReady == TRUE){
-        [interstitial_ presentFromRootViewController:controller];
-    }else{
-        if(appController) [appController interstitialDidDismissScreen:interstitial_];
-    }
+    if (startAppAd) [startAppAd showAd];
 }
 
-void changeAdmobId(const char * adsId){
-    NSString * id = [NSString stringWithUTF8String:adsId];
-    if([admobId isEqualToString:id]) return;
-    [admobId setString:id];
-    if (appController) {
-        [appController interstitialDidDismissScreen:interstitial_];
+void changeAdsId(const char * dev_id , const char * app_id){
+    if ([devId isEqualToString:[NSString stringWithUTF8String:dev_id]] &&
+        [appId isEqualToString:[NSString stringWithUTF8String:app_id]]) {
+        return;
+    }
+    
+    CCLOG("%s,%s", dev_id , app_id);
+    
+    [devId setString:[NSString stringWithUTF8String:dev_id]];
+    [appId setString:[NSString stringWithUTF8String:app_id]];
+    
+    STAStartAppSDK* sdk = [STAStartAppSDK sharedInstance];
+    [sdk SDKInitialize:devId andAppID:appId];
+    if (controller) {
+        [controller didCloseAd:startAppAd];
     }
 }
 
@@ -54,10 +59,8 @@ static AppDelegate s_sharedApplication;
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
     viewController.wantsFullScreenLayout = YES;
     viewController.view = __glView;
-    controller = viewController;
-
-    interstitial_ = [[GADInterstitial alloc] init];
-    appController = self;
+    
+    controller = self;
 
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
@@ -130,32 +133,29 @@ static AppDelegate s_sharedApplication;
 
 
 - (void)dealloc {
+    [startAppAd release];
     [window release];
     [super dealloc];
 }
 
-- (void)interstitialDidReceiveAd:(GADInterstitial *)ad{
-    CCLOG("interstitialDidReceiveAd");
+- (void) didLoadAd:(STAAbstractAd*)ad{
+    CCLOG("didLoadAd");
 }
-
-- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error{
-    CCLOG("interstitial error");
+- (void) failedLoadAd:(STAAbstractAd*)ad withError:(NSError *)error{
+    CCLOG("failedLoadAd");
 }
-
-- (void) interstitialWillLeaveApplication:(GADInterstitial *)ad{
-    CCLOG("interstitialWillLeaveApplication");
+- (void) didShowAd:(STAAbstractAd*)ad{
+    CCLOG("didShowAd");
 }
-
-- (void) interstitialDidDismissScreen:(GADInterstitial *)ad{
-    CCLOG("interstitialDidDismissScreen");
+- (void) failedShowAd:(STAAbstractAd*)ad withError:(NSError *)error{
+    CCLOG("failedShowAd");
+    [self didCloseAd:ad];
+}
+- (void) didCloseAd:(STAAbstractAd*)ad{
+    CCLOG("didCloseAd");
     [ad release];
-    interstitial_ = [[GADInterstitial alloc] init];
-    interstitial_.adUnitID = admobId;
-    interstitial_.delegate = self;
-    GADRequest * request = [GADRequest request];
-    request.testDevices = @[ @"f04d96578c221889a383798544d6f853" ];
-    [interstitial_ loadRequest:request];
+    startAppAd = [[STAStartAppAd alloc] init];
+    [startAppAd loadAd:STAAdType_FullScreen withDelegate:self];
 }
-
 
 @end

@@ -58,18 +58,24 @@ import ca.welcomelm.crossRoad.iapUtil.Inventory;
 import ca.welcomelm.crossRoad.iapUtil.Purchase;
 
 import com.google.android.gms.ads.*;
+import com.startapp.android.publish.Ad;
+import com.startapp.android.publish.AdDisplayListener;
+import com.startapp.android.publish.AdEventListener;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
 
 public class crossRoad extends Cocos2dxActivity implements OnIabSetupFinishedListener, 
 QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 	
 	private static crossRoad _appActiviy;
-	private static InterstitialAd interstitial;
 	private IabHelper iabHelper;
 	private static final String SKU_PRODUCT = "ca.welcomelm.crossroad.ugp";
 	private static final int requestBuy = 8;
 	private boolean isIabSetup = false;
-	private static String admobId = "";
-	private static AdListener adListener;
+	private StartAppAd startAppAd = new StartAppAd(this);
+	static String devId , appId;
+	private static AdEventListener adEventListener;
+	private static AdDisplayListener adDisplayListener;
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -99,12 +105,41 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 //				onAdClicked();
 //			}
 //		});
-		
-		interstitial = new InterstitialAd(this);
-	    adListener = new AdListener(){	
-			public void onAdClosed(){
-				loadAds();
+	    
+	    adDisplayListener = new AdDisplayListener() {
+			@Override
+			public void adClicked(Ad arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("adClicked");
+				startAppAd.loadAd(adEventListener);
 			}
+			@Override
+			public void adDisplayed(Ad arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("adDisplayed");
+			}
+			@Override
+			public void adHidden(Ad arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("adHidden");
+				startAppAd.loadAd(adEventListener);
+			}
+	    };
+	    
+	    adEventListener = new AdEventListener(){
+
+			@Override
+			public void onFailedToReceiveAd(Ad arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("onFailedToReceiveAd");
+			}
+
+			@Override
+			public void onReceiveAd(Ad arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("onReceiveAd");
+			}
+	    	
 	    };
 		
 //        addContentView(main,adParams);
@@ -128,19 +163,6 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
         System.loadLibrary("cocos2dcpp");
     }
     
-    public static void loadAds(){
-	    // Create the interstitial.
-	    interstitial = new InterstitialAd(_appActiviy);
-	    interstitial.setAdUnitId(admobId);
-	    interstitial.setAdListener(adListener);
-	    // Create ad request.
-	    AdRequest adRequest = new AdRequest.Builder()
-	    		.addTestDevice("8A9BF31AFC290C9A1913413505B4BF89").build();
-	    		//.build();
-	    // Begin loading your interstitial.
-	    interstitial.loadAd(adRequest);   	
-    }
-    
     public static void showAds()
     {
     	_appActiviy.runOnUiThread(new Runnable(){
@@ -148,26 +170,26 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
     		@Override
     		public void run()
     		{  
-				if (interstitial.isLoaded()){
-					interstitial.show();
-				}else{
-					loadAds();
-				}
+				_appActiviy.startAppAd.showAd(adDisplayListener);
     		}
     	});
 
     }
     
-    public static void changeAdmobId(String adsId)
+    public static void changeAdsId(String dev_id , String app_id)
     {
-    	if(adsId.equals(admobId)) return;
-    	admobId = adsId;
+    	if(dev_id.equals(devId) && app_id.equals(appId)) return;
+    	devId = dev_id;
+    	appId = app_id;
+    	System.out.println(devId);
+    	System.out.println(appId);
     	_appActiviy.runOnUiThread(new Runnable(){
 
     		@Override
     		public void run()
-    		{  
-    			loadAds();
+    		{
+    			StartAppSDK.init(_appActiviy, devId, appId, false);
+    			_appActiviy.startAppAd.loadAd(adEventListener);
     		}
     	});
 
