@@ -111,7 +111,6 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 			public void adClicked(Ad arg0) {
 				// TODO Auto-generated method stub
 				System.out.println("adClicked");
-				startAppAd.loadAd(adEventListener);
 			}
 			@Override
 			public void adDisplayed(Ad arg0) {
@@ -291,5 +290,17 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 			end();
 		}
 		return false;
+	}
+	
+	@Override
+	public void onPause() {
+	    super.onPause();
+	    startAppAd.onPause();
+	}
+	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    startAppAd.onResume();
 	}
 }

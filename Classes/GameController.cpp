@@ -978,7 +978,7 @@ void GameController::onGetRewardsCompleted(cocos2d::CCNode *node, void *response
         for(std::vector<App42Reward>::iterator it = rewardResponse->rewards.begin(); it != rewardResponse->rewards.end(); ++it)
         {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-            if(it->name == "adsId_ios"){
+            if(it->name == "ios"){
                 size_t pos = it->description.find(".");
                 
                 if(pos == string::npos){
@@ -989,7 +989,7 @@ void GameController::onGetRewardsCompleted(cocos2d::CCNode *node, void *response
                             it->description.substr(pos+1).c_str());
             }
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-            if(it->name == "adsId_android"){
+            if(it->name == "android"){
                 size_t pos = it->description.find(".");
                 
                 if(pos == string::npos){
