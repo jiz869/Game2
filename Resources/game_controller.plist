@@ -1969,7 +1969,7 @@ down for a few seconds</string>
 			<string>LESS</string>
 			<key>description</key>
 			<string>This enemy skill will eat your score
-and time after you cross the hightway</string>
+and time after you cross the highway</string>
 			<key>order</key>
 			<string>10</string>
 		</dict>
