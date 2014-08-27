@@ -54,7 +54,15 @@ CCScene* StartMenuScene::scene()
 
 StartMenuScene::StartMenuScene() : infoLabel(NULL) {
 	// TODO Auto-generated constructor stub
-
+    infoMenu = NULL;
+    startMenu = NULL;
+    optionsMenu = NULL;
+    userMenu = NULL;
+    legendsMenu = NULL;
+    purchaseMenu = NULL;
+    newGameMenu = NULL;
+    creditsMenu = NULL;
+    scoreMenu = NULL;
 }
 
 StartMenuScene::~StartMenuScene() {
@@ -89,28 +97,14 @@ bool StartMenuScene::init(){
 
     initMainMenu();
 
-    initNewGameMenu();
-
-    initOptionsMenu();
-
-    initScoreMenu();
-
     initInfoMenu();
-
-    initUserMenu();
-
-    initLegendsMenu();
-
-    initPurchaseMenu();
-
-    initCreditsMenu();
 
     AnimationData * animationData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(animationData->backgroundSoundImage->getCString());
 	SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
 			animationData->backgroundSoundImage->getCString(), true);
 
-    if(checkboxMute->isSelected()){
+    if(userData->sound == MUTE){
     	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0);
     	SimpleAudioEngine::sharedEngine()->setEffectsVolume(0);
     }else{
@@ -124,6 +118,11 @@ bool StartMenuScene::init(){
 }
 
 void StartMenuScene::initNewGameMenu(){
+    
+    if (newGameMenu) {
+        return;
+    }
+    
     CCMenuItemLabel * currentLevel = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96 ,
             CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
     currentLevel->setDisabledColor( ccRED );
@@ -196,6 +195,11 @@ void StartMenuScene::initNewGameMenu(){
 }
 
 void StartMenuScene::initLegendsMenu(){
+    
+    if (legendsMenu) {
+        return;
+    }
+    
     legendsMenu = CCLayer::create();
     legendsMenu->ignoreAnchorPointForPosition(false);
     legendsMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
@@ -224,6 +228,11 @@ void StartMenuScene::initLegendsMenu(){
 }
 
 void StartMenuScene::initInfoMenu(){
+    
+    if (infoMenu) {
+        return;
+    }
+    
 	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
 			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
     infoLabel->setDisabledColor( ccRED );
@@ -242,8 +251,13 @@ void StartMenuScene::initInfoMenu(){
 }
 
 void StartMenuScene::initPurchaseMenu(){
+    
+    if (purchaseMenu) {
+        return;
+    }
+    
 	CCMenuItemLabel * benefits = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
-			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentLeft));
+			CCSizeMake(winSize.width * 0.9 , winSize.height * 0.6) ,  kCCTextAlignmentLeft));
 	benefits->setDisabledColor( ccRED );
 	benefits->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
 	benefits->setString(PURCHASE_BENEFIT);
@@ -252,19 +266,19 @@ void StartMenuScene::initPurchaseMenu(){
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
     		this , menu_selector(StartMenuScene::okHandler));
     OK->setScale(0.55);
-    OK->setPosition(ccp(winSize.width*0.2, winSize.height * 0.25));
+    OK->setPosition(ccp(winSize.width*0.2, winSize.height * 0.15));
 
     CCMenuItemImage * purchase = CCMenuItemImage::create("purchase_normal.png", "purchase_selected.png" ,
     		this , menu_selector(StartMenuScene::purchaseHandler));
     purchase->setScale(0.55);
     purchase->setTag(PURCHASE);
-    purchase->setPosition(ccp(winSize.width*0.5, winSize.height * 0.25));
+    purchase->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
 
     CCMenuItemImage * restore = CCMenuItemImage::create("restore_normal.png", "restore_selected.png" ,
             this , menu_selector(StartMenuScene::purchaseHandler));
     restore->setScale(0.55);
     restore->setTag(RESTORE);
-    restore->setPosition(ccp(winSize.width*0.8, winSize.height * 0.25));
+    restore->setPosition(ccp(winSize.width*0.8, winSize.height * 0.15));
 
 	purchaseMenu = CCMenu::create(OK , purchase , benefits , restore , NULL);
 	purchaseMenu->ignoreAnchorPointForPosition(false);
@@ -274,6 +288,11 @@ void StartMenuScene::initPurchaseMenu(){
 }
 
 void StartMenuScene::initCreditsMenu(){
+    
+    if (creditsMenu) {
+        return;
+    }
+    
 	CCMenuItemLabel * credits = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96));
 	credits->setDisabledColor( ccBLUE );
 	credits->setPosition(ccp(winSize.width/2 , winSize.height*0.875));
@@ -308,6 +327,9 @@ void StartMenuScene::keyBackClicked(){
 }
 
 void StartMenuScene::initScoreMenu(){
+    if (scoreMenu) {
+        return;
+    }
 #ifdef LISTVIEW_LEADERBOARD
 	scoreMenu = CCLayer::create();
 	scoreMenu->ignoreAnchorPointForPosition(false);
@@ -398,6 +420,11 @@ void StartMenuScene::uploadHandler(CCObject * sender){
 }
 
 void StartMenuScene::initUserMenu(){
+    
+    if (userMenu) {
+        return;
+    }
+    
 	userMenu = CCLayer::create();
 	userMenu->ignoreAnchorPointForPosition(false);
 	userMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
@@ -438,11 +465,11 @@ void StartMenuScene::initUserMenu(){
     pwdField->setDelegate(this);
     userMenu->addChild(pwdField);
 
-    CCLabelTTF * info = CCLabelTTF::create("0", INFO_FONT, 48);
-    info->setColor( ccBLUE );
+    CCLabelTTF * info = CCLabelTTF::create("0", INFO_FONT, 40);
+    info->setColor( ccRED );
     info->setPosition(ccp(winSize.width/2 , winSize.height*0.4));
     //yourNameLabel->setAnchorPoint(ccp(1 , 0.5));
-    info->setString("Please register/login to upload\nyour latest score to leaderboard");
+    info->setString("Please register or login to upload\nyour latest score to leader board");
     userMenu->addChild(info);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
@@ -536,6 +563,9 @@ void StartMenuScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 }
 
 void StartMenuScene::userHandler(CCObject * sender){
+    
+    initUserMenu();
+    
     if(userData->userName.length() == 0) nameField->setString(DEFAULT_NAME);
     if(userData->password.length() == 0) pwdField->setString(DEFAULT_PASSWORD);
     nameField->runAction(CCBlink::create(2, 6));
@@ -691,6 +721,11 @@ void StartMenuScene::scrollViewDidZoom(CCScrollView* view){
 }
 
 void StartMenuScene::initMainMenu(){
+    
+    if (startMenu) {
+        return;
+    }
+    
     CCMenuItemImage * newGame = CCMenuItemImage::create("button_new_game_normal.png",
             "button_new_game_selected.png", this, menu_selector(StartMenuScene::newGameMenuHandler));
     newGame->setTag(NEW_GAME);
@@ -760,11 +795,13 @@ void StartMenuScene::initMainMenu(){
 }
 
 void StartMenuScene::pvpHandler(cocos2d::CCObject *sender){
+    initPurchaseMenu();
     menuStack.push_back(currentMenu);
 	showMenu(purchaseMenu);
 }
 
 void StartMenuScene::creditsHandler(cocos2d::CCObject *sender){
+    initCreditsMenu();
     menuStack.push_back(currentMenu);
 	showMenu(creditsMenu);
 }
@@ -784,6 +821,7 @@ void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
 }
 
 void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
+    initScoreMenu();
 #ifdef LISTVIEW_LEADERBOARD
 	GameController::getGameController()->getTopRankings();
 	scoreTable->reloadData();
@@ -812,6 +850,10 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 }
 
 void StartMenuScene::initOptionsMenu(){
+    
+    if(optionsMenu){
+        return;
+    }
 
     //row 1
     CCMenuItemLabel * controllerPositions = CCMenuItemLabel::create(
@@ -928,9 +970,6 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
     {
         if (userData->justFailed%FREE_PLAY == 0) {
             showAds();
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-            setInfoLabel(ADS_CLICK_RULE, 0);
-#endif
             GameController::getGameController()->setJustFailed(false , true);
             return;
         }
@@ -964,11 +1003,13 @@ void StartMenuScene::showInfoLabel(){
 }
 
 void StartMenuScene::optionsHandler(cocos2d::CCObject *sender){
+    initOptionsMenu();
     menuStack.push_back(currentMenu);
     showMenu(optionsMenu);
 }
 
 void StartMenuScene::newGameMenuHandler(cocos2d::CCObject *sender){
+    initNewGameMenu();
     menuStack.push_back(currentMenu);
     showMenu(newGameMenu);
 }
@@ -1104,6 +1145,9 @@ void StartMenuScene::showMenu(CCLayer * menu){
 }
 
 void StartMenuScene::legendsHandler(CCObject * sender){
+    
+    initLegendsMenu();
+    
     menuStack.push_back(currentMenu);
     showMenu(legendsMenu);
 }

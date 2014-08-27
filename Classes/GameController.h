@@ -214,10 +214,10 @@ typedef struct{
 #define FREE_PLAY (3)
 
 #define NAME_RULE "Username must:\n" \
-                  "has maximum 12 characters\n" \
-                  "has minimum 4 characters\n" \
-                  "start with an alphabet" \
-                  "has following legal characters:\n" \
+                  "have maximum 12 characters\n" \
+                  "have minimum 4 characters\n" \
+                  "start with an alphabet\n\n" \
+                  "Legal characters allowed:\n" \
                   "a-z , A-Z, 0-9 , _ , -\n"
 
 #define PASSWORD_RULE "Password must have:\n" \
@@ -225,7 +225,7 @@ typedef struct{
                   "Minimum 4 characters\n"
 
 #define PURCHASE_BENEFIT "Spend 99 cents to:\n\n" \
-                  "1) Remove the ads\n\n" \
+                  "1) Remove Ads\n\n" \
                   "2) Continue game from where you left off\n"
 
 #define CREDITS "Special thanks to www.opengameart.org\n" \
@@ -236,9 +236,6 @@ typedef struct{
                 "\"Happy Arcade Tune\" by rezoner\n" \
                 "\"Arabesque\" by brainiac256\n" \
                 "\"Tactical Pursuit\" by Matthew Pablo\n"
-
-#define ADS_CLICK_RULE "If you click the ads, you can continue\n" \
-                        "game from where you left off\n"
 
 #define DEFAULT_NAME "Penguin"
 #define DEFAULT_PASSWORD "Penguin#"
