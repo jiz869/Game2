@@ -240,6 +240,8 @@
 		165421F619ABCA7A0042C5A9 /* Integration Manual.url in Resources */ = {isa = PBXBuildFile; fileRef = 165421F319ABCA7A0042C5A9 /* Integration Manual.url */; };
 		165421F719ABCA7A0042C5A9 /* StartApp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 165421F419ABCA7A0042C5A9 /* StartApp.bundle */; };
 		165421F819ABCA7A0042C5A9 /* StartApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165421F519ABCA7A0042C5A9 /* StartApp.framework */; };
+		165421FB19AE6FDE0042C5A9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 165421F919AE6FDE0042C5A9 /* Icon.png */; };
+		165421FC19AE6FDE0042C5A9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165421FA19AE6FDE0042C5A9 /* Icon@2x.png */; };
 		167ED39A194F446200B71E79 /* B2Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED37C194F446200B71E79 /* B2Sprite.cpp */; };
 		167ED39B194F446200B71E79 /* CarObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED37E194F446200B71E79 /* CarObj.cpp */; };
 		167ED39C194F446200B71E79 /* City.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 167ED380194F446200B71E79 /* City.cpp */; };
@@ -789,6 +791,8 @@
 		165421F319ABCA7A0042C5A9 /* Integration Manual.url */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Integration Manual.url"; sourceTree = "<group>"; };
 		165421F419ABCA7A0042C5A9 /* StartApp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = StartApp.bundle; sourceTree = "<group>"; };
 		165421F519ABCA7A0042C5A9 /* StartApp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = StartApp.framework; sourceTree = "<group>"; };
+		165421F919AE6FDE0042C5A9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
+		165421FA19AE6FDE0042C5A9 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		167ED37C194F446200B71E79 /* B2Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = B2Sprite.cpp; path = ../Classes/B2Sprite.cpp; sourceTree = "<group>"; };
 		167ED37D194F446200B71E79 /* B2Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = B2Sprite.h; path = ../Classes/B2Sprite.h; sourceTree = "<group>"; };
 		167ED37E194F446200B71E79 /* CarObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CarObj.cpp; path = ../Classes/CarObj.cpp; sourceTree = "<group>"; };
@@ -1151,6 +1155,8 @@
 		080E96DDFE201D6D7F000001 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				165421F919AE6FDE0042C5A9 /* Icon.png */,
+				165421FA19AE6FDE0042C5A9 /* Icon@2x.png */,
 				1613927E199DB35800C2B942 /* Icon-57.png */,
 				1613927F199DB35800C2B942 /* Icon-72.png */,
 				16139280199DB35800C2B942 /* Icon-114.png */,
@@ -2643,6 +2649,7 @@
 				16139225199DB33900C2B942 /* 23.wav in Resources */,
 				16139181198C863800C2B942 /* Icon-120.png in Resources */,
 				16139249199DB33900C2B942 /* button_options_normal.png in Resources */,
+				165421FB19AE6FDE0042C5A9 /* Icon.png in Resources */,
 				16139277199DB33900C2B942 /* slow.wav in Resources */,
 				1613924D199DB33900C2B942 /* continue_normal.png in Resources */,
 				1613927A199DB33900C2B942 /* stop.wav in Resources */,
@@ -2683,6 +2690,7 @@
 				16139229199DB33900C2B942 /* bless.wav in Resources */,
 				1613926E199DB33900C2B942 /* upload_score_selected.png in Resources */,
 				1613922F199DB33900C2B942 /* Arial.ttf in Resources */,
+				165421FC19AE6FDE0042C5A9 /* Icon@2x.png in Resources */,
 				16139273199DB33900C2B942 /* life.wav in Resources */,
 				16139279199DB33900C2B942 /* splash.wav in Resources */,
 				1613923D199DB33900C2B942 /* background3.png in Resources */,
@@ -3074,7 +3082,7 @@
 				OTHER_CFLAGS = "-O2";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "Freeway Penguin";
-				PROVISIONING_PROFILE = "F8B8CE52-C642-499D-B972-B05F582ED69A";
+				PROVISIONING_PROFILE = "2dc9618d-09b9-4c44-bb7c-412e8d00d407";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -3086,8 +3094,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Min Li (FXWRKQ6EV6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Min Li (FXWRKQ6EV6)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Min Li (58742WE7GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Min Li (58742WE7GT)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3126,7 +3134,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "Freeway Penguin";
-				PROVISIONING_PROFILE = "F8B8CE52-C642-499D-B972-B05F582ED69A";
+				PROVISIONING_PROFILE = "2dc9618d-09b9-4c44-bb7c-412e8d00d407";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

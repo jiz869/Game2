@@ -69,7 +69,7 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 	
 	private static crossRoad _appActiviy;
 	private IabHelper iabHelper;
-	private static final String SKU_PRODUCT = "ca.welcomelm.crossroad.ugp";
+	private static final String SKU_PRODUCT = "ca.welcomelm.continue.ads";
 	private static final int requestBuy = 8;
 	private boolean isIabSetup = false;
 	private StartAppAd startAppAd = new StartAppAd(this);
@@ -147,7 +147,7 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 		_appActiviy = this;
 		
 		String base64EncodedPublicKey = 
-                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAldFi+yJsiLACy9pyMk+s9SOS2uAREtJuwAewFogOXdNp++5Ry5m2PJ1ThGL0fDmgq/yt4+3vVk9Nv0+ov0WrxlEoJKjU+Vrjgd/160ABTnbnp2K/KLfzB/Mx9kXh9qZHv1lshkB7cqOXFACzTP/xbPukpcuoNd0QA60qkZ9lAr1iotbgqloZSpZz/XwFKiSPjCCBtk7/2nbbdP4yfz/l8PnDP2SdkgE6fL8+s4ftNVYAiAXqFS+ODCm4xDeVUblFhigPfFmghgqi79DhyBeL0Dh/7bK15H5Ew2MrW0dpcrQh74HdEn4De75wbVdmsBo8bNEn9I+XPae58vvdPHPFqQIDAQAB";
+                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKmDndSMvICd6tadPMkZBUE4qezWOm9BS24x9luwE5+BgwKhXwnmf37xw0hGMZuyXQVkadqVb5PFUdMFd+F1EiyoEBAOSDNZlNyI/xnNmEjDKBObNInWtrb60KqCWqEPHM7mBHYMBr+c9b8xrjyXsRwzwPkrh3NGcBctB8KSKi99rJ+7pU9msis/boX2sglAZ3aV7+VLGrdhgI5663PZa+PElVKoVNuo/d3Pw6jB6RGutjrHcSKZNeeW8ruV1SFCjP5LNiCkRqe73fYVw21/B2vob7ePvcpyH96K8lZcgZXdtAqidoOYWa5QuV3bdXLdyrwwbcvmz++YIMeVPmOlOQIDAQAB";
 		iabHelper = new IabHelper(this, base64EncodedPublicKey);
 	}
     
