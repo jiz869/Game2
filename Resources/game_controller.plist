@@ -1969,7 +1969,7 @@ down for a few seconds</string>
 			<string>LESS</string>
 			<key>description</key>
 			<string>This enemy skill will eat your score
-and time when you successfully cross street</string>
+and time after you cross the hightway</string>
 			<key>order</key>
 			<string>10</string>
 		</dict>
@@ -2002,9 +2002,9 @@ skills except BLESS</string>
 			<string>TIME
 BOMB</string>
 			<key>description</key>
-			<string>This time bomb will knock you back
-to the starting point after timeout; it
-will be disarmed after you cross street</string>
+			<string>This time bomb will explode in a 
+few seconds. But it will be disarmed
+after you cross the highway</string>
 			<key>order</key>
 			<string>12</string>
 		</dict>

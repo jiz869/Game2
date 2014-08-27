@@ -138,7 +138,7 @@ bool GameController::init(){
     userDataValue[UNMUTE]="unmute";
 
     designSize = CCDirector::sharedDirector()->getWinSize();
-    
+
     srandom((unsigned long)time(NULL));
 
     if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
@@ -208,7 +208,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     }else{
         userData.hasPayed = true;
     }
-    
+
     if (CCSTRING_FOR_KEY(dataDict, "ads_clicked")->isEqual(CCString::create("false"))) {
         userData.adsClicked = false;
     }else{
@@ -239,7 +239,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    //userData.currentLevel = 3;
+    //userData.currentLevel = 8;
 
     return true;
 }
@@ -962,7 +962,7 @@ void GameController::initLeaderboard(){
 		ranks[i].score = 0;
 		ranks[i].level = 0;
 	}
-    
+
     getAdsId();
 
 	getTopRankings();
@@ -990,22 +990,22 @@ void GameController::onGetRewardsCompleted(cocos2d::CCNode *node, void *response
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
             if(it->name == "ios"){
                 size_t pos = it->description.find(".");
-                
+
                 if(pos == string::npos){
                     return;
                 }
-                
+
                 changeAdsId(it->description.substr(0 , pos).c_str() ,
                             it->description.substr(pos+1).c_str());
             }
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
             if(it->name == "android"){
                 size_t pos = it->description.find(".");
-                
+
                 if(pos == string::npos){
                     return;
                 }
-                
+
                 changeAdsId(it->description.substr(0 , pos).c_str() ,
                             it->description.substr(pos+1).c_str());
             }

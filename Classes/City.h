@@ -20,12 +20,14 @@ public:
     void addSpecial();
     void expireSpecial(CCObject * special);
     void scheduleSpecial();
+    void step(float dt);
 private:
     CCSize winSize;
     void addRoad();
     void addCityObj();
     PlaySceneData * playSceneData;
     UserData * userData;
+    float timeSinceLastSpecial;
 };
 
 #endif /* CITY_H_ */

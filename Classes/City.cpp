@@ -14,7 +14,7 @@ using namespace CocosDenshion;
 
 City::City() {
 	// TODO Auto-generated constructor stub
-
+    timeSinceLastSpecial = 10000.0;
 }
 
 City::~City() {
@@ -81,6 +81,8 @@ void City::addHornSounds(){
 
 void City::addSpecial(){
 
+    timeSinceLastSpecial = 0;
+
 	float initPosY = getRandom(1, playSceneData->laneNumber) * 0.1;
 
 	CCPoint initPos = ccp(winSize.width * 0.5 , initPosY * winSize.height);
@@ -101,12 +103,22 @@ void City::expireSpecial(cocos2d::CCObject *special){
     specialObj->expire();
 }
 
+void City::step(float dt){
+    timeSinceLastSpecial += dt;
+}
+
 void City::scheduleSpecial(){
 	playSceneData = GameController::getGameController()->getPlaySceneData(
 			GameController::getGameController()->getUserData()->currentLevel);
 
+	float delay;
+
+	if(timeSinceLastSpecial > playSceneData->specialInterval) delay = 0.01;
+	else delay = playSceneData->specialInterval - timeSinceLastSpecial;
+
 	if(playSceneData->specialInterval > 0.5)
-		schedule(schedule_selector(City::addSpecial) , playSceneData->specialInterval , kCCRepeatForever , 0.01);
+		schedule(schedule_selector(City::addSpecial) , playSceneData->specialInterval ,
+		        kCCRepeatForever , delay);
 
 	schedule(schedule_selector(City::addHornSounds), 8, kCCRepeatForever, 0.01);
 }

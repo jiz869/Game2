@@ -258,6 +258,7 @@ void PlayScene::update(float dt){
 	}
 
 	controlMenu->step(dt);
+	city->step(dt);
 }
 
 void PlayScene::stopAllLanes(){
