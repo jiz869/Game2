@@ -34,6 +34,7 @@ public:
     virtual void onPaymentSuccess() = 0;
 };
 
+extern void restore(IAPManagerDelegate * delegate);
 extern void purchase(IAPManagerDelegate * delegate);
 extern void showAds();
 extern void changeAdsId(const char * , const char *);

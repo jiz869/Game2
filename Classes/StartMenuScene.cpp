@@ -275,7 +275,7 @@ void StartMenuScene::initPurchaseMenu(){
     purchase->setPosition(ccp(winSize.width*0.5, winSize.height * 0.15));
 
     CCMenuItemImage * restore = CCMenuItemImage::create("restore_normal.png", "restore_selected.png" ,
-            this , menu_selector(StartMenuScene::purchaseHandler));
+            this , menu_selector(StartMenuScene::restoreHandler));
     restore->setScale(0.55);
     restore->setTag(RESTORE);
     restore->setPosition(ccp(winSize.width*0.8, winSize.height * 0.15));
@@ -817,6 +817,15 @@ void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     purchase();
 #endif
+#endif
+}
+
+void StartMenuScene::restoreHandler(cocos2d::CCObject *sender){
+    enableButtonsForIap(false);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    restore(GameController::getGameController());
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    purchase();
 #endif
 }
 

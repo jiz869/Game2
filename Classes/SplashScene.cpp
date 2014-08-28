@@ -8,8 +8,17 @@
 #include "SplashScene.h"
 #include "StartMenuScene.h"
 #include "SimpleAudioEngine.h"
+#include <unistd.h>
+#include <pthread.h>
 
 using namespace CocosDenshion;
+
+extern bool gamecontrollerInited;
+
+static void * initGameController(void * data){
+    data = (void *)GameController::getGameController()->getUserData();
+    return 0;
+}
 
 #define SPLASH_TIME 2 //seconds
 
@@ -93,6 +102,12 @@ bool SplashScene::init(){
     scheduleUpdate();
 
     progress = 0;
+    
+    // Init game controller
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
+    pthread_t thread;
+    pthread_create(&thread, NULL, initGameController, NULL);
+    pthread_detach(thread);
 
     return true;
 }
@@ -144,6 +159,9 @@ void SplashScene::update(float dt){
 
 void SplashScene::splashOver(){
     unscheduleUpdate();
+    while (gamecontrollerInited == false) {
+        usleep(10000L);
+    }
     SimpleAudioEngine::sharedEngine()->playEffect("splash.wav");
     CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
 }

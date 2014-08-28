@@ -67,6 +67,7 @@ void static noscoreEnd(PlayerObj * player);
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
+bool gamecontrollerInited = false;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 void onAdClicked(){
@@ -77,15 +78,15 @@ void onAdClicked(){
 #include <jni.h>
 extern "C"
 {
-    void Java_ca_welcomelm_crossRoad_crossRoad_onAdClicked( JNIEnv* env, jobject thiz ){
+    void Java_ca_welcomelm_crossRoadNow_crossRoadNow_onAdClicked( JNIEnv* env, jobject thiz ){
         GameController::getGameController()->onAdsClicked();
     }
 
-    void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentError( JNIEnv* env, jobject thiz ){
+    void Java_ca_welcomelm_crossRoadNow_crossRoadNow_onPaymentError( JNIEnv* env, jobject thiz ){
         GameController::getGameController()->onPaymentError();
     }
 
-    void Java_ca_welcomelm_crossRoad_crossRoad_onPaymentSuccess( JNIEnv* env, jobject thiz ){
+    void Java_ca_welcomelm_crossRoadNow_crossRoadNow_onPaymentSuccess( JNIEnv* env, jobject thiz ){
         GameController::getGameController()->onPaymentSuccess();
     }
 }
@@ -105,7 +106,6 @@ GameController * GameController::getGameController(){
 }
 
 GameController::GameController(){
-
 }
 
 GameController::~GameController(){
@@ -158,6 +158,10 @@ bool GameController::init(){
     }
 
     initLeaderboard();
+    
+    gamecontrollerInited = true;
+    
+    CCLOG("GameController::init end");
 
     return true;
 }

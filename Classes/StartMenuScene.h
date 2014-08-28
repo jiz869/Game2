@@ -42,6 +42,7 @@ public:
     void uploadHandler(CCObject * sender);
     void legendsHandler(CCObject * sender);
     void purchaseHandler(CCObject * sender);
+    void restoreHandler(CCObject * sender);
     void creditsHandler(CCObject * sender);
     virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell);
     virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx);

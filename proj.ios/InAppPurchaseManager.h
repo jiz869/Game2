@@ -4,6 +4,11 @@
 
 #define PRODUCT_ID "ca.welcomelm.continue.ads"
 
+typedef enum : NSUInteger {
+    PURCHASE,
+    RESTORE,
+} CurrentOp;
+
 @interface InAppPurchaseManager : NSObject <SKProductsRequestDelegate , SKPaymentTransactionObserver>
 {
     SKProduct * product;

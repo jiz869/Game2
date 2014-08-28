@@ -8,6 +8,16 @@
 
 #import "InAppPurchaseManager.h"
 
+void restore(IAPManagerDelegate * delegate){
+    InAppPurchaseManager * manager = [InAppPurchaseManager sharedManager];
+    
+    manager->delegate = delegate;
+    
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:manager];
+    
+    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+}
+
 void purchase(IAPManagerDelegate * delegate){
     InAppPurchaseManager * manager = [InAppPurchaseManager sharedManager];
     
@@ -74,7 +84,13 @@ static InAppPurchaseManager * manager;
         NSLog(@"Product description: %@" , product.localizedDescription);
         NSLog(@"Product price: %@" , product.price);
         NSLog(@"Product id: %@" , product.productIdentifier);
-        [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+
+        if ([SKPaymentQueue canMakePayments] == FALSE) {
+            delegate->onPaymentError();
+            return;
+        }
+
+        [self purchase];
     }
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
@@ -154,11 +170,7 @@ static InAppPurchaseManager * manager;
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
 {
     if (delegate->hasPayed() == false) {
-        if ([SKPaymentQueue canMakePayments] == FALSE) {
-            delegate->onPaymentError();
-            return;
-        }
-        [self purchase];
+        delegate->onPaymentError();
     }
 }
 

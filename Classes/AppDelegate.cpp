@@ -3,7 +3,6 @@
 #include "StartMenuScene.h"
 #include "SimpleAudioEngine.h"
 #include "MultiPlayScene.h"
-#include <pthread.h>
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -14,11 +13,6 @@ AppDelegate::AppDelegate() {
 
 AppDelegate::~AppDelegate()
 {
-}
-
-static void * initGameController(void * data){
-    data = (void *)GameController::getGameController()->getUserData();
-    return 0;
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
@@ -45,16 +39,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 70);
-
-    // Init game controller
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
-    pthread_t thread;
-    pthread_create(&thread, NULL, initGameController, NULL);
-    pthread_detach(thread);
-
+    
     //GameController::getGameController();
 
-    CCScene *pScene =SplashScene::scene();
+    CCScene *pScene = SplashScene::scene();
 
     // run
     pDirector->runWithScene(pScene);
