@@ -3,7 +3,7 @@
 #include <jni.h>
 #include <string.h>
 
-const char* AppActivityClassName = "ca/welcomelm/crossRoad/crossRoad";
+const char* AppActivityClassName = "ca/welcomelm/crossRoadNow/crossRoadNow";
 
 void showAds()
 {

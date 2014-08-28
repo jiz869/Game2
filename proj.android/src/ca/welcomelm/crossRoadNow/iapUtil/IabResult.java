@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package ca.welcomelm.crossRoad.iapUtil;
+package ca.welcomelm.crossRoadNow.iapUtil;
 
 /**
  * Represents the result of an in-app billing operation.

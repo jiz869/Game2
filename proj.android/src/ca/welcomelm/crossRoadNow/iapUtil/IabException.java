@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package ca.welcomelm.crossRoad.iapUtil;
+package ca.welcomelm.crossRoadNow.iapUtil;
 
 /**
  * Exception thrown when something went wrong with in-app billing.

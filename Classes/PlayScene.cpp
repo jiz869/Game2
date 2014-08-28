@@ -21,7 +21,7 @@ using namespace CocosDenshion;
 
 extern "C"
 {
-	void Java_ca_welcomelm_crossRoad_crossRoad_up( JNIEnv* env, jobject thiz ){
+	void Java_ca_welcomelm_crossRoadNow_crossRoadNow_up( JNIEnv* env, jobject thiz ){
 		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
 		if(scene && scene->getTag() != PLAY_SCENE) return;
 
@@ -29,7 +29,7 @@ extern "C"
 		playScene->upHandler(0);
 	}
 
-	void Java_ca_welcomelm_crossRoad_crossRoad_down( JNIEnv* env, jobject thiz ){
+	void Java_ca_welcomelm_crossRoadNow_crossRoadNow_down( JNIEnv* env, jobject thiz ){
 		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
 		if(scene && scene->getTag() != PLAY_SCENE) return;
 
@@ -37,7 +37,7 @@ extern "C"
 		playScene->downHandler(0);
 	}
 
-	void Java_ca_welcomelm_crossRoad_crossRoad_end( JNIEnv* env, jobject thiz ){
+	void Java_ca_welcomelm_crossRoadNow_crossRoadNow_end( JNIEnv* env, jobject thiz ){
 		CCScene * scene = CCDirector::sharedDirector()->getRunningScene();
 		if(scene && scene->getTag() != PLAY_SCENE) return;
 

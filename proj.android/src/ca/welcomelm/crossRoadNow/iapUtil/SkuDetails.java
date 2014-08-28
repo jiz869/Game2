@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package ca.welcomelm.crossRoad.iapUtil;
+package ca.welcomelm.crossRoadNow.iapUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;

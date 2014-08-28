@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package ca.welcomelm.crossRoad;
+package ca.welcomelm.crossRoadNow;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
@@ -49,13 +49,13 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import ca.welcomelm.crossRoad.iapUtil.IabHelper;
-import ca.welcomelm.crossRoad.iapUtil.IabHelper.OnIabPurchaseFinishedListener;
-import ca.welcomelm.crossRoad.iapUtil.IabHelper.OnIabSetupFinishedListener;
-import ca.welcomelm.crossRoad.iapUtil.IabHelper.QueryInventoryFinishedListener;
-import ca.welcomelm.crossRoad.iapUtil.IabResult;
-import ca.welcomelm.crossRoad.iapUtil.Inventory;
-import ca.welcomelm.crossRoad.iapUtil.Purchase;
+import ca.welcomelm.crossRoadNow.iapUtil.IabHelper;
+import ca.welcomelm.crossRoadNow.iapUtil.IabResult;
+import ca.welcomelm.crossRoadNow.iapUtil.Inventory;
+import ca.welcomelm.crossRoadNow.iapUtil.Purchase;
+import ca.welcomelm.crossRoadNow.iapUtil.IabHelper.OnIabPurchaseFinishedListener;
+import ca.welcomelm.crossRoadNow.iapUtil.IabHelper.OnIabSetupFinishedListener;
+import ca.welcomelm.crossRoadNow.iapUtil.IabHelper.QueryInventoryFinishedListener;
 
 import com.google.android.gms.ads.*;
 import com.startapp.android.publish.Ad;
@@ -64,10 +64,10 @@ import com.startapp.android.publish.AdEventListener;
 import com.startapp.android.publish.StartAppAd;
 import com.startapp.android.publish.StartAppSDK;
 
-public class crossRoad extends Cocos2dxActivity implements OnIabSetupFinishedListener, 
+public class crossRoadNow extends Cocos2dxActivity implements OnIabSetupFinishedListener, 
 QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 	
-	private static crossRoad _appActiviy;
+	private static crossRoadNow _appActiviy;
 	private IabHelper iabHelper;
 	private static final String SKU_PRODUCT = "ca.welcomelm.continue.ads";
 	private static final int requestBuy = 8;

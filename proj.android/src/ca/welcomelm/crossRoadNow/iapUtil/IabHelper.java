@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package ca.welcomelm.crossRoad.iapUtil;
+package ca.welcomelm.crossRoadNow.iapUtil;
 
 import android.app.Activity;
 import android.app.PendingIntent;
