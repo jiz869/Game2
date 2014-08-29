@@ -30,7 +30,7 @@ public:
     virtual void reStart();
     void step(float dt);
     void destroyLastCar();
-    void destroyMe(cocos2d::CCObject *car);
+	void destroyMe(cocos2d::CCNode *car);
     void setSpecialChance(float chance);
     void resetSpecialChance();
     void allSmallCars();

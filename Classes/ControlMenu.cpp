@@ -411,7 +411,7 @@ void ControlMenu::increaseDuration(float delta){
     updateGameTime();
 }
 
-void ControlMenu::resumeDuration(){
+void ControlMenu::resumeDuration(float dt){
     maxDuration = playSceneData->maxDuration;
     updateGameTime();
 }

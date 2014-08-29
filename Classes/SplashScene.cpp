@@ -8,8 +8,13 @@
 #include "SplashScene.h"
 #include "StartMenuScene.h"
 #include "SimpleAudioEngine.h"
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 #include <unistd.h>
 #include <pthread.h>
+#else
+#include <chrono>
+#include <thread>
+#endif
 
 using namespace CocosDenshion;
 
@@ -105,9 +110,13 @@ bool SplashScene::init(){
     
     // Init game controller
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     pthread_t thread;
     pthread_create(&thread, NULL, initGameController, NULL);
     pthread_detach(thread);
+#else
+	GameController::getGameController();
+#endif
 
     return true;
 }
@@ -160,7 +169,11 @@ void SplashScene::update(float dt){
 void SplashScene::splashOver(){
     unscheduleUpdate();
     while (gamecontrollerInited == false) {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         usleep(10000L);
+#else
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+#endif
     }
     SimpleAudioEngine::sharedEngine()->playEffect("splash.wav");
     CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());

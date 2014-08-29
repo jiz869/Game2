@@ -34,7 +34,7 @@ typedef enum{
     STRONG,
     LIFE,
     SKULL,
-    DOUBLE,
+    DOUBLES,
     SMALL,
     BLESS,
     SPECIAL_NUM = BLESS,

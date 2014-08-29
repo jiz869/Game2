@@ -139,7 +139,11 @@ bool GameController::init(){
 
     designSize = CCDirector::sharedDirector()->getWinSize();
 
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     srandom((unsigned long)time(NULL));
+#else
+	srand((unsigned long)time(NULL));
+#endif
 
     if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
         return false;
@@ -510,16 +514,16 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
     specialDatas[SKULL]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("double");
-    specialDatas[DOUBLE] = new SpecialData;
-    specialDatas[DOUBLE]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
-    specialDatas[DOUBLE]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
-    specialDatas[DOUBLE]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
-    specialDatas[DOUBLE]->begin = &doubleBegin;
-    specialDatas[DOUBLE]->step = NULL;
-    specialDatas[DOUBLE]->end = NULL;
-    specialDatas[DOUBLE]->hitByCar = NULL;
-    specialDatas[DOUBLE]->description = CCSTRING_FOR_KEY(dict, "description");
-    specialDatas[DOUBLE]->name = CCSTRING_FOR_KEY(dict, "name");
+    specialDatas[DOUBLES] = new SpecialData;
+    specialDatas[DOUBLES]->duration = CCSTRING_FOR_KEY(dict, "duration")->floatValue();
+    specialDatas[DOUBLES]->life = CCSTRING_FOR_KEY(dict, "life")->floatValue();
+    specialDatas[DOUBLES]->imageName = CCSTRING_FOR_KEY(dict, "image_name");
+    specialDatas[DOUBLES]->begin = &doubleBegin;
+    specialDatas[DOUBLES]->step = NULL;
+    specialDatas[DOUBLES]->end = NULL;
+    specialDatas[DOUBLES]->hitByCar = NULL;
+    specialDatas[DOUBLES]->description = CCSTRING_FOR_KEY(dict, "description");
+    specialDatas[DOUBLES]->name = CCSTRING_FOR_KEY(dict, "name");
 
     dict = (CCDictionary *)dataDict->objectForKey("police");
     specialDatas[POLICE] = new SpecialData;
@@ -697,8 +701,8 @@ void static doubleBegin(PlayerObj * player){
     AnimationData * animData = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(animData->scoreSpecialSoundImage->getCString());
     PlayScene * playScene = (PlayScene *)player->getParent();
-    playScene->city->addSpecial();
-    playScene->city->addSpecial();
+    playScene->city->addSpecial(0);
+    playScene->city->addSpecial(0);
 }
 
 //police
