@@ -3,6 +3,7 @@
 extern void showAds();
 
 extern void purchase();
+extern void purchaseAmazon();
 
 extern void changeAdsId(const char * dev_id , const char * app_id);
 

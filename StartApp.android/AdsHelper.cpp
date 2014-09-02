@@ -27,6 +27,17 @@ void purchase()
 	}
 }
 
+void purchaseAmazon()
+{
+	cocos2d::JniMethodInfo t;
+	if (cocos2d::JniHelper::getStaticMethodInfo(t, AppActivityClassName, "purchaseAmazon", "()V"))
+	{
+
+		t.env->CallStaticVoidMethod(t.classID, t.methodID);
+		t.env->DeleteLocalRef(t.classID);
+	}
+}
+
 void changeAdsId(const char * dev_id , const char * app_id)
 {
 	cocos2d::JniMethodInfo t;

@@ -287,6 +287,7 @@ public:
     void recoverSpecialDurations();
     virtual void onPaymentError();
     virtual void onPaymentSuccess();
+    virtual void onPaymentLogin();
     virtual bool hasPayed();
     void getAdsId();
     void onAdsClicked();

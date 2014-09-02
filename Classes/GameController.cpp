@@ -85,6 +85,10 @@ extern "C"
     void Java_ca_welcomelm_crossRoadNow_crossRoadNow_onPaymentError( JNIEnv* env, jobject thiz ){
         GameController::getGameController()->onPaymentError();
     }
+    
+    void Java_ca_welcomelm_crossRoadNow_crossRoadNow_onPaymentLogin( JNIEnv* env, jobject thiz ){
+        GameController::getGameController()->onPaymentLogin();
+    }
 
     void Java_ca_welcomelm_crossRoadNow_crossRoadNow_onPaymentSuccess( JNIEnv* env, jobject thiz ){
         GameController::getGameController()->onPaymentSuccess();
@@ -1284,7 +1288,6 @@ void GameController::recoverSpecialDurations(){
 }
 
 void GameController::onPaymentError(){
-    CCLOG("onPaymentError");
     setInfoLabel("Payment Error");
     CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
     if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
@@ -1293,8 +1296,16 @@ void GameController::onPaymentError(){
     }
 }
 
+void GameController::onPaymentLogin(){
+    setInfoLabel("Please login Amazon appstore first");
+    CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+    if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
+        StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+        startup->enableButtonsForIap(true);
+    }
+}
+
 void GameController::onPaymentSuccess(){
-    CCLOG("onPaymentSuccess");
     setInfoLabel("Payment Success");
     setHasPayed(true);
     CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();

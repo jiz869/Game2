@@ -30,6 +30,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
@@ -57,6 +62,13 @@ import ca.welcomelm.crossRoadNow.iapUtil.IabHelper.OnIabPurchaseFinishedListener
 import ca.welcomelm.crossRoadNow.iapUtil.IabHelper.OnIabSetupFinishedListener;
 import ca.welcomelm.crossRoadNow.iapUtil.IabHelper.QueryInventoryFinishedListener;
 
+import com.amazon.device.iap.PurchasingListener;
+import com.amazon.device.iap.PurchasingService;
+import com.amazon.device.iap.model.ProductDataResponse;
+import com.amazon.device.iap.model.PurchaseResponse;
+import com.amazon.device.iap.model.PurchaseUpdatesResponse;
+import com.amazon.device.iap.model.Receipt;
+import com.amazon.device.iap.model.UserDataResponse;
 import com.google.android.gms.ads.*;
 import com.startapp.android.publish.Ad;
 import com.startapp.android.publish.AdDisplayListener;
@@ -65,7 +77,7 @@ import com.startapp.android.publish.StartAppAd;
 import com.startapp.android.publish.StartAppSDK;
 
 public class crossRoadNow extends Cocos2dxActivity implements OnIabSetupFinishedListener, 
-QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
+QueryInventoryFinishedListener, OnIabPurchaseFinishedListener , PurchasingListener{
 	
 	private static crossRoadNow _appActiviy;
 	private IabHelper iabHelper;
@@ -149,6 +161,8 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 		String base64EncodedPublicKey = 
                 "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKmDndSMvICd6tadPMkZBUE4qezWOm9BS24x9luwE5+BgwKhXwnmf37xw0hGMZuyXQVkadqVb5PFUdMFd+F1EiyoEBAOSDNZlNyI/xnNmEjDKBObNInWtrb60KqCWqEPHM7mBHYMBr+c9b8xrjyXsRwzwPkrh3NGcBctB8KSKi99rJ+7pU9msis/boX2sglAZ3aV7+VLGrdhgI5663PZa+PElVKoVNuo/d3Pw6jB6RGutjrHcSKZNeeW8ruV1SFCjP5LNiCkRqe73fYVw21/B2vob7ePvcpyH96K8lZcgZXdtAqidoOYWa5QuV3bdXLdyrwwbcvmz++YIMeVPmOlOQIDAQAB";
 		iabHelper = new IabHelper(this, base64EncodedPublicKey);
+		
+		PurchasingService.registerListener(this.getApplicationContext(), this);
 	}
     
     public native void onAdClicked();
@@ -214,8 +228,13 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
     	});		
 	}
 	
+	public static void purchaseAmazon(){
+		PurchasingService.getUserData();
+	}
+	
 	public native void onPaymentError();
 	public native void onPaymentSuccess();
+	public native void onPaymentLogin();
 
 	@Override
 	public void onIabSetupFinished(IabResult result) {
@@ -308,5 +327,90 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener{
 	public void onResume() {
 	    super.onResume();
 	    startAppAd.onResume();
+	}
+
+	@Override
+	public void onProductDataResponse(ProductDataResponse productDataResponse) {
+		// TODO Auto-generated method stub
+		switch (productDataResponse.getRequestStatus()){
+			case SUCCESSFUL:
+				PurchasingService.getPurchaseUpdates(true);
+				break;
+			default:
+				onPaymentError();
+				break;
+		}
+	}
+
+	@Override
+	public void onPurchaseResponse(PurchaseResponse purchaseResponse) {
+		// TODO Auto-generated method stub
+		switch (purchaseResponse.getRequestStatus()){
+			case SUCCESSFUL:
+			case ALREADY_PURCHASED:
+				PurchasingService.getPurchaseUpdates(true);
+				break;
+			default:
+				onPaymentError();
+				break;		
+		}
+	}
+
+	@Override
+	public void onPurchaseUpdatesResponse(
+			PurchaseUpdatesResponse purchaseUpdatesResponse) {
+		switch (purchaseUpdatesResponse.getRequestStatus()){
+			case SUCCESSFUL:
+				boolean purchased = false;
+				List<Receipt> receipts = purchaseUpdatesResponse.getReceipts();
+				Collections.sort(receipts, new Comparator<Receipt>(){
+					@Override
+					public int compare(Receipt lhs, Receipt rhs) {
+						// TODO Auto-generated method stub
+						return lhs.getPurchaseDate().compareTo(rhs.getPurchaseDate());
+					}
+				});
+				// TODO Auto-generated method stub
+				for (final Receipt receipt : receipts) {
+					if(SKU_PRODUCT.equals(receipt.getSku()) && receipt.isCanceled() == true){
+						purchased = false;
+						Log.v("IAP", "canceled");
+					}else if(SKU_PRODUCT.equals(receipt.getSku()) && receipt.isCanceled() == false){
+						purchased = true;
+						Log.v("IAP", "purchased");
+					}
+		        }
+				
+		        if (purchaseUpdatesResponse.hasMore()) {
+		          PurchasingService.getPurchaseUpdates(false);
+		          break;
+		        }
+				
+				if(purchased == true){
+					onPaymentSuccess();
+				}else{
+					PurchasingService.purchase(SKU_PRODUCT);
+				}
+				
+				break;
+			default:
+				onPaymentError();
+				break;
+		}		
+	}
+
+	@Override
+	public void onUserDataResponse(UserDataResponse userDataResponse) {
+		// TODO Auto-generated method stub
+		switch(userDataResponse.getRequestStatus()){
+			case SUCCESSFUL:
+				final Set<String> productSkus = new HashSet<String>();
+				productSkus.add(SKU_PRODUCT);
+				PurchasingService.getProductData(productSkus);
+				break;
+			default:
+				onPaymentLogin();
+				break;
+		}
 	}
 }

@@ -12,6 +12,8 @@
 #include "MultiPlayScene.h"
 #include "PWDField.h"
 
+#define AMAZON_BUILD
+
 typedef enum{
     NEW_GAME = 0,
     OPTIONS,
@@ -807,6 +809,10 @@ void StartMenuScene::creditsHandler(cocos2d::CCObject *sender){
 }
 
 void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
+    if (userData->hasPayed == true){
+        setInfoLabel("Payment Success" , 0);
+        return;
+    }
 #ifdef MULTIPLAY
     CCScene * pvpScene = MultiPlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(pvpScene);
@@ -815,17 +821,29 @@ void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     purchase(GameController::getGameController());
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#ifdef AMAZON_BUILD
+    purchaseAmazon();
+#else
     purchase();
+#endif
 #endif
 #endif
 }
 
 void StartMenuScene::restoreHandler(cocos2d::CCObject *sender){
+    if (userData->hasPayed == true){
+        setInfoLabel("Payment Success" , 0);
+        return;
+    }
     enableButtonsForIap(false);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     restore(GameController::getGameController());
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#ifdef AMAZON_BUILD
+    purchaseAmazon();
+#else
     purchase();
+#endif
 #endif
 }
 
