@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef __PHYSICSNODES_CCPHYSICSSPRITE_H__
-#define __PHYSICSNODES_CCPHYSICSSPRITE_H__
+#ifndef __B2SPRITE_H__
+#define __B2SPRITE_H__
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
@@ -114,4 +114,4 @@ protected:
     void updatePosFromPhysics();
 };
 
-#endif // __PHYSICSNODES_CCPHYSICSSPRITE_H__
+#endif // __B2SPRITE_H__

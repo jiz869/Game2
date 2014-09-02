@@ -88,6 +88,7 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener , PurchasingListen
 	static String devId , appId;
 	private static AdEventListener adEventListener;
 	private static AdDisplayListener adDisplayListener;
+	boolean purchased = false;
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -348,7 +349,7 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener , PurchasingListen
 		switch (purchaseResponse.getRequestStatus()){
 			case SUCCESSFUL:
 			case ALREADY_PURCHASED:
-				PurchasingService.getPurchaseUpdates(true);
+				onPaymentSuccess();
 				break;
 			default:
 				onPaymentError();
@@ -361,7 +362,6 @@ QueryInventoryFinishedListener, OnIabPurchaseFinishedListener , PurchasingListen
 			PurchaseUpdatesResponse purchaseUpdatesResponse) {
 		switch (purchaseUpdatesResponse.getRequestStatus()){
 			case SUCCESSFUL:
-				boolean purchased = false;
 				List<Receipt> receipts = purchaseUpdatesResponse.getReceipts();
 				Collections.sort(receipts, new Comparator<Receipt>(){
 					@Override
