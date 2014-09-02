@@ -9,12 +9,21 @@
 #include "CarObj.h"
 #include "SpecialObj.h"
 
+
+
 int getRandom(int low, int high)
 {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	if ( low - high < 0x10000L )
         return low + ( ( random() >> 8 ) % ( high + 1 - low ) );
 
 	return low + ( random() % ( high + 1 - low ) );
+#else
+	if ( low - high < 0x10000L )
+        return low + ( ( rand() >> 8 ) % ( high + 1 - low ) );
+
+	return low + ( rand() % ( high + 1 - low ) );
+#endif
 }
 
 bool toss(float chance){
@@ -219,7 +228,7 @@ void Lane::destroyLastCar(){
     }
 }
 
-void Lane::destroyMe(CCObject * car){
+void Lane::destroyMe(CCNode * car){
     B2Sprite * carSprite = (B2Sprite *)car;
     carSprite->setPosition(ccp(-1000 , -1000));
 }

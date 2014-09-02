@@ -50,7 +50,7 @@ public:
     virtual void keyBackClicked();
 
     void setSpecialChance(float chance , float length);
-    void resetSpecialChance();
+    void resetSpecialChance(float dt);
     void allSmallCars();
     void resumeCarNumbers();
     void speedUp(float percent);

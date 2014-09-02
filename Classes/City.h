@@ -16,9 +16,9 @@ public:
 	virtual ~City();
     CREATE_FUNC(City);
     virtual bool init();
-    void addHornSounds();
-    void addSpecial();
-    void expireSpecial(CCObject * special);
+    void addHornSounds(float dt);
+    void addSpecial(float dt);
+	void expireSpecial(CCNode * special);
     void scheduleSpecial();
     void step(float dt);
 private:

@@ -314,7 +314,7 @@ void PlayScene::setSpecialChance(float chance , float length){
     unschedule(schedule_selector(PlayScene::resetSpecialChance));
     scheduleOnce(schedule_selector(PlayScene::resetSpecialChance) , length);
 }
-void PlayScene:: resetSpecialChance(){
+void PlayScene:: resetSpecialChance(float dt){
 	int size = lanes.size();
     for (int i = 0; i < size; i++) {
     	lanes[i]->resetSpecialChance();

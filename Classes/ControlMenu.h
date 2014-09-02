@@ -29,7 +29,7 @@ public:
     virtual bool doScore();
     virtual void step(float dt);
     void increaseDuration(float delta);
-    void resumeDuration();
+    void resumeDuration(float dt);
     void changeScore(int delta , bool isGood);
     void changeControllerPosition(CheckboxType type);
     void pauseAndPlayHandler(CCObject * sender);

@@ -73,13 +73,13 @@ void City::addCityObj(){
     addChild(background);
 }
 
-void City::addHornSounds(){
+void City::addHornSounds(float dt){
     AnimationData * data = GameController::getGameController()->getAnimationData();
     SimpleAudioEngine::sharedEngine()->playEffect(
             data->hornSoundImages[getRandom(0,data->hornSoundImages.size()-1)]->getCString());
 }
 
-void City::addSpecial(){
+void City::addSpecial(float dt){
 
     timeSinceLastSpecial = 0;
 
@@ -97,7 +97,7 @@ void City::addSpecial(){
 	addChild(specialSprite);
 }
 
-void City::expireSpecial(cocos2d::CCObject *special){
+void City::expireSpecial(cocos2d::CCNode *special){
     CCSprite * specialSprite = (CCSprite *)special;
     SpecialObj * specialObj = (SpecialObj *)specialSprite->getUserData();
     specialObj->expire();
