@@ -13,6 +13,7 @@
 #include "PWDField.h"
 
 #define AMAZON_BUILD
+#define GEM 0xdeadbeef
 
 typedef enum{
     NEW_GAME = 0,
@@ -65,6 +66,8 @@ StartMenuScene::StartMenuScene() : infoLabel(NULL) {
     newGameMenu = NULL;
     creditsMenu = NULL;
     scoreMenu = NULL;
+    scoreTable = NULL;
+    rankLabel = NULL;
 }
 
 StartMenuScene::~StartMenuScene() {
@@ -137,6 +140,7 @@ void StartMenuScene::initNewGameMenu(){
     gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
     gem->setPosition(ccp(winSize.width*0.6, winSize.height*0.77));
     gem->setEnabled(false);
+    gem->setTag(GEM);
 
     CCMenuItemLabel * yourSkills = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 56,
             CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
@@ -193,6 +197,35 @@ void StartMenuScene::initNewGameMenu(){
         special->setEnabled(false);
         special->setScale(0.8);
         newGameMenu->addChild(special);
+    }
+}
+
+void StartMenuScene::onAdsClicked(){
+    if (newGameMenu) {
+        CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
+        CCMenuItemImage * gem = (CCMenuItemImage *)newGameMenu->getChildByTag(GEM);
+        gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
+        
+        CCMenuItemImage * special;
+        PlaySceneData * playSceneData = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
+        for (int i=2; i<=playSceneData->goodMax; i++) {
+            SpecialData * specialData = GameController::getGameController()->getSpecialData(i);
+            special = CCMenuItemImage::create();
+            special->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(specialData->imageName->getCString()));
+            special->setPosition(ccp(winSize.width*(0.3+0.08*i) , winSize.height*0.55));
+            special->setEnabled(false);
+            special->setScale(0.8);
+            newGameMenu->addChild(special);
+        }
+        for (int i=SPECIAL_NUM+3; i<=playSceneData->badMax; i++) {
+            SpecialData * specialData = GameController::getGameController()->getSpecialData(i);
+            special = CCMenuItemImage::create();
+            special->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(specialData->imageName->getCString()));
+            special->setPosition(ccp(winSize.width*(0.35+0.08*(i-SPECIAL_NUM-1)) , winSize.height*0.35));
+            special->setEnabled(false);
+            special->setScale(0.8);
+            newGameMenu->addChild(special);
+        }
     }
 }
 
@@ -874,6 +907,18 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 #endif
     menuStack.push_back(currentMenu);
     showMenu(scoreMenu);
+}
+
+void StartMenuScene::reloadScore(){
+    if (scoreTable) {
+        scoreTable->reloadData();
+    }
+    
+    if (rankLabel) {
+        CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
+                                                         userData->userName.c_str(), userData->rank);
+        rankLabel->setString(rankInfo->getCString());
+    }
 }
 
 void StartMenuScene::initOptionsMenu(){

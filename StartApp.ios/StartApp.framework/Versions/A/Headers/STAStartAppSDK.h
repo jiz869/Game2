@@ -4,7 +4,7 @@
 //
 //  Created by StartApp on 3/13/14.
 //  Copyright (c) 2014 StartApp. All rights reserved.
-//  SDK version 2.2.1
+//  SDK version 2.3.0
 
 #import <Foundation/Foundation.h>
 #import "STAStartAppAd.h"
@@ -51,6 +51,9 @@ typedef enum {
 @property (nonatomic)BOOL isUnityEnvironment;
 @property (nonatomic)BOOL isAdMobMediationEnvironment;
 @property (nonatomic)BOOL isMoPubMediationEnvironment;
+@property (nonatomic)int initTime;
+
+
 
 
 @end

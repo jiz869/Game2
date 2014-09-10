@@ -70,7 +70,7 @@ static GameController * controller;
 bool gamecontrollerInited = false;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-void onAdClicked(){
+void onAdsClicked(){
     GameController::getGameController()->onAdsClicked();
 }
 
@@ -1118,6 +1118,11 @@ void GameController::onScoreBoardGetCompleted(CCNode * node , void * response){
 			ranks[i].userName = it->getUserName();
 			i++;
 		}
+        CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+        if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
+            StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+            startup->reloadScore();
+        }
 	}
 	else
 	{
@@ -1142,6 +1147,11 @@ void GameController::onScoreBoardGetUserRankingCompleted(CCNode * node , void * 
 //			CCLOG("ScoreValue=%f\n",it->getScoreValue());
 //			CCLOG("UserName=%s\n",it->getUserName().c_str());
 			userData.rank = it->getRank();
+            CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+            if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
+                StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+                startup->reloadScore();
+            }
 			break;
 		}
 	}
@@ -1326,6 +1336,11 @@ bool GameController::hasPayed(){
 void GameController::onAdsClicked(){
     setAdsClicked(true);
     userData.currentLevel = userData.lastLevel;
+    CCScene * currentScene = CCDirector::sharedDirector()->getRunningScene();
+    if(currentScene && currentScene->getTag() == STARTUP_MENU_SCENE){
+        StartMenuScene * startup = (StartMenuScene *)currentScene->getChildren()->objectAtIndex(0);
+        startup->onAdsClicked();
+    }
 }
 
 void GameController::setAdsClicked(bool clicked){

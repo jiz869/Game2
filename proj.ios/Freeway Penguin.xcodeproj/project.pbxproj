@@ -3039,8 +3039,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Min Li (58742WE7GT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Min Li (58742WE7GT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Min Li (FXWRKQ6EV6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Min Li (FXWRKQ6EV6)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3082,7 +3082,7 @@
 				OTHER_CFLAGS = "-O2";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "Freeway Penguin";
-				PROVISIONING_PROFILE = "2dc9618d-09b9-4c44-bb7c-412e8d00d407";
+				PROVISIONING_PROFILE = "F8B8CE52-C642-499D-B972-B05F582ED69A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -3094,8 +3094,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Min Li (58742WE7GT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Min Li (58742WE7GT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Min Li (FXWRKQ6EV6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Min Li (FXWRKQ6EV6)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3134,7 +3134,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "Freeway Penguin";
-				PROVISIONING_PROFILE = "2dc9618d-09b9-4c44-bb7c-412e8d00d407";
+				PROVISIONING_PROFILE = "F8B8CE52-C642-499D-B972-B05F582ED69A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

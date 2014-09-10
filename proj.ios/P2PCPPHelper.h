@@ -38,5 +38,6 @@ extern void restore(IAPManagerDelegate * delegate);
 extern void purchase(IAPManagerDelegate * delegate);
 extern void showAds();
 extern void changeAdsId(const char * , const char *);
+extern void onAdsClicked();
 
 #endif

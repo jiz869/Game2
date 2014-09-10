@@ -3,8 +3,8 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "P2PCPPHelper.h"
 
-extern void onAdClicked();
 static STAStartAppAd* startAppAd;
 static NSMutableString * devId = [NSMutableString stringWithCString:"1" encoding:NSUTF8StringEncoding];
 static NSMutableString * appId = [NSMutableString stringWithCString:"1" encoding:NSUTF8StringEncoding];
@@ -158,6 +158,12 @@ static AppDelegate s_sharedApplication;
     [ad release];
     startAppAd = [[STAStartAppAd alloc] init];
     [startAppAd loadAd:STAAdType_Automatic withDelegate:self];
+}
+
+- (void) didClickAd:(STAAbstractAd *)ad{
+    CCLOG("didClickAd");
+    onAdsClicked();
+    [self didCloseAd:ad];
 }
 
 @end

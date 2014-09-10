@@ -58,6 +58,8 @@ public:
 //    virtual bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen);
     void enableButtonsForIap(bool enable);
     void showInfoLabel();
+    void reloadScore();
+    void onAdsClicked();
 
 private:
     CCMenu * infoMenu;
