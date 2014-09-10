@@ -429,20 +429,24 @@ void ControlMenu::changeControllerPosition(CheckboxType type){
     switch (type) {
         case LEFT:
             //upButton is on the left side
-            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height*1.5*0.8 + winSize.height * 0.05));
-            upButton->setScale(0.8);
+            upButton->setPosition(ccp(buttonSize.width/2 , buttonSize.height*1.5*0.6 + winSize.height * 0.02));
+            upButton->setScaleY(0.6);
+            upButton->setScaleX(0.8);
             //downButton is on the right side
-            downButton->setPosition(ccp(buttonSize.width/2 + 15, buttonSize.height/2*0.8 + winSize.height * 0.05));
-            downButton->setScale(0.8);
+            downButton->setPosition(ccp(buttonSize.width/2 + 15, buttonSize.height/2*0.6 + winSize.height * 0.02));
+            downButton->setScaleY(0.6);
+            downButton->setScaleX(0.8);
             break;
 
         case RIGHT:
             //upButton is on the left side
-            upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*0.8 + winSize.height * 0.05));
-            upButton->setScale(0.8);
+            upButton->setPosition(ccp(winSize.width - buttonSize.width/2 , buttonSize.height*1.5*0.6 + winSize.height * 0.02));
+            upButton->setScaleY(0.6);
+            upButton->setScaleX(0.8);
             //downButton is on the right side
-            downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*0.8 + winSize.height * 0.05));
-            downButton->setScale(0.8);
+            downButton->setPosition(ccp(winSize.width - buttonSize.width/2 + 15, buttonSize.height/2*0.6 + winSize.height * 0.02));
+            downButton->setScaleY(0.6);
+            downButton->setScaleX(0.8);
             break;
 
         case SIDE_LEFT_UP:
