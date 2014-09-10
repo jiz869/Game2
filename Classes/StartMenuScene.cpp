@@ -1038,7 +1038,7 @@ void StartMenuScene::initOptionsMenu(){
 
 void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    if (!userData->hasPayed && userData->justFailed != 0)
+    if (userData->hasPayed == false && userData->justFailed != 0)
     {
         if (userData->justFailed%FREE_PLAY == 0) {
             showAds();

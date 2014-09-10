@@ -975,7 +975,9 @@ void GameController::initLeaderboard(){
 		ranks[i].level = 0;
 	}
 
-    getAdsId();
+    if (userData.hasPayed == false) {
+        getAdsId();
+    }
 
 	getTopRankings();
 
@@ -1261,10 +1263,12 @@ void GameController::createUser(const char * userName , const char * passwd){
 void GameController::uploadLastScore(){
 
     if(userData.lastScore == userData.lastUploadedScore){
+        setInfoLabel("Please do not upload the same score twice");
         return;
     }
 
     if(userData.lastScore < 100){
+        setInfoLabel("Please beat level 1 before you can upload score to leader board");
         return;
     }
 
