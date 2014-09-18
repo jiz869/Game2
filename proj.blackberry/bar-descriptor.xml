@@ -39,9 +39,9 @@
     <!-- <authorId>ABC1234YjsnUk235h</authorId> -->
    
     <initialWindow>
+        <systemChrome>none</systemChrome>
         <autoOrients>false</autoOrients>
         <aspectRatio>landscape</aspectRatio>
-        <systemChrome>none</systemChrome>
         <transparent>false</transparent>
     </initialWindow>
     
@@ -123,6 +123,5 @@
     <!--  <action>read_device_identifying_information</action> -->
 
     <!-- Ensure that shared libraries in the package are found at run-time. -->
-    <env var="LD_LIBRARY_PATH" value="app/native/lib"/>
-    
+    <env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib"/>
 </qnx>

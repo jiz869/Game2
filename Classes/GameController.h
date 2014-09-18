@@ -195,6 +195,10 @@ typedef struct{
 
 #define LISTVIEW_LEADERBOARD
 
+//#define AMAZON_BUILD
+#define BB_TRIAL
+#define TRIAL_LEVEL 0
+
 #ifdef LISTVIEW_LEADERBOARD
 #define MAX_RANKS (50)
 #else
@@ -223,10 +227,14 @@ typedef struct{
 #define PASSWORD_RULE "Password must have:\n" \
                   "Maximum 12 characters\n" \
                   "Minimum 4 characters\n"
-
+#ifdef BB_TRIAL
+#define PURCHASE_BENEFIT "Please spend 99 cents to purchase the\n" \
+                  "full version to access higher levels\n"
+#else
 #define PURCHASE_BENEFIT "Spend 99 cents to:\n\n" \
                   "1) Remove Ads\n\n" \
                   "2) Continue game from where you left off\n"
+#endif
 
 #define CREDITS "Special thanks to www.opengameart.org\n" \
                 "for all the background music in this game\n\n" \

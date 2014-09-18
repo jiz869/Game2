@@ -322,6 +322,10 @@ void ControlMenu::nextScene(){
     if (status == OVER) {
         CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
     }else if (status == LEVEL_UP){
+#ifdef BB_TRIAL
+        CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
+        return;
+#endif
         CCDirector::sharedDirector()->replaceScene(PlayScene::scene());
     }
 }

@@ -12,7 +12,13 @@
 #include "MultiPlayScene.h"
 #include "PWDField.h"
 
-#define AMAZON_BUILD
+#if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+#include <bb/system/InvokeManager>
+#include <bb/system/InvokeRequest>
+#include <bb/system/InvokeTargetReply>
+#include <QUrl>
+#endif
+
 #define GEM 0xdeadbeef
 
 typedef enum{
@@ -123,11 +129,11 @@ bool StartMenuScene::init(){
 }
 
 void StartMenuScene::initNewGameMenu(){
-    
+
     if (newGameMenu) {
         return;
     }
-    
+
     CCMenuItemLabel * currentLevel = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96 ,
             CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
     currentLevel->setDisabledColor( ccRED );
@@ -205,7 +211,7 @@ void StartMenuScene::onAdsClicked(){
         CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
         CCMenuItemImage * gem = (CCMenuItemImage *)newGameMenu->getChildByTag(GEM);
         gem->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(gemName->getCString()));
-        
+
         CCMenuItemImage * special;
         PlaySceneData * playSceneData = GameController::getGameController()->getPlaySceneData(userData->currentLevel);
         for (int i=2; i<=playSceneData->goodMax; i++) {
@@ -230,11 +236,11 @@ void StartMenuScene::onAdsClicked(){
 }
 
 void StartMenuScene::initLegendsMenu(){
-    
+
     if (legendsMenu) {
         return;
     }
-    
+
     legendsMenu = CCLayer::create();
     legendsMenu->ignoreAnchorPointForPosition(false);
     legendsMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
@@ -263,11 +269,11 @@ void StartMenuScene::initLegendsMenu(){
 }
 
 void StartMenuScene::initInfoMenu(){
-    
+
     if (infoMenu) {
         return;
     }
-    
+
 	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
 			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
     infoLabel->setDisabledColor( ccRED );
@@ -286,11 +292,11 @@ void StartMenuScene::initInfoMenu(){
 }
 
 void StartMenuScene::initPurchaseMenu(){
-    
+
     if (purchaseMenu) {
         return;
     }
-    
+
 	CCMenuItemLabel * benefits = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
 			CCSizeMake(winSize.width * 0.9 , winSize.height * 0.6) ,  kCCTextAlignmentLeft));
 	benefits->setDisabledColor( ccRED );
@@ -323,11 +329,11 @@ void StartMenuScene::initPurchaseMenu(){
 }
 
 void StartMenuScene::initCreditsMenu(){
-    
+
     if (creditsMenu) {
         return;
     }
-    
+
 	CCMenuItemLabel * credits = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96));
 	credits->setDisabledColor( ccBLUE );
 	credits->setPosition(ccp(winSize.width/2 , winSize.height*0.875));
@@ -455,11 +461,11 @@ void StartMenuScene::uploadHandler(CCObject * sender){
 }
 
 void StartMenuScene::initUserMenu(){
-    
+
     if (userMenu) {
         return;
     }
-    
+
 	userMenu = CCLayer::create();
 	userMenu->ignoreAnchorPointForPosition(false);
 	userMenu->setPosition(ccp(winSize.width/2 , winSize.height*1.5));
@@ -598,9 +604,9 @@ void StartMenuScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 }
 
 void StartMenuScene::userHandler(CCObject * sender){
-    
+
     initUserMenu();
-    
+
     if(userData->userName.length() == 0) nameField->setString(DEFAULT_NAME);
     if(userData->password.length() == 0) pwdField->setString(DEFAULT_PASSWORD);
     nameField->runAction(CCBlink::create(2, 6));
@@ -756,11 +762,11 @@ void StartMenuScene::scrollViewDidZoom(CCScrollView* view){
 }
 
 void StartMenuScene::initMainMenu(){
-    
+
     if (startMenu) {
         return;
     }
-    
+
     CCMenuItemImage * newGame = CCMenuItemImage::create("button_new_game_normal.png",
             "button_new_game_selected.png", this, menu_selector(StartMenuScene::newGameMenuHandler));
     newGame->setTag(NEW_GAME);
@@ -787,7 +793,7 @@ void StartMenuScene::initMainMenu(){
 #ifdef MULTIPLAY
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" ,
     		this , menu_selector(StartMenuScene::pvpHandler));
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || defined(BB_TRIAL)
     newGame->setScale(0.7);
     options->setScale(0.7);
     score->setScale(0.7);
@@ -859,7 +865,17 @@ void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
 #else
     purchase();
 #endif
-#endif
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+#ifdef BB_TRIAL
+    enableButtonsForIap(true);
+    bb::system::InvokeManager invokeManager;
+    bb::system::InvokeRequest request;
+    // Set the URI
+    request.setUri(QUrl("http://appworld.blackberry.com/webstore/content/59937992/?lang=en&countrycode=CA"));
+    // Send the invoke
+    bb::system::InvokeTargetReply *reply = invokeManager.invoke(request);
+#endif //BB_TRIAL
+#endif //CC_TARGET_PLATFORM
 #endif
 }
 
@@ -877,6 +893,16 @@ void StartMenuScene::restoreHandler(cocos2d::CCObject *sender){
 #else
     purchase();
 #endif
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
+#ifdef BB_TRIAL
+    enableButtonsForIap(true);
+    bb::system::InvokeManager invokeManager;
+    bb::system::InvokeRequest request;
+    // Set the URI
+    request.setUri(QUrl("http://appworld.blackberry.com/webstore/content/59937992/?lang=en&countrycode=CA"));
+    // Send the invoke
+    bb::system::InvokeTargetReply *reply = invokeManager.invoke(request);
+#endif //BB_TRIAL
 #endif
 }
 
@@ -913,7 +939,7 @@ void StartMenuScene::reloadScore(){
     if (scoreTable) {
         scoreTable->reloadData();
     }
-    
+
     if (rankLabel) {
         CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
                                                          userData->userName.c_str(), userData->rank);
@@ -922,7 +948,7 @@ void StartMenuScene::reloadScore(){
 }
 
 void StartMenuScene::initOptionsMenu(){
-    
+
     if(optionsMenu){
         return;
     }
@@ -1050,6 +1076,11 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
             GameController::getGameController()->getAdsId();
             GameController::getGameController()->setAdsClicked(false);
         }
+    }
+#elif defined(BB_TRIAL)
+    if(userData->currentLevel > TRIAL_LEVEL){
+        pvpHandler(NULL);
+        return;
     }
 #endif
 	CCScene * playScene = PlayScene::scene();
@@ -1217,9 +1248,9 @@ void StartMenuScene::showMenu(CCLayer * menu){
 }
 
 void StartMenuScene::legendsHandler(CCObject * sender){
-    
+
     initLegendsMenu();
-    
+
     menuStack.push_back(currentMenu);
     showMenu(legendsMenu);
 }
