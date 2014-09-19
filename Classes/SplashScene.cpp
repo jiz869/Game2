@@ -11,18 +11,23 @@
 #if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 #include <unistd.h>
 #include <pthread.h>
+typedef void* THREAD_VOID;
+#define THREAD_RETURN 0
 #else
 #include <chrono>
 #include <thread>
+#include <thread>
+typedef void THREAD_VOID;
+#define THREAD_RETURN
 #endif
 
 using namespace CocosDenshion;
 
 extern bool gamecontrollerInited;
 
-static void * initGameController(void * data){
-    data = (void *)GameController::getGameController()->getUserData();
-    return 0;
+static THREAD_VOID initGameController(THREAD_VOID){
+    GameController::getGameController()->getUserData();
+    return THREAD_RETURN;
 }
 
 #define SPLASH_TIME 2 //seconds
@@ -115,7 +120,9 @@ bool SplashScene::init(){
     pthread_create(&thread, NULL, initGameController, NULL);
     pthread_detach(thread);
 #else
-	GameController::getGameController();
+	//std::thread init(initGameController);
+	//init.detach();
+	initGameController();
 #endif
 
     return true;

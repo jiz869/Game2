@@ -12,7 +12,11 @@
 #include <string.h>
 #include <vector>
 #include "app42base64.h"
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 #include <sys/time.h>
+#else
+#include <time.h>
+#endif
 #include <algorithm>
 #include <map>
 #include "HMAC_SHA1.h"

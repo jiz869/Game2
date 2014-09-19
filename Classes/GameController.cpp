@@ -449,7 +449,7 @@ bool GameController::initSpecialData(cocos2d::CCDictionary *dataDict){
         return false;
     }
 
-    specialDatas.reserve(dataDict->count());
+    specialDatas.resize(dataDict->count());
 
     CCDictionary * dict = (CCDictionary *)dataDict->objectForKey("stop");
     specialDatas[STOP] = new SpecialData;
