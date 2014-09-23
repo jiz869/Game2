@@ -196,8 +196,8 @@ typedef struct{
 #define LISTVIEW_LEADERBOARD
 
 //#define AMAZON_BUILD
-#define BB_TRIAL
-#define TRIAL_LEVEL 0
+//#define BB_TRIAL
+#define TRIAL_LEVEL 1
 
 #ifdef LISTVIEW_LEADERBOARD
 #define MAX_RANKS (50)
@@ -252,6 +252,14 @@ typedef struct{
 #include "../proj.ios/P2PCPPHelper.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "../StartApp.android/AdsHelper.h"
+class IAPManagerDelegate {
+public:
+    virtual void onPaymentError() = 0;
+    virtual bool hasPayed() = 0;
+    virtual void onPaymentSuccess() = 0;
+};
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+extern void purchase();
 class IAPManagerDelegate {
 public:
     virtual void onPaymentError() = 0;

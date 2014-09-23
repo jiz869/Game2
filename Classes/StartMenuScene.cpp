@@ -793,7 +793,7 @@ void StartMenuScene::initMainMenu(){
 #ifdef MULTIPLAY
     CCMenuItemImage * pvp = CCMenuItemImage::create("pvp_normal.png", "pvp_selected.png" ,
     		this , menu_selector(StartMenuScene::pvpHandler));
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || defined(BB_TRIAL)
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || defined(BB_TRIAL) || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     newGame->setScale(0.7);
     options->setScale(0.7);
     score->setScale(0.7);
@@ -865,6 +865,8 @@ void StartMenuScene::purchaseHandler(cocos2d::CCObject *sender){
 #else
     purchase();
 #endif
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+	purchase();
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 #ifdef BB_TRIAL
     enableButtonsForIap(true);
@@ -893,6 +895,8 @@ void StartMenuScene::restoreHandler(cocos2d::CCObject *sender){
 #else
     purchase();
 #endif
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+	purchase();
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 #ifdef BB_TRIAL
     enableButtonsForIap(true);
@@ -1082,6 +1086,13 @@ void StartMenuScene::newGameHandler(cocos2d::CCObject *sender){
         pvpHandler(NULL);
         return;
     }
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+	if(userData->hasPayed == false){
+		if(userData->currentLevel > TRIAL_LEVEL){
+			pvpHandler(NULL);
+			return;
+		}
+	}
 #endif
 	CCScene * playScene = PlayScene::scene();
     CCDirector::sharedDirector()->replaceScene(playScene);

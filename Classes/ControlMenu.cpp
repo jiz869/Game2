@@ -325,6 +325,11 @@ void ControlMenu::nextScene(){
 #ifdef BB_TRIAL
         CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
         return;
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+		if(userData->hasPayed == false){
+			CCDirector::sharedDirector()->replaceScene(GameOverScene::scene());
+			return;
+		}
 #endif
         CCDirector::sharedDirector()->replaceScene(PlayScene::scene());
     }
