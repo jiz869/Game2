@@ -298,7 +298,7 @@ void StartMenuScene::initPurchaseMenu(){
     }
 
 	CCMenuItemLabel * benefits = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
-			CCSizeMake(winSize.width * 0.9 , winSize.height * 0.6) ,  kCCTextAlignmentLeft));
+			CCSizeMake(winSize.width * 0.9 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
 	benefits->setDisabledColor( ccRED );
 	benefits->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
 	benefits->setString(PURCHASE_BENEFIT);

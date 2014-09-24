@@ -227,7 +227,7 @@ typedef struct{
 #define PASSWORD_RULE "Password must have:\n" \
                   "Maximum 12 characters\n" \
                   "Minimum 4 characters\n"
-#ifdef BB_TRIAL
+#if defined(BB_TRIAL) || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 #define PURCHASE_BENEFIT "Please spend 99 cents to purchase the\n" \
                   "full version to access higher levels\n"
 #else
