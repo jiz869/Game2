@@ -197,6 +197,7 @@ typedef struct{
 
 //#define AMAZON_BUILD
 //#define BB_TRIAL
+#define CHINA
 #define TRIAL_LEVEL 1
 
 #ifdef LISTVIEW_LEADERBOARD
@@ -317,10 +318,12 @@ private:
     vector<PlaySceneData *> playSceneDatas;
     AnimationData animationData;
     UserData userData;
+    bool initMisc();
     bool initPlaySceneData(CCArray * dataArray);
     bool initAnimationData(CCDictionary * dataDict);
     bool initSpecialData(CCDictionary * dataDict);
     bool initUserData(CCDictionary * dataDict);
+    void updateVersion();
     CCAnimation * initAnimation(CCArray * frameNameArray);
     CCAnimation * initAnimation(CCDictionary * animDict);
     vector<SpecialData *> specialDatas;

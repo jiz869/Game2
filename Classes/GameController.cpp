@@ -85,7 +85,7 @@ extern "C"
     void Java_ca_welcomelm_crossRoadNow_crossRoadNow_onPaymentError( JNIEnv* env, jobject thiz ){
         GameController::getGameController()->onPaymentError();
     }
-    
+
     void Java_ca_welcomelm_crossRoadNow_crossRoadNow_onPaymentLogin( JNIEnv* env, jobject thiz ){
         GameController::getGameController()->onPaymentLogin();
     }
@@ -120,34 +120,9 @@ bool GameController::init(){
 
 	CCLOG("GameController::init");
 
-	plistWritablePath = CCFileUtils::sharedFileUtils()->getWritablePath().append("game_controller.plist");
-
-	if(!CCFileUtils::sharedFileUtils()->isFileExist(plistWritablePath)){
-		string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("game_controller.plist");
-		dict = CCDictionary::createWithContentsOfFileThreadSafe(path.c_str());
-		dict->writeToFile(plistWritablePath.c_str());
-	}else{
-		dict = CCDictionary::createWithContentsOfFileThreadSafe(plistWritablePath.c_str());
-	}
-
-    if (dict == NULL) {
+    if(initMisc() == false){
         return false;
     }
-
-    userDataValue[LEFT]="left";
-    userDataValue[RIGHT]="right";
-    userDataValue[SIDE_LEFT_UP]="side_left_up";
-	userDataValue[SIDE_LEFT_DOWN]="side_left_down";
-    userDataValue[MUTE]="mute";
-    userDataValue[UNMUTE]="unmute";
-
-    designSize = CCDirector::sharedDirector()->getWinSize();
-
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
-    srandom((unsigned long)time(NULL));
-#else
-	srand((unsigned long)time(NULL));
-#endif
 
     if(initAnimationData((CCDictionary *)dict->objectForKey("animation_data")) == false){
         return false;
@@ -166,12 +141,82 @@ bool GameController::init(){
     }
 
     initLeaderboard();
-    
+
     gamecontrollerInited = true;
-    
+
     CCLOG("GameController::init end");
 
     return true;
+}
+
+bool GameController::initMisc(){
+    plistWritablePath = CCFileUtils::sharedFileUtils()->getWritablePath().append("game_controller.plist");
+
+    if(!CCFileUtils::sharedFileUtils()->isFileExist(plistWritablePath)){
+        string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("game_controller.plist");
+        dict = CCDictionary::createWithContentsOfFileThreadSafe(path.c_str());
+        dict->writeToFile(plistWritablePath.c_str());
+    }else{
+        dict = CCDictionary::createWithContentsOfFileThreadSafe(plistWritablePath.c_str());
+        updateVersion();
+    }
+
+    if (dict == NULL) {
+        return false;
+    }
+
+    userDataValue[LEFT]="left";
+    userDataValue[RIGHT]="right";
+    userDataValue[SIDE_LEFT_UP]="side_left_up";
+    userDataValue[SIDE_LEFT_DOWN]="side_left_down";
+    userDataValue[MUTE]="mute";
+    userDataValue[UNMUTE]="unmute";
+
+    designSize = CCDirector::sharedDirector()->getWinSize();
+
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+    srandom((unsigned long)time(NULL));
+#else
+    srand((unsigned long)time(NULL));
+#endif
+    return true;
+}
+
+void GameController::updateVersion(){
+    string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("game_controller.plist");
+    CCDictionary * newDict = CCDictionary::createWithContentsOfFileThreadSafe(path.c_str());
+
+    CCString * currentVersion = CCSTRING_FOR_KEY(dict, "version");
+    CCString * newVersion = CCSTRING_FOR_KEY(newDict, "version");
+
+    if(newVersion == NULL && currentVersion == NULL) return;
+    if(newVersion == NULL && currentVersion != NULL) CCDirector::sharedDirector()->end();
+    if((currentVersion == NULL && newVersion != NULL)||
+            newVersion->intValue() > currentVersion->intValue()){
+
+        CCLOG("updating");
+
+        CCDictElement* pElement = NULL;
+
+        CCDICT_FOREACH(newDict, pElement)
+
+        {
+            string key = pElement->getStrKey();
+
+            if(key == "user_data") continue;
+
+            CCObject * newObj = pElement->getObject();
+
+            dict->setObject(newObj , key);
+
+        }
+
+        dict->writeToFile(plistWritablePath.c_str());
+
+        return;
+    }
+    if(newVersion->intValue() < currentVersion->intValue()) CCDirector::sharedDirector()->end();
+    if(newVersion->intValue() == currentVersion->intValue()) return;
 }
 
 bool GameController::initUserData(cocos2d::CCDictionary *dataDict){

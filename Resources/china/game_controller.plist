@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>version</key>
-	<string>5</string>
+	<string>7</string>
 	<key>user_data</key>
 	<dict>
 		<key>sound</key>
@@ -1797,8 +1797,7 @@
 			<key>name</key>
 			<string>STOP</string>
 			<key>description</key>
-			<string>This penguin skill will stop all 
-traffic for a short time</string>
+			<string>你好</string>
 			<key>order</key>
 			<string>0</string>
 		</dict>

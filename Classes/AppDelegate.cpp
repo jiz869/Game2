@@ -27,6 +27,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCSize designSize = CCSizeMake(1280, 720);
     std::vector<std::string> searchPaths;
 
+#ifdef CHINA
+    searchPaths.push_back("china");
+#endif
+
     searchPaths.push_back("hd");
     //pDirector->setContentScaleFactor(480/640);
 
@@ -39,7 +43,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 70);
-    
+
     //GameController::getGameController();
 
     CCScene *pScene = SplashScene::scene();
