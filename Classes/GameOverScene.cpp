@@ -166,5 +166,5 @@ void GameOverScene::setInfoLabel(const char * info){
 
 void GameOverScene::keyBackClicked(){
 	CCLayer::keyBackClicked();
-	CCDirector::sharedDirector()->end();
+	returnHandler(NULL);
 }

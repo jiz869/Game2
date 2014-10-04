@@ -13,6 +13,7 @@
 #include "SimpleAudioEngine.h"
 #include "City.h"
 #include "MultiPlayControlMenu.h"
+#include "StartMenuScene.h"
 
 using namespace CocosDenshion;
 
@@ -147,7 +148,7 @@ void PlayScene::initMisc(){
 
 void PlayScene::keyBackClicked(){
 	CCLayer::keyBackClicked();
-	CCDirector::sharedDirector()->end();
+	CCDirector::sharedDirector()->replaceScene(StartMenuScene::scene());
 }
 
 void PlayScene::initPlayer(){

@@ -364,7 +364,8 @@ void StartMenuScene::initCreditsMenu(){
 
 void StartMenuScene::keyBackClicked(){
 	CCLayer::keyBackClicked();
-	CCDirector::sharedDirector()->end();
+	if(currentMenu == startMenu) CCDirector::sharedDirector()->end();
+	else okHandler(NULL);
 }
 
 void StartMenuScene::initScoreMenu(){
