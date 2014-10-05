@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>version</key>
-	<string>7</string>
+	<string>1</string>
 	<key>user_data</key>
 	<dict>
 		<key>sound</key>
@@ -1795,9 +1795,9 @@
 			<key>image_name</key>
 			<string>stop0.png</string>
 			<key>name</key>
-			<string>STOP</string>
+			<string>停牌</string>
 			<key>description</key>
-			<string>你好</string>
+			<string>这个企鹅技能可以在短时间内起到停牌的作用</string>
 			<key>order</key>
 			<string>0</string>
 		</dict>
@@ -1810,11 +1810,9 @@
 			<key>image_name</key>
 			<string>time0.png</string>
 			<key>name</key>
-			<string>TIME
-STOP</string>
+			<string>时间停止</string>
 			<key>description</key>
-			<string>Time count down is paused when
-you have this penguin skill</string>
+			<string>这个企鹅技能可以在一段时间内停止倒计时</string>
 			<key>order</key>
 			<string>1</string>
 		</dict>
@@ -1827,11 +1825,9 @@ you have this penguin skill</string>
 			<key>image_name</key>
 			<string>strong0.png</string>
 			<key>name</key>
-			<string>SUPER
-MAN</string>
+			<string>无敌</string>
 			<key>description</key>
-			<string>You are invulnerable for a few
-seconds, so just HURRY !!!</string>
+			<string>这个企鹅技能可以让你在短时间内所向披靡</string>
 			<key>order</key>
 			<string>2</string>
 		</dict>
@@ -1846,10 +1842,10 @@ seconds, so just HURRY !!!</string>
 			<key>time_increase</key>
 			<string>5</string>
 			<key>name</key>
-			<string>LIFE</string>
+			<string>生命</string>
 			<key>description</key>
-			<string>This penguin skill will increase your time
-by a few seconds</string>
+			<string>这个企鹅技能可以瞬间增加你可消耗的时间，
+并且可能增加你的时间上限</string>
 			<key>order</key>
 			<string>3</string>
 		</dict>
@@ -1862,10 +1858,9 @@ by a few seconds</string>
 			<key>image_name</key>
 			<string>skull0.png</string>
 			<key>name</key>
-			<string>BOMB</string>
+			<string>炸弹</string>
 			<key>description</key>
-			<string>This penguin skill will destroy the most
-threatening cars in your way</string>
+			<string>这个企鹅技能可以从每条路上选择一辆车炸毁</string>
 			<key>order</key>
 			<string>4</string>
 		</dict>
@@ -1878,10 +1873,10 @@ threatening cars in your way</string>
 			<key>image_name</key>
 			<string>double0.png</string>
 			<key>name</key>
-			<string>DOUBLE</string>
+			<string>一变二</string>
 			<key>description</key>
-			<string>This penguin skill will randomly generate
-2 penguin skills in your way</string>
+			<string>这个企鹅技能可以在路上随机产生另外
+两个企鹅技能</string>
 			<key>order</key>
 			<string>5</string>
 		</dict>
@@ -1894,10 +1889,9 @@ threatening cars in your way</string>
 			<key>image_name</key>
 			<string>small.png</string>
 			<key>name</key>
-			<string>SMALL</string>
+			<string>缩小</string>
 			<key>description</key>
-			<string>This penguin skill will replace large 
-cars with small ones</string>
+			<string>这个企鹅技能可以使一段时间内出现的车变小</string>
 			<key>order</key>
 			<string>6</string>
 		</dict>
@@ -1916,11 +1910,10 @@ cars with small ones</string>
 			<key>score_increase</key>
 			<string>6</string>
 			<key>name</key>
-			<string>BLESS</string>
+			<string>祝福</string>
 			<key>description</key>
-			<string>With this penguin skill, you are not
-affected by all enemy skills. Plus, you
-will get an extra random penguin skill</string>
+			<string>这个企鹅技能可以消除一切不良效果，并且随机给
+你另外一个企鹅技能，同时能增加你的时间和分数</string>
 			<key>order</key>
 			<string>7</string>
 		</dict>
@@ -1931,10 +1924,9 @@ will get an extra random penguin skill</string>
 			<key>image_name</key>
 			<string>jail.png</string>
 			<key>name</key>
-			<string>JAIL</string>
+			<string>禁锢</string>
 			<key>description</key>
-			<string>This enemy skill will freeze you 
-for a very short time</string>
+			<string>这个不良效果会把你固定在起点几秒钟</string>
 			<key>order</key>
 			<string>8</string>
 		</dict>
@@ -1949,10 +1941,9 @@ for a very short time</string>
 			<key>down_acc_delta</key>
 			<string>-0.02</string>
 			<key>name</key>
-			<string>SLOW</string>
+			<string>减速</string>
 			<key>description</key>
-			<string>This enemy skill will slow you 
-down for a few seconds</string>
+			<string>这个不良效果会使你的加速度减慢几秒钟</string>
 			<key>order</key>
 			<string>9</string>
 		</dict>
@@ -1967,10 +1958,9 @@ down for a few seconds</string>
 			<key>time_decrease</key>
 			<string>-1.5</string>
 			<key>name</key>
-			<string>LESS</string>
+			<string>扣除</string>
 			<key>description</key>
-			<string>This enemy skill will eat your score
-and time after you cross the highway</string>
+			<string>这个不良效果会在你成功穿越后扣除你的分数和时间</string>
 			<key>order</key>
 			<string>10</string>
 		</dict>
@@ -1983,11 +1973,9 @@ and time after you cross the highway</string>
 			<key>time_decrease</key>
 			<string>0</string>
 			<key>name</key>
-			<string>CURSE</string>
+			<string>诅咒</string>
 			<key>description</key>
-			<string>This enemy skill will make you
-fail to acquire all penguin
-skills except BLESS</string>
+			<string>这个不良效果会使一切企鹅技能失效一段时间</string>
 			<key>order</key>
 			<string>11</string>
 		</dict>
@@ -2000,12 +1988,10 @@ skills except BLESS</string>
 			<key>deadline</key>
 			<string>5.5</string>
 			<key>name</key>
-			<string>TIME
-BOMB</string>
+			<string>定时炸弹</string>
 			<key>description</key>
-			<string>This time bomb will explode in a 
-few seconds. But it will be disarmed
-after you cross the highway</string>
+			<string>这个不良效果会在几秒钟之后把你炸回原点，但
+是在这之前，如果你成功穿越，不良效果将消除</string>
 			<key>order</key>
 			<string>12</string>
 		</dict>
@@ -2022,11 +2008,10 @@ after you cross the highway</string>
 			<key>percent</key>
 			<string>0.5</string>
 			<key>name</key>
-			<string>WORSE</string>
+			<string>群魔乱舞</string>
 			<key>description</key>
-			<string>This enemy skill will make every
-car carry an enemy skill and every
-enemy skill will last 50% longer</string>
+			<string>这个不良效果会使每一辆车都携带不良效果，
+并且会延长不良效果时间</string>
 			<key>order</key>
 			<string>13</string>
 		</dict>
@@ -2039,10 +2024,9 @@ enemy skill will last 50% longer</string>
 			<key>speed_increase</key>
 			<string>0.2</string>
 			<key>name</key>
-			<string>MORE</string>
+			<string>拥堵</string>
 			<key>description</key>
-			<string>More cars will show up when
-you are affected by this enemy skill</string>
+			<string>这个不良效果会使一段时间内交通流量更加密集</string>
 			<key>order</key>
 			<string>14</string>
 		</dict>

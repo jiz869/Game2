@@ -68,6 +68,7 @@ char * userDataValue[CHECKBOX_TYPE_NUM];
 
 static GameController * controller;
 bool gamecontrollerInited = false;
+bool isChineseEnabled=false;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 void onAdsClicked(){
@@ -296,7 +297,7 @@ bool GameController::initUserData(cocos2d::CCDictionary *dataDict){
     userData.isLogedIn = false;
     userData.lastUploadedScore = -100000;
     userData.topLevel = getLevelByScore(userData.topScore);
-    //userData.currentLevel = 8;
+    userData.currentLevel = 8;
 
     return true;
 }

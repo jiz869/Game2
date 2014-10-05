@@ -6,6 +6,7 @@
 
 USING_NS_CC;
 using namespace CocosDenshion;
+extern bool isChineseEnabled;
 
 AppDelegate::AppDelegate() {
 
@@ -27,9 +28,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCSize designSize = CCSizeMake(1280, 720);
     std::vector<std::string> searchPaths;
 
-#ifdef CHINA
-    searchPaths.push_back("china");
-#endif
+    isChineseEnabled = (CCApplication::getCurrentLanguage() == kLanguageChinese);
+    
+    if (isChineseEnabled == true) {
+        searchPaths.push_back("china");
+    }
 
     searchPaths.push_back("hd");
     //pDirector->setContentScaleFactor(480/640);

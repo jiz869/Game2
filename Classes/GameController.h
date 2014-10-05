@@ -197,7 +197,7 @@ typedef struct{
 
 //#define AMAZON_BUILD
 //#define BB_TRIAL
-#define CHINA
+//#define CHINA
 #define TRIAL_LEVEL 1
 
 #ifdef LISTVIEW_LEADERBOARD
