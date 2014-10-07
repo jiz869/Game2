@@ -227,11 +227,11 @@ typedef struct{
 #define LEGENDS_PERPAGE (8)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-#define FONT "迷你简祥隶"
-#define INFO_FONT "迷你简祥隶"
+#define FONT "haha"
+#define INFO_FONT "haha"
 #else
-#define FONT "fonts/迷你简祥隶.ttf"
-#define INFO_FONT "fonts/迷你简祥隶.ttf"
+#define FONT "fonts/haha.ttf"
+#define INFO_FONT "fonts/haha.ttf"
 #endif
 
 #define FREE_PLAY (3)

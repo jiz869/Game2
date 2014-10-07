@@ -66,11 +66,16 @@ void static noscoreEnd(PlayerObj * player);
 
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
-string strKey[STR_MAX] = { [STR_CREDITS] = "credits", [STR_CONTROLLER] = "controller" ,
-    [STR_LEFT] = "left", [STR_RIGHT] = "right" ,
-    [STR_LEFTUP] = "leftup", [STR_LEFTDOWN] = "leftdown" ,
-    [STR_SOUND] = "sound", [STR_MUTE] = "mute" ,
-    [STR_UNMUTE] = "unmute", [STR_RANK] = "rank" ,};
+string strKey[STR_MAX] = { "credits",
+                           "controller" ,
+                           "left",
+                           "right" ,
+                           "leftup",
+                           "leftdown" ,
+                           "sound",
+                           "mute" ,
+                           "unmute",
+                           "rank" ,};
 
 static GameController * controller;
 bool gamecontrollerInited = false;
@@ -146,7 +151,7 @@ bool GameController::init(){
     if(initUserData((CCDictionary *)dict->objectForKey("user_data")) == false){
         return false;
     }
-    
+
     if(initString((CCDictionary *)dict->objectForKey("string")) == false){
         return false;
     }
@@ -164,11 +169,11 @@ bool GameController::initString(cocos2d::CCDictionary *dataDict){
     if (dataDict == NULL) {
         return false;
     }
-    
+
     for (int i = 0; i < STR_MAX; i++) {
-        strData.strInfo[i] = CCSTRING_FOR_KEY(dataDict, strKey[i].c_str());
+        strData.strInfo[i] = CCSTRING_FOR_KEY(dataDict, strKey[i]);
     }
-    
+
     return true;
 }
 
