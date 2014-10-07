@@ -2031,5 +2031,36 @@
 			<string>14</string>
 		</dict>
 	</dict>
+	<key>string</key>
+	<dict>
+		<key>credits</key>
+		<string>
+游戏中的背景音乐均来自www.opengameart.org
+
+Jump And Run by bart
+Trance Menu by rezoner
+After Burner by copyc4t
+Happy Arcade Tune by rezoner
+Arabesque by brainiac256
+Tactical Pursuit by Matthew Pablo</string>
+		<key>controller</key>
+		<string>方向键位置</string>
+		<key>left</key>
+		<string>在屏幕左边</string>
+		<key>right</key>
+		<string>在屏幕右边</string>
+		<key>leftup</key>
+		<string>左上右下</string>
+		<key>leftdown</key>
+		<string>左下右上</string>
+		<key>sound</key>
+		<string>声音</string>
+		<key>mute</key>
+		<string>关闭声音</string>
+		<key>unmute</key>
+		<string>打开声音</string>
+		<key>rank</key>
+		<string>%s的排名是 : %d</string>
+	</dict>
 </dict>
 </plist>

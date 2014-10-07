@@ -95,6 +95,7 @@ private:
     CCMenuItemImage * checkboxMute;
     CCMenuItemImage * checkboxUnmute;
     UserData * userData;
+    StrData * strData;
     void checkboxChooser(CheckboxType tag);
     void saveUserData(CheckboxType tag);
 

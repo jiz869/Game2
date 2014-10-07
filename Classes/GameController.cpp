@@ -66,9 +66,15 @@ void static noscoreEnd(PlayerObj * player);
 
 char * userDataValue[CHECKBOX_TYPE_NUM];
 
+string strKey[STR_MAX] = { [STR_CREDITS] = "credits", [STR_CONTROLLER] = "controller" ,
+    [STR_LEFT] = "left", [STR_RIGHT] = "right" ,
+    [STR_LEFTUP] = "leftup", [STR_LEFTDOWN] = "leftdown" ,
+    [STR_SOUND] = "sound", [STR_MUTE] = "mute" ,
+    [STR_UNMUTE] = "unmute", [STR_RANK] = "rank" ,};
+
 static GameController * controller;
 bool gamecontrollerInited = false;
-bool isChineseEnabled=false;
+bool isChineseEnabled = false;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 void onAdsClicked(){
@@ -140,6 +146,10 @@ bool GameController::init(){
     if(initUserData((CCDictionary *)dict->objectForKey("user_data")) == false){
         return false;
     }
+    
+    if(initString((CCDictionary *)dict->objectForKey("string")) == false){
+        return false;
+    }
 
     initLeaderboard();
 
@@ -148,6 +158,22 @@ bool GameController::init(){
     CCLOG("GameController::init end");
 
     return true;
+}
+
+bool GameController::initString(cocos2d::CCDictionary *dataDict){
+    if (dataDict == NULL) {
+        return false;
+    }
+    
+    for (int i = 0; i < STR_MAX; i++) {
+        strData.strInfo[i] = CCSTRING_FOR_KEY(dataDict, strKey[i].c_str());
+    }
+    
+    return true;
+}
+
+StrData * GameController::getStrData(){
+    return &strData;
 }
 
 bool GameController::initMisc(){

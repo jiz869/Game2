@@ -30,6 +30,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     isChineseEnabled = (CCApplication::getCurrentLanguage() == kLanguageChinese);
     
+    CCLOG("isChineseEnabled %d", isChineseEnabled);
+    
     if (isChineseEnabled == true) {
         searchPaths.push_back("china");
     }

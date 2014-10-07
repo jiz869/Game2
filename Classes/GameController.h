@@ -21,6 +21,20 @@ class UserService;
 class RewardService;
 
 typedef enum{
+    STR_CREDITS=0,
+    STR_CONTROLLER,
+    STR_LEFT,
+    STR_RIGHT,
+    STR_LEFTUP,
+    STR_LEFTDOWN,
+    STR_SOUND,
+    STR_MUTE,
+    STR_UNMUTE,
+    STR_RANK,
+    STR_MAX,
+}strType;
+
+typedef enum{
 	STARTUP_MENU_SCENE=0,
 	PLAY_SCENE,
 	SPLASH_SCENE,
@@ -146,6 +160,10 @@ typedef struct{
     CCAnimation * explodeAnim;
 }AnimationData;
 
+typedef struct {
+    CCString * strInfo[STR_MAX];
+}StrData;
+
 typedef struct{
     float duration;
     float life;
@@ -209,11 +227,11 @@ typedef struct{
 #define LEGENDS_PERPAGE (8)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-#define FONT "CroissantD"
-#define INFO_FONT "Arial Rounded MT Bold"
+#define FONT "迷你简祥隶"
+#define INFO_FONT "迷你简祥隶"
 #else
-#define FONT "fonts/CroissantD.ttf"
-#define INFO_FONT "fonts/Arial.ttf"
+#define FONT "fonts/迷你简祥隶.ttf"
+#define INFO_FONT "fonts/迷你简祥隶.ttf"
 #endif
 
 #define FREE_PLAY (3)
@@ -237,17 +255,10 @@ typedef struct{
                   "2) Continue game from where you left off\n"
 #endif
 
-#define CREDITS "Special thanks to www.opengameart.org\n" \
-                "for all the background music in this game\n\n" \
-                "\"Jump And Run\" by bart\n" \
-                "\"Trance Menu\" by rezoner\n" \
-                "\"After Burner\" by copyc4t\n" \
-                "\"Happy Arcade Tune\" by rezoner\n" \
-                "\"Arabesque\" by brainiac256\n" \
-                "\"Tactical Pursuit\" by Matthew Pablo\n"
-
 #define DEFAULT_NAME "Penguin"
 #define DEFAULT_PASSWORD "Penguin#"
+
+extern bool isChineseEnabled;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "../proj.ios/P2PCPPHelper.h"
@@ -283,6 +294,7 @@ public:
     PlaySceneData * getPlaySceneData(int level);
     AnimationData * getAnimationData();
     SpecialData * getSpecialData(int speciaId);
+    StrData * getStrData();
     UserData * getUserData();
     void setUserData(const char * key , CheckboxType data , int value);
     void levelUp();
@@ -318,7 +330,9 @@ private:
     vector<PlaySceneData *> playSceneDatas;
     AnimationData animationData;
     UserData userData;
+    StrData strData;
     bool initMisc();
+    bool initString(CCDictionary * dataDict);
     bool initPlaySceneData(CCArray * dataArray);
     bool initAnimationData(CCDictionary * dataDict);
     bool initSpecialData(CCDictionary * dataDict);

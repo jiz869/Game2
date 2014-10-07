@@ -40,10 +40,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Firenze.ttf</string>
-		<string>HONEB.ttf</string>
-		<string>Sweetie Love.ttf</string>
-		<string>CroissantD.ttf</string>
+		<string>fonts/迷你简祥隶.ttf</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>

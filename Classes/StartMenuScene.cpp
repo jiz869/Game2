@@ -90,6 +90,7 @@ bool StartMenuScene::init(){
     setPosition(ccp(winSize.width/2 , winSize.height/2));
 
     userData = GameController::getGameController()->getUserData();
+    strData = GameController::getGameController()->getStrData();
 
     userData->pvpMode = NONE;
 
@@ -337,7 +338,11 @@ void StartMenuScene::initCreditsMenu(){
 	CCMenuItemLabel * credits = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 96));
 	credits->setDisabledColor( ccBLUE );
 	credits->setPosition(ccp(winSize.width/2 , winSize.height*0.875));
-	credits->setString("CREDITS");
+    if (isChineseEnabled == true) {
+        credits->setString("鸣谢");
+    }else{
+        credits->setString("CREDITS");
+    }
 	credits->setEnabled(false);
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
@@ -347,7 +352,7 @@ void StartMenuScene::initCreditsMenu(){
 #endif
     content->setDisabledColor( ccRED );
 	content->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
-	content->setString(CREDITS);
+	content->setString(strData->strInfo[STR_CREDITS]->getCString());
 	content->setEnabled(false);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
@@ -381,7 +386,7 @@ void StartMenuScene::initScoreMenu(){
 
 	rankLabel = CCLabelTTF::create("0", FONT, 72 );
 	rankLabel->setColor( ccRED );
-	CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
+	CCString * rankInfo = CCString::createWithFormat(strData->strInfo[STR_RANK]->getCString(),
 			userData->userName.c_str(), userData->rank);
 	rankLabel->setString(rankInfo->getCString());
 	rankLabel->setPosition(ccp(winSize.width*0.5, winSize.height*(1.0/(RANK_PERPAGE + 1)*(RANK_PERPAGE)-0.02)));
@@ -916,7 +921,7 @@ void StartMenuScene::scoreHandler(cocos2d::CCObject *sender){
 #ifdef LISTVIEW_LEADERBOARD
 	GameController::getGameController()->getTopRankings();
 	scoreTable->reloadData();
-    CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
+    CCString * rankInfo = CCString::createWithFormat(strData->strInfo[STR_RANK]->getCString(),
             userData->userName.c_str(), userData->rank);
     rankLabel->setString(rankInfo->getCString());
 #else
@@ -946,7 +951,7 @@ void StartMenuScene::reloadScore(){
     }
 
     if (rankLabel) {
-        CCString * rankInfo = CCString::createWithFormat("%s's rank is : %d",
+        CCString * rankInfo = CCString::createWithFormat(strData->strInfo[STR_RANK]->getCString(),
                                                          userData->userName.c_str(), userData->rank);
         rankLabel->setString(rankInfo->getCString());
     }
@@ -960,14 +965,14 @@ void StartMenuScene::initOptionsMenu(){
 
     //row 1
     CCMenuItemLabel * controllerPositions = CCMenuItemLabel::create(
-    		CCLabelTTF::create("CONTROLLER POSITION", FONT , 64));
+    		CCLabelTTF::create(strData->strInfo[STR_CONTROLLER]->getCString(), FONT , 64));
     controllerPositions->setDisabledColor(ccBLUE);
     controllerPositions->setPosition(ccp(winSize.width/2, winSize.height*0.88));
     controllerPositions->setEnabled(false);
 
     //row 2
     CCMenuItemLabel * left = CCMenuItemLabel::create(
-    		CCLabelTTF::create("ON THE LEFT", FONT , 48 ,
+    		CCLabelTTF::create(strData->strInfo[STR_LEFT]->getCString(), FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
     left->setDisabledColor(ccRED);
     checkboxLeft = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
@@ -979,7 +984,7 @@ void StartMenuScene::initOptionsMenu(){
 
     //row 3
     CCMenuItemLabel * right = CCMenuItemLabel::create(
-    		CCLabelTTF::create("ON THE RIGHT", FONT , 48 ,
+    		CCLabelTTF::create(strData->strInfo[STR_LEFT]->getCString(), FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
     right->setDisabledColor(ccRED);
     checkboxRight = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
@@ -991,7 +996,7 @@ void StartMenuScene::initOptionsMenu(){
 
     //row 4
     CCMenuItemLabel * leftUp = CCMenuItemLabel::create(
-    		CCLabelTTF::create("LEFT UP RIGHT DOWN", FONT , 48 ,
+    		CCLabelTTF::create(strData->strInfo[STR_LEFTUP]->getCString(), FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
     leftUp->setDisabledColor(ccBLUE);
     checkboxSideLeftUp = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
@@ -1002,7 +1007,7 @@ void StartMenuScene::initOptionsMenu(){
     leftUp->setEnabled(false);
 
     CCMenuItemLabel * leftDown = CCMenuItemLabel::create(
-    		CCLabelTTF::create("LEFT DOWN RIGHT UP", FONT , 48 ,
+    		CCLabelTTF::create(strData->strInfo[STR_LEFTDOWN]->getCString(), FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
     leftDown->setDisabledColor(ccBLUE);
     checkboxSideLeftDown = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
@@ -1014,14 +1019,14 @@ void StartMenuScene::initOptionsMenu(){
 
     //row 5
     CCMenuItemLabel * sound = CCMenuItemLabel::create(
-    		CCLabelTTF::create("SOUND", FONT , 64));
+    		CCLabelTTF::create(strData->strInfo[STR_SOUND]->getCString(), FONT , 64));
     sound->setDisabledColor(ccBLUE);
     sound->setPosition(ccp(winSize.width/2, winSize.height*0.42));
     sound->setEnabled(false);
 
     //row 6
     CCMenuItemLabel * mute = CCMenuItemLabel::create(
-    		CCLabelTTF::create("MUTE", FONT , 48 ,
+    		CCLabelTTF::create(strData->strInfo[STR_MUTE]->getCString(), FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
     mute->setDisabledColor(ccRED);
     checkboxMute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
@@ -1033,7 +1038,7 @@ void StartMenuScene::initOptionsMenu(){
 
     //row 7
     CCMenuItemLabel * unMute = CCMenuItemLabel::create(
-    		CCLabelTTF::create("UNMUTE", FONT , 48 ,
+    		CCLabelTTF::create(strData->strInfo[STR_UNMUTE]->getCString(), FONT , 48 ,
     		CCSizeMake(winSize.width*0.5 , winSize.height/(RANK_PERPAGE + 1)) ,  kCCTextAlignmentLeft));
     unMute->setDisabledColor(ccBLUE);
     checkboxUnmute = CCMenuItemImage::create("check_box_normal.png", "check_box_selected.png" , this , menu_selector(StartMenuScene::checkboxHandler));
