@@ -2079,6 +2079,46 @@ Tactical Pursuit by Matthew Pablo</string>
 		<string>UNMUTE</string>
 		<key>rank</key>
 		<string>%s&apos;s rank is : %d</string>
+		<key>benefit</key>
+		<string>This in app purchase will cost 0.99 USD
+
+
+1) Remove Ads
+
+2) Continue game from where you left off</string>
+		<key>accountInfo</key>
+		<string>Please register or login to upload
+your latest score to leader board</string>
+		<key>username</key>
+		<string>UserName</string>
+		<key>password</key>
+		<string>PassWord</string>
+		<key>welcome</key>
+		<string>Welcome back %s</string>
+		<key>nameRule</key>
+		<string>Username must:
+have maximum 12 characters
+have minimum 4 characters
+start with an alphabet
+
+Legal characters allowed:
+a-z , A-Z, 0-9 , _ , -</string>
+		<key>passwordRule</key>
+		<string>Password must have:
+Maximum 12 characters
+Minimum 4 characters</string>
+		<key>level</key>
+		<string>LEVEL</string>
+		<key>penguinSkill</key>
+		<string>Penguin
+Skills</string>
+		<key>enemySkill</key>
+		<string>Enemy
+Skills</string>
+		<key>topScore</key>
+		<string>Top score is %d</string>
+		<key>lastScore</key>
+		<string>Last score is %d</string>
 	</dict>
 </dict>
 </plist>

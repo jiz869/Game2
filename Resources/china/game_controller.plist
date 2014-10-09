@@ -2061,6 +2061,45 @@ Tactical Pursuit by Matthew Pablo</string>
 		<string>打开声音</string>
 		<key>rank</key>
 		<string>%s的排名是 : %d</string>
+		<key>benefit</key>
+		<string>购买游戏需要0.99美元
+
+
+1) 移除广告
+
+2) 从上次失败的等级继续游戏</string>
+		<key>accountInfo</key>
+		<string>请注册或者登陆以便上传最新的分数到排行榜</string>
+		<key>username</key>
+		<string>用户名</string>
+		<key>password</key>
+		<string>密码</string>
+		<key>welcome</key>
+		<string>欢迎回来 %s</string>
+		<key>nameRule</key>
+		<string>用户名规则：
+最多12个字符
+最少4个字符
+以字母开头
+
+合法字符包括:
+a-z , A-Z, 0-9 , _ , -</string>
+		<key>passwordRule</key>
+		<string>密码规则:
+最多12个字符
+最少12个字符</string>
+		<key>level</key>
+		<string>等级</string>
+		<key>penguinSkill</key>
+		<string>企鹅
+技能</string>
+		<key>enemySkill</key>
+		<string>不良
+效果</string>
+		<key>topScore</key>
+		<string>最高得分是 %d</string>
+		<key>lastScore</key>
+		<string>上次得分是 %d</string>
 	</dict>
 </dict>
 </plist>

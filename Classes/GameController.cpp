@@ -75,7 +75,19 @@ string strKey[STR_MAX] = { "credits",
                            "sound",
                            "mute" ,
                            "unmute",
-                           "rank" ,};
+                           "rank" ,
+                           "benefit",
+                            "accountInfo",
+                            "username" ,
+                            "password" ,
+                            "welcome" ,
+                            "nameRule" ,
+                            "passwordRule" ,
+                            "level" ,
+                            "penguinSkill" ,
+                            "enemySkill" ,
+                            "topScore" ,
+                            "lastScore"};
 
 static GameController * controller;
 bool gamecontrollerInited = false;
@@ -1286,7 +1298,7 @@ void GameController::onAuthenticateCompleted(CCNode * node , void * response){
             scoreBoardService->GetUserRanking("crossRoad",
                     userData.userName,
                     this, callfuncND_selector(GameController::onScoreBoardGetUserRankingCompleted));
-            CCString * info = CCString::createWithFormat("Welcome back %s", it->userName.c_str());
+            CCString * info = CCString::createWithFormat(strData.strInfo[STR_WELCOME]->getCString(), it->userName.c_str());
             setInfoLabel(info->getCString());
         }
     }

@@ -31,6 +31,18 @@ typedef enum{
     STR_MUTE,
     STR_UNMUTE,
     STR_RANK,
+    STR_BENEFIT,
+    STR_ACCOUNTINFO,
+    STR_USERNAME,
+    STR_PASSWORD,
+    STR_WELCOME,
+    STR_NAMERULE,
+    STR_PWDRULE,
+    STR_LEVEL,
+    STR_PENGUINSKILL,
+    STR_ENEMYSKILL,
+    STR_TOPSCORE,
+    STR_LASTSCORE,
     STR_MAX,
 }strType;
 
@@ -235,25 +247,6 @@ typedef struct{
 #endif
 
 #define FREE_PLAY (3)
-
-#define NAME_RULE "Username must:\n" \
-                  "have maximum 12 characters\n" \
-                  "have minimum 4 characters\n" \
-                  "start with an alphabet\n\n" \
-                  "Legal characters allowed:\n" \
-                  "a-z , A-Z, 0-9 , _ , -\n"
-
-#define PASSWORD_RULE "Password must have:\n" \
-                  "Maximum 12 characters\n" \
-                  "Minimum 4 characters\n"
-#if defined(BB_TRIAL) || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#define PURCHASE_BENEFIT "Please spend 99 cents to purchase the\n" \
-                  "full version to access higher levels\n"
-#else
-#define PURCHASE_BENEFIT "Spend 99 cents to:\n\n" \
-                  "1) Remove Ads\n\n" \
-                  "2) Continue game from where you left off\n"
-#endif
 
 #define DEFAULT_NAME "Penguin"
 #define DEFAULT_PASSWORD "Penguin#"

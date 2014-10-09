@@ -139,7 +139,7 @@ void StartMenuScene::initNewGameMenu(){
             CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
     currentLevel->setDisabledColor( ccRED );
     currentLevel->setPosition(ccp(winSize.width * 0.4 , winSize.height*0.75));
-    currentLevel->setString("LEVEL");
+    currentLevel->setString(strData->strInfo[STR_LEVEL]->getCString());
     currentLevel->setEnabled(false);
 
     CCString * gemName = CCString::createWithFormat("gem%d.png", userData->currentLevel);
@@ -153,14 +153,14 @@ void StartMenuScene::initNewGameMenu(){
             CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
     yourSkills->setDisabledColor( ccRED );
     yourSkills->setPosition(ccp(winSize.width * 0.2 , winSize.height*0.55));
-    yourSkills->setString("Penguin\nSkills");
+    yourSkills->setString(strData->strInfo[STR_PENGUINSKILL]->getCString());
     yourSkills->setEnabled(false);
 
     CCMenuItemLabel * enemySkills = CCMenuItemLabel::create(CCLabelTTF::create("", FONT, 56,
             CCSizeMake(winSize.width * 0.3 , winSize.height * 0.2) ,  kCCTextAlignmentLeft));
     enemySkills->setDisabledColor( ccBLACK );
     enemySkills->setPosition(ccp(winSize.width * 0.2 , winSize.height*0.35));
-    enemySkills->setString("Enemy\nSkills");
+    enemySkills->setString(strData->strInfo[STR_ENEMYSKILL]->getCString());
     enemySkills->setEnabled(false);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
@@ -275,7 +275,7 @@ void StartMenuScene::initInfoMenu(){
         return;
     }
 
-	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 40 ,
+	infoLabel = CCMenuItemLabel::create(CCLabelTTF::create("", INFO_FONT, 48 ,
 			CCSizeMake(winSize.width * 0.8 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
     infoLabel->setDisabledColor( ccRED );
     infoLabel->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
@@ -302,7 +302,7 @@ void StartMenuScene::initPurchaseMenu(){
 			CCSizeMake(winSize.width * 0.9 , winSize.height * 0.6) ,  kCCTextAlignmentCenter));
 	benefits->setDisabledColor( ccRED );
 	benefits->setPosition(ccp(winSize.width/2 , winSize.height*0.5));
-	benefits->setString(PURCHASE_BENEFIT);
+	benefits->setString(strData->strInfo[STR_BENEFIT]->getCString());
 	benefits->setEnabled(false);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
@@ -460,7 +460,7 @@ void StartMenuScene::initScoreMenu(){
 
 void StartMenuScene::uploadHandler(CCObject * sender){
     if(userData->isLogedIn == false){
-        setInfoLabel("Please login or register first" , 0);
+        setInfoLabel(strData->strInfo[STR_ACCOUNTINFO]->getCString() , 0);
         return;
     }
     GameController::getGameController()->uploadLastScore();
@@ -484,7 +484,7 @@ void StartMenuScene::initUserMenu(){
     yourNameLabel->setColor( ccBLUE );
     yourNameLabel->setPosition(ccp(winSize.width/4 , winSize.height*0.8));
     //yourNameLabel->setAnchorPoint(ccp(1 , 0.5));
-    yourNameLabel->setString(CCString::create("UserName")->getCString());
+    yourNameLabel->setString(strData->strInfo[STR_USERNAME]->getCString());
     userMenu->addChild(yourNameLabel);
 
     nameField = CCTextFieldTTF::textFieldWithPlaceHolder(NULL , FONT, 64);
@@ -500,7 +500,7 @@ void StartMenuScene::initUserMenu(){
     yourPwdLabel->setColor( ccBLUE );
     yourPwdLabel->setPosition(ccp(winSize.width/4 , winSize.height*0.6));
     //yourPwdLabel->setAnchorPoint(ccp(1 , 0.5));
-    yourPwdLabel->setString(CCString::create("PassWord")->getCString());
+    yourPwdLabel->setString(strData->strInfo[STR_PASSWORD]->getCString());
     userMenu->addChild(yourPwdLabel);
 
     pwdField = PWDField::textFieldWithPlaceHolder(NULL , FONT, 64);
@@ -516,7 +516,7 @@ void StartMenuScene::initUserMenu(){
     info->setColor( ccRED );
     info->setPosition(ccp(winSize.width/2 , winSize.height*0.4));
     //yourNameLabel->setAnchorPoint(ccp(1 , 0.5));
-    info->setString("Please register or login to upload\nyour latest score to leader board");
+    info->setString(strData->strInfo[STR_ACCOUNTINFO]->getCString());
     userMenu->addChild(info);
 
     CCMenuItemImage * OK = CCMenuItemImage::create("return_normal.png", "return_selected.png" ,
@@ -545,11 +545,11 @@ void StartMenuScene::loginHandler(CCObject * sender){
 
 void StartMenuScene::RegisterHandler(CCObject * sender){
     if(checkName(nameField->getString()) == false){
-        setInfoLabel(NAME_RULE , 0);
+        setInfoLabel(strData->strInfo[STR_NAMERULE]->getCString() , 0);
         return;
     }
     if(checkPWD(pwdField->getString()) == false){
-        setInfoLabel(PASSWORD_RULE , 0);
+        setInfoLabel(strData->strInfo[STR_PWDRULE]->getCString() , 0);
         return;
     }
     GameController::getGameController()->createUser(nameField->getString() , pwdField->getString());
@@ -709,7 +709,7 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
         legend->setAnchorPoint(ccp(0.5 , 1.05));
         cell->addChild(legend);
 
-        CCLabelTTF * name = CCLabelTTF::create("0", INFO_FONT, 32 ,
+        CCLabelTTF * name = CCLabelTTF::create("0", INFO_FONT, 36 ,
                 CCSizeMake(winSize.width*0.2 , winSize.height/(LEGENDS_PERPAGE + 1)*patch*2) ,
                 kCCTextAlignmentLeft);
         name->setColor( ccRED );
@@ -718,7 +718,7 @@ CCTableViewCell * StartMenuScene::cellForLegends(CCTableViewCell *cell , int ind
         name->setTag(LEGEND_NAME_LABEL);
         cell->addChild(name);
 
-        CCLabelTTF * description = CCLabelTTF::create("0", INFO_FONT, 30 ,
+        CCLabelTTF * description = CCLabelTTF::create("0", INFO_FONT, 32 ,
                 CCSizeMake(winSize.width*0.7 , winSize.height/(LEGENDS_PERPAGE + 1)*patch*2) ,
                 kCCTextAlignmentLeft);
         description->setColor( ccRED );

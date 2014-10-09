@@ -34,6 +34,7 @@ private:
     void initInfoMenu();
     void initMainMenu();
     CCMenu * infoMenu;
+    StrData * strData;
 };
 
 #endif /* GAMEOVERSCENE_H_ */
